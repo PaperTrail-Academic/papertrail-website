@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PaperTrail StyleMatch — Authorship Consistency Analysis</title>
+  <meta name="description" content="Compare a student's in-class writing against submitted work across eight research-based stylometric metrics. Does this essay actually sound like them?" />
+  <link rel="icon" href="/icon128.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --blue:#4A6FA5;--blue-dk:#3a5882;--blue-lt:#e8eef6;
+  --gold:#C9A84C;--gold-dk:#a8892f;--gold-lt:#fdf6e3;
+  --teal:#2a7a6b;--teal-lt:#e6f4f1;
+  --ink:#1a2235;--ink-2:#3d4f6e;--ink-3:#6b7a96;
+  --rule:#dce4ef;--bg:#f9fafc;--white:#fff;
+  --green:#34a853;--red:#ea4335;--amber:#fbbc04;
+  --shadow:0 4px 24px rgba(74,111,165,.10);
+  --shadow-lg:0 16px 56px rgba(74,111,165,.18);
+}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;color:var(--ink);background:var(--white);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%}
+.container{max-width:1100px;margin:0 auto;padding:0 28px}
+.eyebrow{font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-dk);margin-bottom:10px;display:block}
+
+.btn{display:inline-flex;align-items:center;gap:7px;padding:12px 22px;border-radius:6px;font-family:'DM Sans',sans-serif;font-size:13.5px;font-weight:600;cursor:pointer;transition:all .18s ease;border:none;white-space:nowrap;text-decoration:none}
+.btn-gold{background:var(--gold);color:#fff}.btn-gold:hover{background:var(--gold-dk);transform:translateY(-1px)}
+.btn-ghost-gold{background:transparent;color:var(--gold-dk);border:1.5px solid var(--gold)}.btn-ghost-gold:hover{background:var(--gold-lt)}
+.btn-lg{padding:15px 30px;font-size:15px}
+
+/* Nav */
+nav{position:sticky;top:0;z-index:200;background:rgba(255,255,255,.96);backdrop-filter:blur(10px);border-bottom:1px solid var(--rule)}
+.nav-inner{max-width:1100px;margin:0 auto;padding:0 28px;height:60px;display:flex;align-items:center;gap:28px}
+.nav-logo{display:flex;align-items:center;gap:9px;margin-right:auto;text-decoration:none}
+.nav-logo img{width:26px;height:26px}
+.nav-wm{font-family:'Lora',serif;font-size:16px;font-weight:700;color:var(--ink)}
+.nav-wm em{color:var(--blue);font-style:italic}
+.nl{font-size:13px;font-weight:500;color:var(--ink-2);transition:color .15s;text-decoration:none}
+.nl:hover{color:var(--blue)}
+.nl.cta{background:var(--blue);color:#fff;padding:7px 16px;border-radius:5px;font-weight:600}
+.nl.cta:hover{background:var(--blue-dk)}
+.nav-dropdown{position:relative}
+.nav-dropdown>.nl{display:flex;align-items:center;gap:4px;cursor:pointer;user-select:none}
+.nav-dropdown>.nl .dd-caret{font-size:10px;opacity:.55;display:inline-block;transition:transform .2s}
+.nav-dropdown.open>.nl .dd-caret{transform:rotate(-180deg)}
+.nav-dd-menu{position:absolute;top:100%;left:50%;transform:translateX(-50%);padding-top:8px;opacity:0;pointer-events:none;transition:opacity .18s ease}
+.nav-dropdown.open .nav-dd-menu{opacity:1;pointer-events:all}
+.nav-dd-inner{background:#fff;border:1.5px solid var(--rule);border-radius:10px;box-shadow:var(--shadow-lg);padding:8px;min-width:230px}
+.dd-item{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:7px;text-decoration:none;transition:background .15s;color:var(--ink)}
+.dd-item:hover{background:var(--bg)}
+.dd-icon{font-size:16px;flex-shrink:0}
+.dd-label{font-size:13px;font-weight:600;color:var(--ink);display:block;line-height:1.2}
+.dd-sub{font-size:11px;color:var(--ink-3);font-weight:400}
+.dd-divider{height:1px;background:var(--rule);margin:4px 0}
+
+/* Hero */
+.hero{background:linear-gradient(155deg,#fdf8ee 0%,#fff 55%,#f9fafc 100%);padding:68px 0 56px;border-bottom:1px solid var(--rule)}
+.hero-inner{max-width:1100px;margin:0 auto;padding:0 28px;display:grid;grid-template-columns:1fr 460px;gap:52px;align-items:start}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:var(--gold-lt);color:var(--gold-dk);border:1px solid #e8d49a;border-radius:20px;padding:4px 14px;font-size:11.5px;font-weight:700;margin-bottom:18px}
+.hero h1{font-family:'Lora',serif;font-size:clamp(28px,3.2vw,42px);font-weight:700;line-height:1.18;color:var(--ink);margin-bottom:16px}
+.hero-sub{font-size:15.5px;color:var(--ink-2);line-height:1.7;margin-bottom:28px;max-width:490px}
+.hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:22px}
+.hero-trust{display:flex;flex-direction:column;gap:10px;margin-top:24px}
+.hero-trust span{font-size:13.5px;color:var(--ink-2);display:flex;align-items:center;gap:8px}
+.hero-trust span::before{content:'✓';color:var(--gold);font-weight:700;font-size:12px;flex-shrink:0}
+
+/* ══ STYLEMATCH SIDEBAR MOCKUP ══════════════════════════════ */
+.sm-sidebar{background:#fff;border:1px solid #d0d0d0;border-radius:10px;overflow:hidden;box-shadow:0 8px 36px rgba(0,0,0,.16);font-family:'DM Sans',sans-serif;width:100%}
+
+/* Header */
+.sms-hd{background:var(--blue);padding:9px 13px 0}
+.sms-hd-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:3px}
+.sms-hd-left{display:flex;align-items:center;gap:7px}
+.sms-hd-icon{width:20px;height:20px;background:rgba(255,255,255,.18);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:11px}
+.sms-hd-title{font-size:12px;font-weight:700;color:#fff;font-family:'Lora',serif}
+.sms-hd-title em{color:var(--gold);font-style:italic}
+.sms-signin{background:rgba(255,255,255,.18);color:#fff;border:1px solid rgba(255,255,255,.35);border-radius:10px;padding:3px 10px;font-size:9.5px;font-weight:600}
+.sms-hd-sub{font-size:8.5px;color:rgba(255,255,255,.6);padding-bottom:8px}
+
+/* Form fields */
+.sms-fields{padding:8px 10px 4px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:5px}
+.sms-field-wide{grid-column:1/3}
+.sms-field-label{font-size:7.5px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--ink-3);margin-bottom:2px}
+.sms-field-input{background:#f7f8fa;border:1px solid var(--rule);border-radius:4px;padding:4px 7px;font-size:9.5px;color:var(--ink-2);font-family:'DM Sans',sans-serif}
+.sms-field-input.filled{color:var(--ink);background:#fff}
+
+/* Two panels */
+.sms-panels{display:grid;grid-template-columns:1fr 1fr;gap:0;border-top:1px solid var(--rule)}
+.sms-panel{padding:8px 10px}
+.sms-panel:first-child{border-right:1px solid var(--rule)}
+.sms-panel-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:5px}
+.sms-panel-label{font-size:8.5px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--blue)}
+.sms-panel-label.gold{color:var(--gold-dk)}
+.sms-word-count{font-size:8px;font-weight:700;background:var(--blue-lt);color:var(--blue);padding:1px 6px;border-radius:8px}
+.sms-word-count.gold{background:var(--gold-lt);color:var(--gold-dk)}
+.sms-fill-btn{font-size:8px;font-weight:700;background:var(--green);color:#fff;padding:2px 7px;border-radius:8px;display:flex;align-items:center;gap:3px}
+.sms-panel-text{background:#f9fafb;border:1px solid var(--rule);border-radius:4px;padding:6px 7px;font-size:8px;color:var(--ink-2);line-height:1.55;height:100px;overflow:hidden;font-family:Georgia,serif}
+
+/* Run button */
+.sms-run-btn{margin:8px 10px;background:var(--gold);color:#fff;border-radius:6px;padding:9px 12px;font-size:11.5px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:7px;cursor:default}
+.sms-run-btn .sms-q{width:15px;height:15px;border-radius:50%;background:rgba(255,255,255,.25);display:flex;align-items:center;justify-content:center;font-size:8px;color:#fff}
+.sms-footer{padding:5px 10px 8px;text-align:center;font-size:9px;color:var(--ink-3)}
+
+/* ══ REPORT MOCKUP ══════════════════════════════════════════ */
+.report-mock{background:#fff;border:1px solid #d0d0d0;border-radius:10px;overflow:hidden;box-shadow:0 8px 32px rgba(0,0,0,.14);font-family:'DM Sans',sans-serif}
+.rm-hd{background:var(--blue);padding:10px 16px;display:flex;align-items:center;gap:10px}
+.rm-hd-icon{font-size:16px}
+.rm-hd-title{font-family:'Lora',serif;font-size:13px;font-weight:700;color:#fff}
+.rm-hd-title em{color:var(--gold);font-style:italic}
+.rm-meta{padding:8px 14px;background:#f7f8fa;border-bottom:1px solid var(--rule);font-size:9px;color:var(--ink-3);line-height:1.7}
+.rm-meta strong{color:var(--ink-2)}
+.rm-student-row{padding:7px 14px;border-bottom:1px solid var(--rule);display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px}
+.rm-student-field{font-size:8.5px;color:var(--ink-3)}
+.rm-student-field strong{color:var(--ink-2);display:block;font-size:9px}
+.rm-section-hd{padding:7px 14px 4px;font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--ink-3);border-bottom:1px solid var(--rule);display:flex;justify-content:space-between}
+.rm-section-hd span{color:var(--gold-dk);font-style:italic;font-weight:400;text-transform:none;letter-spacing:0;font-size:8px}
+
+/* Metric rows */
+.rm-metrics{padding:4px 0}
+.rm-metric{padding:7px 14px;border-bottom:1px solid #f0f0f0}
+.rm-metric:last-child{border-bottom:none}
+.rm-metric-top{display:flex;align-items:center;gap:8px;margin-bottom:4px}
+.rm-metric-name{font-size:10.5px;font-weight:700;color:var(--ink);width:110px;flex-shrink:0}
+.rm-metric-vals{display:flex;gap:10px;flex:1}
+.rm-val{font-size:9.5px;font-weight:700}
+.rm-val.blue{color:var(--blue)}
+.rm-bar-wrap{flex:1;display:flex;align-items:center;gap:7px}
+.rm-bar-track{flex:1;height:5px;background:#e8edf4;border-radius:3px;overflow:hidden}
+.rm-bar-fill{height:100%;border-radius:3px}
+.bar-green{background:var(--green)}
+.bar-amber{background:var(--amber)}
+.bar-red{background:var(--red)}
+.rm-pct{font-size:10px;font-weight:800;width:28px;text-align:right;flex-shrink:0}
+.pct-green{color:var(--green)}
+.pct-amber{color:#b06000}
+.pct-red{color:var(--red)}
+.rm-verdict{font-size:9px;font-weight:700;padding:1px 8px;border-radius:9px;flex-shrink:0}
+.verd-sim{background:#e8f5e9;color:#2e7d32}
+.verd-not{background:#fff3cd;color:#856404}
+.verd-div{background:#fce8e6;color:#c62828}
+.rm-metric-note{font-size:8px;color:var(--ink-3);line-height:1.5;padding-left:2px;border-left:2px solid var(--rule);padding-left:8px;margin-top:3px}
+
+/* Research section */
+.research-section{padding:72px 0;background:var(--bg);border-bottom:1px solid var(--rule)}
+.research-inner{max-width:1100px;margin:0 auto;padding:0 28px;display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start}
+.research-left h2{font-family:'Lora',serif;font-size:clamp(22px,2.8vw,30px);color:var(--ink);margin-bottom:12px;line-height:1.25}
+.research-left h2 em{color:var(--gold-dk);font-style:italic}
+.research-left p{font-size:14.5px;color:var(--ink-2);line-height:1.72;margin-bottom:16px}
+.research-cards{display:flex;flex-direction:column;gap:12px}
+.rc{background:#fff;border:1.5px solid var(--rule);border-radius:9px;padding:14px 16px;border-left:4px solid var(--gold)}
+.rc-metric{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--gold-dk);margin-bottom:4px}
+.rc-title{font-size:13.5px;font-weight:600;color:var(--ink);margin-bottom:4px;line-height:1.3}
+.rc-cite{font-size:11px;color:var(--ink-3);font-style:italic;line-height:1.5}
+
+/* How it works */
+.hiw-section{padding:72px 0;background:var(--white);border-bottom:1px solid var(--rule)}
+.hiw-inner{max-width:1100px;margin:0 auto;padding:0 28px}
+.hiw-hdr{max-width:620px;margin:0 auto 48px;text-align:center}
+.hiw-hdr h2{font-family:'Lora',serif;font-size:clamp(22px,2.8vw,30px);color:var(--ink);margin-bottom:10px}
+.hiw-hdr p{font-size:14.5px;color:var(--ink-2);line-height:1.7}
+.hiw-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:28px}
+.hiw-step{text-align:center;padding:28px 22px;background:var(--bg);border-radius:12px;border:1.5px solid var(--rule);position:relative}
+.hiw-step-num{width:36px;height:36px;border-radius:50%;background:var(--gold);color:#fff;font-size:14px;font-weight:800;display:flex;align-items:center;justify-content:center;margin:0 auto 14px}
+.hiw-step h3{font-family:'Lora',serif;font-size:16px;color:var(--ink);margin-bottom:8px}
+.hiw-step p{font-size:13px;color:var(--ink-2);line-height:1.65}
+.hiw-step .hiw-note{font-size:11.5px;color:var(--ink-3);margin-top:10px;padding-top:10px;border-top:1px solid var(--rule);font-style:italic}
+.hiw-connector{display:none}
+
+/* Features */
+.features-section{padding:72px 0;background:var(--bg);border-bottom:1px solid var(--rule)}
+.fsplit{max-width:1100px;margin:0 auto;padding:0 28px;display:grid;grid-template-columns:1fr 460px;gap:52px;align-items:start}
+.fsplit-hdr{margin-bottom:32px}
+.fsplit-hdr h2{font-family:'Lora',serif;font-size:clamp(22px,2.8vw,30px);color:var(--ink);margin-bottom:10px;line-height:1.25}
+.fsplit-hdr h2 em{color:var(--gold-dk);font-style:italic}
+.fsplit-hdr p{font-size:14.5px;color:var(--ink-2);line-height:1.7}
+.feat-list{display:flex;flex-direction:column;gap:22px}
+.feat-item{display:flex;gap:14px;align-items:flex-start}
+.feat-icon{font-size:22px;flex-shrink:0;margin-top:2px}
+.feat-item h3{font-size:14.5px;font-weight:700;color:var(--ink);margin-bottom:5px}
+.feat-item p{font-size:13.5px;color:var(--ink-2);line-height:1.65}
+
+/* Limitations */
+.limits-section{padding:72px 0;background:var(--white);border-bottom:1px solid var(--rule)}
+.limits-inner{max-width:1100px;margin:0 auto;padding:0 28px}
+.limits-hdr{max-width:620px;margin-bottom:36px}
+.limits-hdr h2{font-family:'Lora',serif;font-size:clamp(22px,2.8vw,30px);color:var(--ink);margin-bottom:10px}
+.limits-hdr p{font-size:14.5px;color:var(--ink-2);line-height:1.68}
+.limits-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.limit-card{border:1.5px solid var(--rule);border-radius:10px;padding:20px;background:var(--bg)}
+.limit-card h4{font-size:14px;font-weight:600;color:var(--ink);margin-bottom:8px}
+.limit-card p{font-size:13px;color:var(--ink-2);line-height:1.65}
+.lim-then{font-size:12.5px;color:var(--ink-3);margin-top:10px;padding-top:10px;border-top:1px solid var(--rule);display:flex;gap:7px;line-height:1.55}
+.lim-arr{color:var(--gold-dk);font-weight:700;flex-shrink:0}
+
+/* Upgrade */
+.upgrade-section{padding:64px 0;background:linear-gradient(155deg,#1e3a5f 0%,var(--blue) 100%)}
+.upgrade-inner{max-width:1100px;margin:0 auto;padding:0 28px;display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
+.upgrade-left h2{font-family:'Lora',serif;font-size:clamp(22px,2.8vw,30px);color:#fff;margin-bottom:12px;line-height:1.25}
+.upgrade-left h2 em{color:var(--gold);font-style:normal}
+.upgrade-left p{font-size:14.5px;color:rgba(255,255,255,.75);line-height:1.7}
+.upgrade-cards{display:flex;flex-direction:column;gap:14px}
+.ucard{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);border-radius:10px;padding:16px 18px;display:flex;gap:14px;text-decoration:none;transition:background .2s}
+.ucard:hover{background:rgba(255,255,255,.17)}
+.ucard-icon{font-size:22px;flex-shrink:0;margin-top:2px}
+.ucard h4{font-size:14px;font-weight:700;color:#fff;margin-bottom:3px}
+.ucard p{font-size:12.5px;color:rgba(255,255,255,.65);line-height:1.5}
+.ucard-price{font-size:11.5px;color:var(--gold);font-weight:700;margin-top:5px}
+
+/* Privacy */
+.privacy-strip{padding:48px 0;background:var(--bg);border-bottom:1px solid var(--rule)}
+.privacy-inner{max-width:1100px;margin:0 auto;padding:0 28px;display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
+.priv-item{display:flex;gap:12px;align-items:flex-start}
+.priv-ico{font-size:22px;flex-shrink:0;margin-top:2px}
+.priv-item h4{font-size:13.5px;font-weight:600;color:var(--ink);margin-bottom:4px}
+.priv-item p{font-size:12.5px;color:var(--ink-3);line-height:1.6}
+
+/* CTA */
+.cta-section{padding:64px 0;background:var(--white);border-bottom:1px solid var(--rule);text-align:center}
+.cta-section h2{font-family:'Lora',serif;font-size:clamp(22px,2.8vw,30px);color:var(--ink);margin-bottom:12px}
+.cta-section p{font-size:15px;color:var(--ink-2);max-width:480px;margin:0 auto 28px;line-height:1.7}
+.cta-trust{display:flex;justify-content:center;gap:20px;flex-wrap:wrap;margin-top:20px}
+.cta-trust span{font-size:12px;color:var(--ink-3);display:flex;align-items:center;gap:5px}
+.cta-trust span::before{content:'✓';color:var(--gold);font-weight:700;font-size:11px}
+
+/* Footer */
+footer{background:var(--ink);padding:42px 0 0}
+.ftr-inner{max-width:1100px;margin:0 auto;padding:0 28px 34px;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:32px}
+.ftr-logo{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.ftr-logo img{width:23px;height:23px}
+.ftr-wm{font-family:'Lora',serif;font-size:14.5px;font-weight:700;color:#fff}
+.ftr-wm em{color:var(--gold);font-style:italic}
+.ftr-tag{font-size:12.5px;color:rgba(255,255,255,.42);line-height:1.6;font-style:italic}
+.ftr-col h4{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,.35);margin-bottom:12px}
+.ftr-col ul{list-style:none;display:flex;flex-direction:column;gap:8px}
+.ftr-col ul a{font-size:12.5px;color:rgba(255,255,255,.62);transition:color .15s;text-decoration:none}
+.ftr-col ul a:hover{color:#fff}
+.ftr-bottom{border-top:1px solid rgba(255,255,255,.1);padding:15px 28px;max-width:1100px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
+.ftr-bottom span{font-size:11.5px;color:rgba(255,255,255,.36)}
+.ftr-bottom a{color:rgba(255,255,255,.5);text-decoration:none}
+.ftr-bottom a:hover{color:#fff}
+
+@media(max-width:1020px){
+  .hero-inner,.fsplit{grid-template-columns:1fr}
+  .hero .sm-sidebar,.fsplit .report-mock,.fsplit .report-caption{display:none}
+}
+@media(max-width:960px){
+  .research-inner{grid-template-columns:1fr}
+  .hiw-steps{grid-template-columns:1fr}
+  .limits-grid{grid-template-columns:1fr 1fr}
+  .privacy-inner{grid-template-columns:1fr 1fr}
+  .upgrade-inner{grid-template-columns:1fr}
+  .ftr-inner{grid-template-columns:1fr 1fr}
+}
+@media(max-width:640px){
+  .nav-inner .nl:not(.cta){display:none}
+  .limits-grid{grid-template-columns:1fr}
+  .privacy-inner{grid-template-columns:1fr}
+  .ftr-inner{grid-template-columns:1fr}
+  .ftr-bottom{flex-direction:column;text-align:center}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">
+      <img src="/icon128.png" alt="PaperTrail Academic" />
+      <span class="nav-wm">PaperTrail <em>Academic</em></span>
+    </a>
+    <div class="nav-dropdown" id="navDropdown">
+      <span class="nl" id="navDropdownTrigger">Products <span class="dd-caret">▾</span></span>
+      <div class="nav-dd-menu">
+        <div class="nav-dd-inner">
+          <a href="/inspect" class="dd-item">
+            <span class="dd-icon">✏️</span>
+            <span><span class="dd-label">Inspect <span style="color:var(--green);font-size:10px;font-weight:700">Free</span></span><span class="dd-sub">Revision history, paste detection, playback</span></span>
+          </a>
+          <div class="dd-divider"></div>
+          <a href="/stylematch" class="dd-item">
+            <span class="dd-icon">🔍</span>
+            <span><span class="dd-label">StyleMatch <span style="color:var(--gold-dk);font-size:10px">$4.99/mo</span></span><span class="dd-sub">8-metric authorship consistency analysis</span></span>
+          </a>
+          <div class="dd-divider"></div>
+          <a href="/verify" class="dd-item">
+            <span class="dd-icon">🔬</span>
+            <span><span class="dd-label">Verify <span style="color:var(--teal);font-size:10px">From $0.60</span></span><span class="dd-sub">AI-assisted deep analysis &amp; reports</span></span>
+          </a>
+        </div>
+      </div>
+    </div>
+    <a href="/#pricing" class="nl">Pricing</a>
+    <a href="/#schools" class="nl">For Schools</a>
+    <a href="/privacy-policy" class="nl">Privacy</a>
+    <a href="https://chromewebstore.google.com/detail/papertrail/kgkjmhfoijiiplbmablcjbooopndjbgm"
+       class="nl cta" target="_blank" rel="noopener">Add to Chrome — Free</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div>
+      <div class="hero-badge">🔍 PaperTrail StyleMatch &nbsp;·&nbsp; $4.99/mo</div>
+      <h1>This doesn't sound<br>like them.</h1>
+      <p class="hero-sub">StyleMatch compares a student's known in-class writing against submitted work across eight research-based stylometric metrics — the same signals forensic linguists have used for decades. All analysis runs in your browser. No text ever leaves your device.</p>
+      <div class="hero-actions">
+        <a href="https://chromewebstore.google.com/detail/papertrail/kgkjmhfoijiiplbmablcjbooopndjbgm"
+           class="btn btn-gold btn-lg" target="_blank" rel="noopener">⬇ Add to Chrome — Try Free</a>
+        <a href="#how-it-works" class="btn btn-ghost-gold btn-lg">See how it works ↓</a>
+      </div>
+      <div class="hero-trust">
+        <span>Submitted work fills directly from the open Google Doc — one click</span>
+        <span>Controlled sample pasted in by the teacher from any in-class writing</span>
+        <span>All eight metrics computed locally — no text transmitted, ever</span>
+        <span>Printable Authorship Consistency Report for documentation</span>
+        <span>Built on peer-reviewed stylometric research, cited in every report</span>
+      </div>
+    </div>
+
+    <!-- SIDEBAR MOCKUP -->
+    <div class="sm-sidebar">
+      <div class="sms-hd">
+        <div class="sms-hd-row">
+          <div class="sms-hd-left">
+            <div class="sms-hd-icon">🔍</div>
+            <span class="sms-hd-title">PaperTrail <em>StyleMatch</em></span>
+          </div>
+          <div class="sms-signin">Sign In</div>
+        </div>
+        <div class="sms-hd-sub">Revision analysis &amp; authorship comparison</div>
+      </div>
+
+      <div class="sms-fields">
+        <div>
+          <div class="sms-field-label">Student Name</div>
+          <div class="sms-field-input filled">Emma Kowalski</div>
+        </div>
+        <div>
+          <div class="sms-field-label">Student ID</div>
+          <div class="sms-field-input filled">2841-K</div>
+        </div>
+        <div>
+          <div class="sms-field-label">Date</div>
+          <div class="sms-field-input filled">3/10/2026</div>
+        </div>
+        <div class="sms-field-wide">
+          <div class="sms-field-label">Teacher Name</div>
+          <div class="sms-field-input">Optional</div>
+        </div>
+        <div>
+          <div class="sms-field-label">Course</div>
+          <div class="sms-field-input">Optional</div>
+        </div>
+        <div class="sms-field-wide" style="grid-column:1/4">
+          <div class="sms-field-label">Assignment</div>
+          <div class="sms-field-input">Optional</div>
+        </div>
+      </div>
+
+      <div class="sms-panels">
+        <div class="sms-panel">
+          <div class="sms-panel-hd">
+            <span class="sms-panel-label">📄 Submitted Work</span>
+            <span class="sms-word-count">1766 words</span>
+          </div>
+          <div style="margin-bottom:5px">
+            <div class="sms-fill-btn">✓ Fill from open doc</div>
+          </div>
+          <div class="sms-panel-text">To what extent is interpretation a reliable tool in the production of knowledge? To say that all knowledge must be interpreted holds true in many regards. From the perspective of a knower, knowledge is not inherent in any object, speech, or piece of literature…</div>
+        </div>
+        <div class="sms-panel">
+          <div class="sms-panel-hd">
+            <span class="sms-panel-label gold">✏️ Controlled Sample</span>
+            <span class="sms-word-count gold">1861 words</span>
+          </div>
+          <div style="height:20px"></div>
+          <div class="sms-panel-text">…which that knowledge is produced and interpreted. Furthermore, it questions whether a deeper understanding is necessarily a better one. Context, here, extends beyond simply referring to background information and can be understood as the historical and methodological frameworks…</div>
+        </div>
+      </div>
+
+      <div class="sms-run-btn">
+        🔍 Run StyleMatch
+        <div class="sms-q">?</div>
+      </div>
+      <div class="sms-footer">8 reports remaining &nbsp;·&nbsp; All analysis stays in your browser</div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="hiw-section" id="how-it-works">
+  <div class="hiw-inner">
+    <div class="hiw-hdr">
+      <span class="eyebrow">Workflow</span>
+      <h2 style="font-family:'Lora',serif;font-size:clamp(22px,2.8vw,30px);color:var(--ink);margin-bottom:10px">Two samples. Eight metrics. One report.</h2>
+      <p>StyleMatch is designed around how teachers actually work — the submitted document is already open in Google Docs, and the controlled sample is whatever in-class writing you have on hand.</p>
+    </div>
+    <div class="hiw-steps">
+      <div class="hiw-step">
+        <div class="hiw-step-num">1</div>
+        <h3>Open the submitted work</h3>
+        <p>Open the student's submitted Google Doc. Click <strong>Fill from open doc</strong> in the StyleMatch sidebar — the submitted work populates automatically from the active document.</p>
+        <p class="hiw-note">No copy-pasting. No file uploads. One click fills the field directly from the document you're reviewing.</p>
+      </div>
+      <div class="hiw-step">
+        <div class="hiw-step-num">2</div>
+        <h3>Paste the controlled sample</h3>
+        <p>Paste any in-class writing you have from the same student into the Controlled Sample field — a timed in-class essay, a Google Classroom response, a previous assignment.</p>
+        <p class="hiw-note">The controlled sample is the anchor. The closer in genre to the submitted work, the stronger the signal on function words and discourse markers.</p>
+      </div>
+      <div class="hiw-step">
+        <div class="hiw-step-num">3</div>
+        <h3>Run StyleMatch &amp; read the report</h3>
+        <p>Eight metrics compute instantly in your browser. A printable Authorship Consistency Report is generated with divergence ratings, the raw numbers, and plain-language research context for each metric.</p>
+        <p class="hiw-note">The report is designed to be documentable — something you can save, print, or share with a department head before a student conversation.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RESEARCH + REPORT MOCKUP -->
+<section class="research-section" id="research">
+  <div class="research-inner">
+    <div class="research-left">
+      <span class="eyebrow">The Research Basis</span>
+      <h2>These aren't invented signals.<br><em>They're established science.</em></h2>
+      <p>Every metric in StyleMatch is drawn from peer-reviewed stylometric and computational linguistics research. These are the same signals used in authorship attribution studies, forensic linguistics, and academic integrity research. The citations appear in every report we generate — not as decoration, but because you should know what you're looking at.</p>
+      <p>Stylometric analysis has been used in academic and legal contexts for decades. Function words in particular — the <em>the</em>, <em>and</em>, <em>of</em>, <em>in</em> that writers use without thinking — are among the most stable and reliable authorship signals in free prose precisely because no one writes them deliberately.</p>
+      <div class="research-cards">
+        <div class="rc">
+          <div class="rc-metric">Grammatical Function Words</div>
+          <div class="rc-title">Burrows' Delta — the gold standard of authorship attribution</div>
+          <div class="rc-cite">Burrows, J. "Delta: A Measure of Stylistic Difference." <em>Literary and Linguistic Computing</em>, 2002. Applied over 30 core function words. Lower Delta = more similar authorship.</div>
+        </div>
+        <div class="rc">
+          <div class="rc-metric">Punctuation Fingerprint</div>
+          <div class="rc-title">Punctuation habits are largely unconscious and writer-stable</div>
+          <div class="rc-cite">Koppel, Schler &amp; Argamon. "Computational Methods in Authorship Attribution." <em>JASIST 60:1</em>, 2009. Comma, semicolon, em-dash, colon, !, ? rates per 1,000 characters.</div>
+        </div>
+        <div class="rc">
+          <div class="rc-metric">Flesch-Kincaid Grade Level</div>
+          <div class="rc-title">Reading complexity is relatively stable across writing tasks for the same writer</div>
+          <div class="rc-cite">Kincaid et al., "Derivation of New Readability Formulas." <em>Naval Technical Training</em>, 1975. A gap greater than 3 grade levels between samples is worth examining.</div>
+        </div>
+        <div class="rc">
+          <div class="rc-metric">Discourse Marker Profile</div>
+          <div class="rc-title">How a writer structures argument reflects individual rhetorical habit</div>
+          <div class="rc-cite">Hyland, K. <em>Metadiscourse.</em> Continuum, 2005. Delta over 29 connectives and stance markers — strongest signal for same-genre comparisons.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- REPORT MOCKUP -->
+    <div>
+      <div class="report-mock">
+        <div class="rm-hd">
+          <span class="rm-hd-icon">🔍</span>
+          <span class="rm-hd-title">PaperTrail <em>StyleMatch</em> — Authorship Consistency Report</span>
+        </div>
+        <div class="rm-meta">
+          Controlled Sample: <strong>1,861 words</strong> &nbsp;·&nbsp; Submitted Work: <strong>1,766 words</strong> &nbsp;·&nbsp; Generated: 3/10/2026, 2:14 PM
+        </div>
+        <div class="rm-student-row">
+          <div class="rm-student-field"><strong>Emma Kowalski</strong>Student Name</div>
+          <div class="rm-student-field"><strong>2841-K</strong>Student ID</div>
+          <div class="rm-student-field"><strong>IB English HL</strong>Course</div>
+        </div>
+        <div class="rm-section-hd">
+          Stylometric Metrics — Side by Side
+          <span>FK Grade &amp; Punctuation most stable · Function Words strongest same-genre</span>
+        </div>
+        <div class="rm-metrics">
+
+          <!-- FK Grade: Similar -->
+          <div class="rm-metric">
+            <div class="rm-metric-top">
+              <div class="rm-metric-name">FK Grade Level</div>
+              <div class="rm-metric-vals">
+                <span class="rm-val blue">Grade 13.2</span>
+                <span style="font-size:9px;color:var(--ink-3)">vs</span>
+                <span class="rm-val blue">Grade 14.1</span>
+              </div>
+              <div class="rm-bar-wrap">
+                <div class="rm-bar-track"><div class="rm-bar-fill bar-green" style="width:91%"></div></div>
+                <span class="rm-pct pct-green">91%</span>
+                <span class="rm-verdict verd-sim">Similar</span>
+              </div>
+            </div>
+            <div class="rm-metric-note">Grade gap: 0.9 levels — within the expected range for the same writer across tasks.</div>
+          </div>
+
+          <!-- Avg Sentence Length: Similar -->
+          <div class="rm-metric">
+            <div class="rm-metric-top">
+              <div class="rm-metric-name">Avg Sentence Length</div>
+              <div class="rm-metric-vals">
+                <span class="rm-val blue">21.4 w/s</span>
+                <span style="font-size:9px;color:var(--ink-3)">vs</span>
+                <span class="rm-val blue">22.9 w/s</span>
+              </div>
+              <div class="rm-bar-wrap">
+                <div class="rm-bar-track"><div class="rm-bar-fill bar-green" style="width:84%"></div></div>
+                <span class="rm-pct pct-green">84%</span>
+                <span class="rm-verdict verd-sim">Similar</span>
+              </div>
+            </div>
+            <div class="rm-metric-note">Avg gap: 1.5 words/sentence — consistent with same-author variation.</div>
+          </div>
+
+          <!-- Sentence Rhythm: Notable -->
+          <div class="rm-metric">
+            <div class="rm-metric-top">
+              <div class="rm-metric-name">Sentence Rhythm (SD)</div>
+              <div class="rm-metric-vals">
+                <span class="rm-val blue">SD 8.1</span>
+                <span style="font-size:9px;color:var(--ink-3)">vs</span>
+                <span class="rm-val blue">SD 13.7</span>
+              </div>
+              <div class="rm-bar-wrap">
+                <div class="rm-bar-track"><div class="rm-bar-fill bar-amber" style="width:61%"></div></div>
+                <span class="rm-pct pct-amber">61%</span>
+                <span class="rm-verdict verd-not">Notable</span>
+              </div>
+            </div>
+            <div class="rm-metric-note">SD gap: 5.6 words — submitted work shows considerably more varied sentence rhythm than the controlled sample.</div>
+          </div>
+
+          <!-- Punctuation: Notable -->
+          <div class="rm-metric">
+            <div class="rm-metric-top">
+              <div class="rm-metric-name">Punctuation Fingerprint</div>
+              <div class="rm-metric-vals">
+                <span class="rm-val blue" style="font-size:8.5px">C 6.1‰ · S 0.1‰ · D 0.0‰</span>
+                <span style="font-size:9px;color:var(--ink-3)">vs</span>
+                <span class="rm-val blue" style="font-size:8.5px">C 11.4‰ · S 0.4‰ · D 0.6‰</span>
+              </div>
+            </div>
+            <div class="rm-bar-wrap" style="padding:0 0 4px 0">
+              <div class="rm-bar-track"><div class="rm-bar-fill bar-amber" style="width:67%"></div></div>
+              <span class="rm-pct pct-amber">67%</span>
+              <span class="rm-verdict verd-not">Notable</span>
+            </div>
+            <div class="rm-metric-note">Comma rate nearly double in submitted work; dashes absent in controlled sample but present in submission. Punctuation habits are largely unconscious.</div>
+          </div>
+
+          <!-- TTR: Similar -->
+          <div class="rm-metric">
+            <div class="rm-metric-top">
+              <div class="rm-metric-name">Type-Token Ratio</div>
+              <div class="rm-metric-vals">
+                <span class="rm-val blue">31.2%</span>
+                <span style="font-size:9px;color:var(--ink-3)">vs</span>
+                <span class="rm-val blue">28.8%</span>
+              </div>
+              <div class="rm-bar-wrap">
+                <div class="rm-bar-track"><div class="rm-bar-fill bar-green" style="width:86%"></div></div>
+                <span class="rm-pct pct-green">86%</span>
+                <span class="rm-verdict verd-sim">Similar</span>
+              </div>
+            </div>
+            <div class="rm-metric-note">Vocab range gap: 2.4% — comparable vocabulary density across both samples.</div>
+          </div>
+
+          <!-- Function Words: Divergent -->
+          <div class="rm-metric">
+            <div class="rm-metric-top">
+              <div class="rm-metric-name">Grammatical Function Words</div>
+              <div class="rm-metric-vals">
+                <span class="rm-val blue" style="font-size:8.5px">Top: of, in, that, for</span>
+                <span style="font-size:9px;color:var(--ink-3)">vs</span>
+                <span class="rm-val blue" style="font-size:8.5px">Top: the, and, is, as</span>
+              </div>
+            </div>
+            <div class="rm-bar-wrap" style="padding:0 0 4px 0">
+              <div class="rm-bar-track"><div class="rm-bar-fill bar-red" style="width:18%"></div></div>
+              <span class="rm-pct pct-red">18%</span>
+              <span class="rm-verdict verd-div">Divergent</span>
+            </div>
+            <div class="rm-metric-note">Δ 2.41 · Burrows' Delta over 30 core function words. This is the strongest authorship signal in free prose — used unconsciously, difficult to imitate.</div>
+          </div>
+
+          <!-- Discourse Markers: Divergent -->
+          <div class="rm-metric">
+            <div class="rm-metric-top">
+              <div class="rm-metric-name">Discourse Marker Profile</div>
+              <div class="rm-metric-vals">
+                <span class="rm-val blue" style="font-size:8.5px">because, since, thus</span>
+                <span style="font-size:9px;color:var(--ink-3)">vs</span>
+                <span class="rm-val blue" style="font-size:8.5px">however, furthermore, additionally</span>
+              </div>
+            </div>
+            <div class="rm-bar-wrap" style="padding:0 0 4px 0">
+              <div class="rm-bar-track"><div class="rm-bar-fill bar-red" style="width:31%"></div></div>
+              <span class="rm-pct pct-red">31%</span>
+              <span class="rm-verdict verd-div">Divergent</span>
+            </div>
+            <div class="rm-metric-note">Δ 1.87 · Submitted work relies on however/furthermore/additionally; controlled sample uses causal connectives. Same-genre comparison — this divergence is notable.</div>
+          </div>
+
+        </div>
+      </div>
+      <p class="report-caption" style="font-size:11.5px;color:var(--ink-3);text-align:center;margin-top:12px;line-height:1.6">Report generates instantly in the sidebar.<br>Print or save as PDF for documentation.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="features-section" id="features">
+  <div class="fsplit">
+    <div>
+      <div class="fsplit-hdr">
+        <span class="eyebrow">What StyleMatch Measures</span>
+        <h2>Eight metrics. All of them <em>established.</em></h2>
+        <p>Every metric was selected because it's stable within a writer, difficult to consciously replicate, and grounded in published research. The report explains each one — so you understand what you're looking at, not just whether a number is red or green.</p>
+      </div>
+      <div class="feat-list">
+        <div class="feat-item">
+          <div class="feat-icon">🔤</div>
+          <div>
+            <h3>Grammatical Function Words (35% weight)</h3>
+            <p>Burrows' Delta over 30 core function words — <em>the, and, of, in, that</em> and so on. These words are used unconsciously and are among the most reliable stylometric signals known. Writers cannot easily change their function word profile even when they try.</p>
+          </div>
+        </div>
+        <div class="feat-item">
+          <div class="feat-icon">🗣️</div>
+          <div>
+            <h3>Discourse Marker Profile (part of weighted score)</h3>
+            <p>Delta over 29 connectives and stance markers — <em>however, therefore, furthermore, suggests</em>. Reflects how a writer structures argument and signals reasoning. Strong signal for same-genre comparisons; the report flags when genres differ.</p>
+          </div>
+        </div>
+        <div class="feat-item">
+          <div class="feat-icon">，</div>
+          <div>
+            <h3>Punctuation Fingerprint (20% weight)</h3>
+            <p>Comma, semicolon, em-dash, colon, exclamation, and question mark rates per 1,000 characters. Punctuation habits are largely unconscious — most people don't know how often they use a semicolon, which makes it a surprisingly strong authorship signal.</p>
+          </div>
+        </div>
+        <div class="feat-item">
+          <div class="feat-icon">📐</div>
+          <div>
+            <h3>Sentence Length + Rhythm (15% weight)</h3>
+            <p>Average sentence length and its standard deviation, separately. Average length catches obvious differences in sentence construction; SD catches rhythm — a writer who mixes short and long sentences has a signature that's distinct from someone who writes uniformly.</p>
+          </div>
+        </div>
+        <div class="feat-item">
+          <div class="feat-icon">📊</div>
+          <div>
+            <h3>Flesch-Kincaid Grade Level (10% weight)</h3>
+            <p>Computed from sentence length and syllable count. Reading complexity is relatively stable across writing tasks for the same writer. A gap of more than 3 grade levels between samples is flagged as worth examining.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Second sidebar mockup showing post-run state could go here, for now clean -->
+    <div style="display:flex;flex-direction:column;gap:16px">
+      <div style="background:var(--gold-lt);border:1.5px solid #e8d49a;border-radius:12px;padding:22px 24px">
+        <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--gold-dk);margin-bottom:12px">How divergence ratings work</div>
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <div style="display:flex;align-items:center;gap:12px">
+            <div style="background:#e8f5e9;color:#2e7d32;font-size:10px;font-weight:800;padding:3px 10px;border-radius:9px;white-space:nowrap">Similar</div>
+            <div style="font-size:12.5px;color:var(--ink-2);line-height:1.5">Metric is consistent with same-author variation. No signal of concern on this dimension.</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:12px">
+            <div style="background:#fff3cd;color:#856404;font-size:10px;font-weight:800;padding:3px 10px;border-radius:9px;white-space:nowrap">Notable</div>
+            <div style="font-size:12.5px;color:var(--ink-2);line-height:1.5">A measurable difference worth noting. May reflect genre, topic, or context — or may warrant a closer look.</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:12px">
+            <div style="background:#fce8e6;color:#c62828;font-size:10px;font-weight:800;padding:3px 10px;border-radius:9px;white-space:nowrap">Divergent</div>
+            <div style="font-size:12.5px;color:var(--ink-2);line-height:1.5">A substantial difference on a stable metric. This is the signal that warrants a student conversation with documentation.</div>
+          </div>
+        </div>
+      </div>
+      <div style="background:var(--bg);border:1.5px solid var(--rule);border-radius:12px;padding:22px 24px">
+        <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--ink-3);margin-bottom:12px">How to read the report</div>
+        <div style="display:flex;flex-direction:column;gap:9px;font-size:13px;color:var(--ink-2);line-height:1.6">
+          <div>No single metric is decisive. The report is designed to be read as a <strong>pattern</strong> — consistent Similar ratings alongside two Divergent ratings tells a different story than six Divergent ratings.</div>
+          <div>Genre matters. Function words and discourse markers are strongest when both samples are the same genre. The report flags when they're not.</div>
+          <div>The report is a <strong>data point</strong>, not a verdict. It is designed to support an informed educator conversation — never to replace it.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LIMITATIONS -->
+<section class="limits-section" id="limitations">
+  <div class="limits-inner">
+    <div class="limits-hdr">
+      <span class="eyebrow">Honest Limitations</span>
+      <h2>What StyleMatch can't tell you</h2>
+      <p>StyleMatch gives you a structured, repeatable data point. It's not a verdict machine, and we've deliberately designed it not to be one. Here's what to keep in mind.</p>
+    </div>
+    <div class="limits-grid">
+      <div class="limit-card">
+        <h4>📝 Genre differences inflate divergence</h4>
+        <p>Function words and discourse markers perform best when both samples are the same genre. A timed in-class response compared against a polished analytical essay will show divergence on these metrics regardless of authorship. The report flags this — but you need to account for it.</p>
+        <div class="lim-then"><span class="lim-arr">→</span><span>Use in-class writing of the same genre as your controlled sample when possible. FK Grade and Punctuation are more genre-stable.</span></div>
+      </div>
+      <div class="limit-card">
+        <h4>📏 Short samples reduce reliability</h4>
+        <p>A minimum of 500 words per sample is required. Below that, statistical noise dominates. Even above 500, shorter samples produce wider confidence intervals — a 600-word sample is less reliable than a 1,200-word one.</p>
+        <div class="lim-then"><span class="lim-arr">→</span><span>Longer controlled samples produce more reliable baselines. Multi-paragraph in-class responses work better than short answers.</span></div>
+      </div>
+      <div class="limit-card">
+        <h4>⚖️ Divergence isn't authorship proof</h4>
+        <p>A Divergent rating means the metric differs substantially between samples — not that the student didn't write it. Heavy editing, collaborative revision, significant time between samples, or genuine writing development can all produce divergence.</p>
+        <div class="lim-then"><span class="lim-arr">→</span><span>The report is a starting point for a conversation, supported by Inspect revision data. Never use it as the sole basis for an academic integrity decision.</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- UPGRADE -->
+<section class="upgrade-section">
+  <div class="upgrade-inner">
+    <div class="upgrade-left">
+      <h2>When StyleMatch raises a question<br><em>you want to go deeper</em></h2>
+      <p>StyleMatch gives you eight metrics and a printable report. When you want AI-assisted sentence-level analysis — or follow-up questions to use in the student conversation — Verify takes it further. Both tools are in the same extension.</p>
+    </div>
+    <div class="upgrade-cards">
+      <a href="/inspect" class="ucard">
+        <div class="ucard-icon">✏️</div>
+        <div>
+          <h4>Inspect</h4>
+          <p>See how the submitted document was built — every session, paste event, and revision cluster. Free. Start here if you haven't already.</p>
+          <div class="ucard-price">Free — always</div>
+        </div>
+      </a>
+      <a href="/verify" class="ucard">
+        <div class="ucard-icon">🔬</div>
+        <div>
+          <h4>Verify</h4>
+          <p>AI-assisted deep analysis — sentence-level consistency scoring, internal coherence, and AI-suggested follow-up questions for the student conversation. Uses StyleMatch scores as anchors.</p>
+          <div class="ucard-price">From $0.60/report — credits never expire</div>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- PRIVACY -->
+<section class="privacy-strip">
+  <div class="privacy-inner">
+    <div class="priv-item">
+      <div class="priv-ico">🔒</div>
+      <div><h4>No text transmitted</h4><p>All eight metrics compute entirely in your browser. Student writing never leaves your device — not to PaperTrail, not anywhere.</p></div>
+    </div>
+    <div class="priv-item">
+      <div class="priv-ico">👤</div>
+      <div><h4>No student accounts</h4><p>Students never interact with PaperTrail. No logins, no sign-ups, no data of any kind collected from students.</p></div>
+    </div>
+    <div class="priv-item">
+      <div class="priv-ico">📋</div>
+      <div><h4>Client-side only</h4><p>StyleMatch is pure browser computation. The only thing that leaves your device is the report you choose to print or save yourself.</p></div>
+    </div>
+    <div class="priv-item">
+      <div class="priv-ico">🏫</div>
+      <div><h4>FERPA &amp; PIPEDA conscious</h4><p>Designed with North American school privacy requirements in mind. No advertising, no data resale, no third-party tracking.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="container">
+    <h2>Start with Inspect free. Unlock StyleMatch when you're ready.</h2>
+    <p>Install the extension, run Inspect on any student document, and activate StyleMatch when you have an in-class sample to compare against. One extension. Three tools.</p>
+    <a href="https://chromewebstore.google.com/detail/papertrail/kgkjmhfoijiiplbmablcjbooopndjbgm"
+       class="btn btn-gold btn-lg" target="_blank" rel="noopener">⬇ Add PaperTrail to Chrome</a>
+    <div class="cta-trust">
+      <span>Inspect is always free</span>
+      <span>StyleMatch $4.99/mo or $49.99/yr</span>
+      <span>All analysis stays in your browser</span>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="ftr-inner">
+    <div>
+      <div class="ftr-logo">
+        <img src="/icon128.png" alt="PaperTrail Academic" />
+        <span class="ftr-wm">PaperTrail <em>Academic</em></span>
+      </div>
+      <p class="ftr-tag">You've read thousands of student essays.<br>Trust that instinct — then document it.</p>
+    </div>
+    <div class="ftr-col">
+      <h4>Products</h4>
+      <ul>
+        <li><a href="/inspect">Inspect</a></li>
+        <li><a href="/stylematch">StyleMatch</a></li>
+        <li><a href="/verify">Verify</a></li>
+        <li><a href="https://chromewebstore.google.com/detail/papertrail/kgkjmhfoijiiplbmablcjbooopndjbgm" target="_blank" rel="noopener">Chrome Web Store</a></li>
+      </ul>
+    </div>
+    <div class="ftr-col">
+      <h4>For Schools</h4>
+      <ul>
+        <li><a href="/for-schools">Privacy &amp; Compliance</a></li>
+        <li><a href="mailto:hello@papertrailacademic.com?subject=School or Department Inquiry">School Inquiries</a></li>
+        <li><a href="mailto:hello@papertrailacademic.com?subject=Privacy Question">FERPA / PIPEDA / GDPR</a></li>
+      </ul>
+    </div>
+    <div class="ftr-col">
+      <h4>Legal</h4>
+      <ul>
+        <li><a href="/privacy-policy">Privacy Policy</a></li>
+        <li><a href="/terms-of-service">Terms of Service</a></li>
+        <li><a href="mailto:hello@papertrailacademic.com">Contact</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="ftr-bottom">
+    <span>&copy; 2026 PaperTrail Academic. All rights reserved. Operated by Michael Smith.</span>
+    <span>
+      <a href="/privacy-policy">Privacy Policy</a> &nbsp;&middot;&nbsp;
+      <a href="/terms-of-service">Terms of Service</a> &nbsp;&middot;&nbsp;
+      <a href="mailto:hello@papertrailacademic.com">Contact</a>
+    </span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  const dd      = document.getElementById('navDropdown');
+  const trigger = document.getElementById('navDropdownTrigger');
+  if (!dd) return;
+  let closeTimer;
+  function open()  { clearTimeout(closeTimer); dd.classList.add('open'); }
+  function close() { closeTimer = setTimeout(() => dd.classList.remove('open'), 120); }
+  trigger.addEventListener('mouseenter', open);
+  trigger.addEventListener('mouseleave', close);
+  dd.querySelector('.nav-dd-menu').addEventListener('mouseenter', open);
+  dd.querySelector('.nav-dd-menu').addEventListener('mouseleave', close);
+  trigger.addEventListener('click', () => dd.classList.toggle('open'));
+  document.addEventListener('click', e => { if (!dd.contains(e.target)) dd.classList.remove('open'); });
+})();
+</script>
+
+</body>
+</html>
