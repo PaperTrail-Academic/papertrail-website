@@ -52,6 +52,18 @@ nav{position:sticky;top:0;z-index:200;background:rgba(255,255,255,.96);backdrop-
 .nl:hover{color:var(--blue)}
 .nl.cta{background:var(--gold);color:#fff;padding:7px 16px;border-radius:5px;font-weight:600}
 .nl.cta:hover{background:var(--gold-dk)}
+.nav-dropdown{position:relative}
+.nav-dropdown>.nl{display:flex;align-items:center;gap:4px;cursor:pointer}
+.nav-dropdown>.nl::after{content:'▾';font-size:10px;opacity:.6;transition:transform .2s}
+.nav-dropdown:hover>.nl::after{transform:rotate(-180deg)}
+.nav-dd-menu{position:absolute;top:calc(100% + 8px);left:50%;transform:translateX(-50%) translateY(-4px);background:#fff;border:1.5px solid var(--rule);border-radius:10px;box-shadow:var(--shadow-lg);padding:8px;min-width:230px;opacity:0;pointer-events:none;transition:opacity .18s ease,transform .18s ease}
+.nav-dropdown:hover .nav-dd-menu{opacity:1;pointer-events:all;transform:translateX(-50%) translateY(0)}
+.dd-item{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:7px;text-decoration:none;transition:background .15s;color:var(--ink)}
+.dd-item:hover{background:var(--bg)}
+.dd-icon{font-size:16px;flex-shrink:0}
+.dd-label{font-size:13px;font-weight:600;color:var(--ink);display:block;line-height:1.2}
+.dd-sub{font-size:11px;color:var(--ink-3);font-weight:400}
+.dd-divider{height:1px;background:var(--rule);margin:4px 0}
 
 /* ─── Hero ────────────────────────────────────────────────────── */
 .hero{background:linear-gradient(155deg,#f0f5fc 0%,#fff 50%,#fdf8ee 100%);padding:72px 0 60px}
@@ -368,7 +380,25 @@ footer{background:var(--ink);padding:42px 0 0}
       <img src="icon128.png" alt="PaperTrail Academic" />
       <span class="nav-wm">PaperTrail <em>Academic</em></span>
     </a>
-    <a href="#products" class="nl">Products</a>
+    <div class="nav-dropdown">
+      <span class="nl">Products</span>
+      <div class="nav-dd-menu">
+        <a href="/inspect" class="dd-item">
+          <span class="dd-icon">✏️</span>
+          <span><span class="dd-label">Inspect <span style="color:var(--green);font-size:10px;font-weight:700">Free</span></span><span class="dd-sub">Revision history, paste detection, playback</span></span>
+        </a>
+        <div class="dd-divider"></div>
+        <a href="/stylematch" class="dd-item">
+          <span class="dd-icon">🔍</span>
+          <span><span class="dd-label">StyleMatch <span style="color:var(--gold-dk);font-size:10px">$4.99/mo</span></span><span class="dd-sub">8-metric authorship consistency analysis</span></span>
+        </a>
+        <div class="dd-divider"></div>
+        <a href="/verify" class="dd-item">
+          <span class="dd-icon">🔬</span>
+          <span><span class="dd-label">Verify <span style="color:var(--teal);font-size:10px">From $0.60</span></span><span class="dd-sub">AI-assisted deep analysis &amp; reports</span></span>
+        </a>
+      </div>
+    </div>
     <a href="#pricing"  class="nl">Pricing</a>
     <a href="#schools"  class="nl">For Schools</a>
     <a href="/privacy-policy" class="nl">Privacy</a>
@@ -408,6 +438,7 @@ footer{background:var(--ink);padding:42px 0 0}
             <li>⚡ Struggle moment detection</li>
             <li>Revision playback — watch it being written</li>
           </ul>
+          <div style="margin-top:8px"><a href="/inspect" onclick="event.stopPropagation()" style="font-size:11.5px;color:var(--blue);font-weight:600;text-decoration:none">Learn more →</a></div>
         </div>
       </div>
 
@@ -422,6 +453,7 @@ footer{background:var(--ink);padding:42px 0 0}
             <li>Divergence ratings: Similar / Notable / Divergent per metric</li>
             <li>Printable report — all analysis stays in your browser</li>
           </ul>
+          <div style="margin-top:8px"><a href="/stylematch" onclick="event.stopPropagation()" style="font-size:11.5px;color:var(--gold-dk);font-weight:600;text-decoration:none">Learn more →</a></div>
         </div>
       </div>
 
@@ -436,6 +468,7 @@ footer{background:var(--ink);padding:42px 0 0}
             <li>Suggests follow-up questions and next steps for the student conversation</li>
             <li>No text retained — credits never expire</li>
           </ul>
+          <div style="margin-top:8px"><a href="/verify" onclick="event.stopPropagation()" style="font-size:11.5px;color:var(--teal);font-weight:600;text-decoration:none">Learn more →</a></div>
         </div>
       </div>
 
