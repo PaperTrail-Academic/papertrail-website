@@ -319,7 +319,7 @@
         <span class="arch-icon">🔬</span>
         <h3>Verify</h3>
         <p>Verify is the only tool that transmits text. When a teacher runs a Verify report, the submitted text is sent to PaperTrail's secure backend (Supabase / AWS), forwarded to the Anthropic API for analysis, and returned as a report.</p>
-        <p><strong>The full essay text is not retained after the report is generated.</strong> Only report metadata is stored (scores, timestamps, the label the teacher assigned). Teachers should anonymize student names before submitting if their institution requires it.</p>
+        <p><strong>The text is processed to generate a report and is not retained by PaperTrail. Anthropic's standard API retention policy applies — see <a href="https://privacy.claude.com/en/articles/7996866-how-long-do-you-store-my-organization-s-data" target="_blank" rel="noopener">Anthropic's data retention policy</a>..</strong> Only report metadata is stored (scores, timestamps, the label the teacher assigned). Teachers should anonymize student names before submitting if their institution requires it.</p>
         <span class="arch-verdict verdict-handled">→ Transmitted, not retained</span>
       </div>
 
@@ -377,7 +377,7 @@
         <h3>FERPA</h3>
         <div class="reg-subtitle">United States — Family Educational Rights and Privacy Act</div>
         <p>FERPA protects personally identifiable information in education records. PaperTrail does not collect, store, or transmit student PII. Inspect reads only Google Docs revision metadata — timestamps and anonymized edit markers — which are not education records under FERPA. StyleMatch runs entirely locally with no transmission of any kind.</p>
-        <p>Verify transmits essay text to generate a report. The teacher controls what is submitted; no student name or ID is required or collected by PaperTrail. The submitted text is not retained after the report is generated. We recommend anonymizing student names from essay text before submitting.</p>
+        <p>Verify transmits essay text to generate a report. The teacher controls what is submitted; no student name or ID is required or collected by PaperTrail. The text is processed to generate a report and is not retained by PaperTrail. Anthropic's standard API retention policy applies — see <a href="https://privacy.claude.com/en/articles/7996866-how-long-do-you-store-my-organization-s-data" target="_blank" rel="noopener">Anthropic's data retention policy</a>. We recommend anonymizing student names from essay text before submitting.</p>
         <div class="reg-note">A Data Processing Agreement (DPA) is available on request. Contact <a href="mailto:hello@papertrailacademic.com">hello@papertrailacademic.com</a>.</div>
       </div>
 
