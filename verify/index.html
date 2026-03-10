@@ -1,0 +1,967 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PaperTrail Verify — AI-Assisted Deep Authorship Analysis</title>
+  <meta name="description" content="Two AI-powered report types: scan a single essay for internal consistency, or compare submitted work against an authenticated baseline across ten research-grounded dimensions." />
+  <link rel="icon" href="/icon128.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --blue:#4A6FA5;--blue-dk:#3a5882;--blue-lt:#e8eef6;
+  --gold:#C9A84C;--gold-dk:#a8892f;--gold-lt:#fdf6e3;
+  --teal:#2a7a6b;--teal-dk:#1e5a4f;--teal-lt:#e6f4f1;
+  --ink:#1a2235;--ink-2:#3d4f6e;--ink-3:#6b7a96;
+  --rule:#dce4ef;--bg:#f9fafc;--white:#fff;
+  --green:#34a853;--red:#ea4335;--amber:#fbbc04;
+  --shadow:0 4px 24px rgba(42,122,107,.10);
+  --shadow-lg:0 16px 56px rgba(42,122,107,.18);
+}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;color:var(--ink);background:var(--white);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%}
+.container{max-width:1100px;margin:0 auto;padding:0 28px}
+.eyebrow{font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--teal);margin-bottom:10px;display:block}
+.eyebrow-gold{color:var(--gold-dk)}
+
+.btn{display:inline-flex;align-items:center;gap:7px;padding:12px 22px;border-radius:6px;font-family:'DM Sans',sans-serif;font-size:13.5px;font-weight:600;cursor:pointer;transition:all .18s ease;border:none;white-space:nowrap;text-decoration:none}
+.btn-teal{background:var(--teal);color:#fff}.btn-teal:hover{background:var(--teal-dk);transform:translateY(-1px)}
+.btn-ghost-teal{background:transparent;color:var(--teal);border:1.5px solid var(--teal)}.btn-ghost-teal:hover{background:var(--teal-lt)}
+.btn-lg{padding:15px 30px;font-size:15px}
+
+/* Nav */
+nav{position:sticky;top:0;z-index:200;background:rgba(255,255,255,.96);backdrop-filter:blur(10px);border-bottom:1px solid var(--rule)}
+.nav-inner{max-width:1100px;margin:0 auto;padding:0 28px;height:60px;display:flex;align-items:center;gap:28px}
+.nav-logo{display:flex;align-items:center;gap:9px;margin-right:auto;text-decoration:none}
+.nav-logo img{width:26px;height:26px}
+.nav-wm{font-family:'Lora',serif;font-size:16px;font-weight:700;color:var(--ink)}
+.nav-wm em{color:var(--blue);font-style:italic}
+.nl{font-size:13px;font-weight:500;color:var(--ink-2);transition:color .15s;text-decoration:none}
+.nl:hover{color:var(--blue)}
+.nl.cta{background:var(--blue);color:#fff;padding:7px 16px;border-radius:5px;font-weight:600}
+.nl.cta:hover{background:var(--blue-dk)}
+.nav-dropdown{position:relative}
+.nav-dropdown>.nl{display:flex;align-items:center;gap:4px;cursor:pointer;user-select:none}
+.nav-dropdown>.nl .dd-caret{font-size:10px;opacity:.55;display:inline-block;transition:transform .2s}
+.nav-dropdown.open>.nl .dd-caret{transform:rotate(-180deg)}
+.nav-dd-menu{position:absolute;top:100%;left:50%;transform:translateX(-50%);padding-top:8px;opacity:0;pointer-events:none;transition:opacity .18s ease}
+.nav-dropdown.open .nav-dd-menu{opacity:1;pointer-events:all}
+.nav-dd-inner{background:#fff;border:1.5px solid var(--rule);border-radius:10px;box-shadow:var(--shadow-lg);padding:8px;min-width:230px}
+.dd-item{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:7px;text-decoration:none;transition:background .15s;color:var(--ink)}
+.dd-item:hover{background:var(--bg)}
+.dd-icon{font-size:16px;flex-shrink:0}
+.dd-label{font-size:13px;font-weight:600;color:var(--ink);display:block;line-height:1.2}
+.dd-sub{font-size:11px;color:var(--ink-3);font-weight:400}
+.dd-divider{height:1px;background:var(--rule);margin:4px 0}
+
+/* ── Hero ─────────────────────────────────────────────────── */
+.hero{background:linear-gradient(155deg,#e6f4f1 0%,#fff 55%,#f9fafc 100%);padding:52px 0 0;border-bottom:none}
+.hero-inner{max-width:1100px;margin:0 auto;padding:0 28px;display:grid;grid-template-columns:1fr 460px;gap:52px;align-items:start}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:var(--teal-lt);color:var(--teal);border:1px solid #9dd4c9;border-radius:20px;padding:4px 14px;font-size:11.5px;font-weight:700;margin-bottom:14px}
+.hero h1{font-family:'Lora',serif;font-size:clamp(26px,3vw,40px);font-weight:700;line-height:1.18;color:var(--ink);margin-bottom:12px}
+.hero h1 em{color:var(--teal);font-style:italic}
+.hero-sub{font-size:15px;color:var(--ink-2);line-height:1.7;margin-bottom:22px;max-width:500px}
+.hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:18px}
+.hero-trust{display:flex;flex-direction:column;gap:10px;margin-top:22px}
+.hero-trust span{font-size:13.5px;color:var(--ink-2);display:flex;align-items:center;gap:8px}
+.hero-trust span::before{content:'✓';color:var(--teal);font-weight:700;font-size:12px;flex-shrink:0}
+
+/* Mode tabs on sidebar mockup */
+.mode-tabs{display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid var(--rule)}
+.mode-tab{padding:6px 8px;font-size:9px;font-weight:700;text-align:center;color:var(--ink-3);cursor:default;border-bottom:2px solid transparent}
+.mode-tab.active{color:var(--teal);border-bottom-color:var(--teal);background:var(--teal-lt)}
+
+/* ── SIDEBAR MOCKUP (reuse sms- classes from stylematch) ───── */
+.sm-sidebar{background:#fff;border:1px solid #d0d0d0;border-radius:10px;overflow:hidden;box-shadow:0 8px 36px rgba(0,0,0,.16);font-family:'DM Sans',sans-serif;width:100%}
+.sms-hd{background:var(--blue);padding:9px 13px 0}
+.sms-hd-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:3px}
+.sms-hd-left{display:flex;align-items:center;gap:7px}
+.sms-hd-icon{width:20px;height:20px;background:rgba(255,255,255,.18);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:11px}
+.sms-hd-title{font-size:12px;font-weight:700;color:#fff;font-family:'Lora',serif}
+.sms-hd-title em{color:var(--gold);font-style:italic}
+.sms-signin{background:rgba(255,255,255,.18);color:#fff;border:1px solid rgba(255,255,255,.35);border-radius:10px;padding:3px 10px;font-size:9.5px;font-weight:600}
+.sms-hd-sub{font-size:8.5px;color:rgba(255,255,255,.6);padding-bottom:8px}
+.sms-fields{padding:8px 10px 4px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:5px}
+.sms-field-label{font-size:7.5px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--ink-3);margin-bottom:2px}
+.sms-field-input{background:#f7f8fa;border:1px solid var(--rule);border-radius:4px;padding:4px 7px;font-size:9.5px;color:var(--ink-2);font-family:'DM Sans',sans-serif}
+.sms-field-input.filled{color:var(--ink);background:#fff}
+.sms-panels{display:grid;grid-template-columns:1fr 1fr;gap:0;border-top:1px solid var(--rule)}
+.sms-panel{padding:8px 10px}
+.sms-panel:first-child{border-right:1px solid var(--rule)}
+.sms-panel-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:5px}
+.sms-panel-label{font-size:8.5px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--blue)}
+.sms-panel-label.gold{color:var(--gold-dk)}
+.sms-word-count{font-size:8px;font-weight:700;background:var(--blue-lt);color:var(--blue);padding:1px 6px;border-radius:8px}
+.sms-word-count.gold{background:var(--gold-lt);color:var(--gold-dk)}
+.sms-fill-btn{font-size:8px;font-weight:700;background:var(--green);color:#fff;padding:2px 7px;border-radius:8px;display:inline-flex;align-items:center;gap:3px}
+.sms-panel-text{background:#f9fafb;border:1px solid var(--rule);border-radius:4px;padding:6px 7px;font-size:8px;color:var(--ink-2);line-height:1.55;height:80px;overflow:hidden;font-family:Georgia,serif}
+.sms-run-row{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin:8px 10px 0}
+.sms-run-btn{background:var(--gold);color:#fff;border-radius:6px;padding:8px 10px;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:5px;cursor:default}
+.sms-run-btn.teal{background:var(--teal)}
+.sms-run-btn.disabled{background:#ccd5e0;color:#8a9ab5}
+.sms-q{width:14px;height:14px;border-radius:50%;background:rgba(255,255,255,.25);display:flex;align-items:center;justify-content:center;font-size:7.5px;color:#fff;flex-shrink:0}
+.sms-footer{padding:5px 10px 8px;text-align:center;font-size:9px;color:var(--ink-3)}
+
+/* ── TWO-MODE SECTION ──────────────────────────────────────── */
+.modes-section{padding:0 0 0;background:linear-gradient(180deg,#e6f4f1 0%,#f9fafc 100%);border-bottom:1px solid var(--rule)}
+.modes-inner{max-width:1100px;margin:0 auto;padding:32px 28px 64px}
+.modes-hdr{text-align:center;max-width:680px;margin:0 auto 48px}
+.modes-hdr h2{font-family:'Lora',serif;font-size:clamp(22px,2.8vw,30px);color:var(--ink);margin-bottom:12px;line-height:1.28}
+.modes-hdr h2 em{color:var(--teal);font-style:italic}
+.modes-hdr p{font-size:14.5px;color:var(--ink-2);line-height:1.72}
+.modes-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.mode-card{background:#fff;border:2px solid var(--rule);border-radius:14px;padding:28px 28px 24px;position:relative}
+.mode-card.primary{border-color:var(--teal)}
+.mode-card-badge{display:inline-flex;align-items:center;gap:6px;border-radius:16px;padding:4px 12px;font-size:10.5px;font-weight:700;margin-bottom:14px}
+.mode-card-badge.teal{background:var(--teal-lt);color:var(--teal)}
+.mode-card-badge.gold{background:var(--gold-lt);color:var(--gold-dk)}
+.mode-card h3{font-family:'Lora',serif;font-size:18px;color:var(--ink);margin-bottom:8px;line-height:1.3}
+.mode-card h3 em{color:var(--teal);font-style:italic}
+.mode-card h3 em.gold{color:var(--gold-dk)}
+.mode-card-desc{font-size:13.5px;color:var(--ink-2);line-height:1.68;margin-bottom:16px}
+.mode-bullets{display:flex;flex-direction:column;gap:7px;margin-bottom:18px}
+.mode-bullets li{list-style:none;font-size:13px;color:var(--ink-2);display:flex;align-items:flex-start;gap:8px;line-height:1.55}
+.mode-bullets li::before{content:'→';color:var(--teal);font-weight:700;flex-shrink:0;margin-top:1px}
+.mode-bullets li.gold-arrow::before{color:var(--gold-dk)}
+.mode-when{background:var(--teal-lt);border-radius:8px;padding:12px 14px;font-size:12.5px;color:var(--teal-dk);line-height:1.6;border-left:3px solid var(--teal)}
+.mode-when.gold{background:var(--gold-lt);color:var(--gold-dk);border-left-color:var(--gold)}
+.mode-tag{position:absolute;top:18px;right:18px;font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--teal);background:var(--teal-lt);border-radius:4px;padding:2px 8px}
+
+/* ── CONSISTENCY SECTION ───────────────────────────────────── */
+.consistency-section{padding:72px 0;background:var(--white);border-bottom:1px solid var(--rule)}
+.split{max-width:1100px;margin:0 auto;padding:0 28px;display:grid;grid-template-columns:1fr 440px;gap:52px;align-items:start}
+.split-hdr{margin-bottom:28px}
+.split-hdr h2{font-family:'Lora',serif;font-size:clamp(22px,2.8vw,30px);color:var(--ink);margin-bottom:10px;line-height:1.25}
+.split-hdr h2 em{color:var(--teal);font-style:italic}
+.split-hdr p{font-size:14.5px;color:var(--ink-2);line-height:1.72}
+.feat-list{display:flex;flex-direction:column;gap:20px}
+.feat-item{display:flex;gap:14px;align-items:flex-start}
+.feat-icon{font-size:20px;flex-shrink:0;margin-top:3px}
+.feat-item h3{font-size:14px;font-weight:700;color:var(--ink);margin-bottom:4px}
+.feat-item p{font-size:13px;color:var(--ink-2);line-height:1.65}
+
+/* Consistency report mockup */
+.cr-mock{background:#fff;border:1px solid #d0d0d0;border-radius:10px;overflow:hidden;box-shadow:0 8px 28px rgba(0,0,0,.12);font-family:'DM Sans',sans-serif}
+.cr-hd{background:var(--blue);padding:10px 14px;display:flex;align-items:center;gap:9px}
+.cr-hd-title{font-family:'Lora',serif;font-size:12px;font-weight:700;color:#fff}
+.cr-hd-title em{color:var(--teal-lt);font-style:italic}
+.cr-summary{background:#f0faf8;border-bottom:1px solid #c0e4de;padding:10px 14px;display:flex;gap:12px;align-items:center}
+.cr-score{font-size:28px;font-weight:800;color:var(--teal);line-height:1;flex-shrink:0}
+.cr-verdict{font-size:10.5px;font-weight:700;color:var(--teal-dk);margin-bottom:2px}
+.cr-verdict-sub{font-size:9px;color:var(--ink-3);line-height:1.5}
+.cr-meta{padding:6px 14px;background:#f9fafb;border-bottom:1px solid var(--rule);display:flex;gap:16px;font-size:8.5px;color:var(--ink-3)}
+.cr-meta strong{color:var(--ink-2)}
+
+/* Heatmap */
+.cr-heatmap-wrap{padding:8px 14px;border-bottom:1px solid var(--rule)}
+.cr-heatmap-lbl{font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-3);margin-bottom:5px;display:flex;justify-content:space-between}
+.cr-heatmap{display:flex;flex-wrap:wrap;gap:3px;margin-bottom:6px}
+.cr-chunk{width:18px;height:18px;border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:7px;font-weight:700;color:#fff}
+.chunk-ok{background:#2a7a6b}
+.chunk-notable{background:var(--amber)}
+.chunk-flagged{background:var(--red)}
+.cr-legend{display:flex;gap:10px}
+.cr-leg-item{display:flex;align-items:center;gap:4px;font-size:7.5px;color:var(--ink-3)}
+.cr-leg-dot{width:8px;height:8px;border-radius:2px}
+
+/* Chunk table */
+.cr-table{width:100%;border-collapse:collapse;font-size:8px}
+.cr-table th{padding:4px 8px;text-align:left;background:#f0f3f8;font-weight:700;font-size:7.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-3);border-bottom:1px solid var(--rule)}
+.cr-table td{padding:4px 8px;border-bottom:1px solid #f0f3f8;color:var(--ink-2);font-size:8px}
+.cr-table tr:last-child td{border-bottom:none}
+.cr-table .chunk-num{font-weight:700;color:var(--teal)}
+.cr-score-cell{font-weight:700}
+.score-hi{color:var(--teal)}
+.score-lo{color:var(--amber)}
+.score-flag{color:var(--red)}
+.cr-within{font-size:7.5px;color:var(--green);font-weight:700}
+.cr-notable{font-size:7.5px;color:#b06000;font-weight:700}
+
+/* Baseline profile bars */
+.cr-baseline{padding:8px 14px 10px}
+.cr-baseline-lbl{font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-3);margin-bottom:7px}
+.cr-dim-row{display:flex;align-items:center;gap:6px;margin-bottom:4px}
+.cr-dim-name{font-size:8px;color:var(--ink-2);width:80px;flex-shrink:0}
+.cr-dim-track{flex:1;height:5px;background:#e4ecf5;border-radius:3px;overflow:hidden}
+.cr-dim-fill{height:100%;border-radius:3px;background:var(--teal)}
+.cr-dim-val{font-size:8px;font-weight:700;color:var(--teal);width:28px;text-align:right}
+
+/* ── BASELINE DEVIATION SECTION ────────────────────────────── */
+.deviation-section{padding:72px 0;background:var(--bg);border-bottom:1px solid var(--rule)}
+
+/* Deviation report mockup */
+.dr-mock{background:#fff;border:1px solid #d0d0d0;border-radius:10px;overflow:hidden;box-shadow:0 8px 28px rgba(0,0,0,.12);font-family:'DM Sans',sans-serif}
+.dr-hd{background:var(--blue);padding:10px 14px;display:flex;align-items:center;gap:9px}
+.dr-hd-title{font-family:'Lora',serif;font-size:12px;font-weight:700;color:#fff}
+.dr-hd-title em{color:var(--teal-lt);font-style:italic}
+.dr-summary{background:#fff8f0;border-bottom:1px solid #f0d9b8;padding:10px 14px;display:flex;gap:12px;align-items:center}
+.dr-score-num{font-size:28px;font-weight:800;color:#c45000;line-height:1;flex-shrink:0}
+.dr-verdict{font-size:10.5px;font-weight:700;color:#8b3a00;margin-bottom:2px}
+.dr-verdict-sub{font-size:9px;color:var(--ink-3);line-height:1.5}
+.dr-meta{padding:5px 14px;background:#f9fafb;border-bottom:1px solid var(--rule);font-size:8.5px;color:var(--ink-3)}
+.dr-meta strong{color:var(--ink-2)}
+
+/* StyleMatch anchor bars */
+.dr-sm-section{padding:8px 14px;border-bottom:1px solid var(--rule)}
+.dr-sm-lbl{font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-3);margin-bottom:6px}
+.dr-bar-row{display:flex;align-items:center;gap:6px;margin-bottom:3px}
+.dr-bar-name{font-size:8px;color:var(--ink-2);width:110px;flex-shrink:0}
+.dr-bar-track{flex:1;height:5px;background:#e4ecf5;border-radius:3px;overflow:hidden}
+.dr-bar-fill{height:100%;border-radius:3px}
+.bar-strong{background:var(--green)}
+.bar-mid{background:var(--amber)}
+.bar-weak{background:var(--red)}
+.dr-bar-val{font-size:8px;font-weight:700;width:36px;text-align:right}
+.val-strong{color:#2e7d32}
+.val-mid{color:#b06000}
+.val-weak{color:var(--red)}
+
+/* Summary badges */
+.dr-badge-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;padding:8px 14px;border-bottom:1px solid var(--rule)}
+.dr-badge{border-radius:7px;padding:7px 8px;text-align:center}
+.dr-badge-num{font-size:18px;font-weight:800;line-height:1;display:block}
+.dr-badge-label{font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;display:block;margin-top:2px}
+.dr-badge-sub{font-size:7.5px;display:block;margin-top:1px}
+.badge-anom{background:#fce8e6;color:#c62828}
+.badge-notable{background:#fff3cd;color:#856404}
+.badge-ok{background:#e8f5e9;color:#2e7d32}
+
+/* Dimension cards */
+.dr-dims{padding:6px 10px 10px}
+.dr-dim-card{border-radius:7px;padding:9px 11px;margin-bottom:6px;border-left:3px solid}
+.dr-dim-card:last-child{margin-bottom:0}
+.dr-dim-card.anom{background:#fef8f7;border-left-color:var(--red)}
+.dr-dim-card.notable{background:#fffdf0;border-left-color:var(--amber)}
+.dr-dim-card.ok{background:#f7fdf8;border-left-color:var(--green)}
+.dr-dim-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px}
+.dr-dim-name{font-size:9.5px;font-weight:700;color:var(--ink)}
+.dr-dim-verdict{font-size:8px;font-weight:700;padding:1px 7px;border-radius:8px}
+.verd-anom{background:#fce8e6;color:#c62828}
+.verd-notable{background:#fff3cd;color:#856404}
+.verd-ok{background:#e8f5e9;color:#2e7d32}
+.dr-dim-evidence{display:grid;grid-template-columns:1fr 1fr;gap:5px;margin-bottom:5px}
+.dr-evid-col-lbl{font-size:7px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px}
+.evid-blue{color:var(--blue)}
+.evid-gold{color:var(--gold-dk)}
+.dr-evid-tag{display:inline-block;background:#eef2f8;border-radius:3px;padding:2px 5px;font-size:7.5px;color:var(--ink-2);margin:1px 2px 1px 0;font-family:Georgia,serif}
+.dr-evid-tag.gold-bg{background:#fdf6e3}
+.dr-dim-note{font-size:8px;color:var(--ink-3);line-height:1.5;margin-top:3px}
+
+/* Suggested questions */
+.sq-section{padding:8px 14px 10px;border-top:1px solid var(--rule)}
+.sq-lbl{font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-3);margin-bottom:6px}
+.sq-item{display:flex;gap:6px;margin-bottom:5px;font-size:8px;color:var(--ink-2);line-height:1.5}
+.sq-num{font-size:8px;font-weight:800;color:var(--teal);flex-shrink:0;width:12px}
+
+/* Research */
+.research-section{padding:64px 0;background:var(--white);border-bottom:1px solid var(--rule)}
+.research-inner{max-width:1100px;margin:0 auto;padding:0 28px;display:grid;grid-template-columns:1fr 1fr;gap:52px;align-items:start}
+.research-left h2{font-family:'Lora',serif;font-size:clamp(22px,2.8vw,30px);color:var(--ink);margin-bottom:12px;line-height:1.25}
+.research-left h2 em{color:var(--teal);font-style:italic}
+.research-left p{font-size:14px;color:var(--ink-2);line-height:1.72;margin-bottom:14px}
+.rc-grid{display:flex;flex-direction:column;gap:10px}
+.rc{background:#fff;border:1.5px solid var(--rule);border-radius:9px;padding:13px 15px;border-left:4px solid var(--teal)}
+.rc-metric{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--teal);margin-bottom:3px}
+.rc-title{font-size:13px;font-weight:600;color:var(--ink);margin-bottom:3px;line-height:1.3}
+.rc-cite{font-size:11px;color:var(--ink-3);font-style:italic;line-height:1.5}
+
+/* Pricing */
+.pricing-section{padding:64px 0;background:linear-gradient(155deg,#1a3a30 0%,var(--teal) 100%)}
+.pricing-inner{max-width:1100px;margin:0 auto;padding:0 28px;display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
+.pricing-left h2{font-family:'Lora',serif;font-size:clamp(22px,2.8vw,30px);color:#fff;margin-bottom:12px}
+.pricing-left h2 em{color:#9dd4c9;font-style:normal}
+.pricing-left p{font-size:14px;color:rgba(255,255,255,.75);line-height:1.7}
+.price-cards{display:flex;flex-direction:column;gap:12px}
+.price-card{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);border-radius:10px;padding:16px 18px;display:flex;justify-content:space-between;align-items:center}
+.price-card-left h4{font-size:14px;font-weight:700;color:#fff;margin-bottom:3px}
+.price-card-left p{font-size:12.5px;color:rgba(255,255,255,.65);line-height:1.45}
+.price-card-right{text-align:right;flex-shrink:0;margin-left:16px}
+.price-amt{font-size:18px;font-weight:800;color:#fff;display:block;line-height:1.1}
+.price-per{font-size:11px;color:rgba(255,255,255,.55);display:block}
+.price-note{font-size:11px;color:#9dd4c9;margin-top:4px;display:block;font-style:italic}
+
+/* Privacy */
+.privacy-strip{padding:44px 0;background:var(--bg);border-bottom:1px solid var(--rule)}
+.privacy-inner{max-width:1100px;margin:0 auto;padding:0 28px;display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
+.priv-item{display:flex;gap:12px;align-items:flex-start}
+.priv-ico{font-size:20px;flex-shrink:0;margin-top:2px}
+.priv-item h4{font-size:13.5px;font-weight:600;color:var(--ink);margin-bottom:3px}
+.priv-item p{font-size:12.5px;color:var(--ink-3);line-height:1.6}
+
+/* CTA */
+.cta-section{padding:60px 0;background:var(--white);text-align:center;border-bottom:1px solid var(--rule)}
+.cta-section h2{font-family:'Lora',serif;font-size:clamp(22px,2.8vw,30px);color:var(--ink);margin-bottom:12px}
+.cta-section p{font-size:15px;color:var(--ink-2);max-width:480px;margin:0 auto 28px;line-height:1.7}
+.cta-trust{display:flex;justify-content:center;gap:20px;flex-wrap:wrap;margin-top:18px}
+.cta-trust span{font-size:12px;color:var(--ink-3);display:flex;align-items:center;gap:5px}
+.cta-trust span::before{content:'✓';color:var(--teal);font-weight:700;font-size:11px}
+
+/* Footer */
+footer{background:var(--ink);padding:42px 0 0}
+.ftr-inner{max-width:1100px;margin:0 auto;padding:0 28px 34px;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:32px}
+.ftr-logo{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.ftr-logo img{width:23px;height:23px}
+.ftr-wm{font-family:'Lora',serif;font-size:14.5px;font-weight:700;color:#fff}
+.ftr-wm em{color:var(--gold);font-style:italic}
+.ftr-tag{font-size:12.5px;color:rgba(255,255,255,.42);line-height:1.6;font-style:italic}
+.ftr-col h4{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,.35);margin-bottom:12px}
+.ftr-col ul{list-style:none;display:flex;flex-direction:column;gap:8px}
+.ftr-col ul a{font-size:12.5px;color:rgba(255,255,255,.62);transition:color .15s;text-decoration:none}
+.ftr-col ul a:hover{color:#fff}
+.ftr-bottom{border-top:1px solid rgba(255,255,255,.1);padding:15px 28px;max-width:1100px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
+.ftr-bottom span{font-size:11.5px;color:rgba(255,255,255,.36)}
+.ftr-bottom a{color:rgba(255,255,255,.5);text-decoration:none}
+.ftr-bottom a:hover{color:#fff}
+
+@media(max-width:1020px){
+  .hero-inner,.split{grid-template-columns:1fr}
+  .hero .sm-sidebar,.split .cr-mock,.split .dr-mock{display:none}
+  .modes-grid{grid-template-columns:1fr}
+}
+@media(max-width:900px){
+  .research-inner,.pricing-inner{grid-template-columns:1fr}
+  .privacy-inner{grid-template-columns:1fr 1fr}
+}
+@media(max-width:640px){
+  .nav-inner .nl:not(.cta){display:none}
+  .privacy-inner{grid-template-columns:1fr}
+  .ftr-inner{grid-template-columns:1fr}
+  .ftr-bottom{flex-direction:column;text-align:center}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">
+      <img src="/icon128.png" alt="PaperTrail Academic" />
+      <span class="nav-wm">PaperTrail <em>Academic</em></span>
+    </a>
+    <div class="nav-dropdown" id="navDropdown">
+      <span class="nl" id="navDropdownTrigger">Products <span class="dd-caret">▾</span></span>
+      <div class="nav-dd-menu">
+        <div class="nav-dd-inner">
+          <a href="/inspect" class="dd-item">
+            <span class="dd-icon">✏️</span>
+            <span><span class="dd-label">Inspect <span style="color:var(--green);font-size:10px;font-weight:700">Free</span></span><span class="dd-sub">Revision history, paste detection, playback</span></span>
+          </a>
+          <div class="dd-divider"></div>
+          <a href="/stylematch" class="dd-item">
+            <span class="dd-icon">🔍</span>
+            <span><span class="dd-label">StyleMatch <span style="color:var(--gold-dk);font-size:10px">$4.99/mo</span></span><span class="dd-sub">8-metric authorship consistency analysis</span></span>
+          </a>
+          <div class="dd-divider"></div>
+          <a href="/verify" class="dd-item">
+            <span class="dd-icon">🔬</span>
+            <span><span class="dd-label">Verify <span style="color:var(--teal);font-size:10px">From $0.60</span></span><span class="dd-sub">AI-assisted deep analysis &amp; reports</span></span>
+          </a>
+        </div>
+      </div>
+    </div>
+    <a href="/#pricing" class="nl">Pricing</a>
+    <a href="/#schools" class="nl">For Schools</a>
+    <a href="/privacy-policy" class="nl">Privacy</a>
+    <a href="https://chromewebstore.google.com/detail/papertrail/kgkjmhfoijiiplbmablcjbooopndjbgm"
+       class="nl cta" target="_blank" rel="noopener">Add to Chrome — Free</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div>
+      <div class="hero-badge">🔬 PaperTrail Verify &nbsp;·&nbsp; From $0.60/report</div>
+      <h1>When you need to go<br><em>deeper than the numbers.</em></h1>
+      <p class="hero-sub">StyleMatch gives you eight metrics. Verify gives you what the AI can see that the metrics can't — internal consistency patterns across the whole essay, or a ten-dimension qualitative analysis that reads the writing itself, not just its statistics.</p>
+      <div class="hero-actions">
+        <a href="https://chromewebstore.google.com/detail/papertrail/kgkjmhfoijiiplbmablcjbooopndjbgm"
+           class="btn btn-teal btn-lg" target="_blank" rel="noopener">⬇ Add to Chrome — Try Free</a>
+        <a href="#modes" class="btn btn-ghost-teal btn-lg">See both report types ↓</a>
+      </div>
+      <div class="hero-trust">
+        <span>Two report types — no controlled sample needed for the first</span>
+        <span>AI reads the writing, not just the statistics</span>
+        <span>Evidence pulled directly from the student's text</span>
+        <span>Suggested conversation questions generated per report</span>
+        <span>Credits never expire — use them when you need them</span>
+      </div>
+    </div>
+
+    <!-- FULL SIDEBAR MOCKUP — all three buttons -->
+    <div class="sm-sidebar">
+      <div class="sms-hd">
+        <div class="sms-hd-row">
+          <div class="sms-hd-left">
+            <div class="sms-hd-icon">🔬</div>
+            <span class="sms-hd-title">PaperTrail <em>StyleMatch</em></span>
+          </div>
+          <div class="sms-signin">Sign In</div>
+        </div>
+        <div class="sms-hd-sub">Revision analysis &amp; authorship comparison</div>
+      </div>
+      <div class="sms-fields">
+        <div>
+          <div class="sms-field-label">Student Name</div>
+          <div class="sms-field-input filled">Emma Kowalski</div>
+        </div>
+        <div>
+          <div class="sms-field-label">Student ID</div>
+          <div class="sms-field-input filled">2841-K</div>
+        </div>
+        <div>
+          <div class="sms-field-label">Date</div>
+          <div class="sms-field-input filled">3/10/2026</div>
+        </div>
+        <div style="grid-column:1/3">
+          <div class="sms-field-label">Teacher Name</div>
+          <div class="sms-field-input">Optional</div>
+        </div>
+        <div>
+          <div class="sms-field-label">Course</div>
+          <div class="sms-field-input">Optional</div>
+        </div>
+        <div style="grid-column:1/4">
+          <div class="sms-field-label">Assignment</div>
+          <div class="sms-field-input">Optional</div>
+        </div>
+      </div>
+      <div class="sms-panels">
+        <div class="sms-panel">
+          <div class="sms-panel-hd">
+            <span class="sms-panel-label">📄 Submitted Work</span>
+            <span class="sms-word-count">1766 words</span>
+          </div>
+          <div style="margin-bottom:5px"><div class="sms-fill-btn">✓ Fill from open doc</div></div>
+          <div class="sms-panel-text">To what extent is interpretation a reliable tool in the production of knowledge? To say that all knowledge must be interpreted holds true in many regards…</div>
+        </div>
+        <div class="sms-panel">
+          <div class="sms-panel-hd">
+            <span class="sms-panel-label gold">✏️ Controlled Sample</span>
+            <span class="sms-word-count gold">1861 words</span>
+          </div>
+          <div style="height:18px"></div>
+          <div class="sms-panel-text">…which that knowledge is produced and interpreted. Furthermore, it questions whether a deeper understanding is necessarily a better one…</div>
+        </div>
+      </div>
+      <!-- ALL THREE BUTTONS -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin:8px 10px 0">
+        <div class="sms-run-btn" style="grid-column:1/3;background:#4a6fa5;font-size:10px">🔍 Run StyleMatch <div class="sms-q">?</div></div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin:6px 10px 0">
+        <div class="sms-run-btn teal" style="font-size:9.5px">🔬 Verify — Submitted <div class="sms-q">?</div></div>
+        <div class="sms-run-btn teal" style="font-size:9.5px">⚖️ Verify — Compare <div class="sms-q">?</div></div>
+      </div>
+      <div class="sms-footer">8 reports remaining &nbsp;·&nbsp; Credits never expire</div>
+    </div>
+  </div>
+</section>
+
+<!-- TWO MODES -->
+<section class="modes-section" id="modes">
+  <div class="modes-inner">
+    <div class="modes-hdr">
+      <span class="eyebrow">Two Report Types</span>
+      <h2>One uses what you have.<br><em>The other goes further.</em></h2>
+      <p>Verify uses AI to read the writing itself — not just count words and measure sentences. Both report types draw on the same underlying stylometric signals as StyleMatch, but layer qualitative analysis on top: what the writing actually says about how it was produced, who produced it, and whether the two samples sound like the same person.</p>
+    </div>
+    <div class="modes-grid">
+
+      <!-- MODE 1: Consistency -->
+      <div class="mode-card primary">
+        <div class="mode-tag">No sample needed</div>
+        <div class="mode-card-badge teal">🔬 Consistency Report</div>
+        <h3>One essay.<br>Is it all the same <em>writer?</em></h3>
+        <p class="mode-card-desc">The Consistency Report works on a single submitted document — no controlled sample required. The AI chunks the essay into ~150-word segments and scores each one on six dimensions: Register, Vocabulary, Sentence Complexity, Argument Depth, Error Density, and Cohesion.</p>
+        <ul class="mode-bullets">
+          <li>A colour-coded heatmap shows which chunks stand out from the document's own baseline</li>
+          <li>Shifts in register, vocabulary sophistication, or argument depth mid-essay are flagged</li>
+          <li>A writer baseline profile is generated — the characteristic measurements for this document</li>
+          <li>Pairs well with AI detection tools that highlight specific passages — Verify shows you whether those passages fit the rest of the document stylistically</li>
+        </ul>
+        <div class="mode-when">
+          <strong>Use this when:</strong> You don't have in-class writing, or you want to check whether a submitted essay is internally consistent — one voice throughout, or something else.
+        </div>
+      </div>
+
+      <!-- MODE 2: Baseline Deviation -->
+      <div class="mode-card">
+        <div class="mode-card-badge gold">⚖️ Baseline Deviation Report</div>
+        <h3>Two samples.<br>Does the submitted work sound like <em class="gold">the same person?</em></h3>
+        <p class="mode-card-desc">The Baseline Deviation Report goes beyond StyleMatch's statistical comparison. It uses AI to analyse ten qualitative dimensions — including patterns that numbers can't capture, like error fingerprints, characteristic phrase recurrence, and syntactic construction habits.</p>
+        <ul class="mode-bullets">
+          <li class="gold-arrow">StyleMatch scores serve as quantitative anchors — the qualitative analysis builds on them</li>
+          <li class="gold-arrow">Ten dimensions rated Anomalous / Notable / Within Range with evidence pulled from the text</li>
+          <li class="gold-arrow">AI-suggested follow-up questions tailored to the specific deviations found</li>
+          <li class="gold-arrow">Research citations for every dimension — ten peer-reviewed sources cited per report</li>
+        </ul>
+        <div class="mode-when gold">
+          <strong>Use this when:</strong> StyleMatch raised flags and you want qualitative depth before a student conversation — or when you need a documented, evidence-based report.
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CONSISTENCY REPORT DETAIL -->
+<section class="consistency-section" id="consistency">
+  <div class="split">
+    <div>
+      <div class="split-hdr">
+        <span class="eyebrow">Report Type 1</span>
+        <h2>Consistency Report —<br><em>no controlled sample needed</em></h2>
+        <p>This is the report that truly sets Verify apart. You don't need anything except the submitted essay itself. The AI segments the document into chunks, establishes a baseline from the document as a whole, then measures every chunk against that baseline.</p>
+        <p style="margin-top:12px">What it's looking for is not bad writing — it's <strong>inconsistent</strong> writing. A sudden jump in vocabulary sophistication. A chunk where argument depth drops to descriptive. A change in register halfway through. These are the kinds of shifts a teacher notices but can't quite name.</p>
+      </div>
+      <div class="feat-list">
+        <div class="feat-item">
+          <div class="feat-icon">🌡️</div>
+          <div>
+            <h3>Six-dimension chunk scoring</h3>
+            <p>Each chunk is scored 1–10 on Register, Vocabulary, Sentence Complexity, Argument Depth, Error Density, and Cohesion. The document's own average becomes the baseline — deviations are measured against the writer's own fingerprint, not a generic standard.</p>
+          </div>
+        </div>
+        <div class="feat-item">
+          <div class="feat-icon">🎨</div>
+          <div>
+            <h3>Visual heatmap</h3>
+            <p>Chunks are colour-coded: teal for within baseline, amber for notable, red for flagged. A clean grid gives you a visual read of the essay's consistency before you look at a single number.</p>
+          </div>
+        </div>
+        <div class="feat-item">
+          <div class="feat-icon">🤝</div>
+          <div>
+            <h3>Pairs with AI detection tools</h3>
+            <p>If another tool has flagged specific passages as potentially AI-generated, the Consistency Report tells you whether those passages are also stylistically inconsistent with the rest of the document. It's a second, independent signal from a different angle.</p>
+          </div>
+        </div>
+        <div class="feat-item">
+          <div class="feat-icon">👤</div>
+          <div>
+            <h3>Writer baseline profile</h3>
+            <p>The report closes with a characterisation of this writer's style — their typical register, vocabulary level, sentence complexity, and argument depth. A useful reference if you later run a Baseline Deviation Report on a second piece from the same student.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CONSISTENCY REPORT MOCKUP -->
+    <div class="cr-mock">
+      <div class="cr-hd">
+        <span style="font-size:14px">🔬</span>
+        <span class="cr-hd-title">PaperTrail <em>Verify</em> — Consistency Report</span>
+      </div>
+      <div class="cr-summary">
+        <div class="cr-score">78</div>
+        <div>
+          <div class="cr-verdict">Consistent with Single Authorship</div>
+          <div class="cr-verdict-sub">29-chunk analysis · no anomalies flagged · stable formal register throughout</div>
+        </div>
+      </div>
+      <div class="cr-meta">
+        <span>Words: <strong>3,937</strong></span>
+        <span>Chunks: <strong>29</strong></span>
+        <span>Flagged: <strong>0</strong></span>
+        <span>Student: <strong>Emma Kowalski</strong></span>
+      </div>
+
+      <!-- Heatmap -->
+      <div class="cr-heatmap-wrap">
+        <div class="cr-heatmap-lbl">
+          <span>Stylometric Heatmap — 29 chunks</span>
+          <span>0 differences noted</span>
+        </div>
+        <div class="cr-heatmap">
+          <!-- All within baseline for this report (clean) -->
+          <div class="cr-chunk chunk-ok">1</div><div class="cr-chunk chunk-ok">2</div><div class="cr-chunk chunk-ok">3</div><div class="cr-chunk chunk-ok">4</div><div class="cr-chunk chunk-ok">5</div><div class="cr-chunk chunk-ok">6</div><div class="cr-chunk chunk-ok">7</div><div class="cr-chunk chunk-ok">8</div><div class="cr-chunk chunk-ok">9</div><div class="cr-chunk chunk-ok">10</div><div class="cr-chunk chunk-ok">11</div><div class="cr-chunk chunk-ok">12</div><div class="cr-chunk chunk-ok">13</div><div class="cr-chunk chunk-ok">14</div><div class="cr-chunk chunk-ok">15</div><div class="cr-chunk chunk-ok">16</div><div class="cr-chunk chunk-ok">17</div><div class="cr-chunk chunk-ok">18</div><div class="cr-chunk chunk-ok">19</div><div class="cr-chunk chunk-ok">20</div><div class="cr-chunk chunk-ok">21</div><div class="cr-chunk chunk-ok">22</div><div class="cr-chunk chunk-ok">23</div><div class="cr-chunk chunk-ok">24</div><div class="cr-chunk chunk-ok">25</div><div class="cr-chunk chunk-ok">26</div><div class="cr-chunk chunk-ok">27</div><div class="cr-chunk chunk-ok">28</div><div class="cr-chunk chunk-ok">29</div>
+        </div>
+        <div class="cr-legend">
+          <div class="cr-leg-item"><div class="cr-leg-dot" style="background:var(--teal)"></div>Within Baseline</div>
+          <div class="cr-leg-item"><div class="cr-leg-dot" style="background:var(--amber)"></div>Notable</div>
+          <div class="cr-leg-item"><div class="cr-leg-dot" style="background:var(--red)"></div>Flagged</div>
+        </div>
+      </div>
+
+      <!-- Chunk table (sample rows) -->
+      <div style="padding:6px 14px 0">
+        <div style="font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-3);margin-bottom:4px">Chunk Measurements — sample</div>
+        <table class="cr-table">
+          <thead>
+            <tr>
+              <th>Chunk</th><th>Register</th><th>Vocab</th><th>Complexity</th><th>Arg. Depth</th><th>Cohesion</th><th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td class="chunk-num">1</td><td class="cr-score-cell score-lo">3 ↓</td><td class="cr-score-cell score-lo">4 ↓</td><td class="cr-score-cell score-lo">3 ↓</td><td class="cr-score-cell score-lo">2 ↓</td><td class="cr-score-cell">4 ↓</td><td class="cr-within">Within</td></tr>
+            <tr><td class="chunk-num">3</td><td class="cr-score-cell score-hi">7 ↑</td><td class="cr-score-cell score-hi">7 ↑</td><td class="cr-score-cell score-hi">6 ↑</td><td class="cr-score-cell score-hi">6</td><td class="cr-score-cell score-hi">7 ↑</td><td class="cr-within">Within</td></tr>
+            <tr><td class="chunk-num">11</td><td class="cr-score-cell score-hi">7 ↑</td><td class="cr-score-cell score-hi">7 ↑</td><td class="cr-score-cell score-hi">6 ↑</td><td class="cr-score-cell score-hi">7 ↑</td><td class="cr-score-cell score-hi">7 ↑</td><td class="cr-within">Within</td></tr>
+            <tr><td class="chunk-num">18</td><td class="cr-score-cell">6</td><td class="cr-score-cell">6</td><td class="cr-score-cell score-hi">7 ↑</td><td class="cr-score-cell score-hi">7 ↑</td><td class="cr-score-cell">6</td><td class="cr-within">Within</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Baseline profile -->
+      <div class="cr-baseline">
+        <div class="cr-baseline-lbl">Document Baseline Profile</div>
+        <div class="cr-dim-row"><div class="cr-dim-name">Register</div><div class="cr-dim-track"><div class="cr-dim-fill" style="width:56%"></div></div><div class="cr-dim-val">5.6</div></div>
+        <div class="cr-dim-row"><div class="cr-dim-name">Vocabulary</div><div class="cr-dim-track"><div class="cr-dim-fill" style="width:58%"></div></div><div class="cr-dim-val">5.8</div></div>
+        <div class="cr-dim-row"><div class="cr-dim-name">Complexity</div><div class="cr-dim-track"><div class="cr-dim-fill" style="width:53%"></div></div><div class="cr-dim-val">5.3</div></div>
+        <div class="cr-dim-row"><div class="cr-dim-name">Arg. Depth</div><div class="cr-dim-track"><div class="cr-dim-fill" style="width:60%"></div></div><div class="cr-dim-val">6.0</div></div>
+        <div class="cr-dim-row"><div class="cr-dim-name">Error Density</div><div class="cr-dim-track"><div class="cr-dim-fill" style="width:75%"></div></div><div class="cr-dim-val">7.5</div></div>
+        <div class="cr-dim-row"><div class="cr-dim-name">Cohesion</div><div class="cr-dim-track"><div class="cr-dim-fill" style="width:61%"></div></div><div class="cr-dim-val">6.1</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BASELINE DEVIATION DETAIL -->
+<section class="deviation-section" id="deviation">
+  <div class="split">
+    <div>
+      <div class="split-hdr">
+        <span class="eyebrow">Report Type 2</span>
+        <h2>Baseline Deviation Report —<br><em>ten dimensions, cited evidence</em></h2>
+        <p>This report is an extension of StyleMatch — it takes the statistical anchors StyleMatch produces and layers ten qualitative dimensions on top. The AI reads both writing samples and assesses each dimension, pulling actual phrases from the text as evidence rather than just reporting numbers.</p>
+        <p style="margin-top:12px">These ten dimensions were chosen because they capture things that statistical metrics miss: <strong>how a writer constructs sentences</strong>, not just how long they are. <strong>Which error patterns recur</strong>, not just how many. <strong>Whether characteristic phrases reappear</strong> across both samples, or whether the vocabulary and idiom belong to two different people.</p>
+      </div>
+      <div class="feat-list">
+        <div class="feat-item">
+          <div class="feat-icon">🔡</div>
+          <div>
+            <h3>Error &amp; Mechanics Fingerprint</h3>
+            <p>Recurring grammar patterns, article errors, tense inconsistencies, comma splices. Error patterns are among the most individual stylometric signals — and the <em>absence</em> of expected errors is as significant as their presence. If a student's in-class writing has consistent spacing errors around numbers that vanish in the submission, that's a finding.</p>
+          </div>
+        </div>
+        <div class="feat-item">
+          <div class="feat-icon">🔧</div>
+          <div>
+            <h3>Syntactic Patterning</h3>
+            <p>Structural construction preferences beyond complexity: how the writer opens sentences, how they link clauses, what phrase-structure habits recur. Two writers can produce sentences of identical average length using completely different structural habits. This dimension captures that.</p>
+          </div>
+        </div>
+        <div class="feat-item">
+          <div class="feat-icon">💬</div>
+          <div>
+            <h3>Characteristic Phrase Recurrence</h3>
+            <p>Whether the same analytical hedges, evidence-introduction patterns, and idiosyncratic expressions recur across both samples. Recent LLM-era authorship research has found that characteristic content words carry strong authorial signal — particularly when a student has a distinctive way of framing claims.</p>
+          </div>
+        </div>
+        <div class="feat-item">
+          <div class="feat-icon">🗂️</div>
+          <div>
+            <h3>Nominal vs. Verbal Style</h3>
+            <p>Whether the writer favours noun-heavy constructions (<em>the implementation of, a consideration of</em>) or verb-driven ones (<em>implementing, considering</em>). This cognitive-stylistic habit is remarkably stable across topics and genres — and hard to fake consistently.</p>
+          </div>
+        </div>
+        <div class="feat-item">
+          <div class="feat-icon">💡</div>
+          <div>
+            <h3>AI-generated follow-up questions</h3>
+            <p>The report closes with suggested questions tailored to the specific deviations found — not generic prompts, but questions that reference what was actually observed. What to ask a student about their function word patterns. How to probe the absence of characteristic errors. Ready to use before the conversation.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BASELINE DEVIATION REPORT MOCKUP -->
+    <div class="dr-mock">
+      <div class="dr-hd">
+        <span style="font-size:14px">⚖️</span>
+        <span class="dr-hd-title">PaperTrail <em>Verify</em> — Baseline Deviation Report</span>
+      </div>
+      <div class="dr-summary">
+        <div class="dr-score-num">2</div>
+        <div>
+          <div class="dr-verdict">Notable Baseline Deviation</div>
+          <div class="dr-verdict-sub">2 anomalous · 2 notable · 6 within range across ten dimensions<br>4242-word submitted vs. 5045-word baseline</div>
+        </div>
+      </div>
+      <div class="dr-meta">
+        Report ID: <strong>PT-K7N9M3</strong> &nbsp;·&nbsp; Date: <strong>March 10, 2026</strong> &nbsp;·&nbsp; Student: <strong>Emma Kowalski</strong>
+      </div>
+
+      <!-- StyleMatch anchors -->
+      <div class="dr-sm-section">
+        <div class="dr-sm-lbl">StyleMatch Algorithmic Baseline</div>
+        <div class="dr-bar-row"><div class="dr-bar-name">Function Word Profile</div><div class="dr-bar-track"><div class="dr-bar-fill bar-weak" style="width:43%"></div></div><div class="dr-bar-val val-weak">43/100</div></div>
+        <div class="dr-bar-row"><div class="dr-bar-name">Punctuation Fingerprint</div><div class="dr-bar-track"><div class="dr-bar-fill bar-strong" style="width:82%"></div></div><div class="dr-bar-val val-strong">82/100</div></div>
+        <div class="dr-bar-row"><div class="dr-bar-name">Sentence Length</div><div class="dr-bar-track"><div class="dr-bar-fill bar-strong" style="width:75%"></div></div><div class="dr-bar-val val-strong">75/100</div></div>
+        <div class="dr-bar-row"><div class="dr-bar-name">FK Grade Level</div><div class="dr-bar-track"><div class="dr-bar-fill bar-strong" style="width:92%"></div></div><div class="dr-bar-val val-strong">92/100</div></div>
+        <div class="dr-bar-row"><div class="dr-bar-name">Type-Token Ratio</div><div class="dr-bar-track"><div class="dr-bar-fill bar-strong" style="width:87%"></div></div><div class="dr-bar-val val-strong">87/100</div></div>
+        <div class="dr-bar-row"><div class="dr-bar-name">Informality Markers</div><div class="dr-bar-track"><div class="dr-bar-fill bar-strong" style="width:98%"></div></div><div class="dr-bar-val val-strong">98/100</div></div>
+      </div>
+
+      <!-- Badge summary -->
+      <div class="dr-badge-row">
+        <div class="dr-badge badge-anom"><span class="dr-badge-num">2</span><span class="dr-badge-label">Anomalous</span><span class="dr-badge-sub">Exceeds expected variation</span></div>
+        <div class="dr-badge badge-notable"><span class="dr-badge-num">2</span><span class="dr-badge-label">Notable</span><span class="dr-badge-sub">Warrants attention</span></div>
+        <div class="dr-badge badge-ok"><span class="dr-badge-num">6</span><span class="dr-badge-label">Within Range</span><span class="dr-badge-sub">Consistent with baseline</span></div>
+      </div>
+
+      <!-- Dimension cards -->
+      <div class="dr-dims">
+        <div style="font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-3);margin-bottom:6px">Ten-Dimension Analysis</div>
+
+        <div class="dr-dim-card anom">
+          <div class="dr-dim-top">
+            <div class="dr-dim-name">Function Word Distribution</div>
+            <div class="dr-dim-verdict verd-anom">🔴 Anomalous</div>
+          </div>
+          <div class="dr-dim-evidence">
+            <div><div class="dr-evid-col-lbl evid-blue">Submitted Work</div><span class="dr-evid-tag">in which</span><span class="dr-evid-tag">of the</span><span class="dr-evid-tag">has been</span></div>
+            <div><div class="dr-evid-col-lbl evid-gold">Controlled Sample</div><span class="dr-evid-tag gold-bg">to a</span><span class="dr-evid-tag gold-bg">in the</span><span class="dr-evid-tag gold-bg">which is</span></div>
+          </div>
+          <div class="dr-dim-note">43/100 similarity — substantial deviation in preposition and conjunction patterns. Function words are used unconsciously and remain stable across topics.</div>
+        </div>
+
+        <div class="dr-dim-card anom">
+          <div class="dr-dim-top">
+            <div class="dr-dim-name">Error &amp; Mechanics Fingerprint</div>
+            <div class="dr-dim-verdict verd-anom">🔴 Anomalous</div>
+          </div>
+          <div class="dr-dim-evidence">
+            <div><div class="dr-evid-col-lbl evid-blue">Submitted Work</div><span class="dr-evid-tag">border cross militancy</span><span class="dr-evid-tag">compelling questions over</span></div>
+            <div><div class="dr-evid-col-lbl evid-gold">Controlled Sample</div><span class="dr-evid-tag gold-bg">'800,000people'</span><span class="dr-evid-tag gold-bg">42million' people</span></div>
+          </div>
+          <div class="dr-dim-note">Characteristic spacing errors around numbers in the controlled sample are completely absent in the submitted work. The absence of expected errors is a documented authorship signal.</div>
+        </div>
+
+        <div class="dr-dim-card notable">
+          <div class="dr-dim-top">
+            <div class="dr-dim-name">Syntactic Patterning</div>
+            <div class="dr-dim-verdict verd-notable">🟡 Notable</div>
+          </div>
+          <div class="dr-dim-evidence">
+            <div><div class="dr-evid-col-lbl evid-blue">Submitted</div><span class="dr-evid-tag">As of 2023…</span><span class="dr-evid-tag">The CFR remarked that</span></div>
+            <div><div class="dr-evid-col-lbl evid-gold">Baseline</div><span class="dr-evid-tag gold-bg">According to…</span><span class="dr-evid-tag gold-bg">According to…</span></div>
+          </div>
+          <div class="dr-dim-note">Both favour source-attribution openings, but submitted work shows more varied structural patterns — temporal markers, prepositional phrases — vs. repetitive "According to" in the baseline.</div>
+        </div>
+
+        <div class="dr-dim-card ok">
+          <div class="dr-dim-top">
+            <div class="dr-dim-name">Nominal vs. Verbal Style</div>
+            <div class="dr-dim-verdict verd-ok">✅ Within Range</div>
+          </div>
+          <div class="dr-dim-evidence">
+            <div><div class="dr-evid-col-lbl evid-blue">Submitted</div><span class="dr-evid-tag">the implementation of</span><span class="dr-evid-tag">the articulation of</span></div>
+            <div><div class="dr-evid-col-lbl evid-gold">Baseline</div><span class="dr-evid-tag gold-bg">the ratification of</span><span class="dr-evid-tag gold-bg">the lack of</span></div>
+          </div>
+          <div class="dr-dim-note">Consistent noun-heavy academic constructions in both samples. Stable cognitive-stylistic preference.</div>
+        </div>
+
+      </div>
+
+      <!-- Suggested questions -->
+      <div class="sq-section">
+        <div class="sq-lbl">AI-Generated Follow-Up Questions</div>
+        <div class="sq-item"><div class="sq-num">1.</div><div>Can you walk me through how you decided to structure this opening paragraph — specifically why you used "in which" rather than a more direct construction?</div></div>
+        <div class="sq-item"><div class="sq-num">2.</div><div>I noticed your in-class writing has some consistent patterns around numbers and quotations that don't appear here. Can you tell me about your editing process for this piece?</div></div>
+        <div class="sq-item"><div class="sq-num">3.</div><div>In your controlled sample you tend to introduce sources with "According to" — why did you vary that structure more in this essay?</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RESEARCH -->
+<section class="research-section" id="research">
+  <div class="research-inner">
+    <div class="research-left">
+      <span class="eyebrow">The Research Basis</span>
+      <h2>Ten dimensions.<br><em>All of them grounded.</em></h2>
+      <p>Every dimension in the Baseline Deviation Report is anchored in peer-reviewed research. The AI isn't pattern-matching against a generic rubric — it's applying stylometric frameworks that have been validated across thousands of texts in authorship attribution, forensic linguistics, and computational humanities research.</p>
+      <p>The research citations appear in every report — not as a disclaimer, but because a teacher handing a report to a department head or parent deserves to be able to say exactly what it's based on and where it comes from.</p>
+    </div>
+    <div class="rc-grid">
+      <div class="rc">
+        <div class="rc-metric">Function Word Distribution</div>
+        <div class="rc-title">Burrows' Delta — the most validated authorship attribution method</div>
+        <div class="rc-cite">Burrows (2002) Literary &amp; Linguistic Computing · Mosteller &amp; Wallace (1964) Federalist Papers attribution</div>
+      </div>
+      <div class="rc">
+        <div class="rc-metric">Error &amp; Mechanics Fingerprint</div>
+        <div class="rc-title">Idiosyncratic error patterns are among the most individual stylometric signals</div>
+        <div class="rc-cite">Sapkota et al. (2014) NAACL-HLT · Stamatatos (2013) Journal of Law and Policy · Character n-gram stability research</div>
+      </div>
+      <div class="rc">
+        <div class="rc-metric">Syntactic Complexity &amp; Patterning</div>
+        <div class="rc-title">Sentence structure and clause-linking preferences are stable cross-genre signals</div>
+        <div class="rc-cite">McNamara et al. (2014) Coh-Metrix · Björklund &amp; Zechner (2017) Natural Language Engineering</div>
+      </div>
+      <div class="rc">
+        <div class="rc-metric">Cohesive Device Profile</div>
+        <div class="rc-title">Discourse connective preferences are stable per writer and reflect reasoning habits</div>
+        <div class="rc-cite">Ferracane, Wang &amp; Mooney (2017) IJCNLP · Hyland, Metadiscourse (2005)</div>
+      </div>
+      <div class="rc">
+        <div class="rc-metric">Characteristic Phrase Recurrence</div>
+        <div class="rc-title">Content words and characteristic phrases carry strong authorial signal in LLM-era research</div>
+        <div class="rc-cite">PMC / National Library of Medicine (2025) PLoS ONE doi:10.1371/journal.pone.0320609</div>
+      </div>
+      <div class="rc">
+        <div class="rc-metric">Lexical Diversity</div>
+        <div class="rc-title">Length-normalised measures (MATTR, MTLD) provide stable cross-text comparisons</div>
+        <div class="rc-cite">Covington &amp; McFall (2010) Journal of Quantitative Linguistics · Biber (1988) Variation Across Speech and Writing</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="pricing-section" id="pricing">
+  <div class="pricing-inner">
+    <div class="pricing-left">
+      <h2>Pay for what<br><em>you actually use.</em></h2>
+      <p>Verify runs on credits. Buy a pack when you need one — they never expire. Most teachers use Verify when something in Inspect or StyleMatch warrants a deeper look, not on every submission.</p>
+      <p style="margin-top:12px;font-size:13px;color:rgba(255,255,255,.55)">Inspect is always free. StyleMatch requires an active subscription.</p>
+    </div>
+    <div class="price-cards">
+      <div class="price-card">
+        <div class="price-card-left">
+          <h4>Starter Pack</h4>
+          <p>10 reports — enough for a full class set when something comes up. Mix Consistency and Baseline Deviation as needed.</p>
+        </div>
+        <div class="price-card-right">
+          <span class="price-amt">$6</span>
+          <span class="price-per">10 reports · $0.60 each</span>
+          <span class="price-note">Credits never expire</span>
+        </div>
+      </div>
+      <div class="price-card">
+        <div class="price-card-left">
+          <h4>Standard Pack</h4>
+          <p>35 reports — a semester's worth of deeper investigation for a busy teacher.</p>
+        </div>
+        <div class="price-card-right">
+          <span class="price-amt">$18</span>
+          <span class="price-per">35 reports · $0.51 each</span>
+          <span class="price-note">Credits never expire</span>
+        </div>
+      </div>
+      <div class="price-card">
+        <div class="price-card-left">
+          <h4>Department Pack</h4>
+          <p>100 reports — for a department or shared license. Coordinate through one account.</p>
+        </div>
+        <div class="price-card-right">
+          <span class="price-amt">$45</span>
+          <span class="price-per">100 reports · $0.45 each</span>
+          <span class="price-note">Credits never expire</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRIVACY -->
+<section class="privacy-strip">
+  <div class="privacy-inner">
+    <div class="priv-item">
+      <div class="priv-ico">🔒</div>
+      <div><h4>Text not retained</h4><p>Student text is transmitted to generate the report, then immediately discarded. Nothing is stored after analysis completes.</p></div>
+    </div>
+    <div class="priv-item">
+      <div class="priv-ico">👤</div>
+      <div><h4>No student accounts</h4><p>Students never interact with PaperTrail. The teacher runs the report from their own account. No student data is collected.</p></div>
+    </div>
+    <div class="priv-item">
+      <div class="priv-ico">📋</div>
+      <div><h4>Educator judgment first</h4><p>Every report carries a disclaimer — it is a data point, not a verdict. No report should be used as the sole basis for any disciplinary decision.</p></div>
+    </div>
+    <div class="priv-item">
+      <div class="priv-ico">🏫</div>
+      <div><h4>FERPA &amp; PIPEDA conscious</h4><p>Designed with North American school privacy requirements in mind. No advertising, no data resale, no third-party tracking.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="container">
+    <h2>Start with Inspect free. Use Verify when it matters.</h2>
+    <p>Most of the time, Inspect tells you what you need. When something warrants a deeper look — before the conversation with the student — that's when Verify earns its credit.</p>
+    <a href="https://chromewebstore.google.com/detail/papertrail/kgkjmhfoijiiplbmablcjbooopndjbgm"
+       class="btn btn-teal btn-lg" target="_blank" rel="noopener">⬇ Add PaperTrail to Chrome</a>
+    <div class="cta-trust">
+      <span>Inspect always free</span>
+      <span>StyleMatch $4.99/mo</span>
+      <span>Verify from $0.60/report</span>
+      <span>Credits never expire</span>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="ftr-inner">
+    <div>
+      <div class="ftr-logo">
+        <img src="/icon128.png" alt="PaperTrail Academic" />
+        <span class="ftr-wm">PaperTrail <em>Academic</em></span>
+      </div>
+      <p class="ftr-tag">You've read thousands of student essays.<br>Trust that instinct — then document it.</p>
+    </div>
+    <div class="ftr-col">
+      <h4>Products</h4>
+      <ul>
+        <li><a href="/inspect">Inspect</a></li>
+        <li><a href="/stylematch">StyleMatch</a></li>
+        <li><a href="/verify">Verify</a></li>
+        <li><a href="https://chromewebstore.google.com/detail/papertrail/kgkjmhfoijiiplbmablcjbooopndjbgm" target="_blank" rel="noopener">Chrome Web Store</a></li>
+      </ul>
+    </div>
+    <div class="ftr-col">
+      <h4>For Schools</h4>
+      <ul>
+        <li><a href="/for-schools">Privacy &amp; Compliance</a></li>
+        <li><a href="mailto:hello@papertrailacademic.com?subject=School or Department Inquiry">School Inquiries</a></li>
+        <li><a href="mailto:hello@papertrailacademic.com?subject=Privacy Question">FERPA / PIPEDA / GDPR</a></li>
+      </ul>
+    </div>
+    <div class="ftr-col">
+      <h4>Legal</h4>
+      <ul>
+        <li><a href="/privacy-policy">Privacy Policy</a></li>
+        <li><a href="/terms-of-service">Terms of Service</a></li>
+        <li><a href="mailto:hello@papertrailacademic.com">Contact</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="ftr-bottom">
+    <span>&copy; 2026 PaperTrail Academic. All rights reserved. Operated by Michael Smith.</span>
+    <span>
+      <a href="/privacy-policy">Privacy Policy</a> &nbsp;&middot;&nbsp;
+      <a href="/terms-of-service">Terms of Service</a> &nbsp;&middot;&nbsp;
+      <a href="mailto:hello@papertrailacademic.com">Contact</a>
+    </span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  const dd      = document.getElementById('navDropdown');
+  const trigger = document.getElementById('navDropdownTrigger');
+  if (!dd) return;
+  let closeTimer;
+  function open()  { clearTimeout(closeTimer); dd.classList.add('open'); }
+  function close() { closeTimer = setTimeout(() => dd.classList.remove('open'), 120); }
+  trigger.addEventListener('mouseenter', open);
+  trigger.addEventListener('mouseleave', close);
+  dd.querySelector('.nav-dd-menu').addEventListener('mouseenter', open);
+  dd.querySelector('.nav-dd-menu').addEventListener('mouseleave', close);
+  trigger.addEventListener('click', () => dd.classList.toggle('open'));
+  document.addEventListener('click', e => { if (!dd.contains(e.target)) dd.classList.remove('open'); });
+})();
+</script>
+
+</body>
+</html>
