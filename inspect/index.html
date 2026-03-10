@@ -45,6 +45,20 @@ nav{position:sticky;top:0;z-index:200;background:rgba(255,255,255,.96);backdrop-
 .nl:hover{color:var(--blue)}
 .nl.cta{background:var(--blue);color:#fff;padding:7px 16px;border-radius:5px;font-weight:600}
 .nl.cta:hover{background:var(--blue-dk)}
+/* Dropdown */
+.nav-dropdown{position:relative}
+.nav-dropdown>.nl{display:flex;align-items:center;gap:4px;cursor:pointer;user-select:none}
+.nav-dropdown>.nl .dd-caret{font-size:10px;opacity:.55;display:inline-block;transition:transform .2s}
+.nav-dropdown.open>.nl .dd-caret{transform:rotate(-180deg)}
+.nav-dd-menu{position:absolute;top:100%;left:50%;transform:translateX(-50%);padding-top:8px;opacity:0;pointer-events:none;transition:opacity .18s ease}
+.nav-dropdown.open .nav-dd-menu{opacity:1;pointer-events:all}
+.nav-dd-inner{background:#fff;border:1.5px solid var(--rule);border-radius:10px;box-shadow:var(--shadow-lg);padding:8px;min-width:230px}
+.dd-item{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:7px;text-decoration:none;transition:background .15s;color:var(--ink)}
+.dd-item:hover{background:var(--bg)}
+.dd-icon{font-size:16px;flex-shrink:0}
+.dd-label{font-size:13px;font-weight:600;color:var(--ink);display:block;line-height:1.2}
+.dd-sub{font-size:11px;color:var(--ink-3);font-weight:400}
+.dd-divider{height:1px;background:var(--rule);margin:4px 0}
 
 /* ── Value strip ─────────────────────────────────────────────── */
 .value-strip{background:var(--blue);padding:11px 0}
@@ -239,7 +253,7 @@ footer{background:var(--ink);padding:42px 0 0}
 .ftr-bottom a{color:rgba(255,255,255,.5);text-decoration:none}
 .ftr-bottom a:hover{color:#fff}
 
-@media(max-width:1020px){
+@media(max-width:900px){
   .hero-inner,.fsplit{grid-template-columns:1fr}
   .hero .sidebar-mock,.fsplit .pb-wrap,.fsplit .pb-caption{display:none}
   .value-strip-inner{gap:16px}
@@ -269,9 +283,29 @@ footer{background:var(--ink);padding:42px 0 0}
       <img src="/icon128.png" alt="PaperTrail Academic" />
       <span class="nav-wm">PaperTrail <em>Academic</em></span>
     </a>
-    <a href="/#products" class="nl">Products</a>
-    <a href="/#pricing"  class="nl">Pricing</a>
-    <a href="/#schools"  class="nl">For Schools</a>
+    <div class="nav-dropdown" id="navDropdown">
+      <span class="nl" id="navDropdownTrigger">Products <span class="dd-caret">▾</span></span>
+      <div class="nav-dd-menu">
+        <div class="nav-dd-inner">
+          <a href="/inspect" class="dd-item">
+            <span class="dd-icon">✏️</span>
+            <span><span class="dd-label">Inspect <span style="color:var(--green);font-size:10px;font-weight:700">Free</span></span><span class="dd-sub">Revision history, paste detection, playback</span></span>
+          </a>
+          <div class="dd-divider"></div>
+          <a href="/stylematch" class="dd-item">
+            <span class="dd-icon">🔍</span>
+            <span><span class="dd-label">StyleMatch <span style="color:var(--gold-dk);font-size:10px">$4.99/mo</span></span><span class="dd-sub">8-metric authorship consistency analysis</span></span>
+          </a>
+          <div class="dd-divider"></div>
+          <a href="/verify" class="dd-item">
+            <span class="dd-icon">🔬</span>
+            <span><span class="dd-label">Verify <span style="color:var(--teal);font-size:10px">From $0.60</span></span><span class="dd-sub">AI-assisted deep analysis &amp; reports</span></span>
+          </a>
+        </div>
+      </div>
+    </div>
+    <a href="/#pricing" class="nl">Pricing</a>
+    <a href="/#schools" class="nl">For Schools</a>
     <a href="/privacy-policy" class="nl">Privacy</a>
     <a href="https://chromewebstore.google.com/detail/papertrail/kgkjmhfoijiiplbmablcjbooopndjbgm"
        class="nl cta" target="_blank" rel="noopener">Add to Chrome — Free</a>
@@ -448,7 +482,7 @@ footer{background:var(--ink);padding:42px 0 0}
       </div>
     </div>
 
-    <!-- Playback mockup -->
+    <!-- Animated Playback mockup -->
     <div>
       <div class="pb-wrap">
         <div class="pb-hd">
@@ -456,24 +490,28 @@ footer{background:var(--ink);padding:42px 0 0}
             <span class="pb-logo-icon">✏️</span>
             <span class="pb-logo-text">PaperTrail <em>Inspect</em></span>
           </div>
-          <span class="pb-step">Step 36 / 11331 · Dec 1, 9:00 AM</span>
+          <span class="pb-step" id="pb-step-counter">Step 1 / 847</span>
         </div>
         <div class="pb-doc-area">
           <div class="pb-page">
-            <div class="pb-page-text">6To what extent is interpreatation a reliable tool in the [roproduction of knwoowledge? nAnsw<span class="pb-cursor"></span></div>
+            <div class="pb-page-text" id="pb-anim-text"></div>
           </div>
         </div>
         <div class="pb-tl-bar">
-          <div class="pb-tl-progress"></div>
+          <div class="pb-tl-progress" id="pb-progress"></div>
         </div>
         <div class="pb-tl-events">
-          <div class="pb-ev bl" style="left:1%"></div>
-          <div class="pb-ev rd" style="left:6%"></div>
-          <div class="pb-ev bl" style="left:15%"></div>
-          <div class="pb-ev rd" style="left:43%"></div>
-          <div class="pb-ev am" style="left:67%"></div>
-          <div class="pb-ev rd" style="left:91%"></div>
+          <div class="pb-ev bl"  style="left:4%"></div>
+          <div class="pb-ev bl"  style="left:18%"></div>
+          <div class="pb-ev rd"  style="left:29%"></div>
+          <div class="pb-ev bl"  style="left:44%"></div>
+          <div class="pb-ev am"  style="left:58%"></div>
+          <div class="pb-ev bl"  style="left:71%"></div>
+          <div class="pb-ev rd"  style="left:83%"></div>
+          <div class="pb-ev bl"  style="left:94%"></div>
         </div>
+        <!-- Mode label -->
+        <div id="pb-mode-label" style="text-align:center;padding:5px 0 2px;font-size:9px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3)">TYPING</div>
         <div class="pb-controls">
           <div class="pb-btns">
             <div class="pb-btn">⏮</div>
@@ -497,6 +535,165 @@ footer{background:var(--ink);padding:42px 0 0}
       </div>
       <p class="pb-caption" style="font-size:11.5px;color:var(--ink-3);text-align:center;margin-top:12px;line-height:1.6">Playback opens in a dedicated window.<br>Navigate by step, or let it run at any speed.</p>
     </div>
+
+<script>
+// ── Playback animation ────────────────────────────────────────────
+// Simulates a student writing a TKAM paragraph: typing → struggle
+// (delete/retype) → paste event → more typing → done
+(function(){
+  const textEl    = document.getElementById('pb-anim-text');
+  const stepEl    = document.getElementById('pb-step-counter');
+  const progEl    = document.getElementById('pb-progress');
+  const modeEl    = document.getElementById('pb-mode-label');
+
+  // Colour tokens matching the extension
+  const C = { typing:'#1a2235', paste:'#ea4335', struggle:'#fbbc04' };
+
+  // Script: array of {type, text} operations
+  // type: 'type' | 'delete' | 'pause' | 'paste'
+  const TOTAL = 847;
+
+  const script = [
+    // Session 1 — normal typing
+    {t:'type', s:'To Kill a Mockingbird'},
+    {t:'pause'},
+    {t:'type', s:'\n\nHarper Lee\'s novel explores the nature of moral courage through Atticus Finch, a lawyer who defends '},
+    // Struggle — student deletes and rewrites
+    {t:'struggle_start'},
+    {t:'delete', n:15},
+    {t:'type', s:'an innocent Black man'},
+    {t:'delete', n:21},
+    {t:'type', s:'Tom Robinson, a Black man falsely accused of a crime'},
+    {t:'struggle_end'},
+    {t:'type', s:', in a deeply prejudiced Alabama town.\n\n'},
+    // Paste event
+    {t:'paste', s:'Scout Finch, the narrator, observes her father\'s unwavering integrity and gradually comes to understand that true courage means doing what is right even when the outcome is uncertain. Lee uses the trial at the heart of the novel to expose the moral failures of a community that chooses comfortable injustice over difficult truth.'},
+    // Back to typing
+    {t:'type', s:'\n\nThis tension between '},
+    {t:'pause'},
+    {t:'type', s:'institutional injustice and personal integrity remains the novel\'s most enduring concern.'},
+  ];
+
+  let currentText = '';
+  let step = 0;
+  let opIdx = 0;
+  let charIdx = 0;
+  let mode = 'typing'; // 'typing' | 'deleting' | 'paste' | 'pause'
+  let pauseFrames = 0;
+  let deleteCount = 0;
+
+  function render(color) {
+    // Show text with a blinking cursor span
+    textEl.innerHTML =
+      '<span style="color:' + color + '">' +
+      currentText.replace(/\n/g,'<br>') +
+      '</span><span style="display:inline-block;width:1.5px;height:13px;background:' + color + ';margin-left:1px;vertical-align:middle;animation:blink 1.1s step-end infinite"></span>';
+    const pct = Math.min(100, Math.round((step / TOTAL) * 100));
+    progEl.style.width = pct + '%';
+    stepEl.textContent = 'Step ' + step + ' / ' + TOTAL;
+  }
+
+  function setMode(m, color, label) {
+    mode = m;
+    modeEl.textContent = label;
+    modeEl.style.color = color;
+  }
+
+  function tick() {
+    if (opIdx >= script.length) {
+      // loop with a pause
+      setTimeout(() => {
+        currentText = ''; step = 0; opIdx = 0; charIdx = 0;
+        setMode('typing', C.typing, 'TYPING');
+        render(C.typing);
+      }, 3200);
+      return;
+    }
+
+    const op = script[opIdx];
+
+    if (op.t === 'pause') {
+      pauseFrames++;
+      if (pauseFrames > 8) { pauseFrames = 0; opIdx++; }
+      step++;
+      render(C.typing);
+      setTimeout(tick, 180);
+      return;
+    }
+
+    if (op.t === 'struggle_start') {
+      setMode('struggle', C.struggle, 'STRUGGLE — rewriting');
+      opIdx++; tick(); return;
+    }
+    if (op.t === 'struggle_end') {
+      setMode('typing', C.typing, 'TYPING');
+      opIdx++; tick(); return;
+    }
+
+    if (op.t === 'delete') {
+      deleteCount++;
+      if (deleteCount <= op.n && currentText.length > 0) {
+        currentText = currentText.slice(0, -1);
+        step++;
+        render(C.struggle);
+        setTimeout(tick, 55);
+      } else {
+        deleteCount = 0; opIdx++;
+        setTimeout(tick, 60);
+      }
+      return;
+    }
+
+    if (op.t === 'paste') {
+      setMode('paste', C.paste, 'PASTE EVENT DETECTED');
+      currentText += op.s;
+      step += Math.round(op.s.length * 0.4);
+      render(C.paste);
+      opIdx++;
+      setTimeout(() => {
+        setMode('typing', C.typing, 'TYPING');
+        tick();
+      }, 900);
+      return;
+    }
+
+    // 'type'
+    if (charIdx < op.s.length) {
+      currentText += op.s[charIdx];
+      charIdx++;
+      step++;
+      render(C.typing);
+      const delay = op.s[charIdx-1] === '\n' ? 260 :
+                    op.s[charIdx-1] === ' '  ? 95  :
+                    45 + Math.random() * 55;
+      setTimeout(tick, delay);
+    } else {
+      charIdx = 0; opIdx++;
+      setTimeout(tick, 60);
+    }
+  }
+
+  // Kick off
+  render(C.typing);
+  setTimeout(tick, 600);
+})();
+
+// ── Products dropdown ────────────────────────────────────────────
+(function(){
+  const dd      = document.getElementById('navDropdown');
+  const trigger = document.getElementById('navDropdownTrigger');
+  if (!dd) return;
+  let closeTimer;
+  function open()  { clearTimeout(closeTimer); dd.classList.add('open'); }
+  function close() { closeTimer = setTimeout(() => dd.classList.remove('open'), 120); }
+  trigger.addEventListener('mouseenter', open);
+  trigger.addEventListener('mouseleave', close);
+  dd.querySelector('.nav-dd-menu').addEventListener('mouseenter', open);
+  dd.querySelector('.nav-dd-menu').addEventListener('mouseleave', close);
+  trigger.addEventListener('click', () => dd.classList.toggle('open'));
+  document.addEventListener('click', e => { if (!dd.contains(e.target)) dd.classList.remove('open'); });
+})();
+</script>
   </div>
 </section>
 
