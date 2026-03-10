@@ -399,7 +399,7 @@ footer{background:var(--ink);padding:42px 0 0}
     <div style="display:flex;flex-direction:column;gap:11px">
 
       <div class="hero-preview-card" onclick="heroOpenCard('inspect')" role="button" tabindex="0" aria-label="Learn more about Inspect">
-        <div class="hpc-icon">🔍</div>
+        <div class="hpc-icon">✏️</div>
         <div style="flex:1">
           <div class="hpc-title">Inspect &nbsp;<span style="color:var(--green);font-weight:700;font-size:11.5px">Free</span></div>
           <ul class="hpc-bullets">
@@ -468,7 +468,7 @@ footer{background:var(--ink);padding:42px 0 0}
         <div class="pcard-stripe stripe-blue"></div>
         <div class="pcard-top">
           <div style="display:flex;gap:7px;flex-wrap:wrap;margin-bottom:11px">
-            <span class="pcard-badge badge-blue">🔍 Inspect</span>
+            <span class="pcard-badge badge-blue">✏️ Inspect</span>
             <span class="pcard-badge badge-free">Free</span>
           </div>
           <h3>How was it written?</h3>
@@ -775,7 +775,7 @@ footer{background:var(--ink);padding:42px 0 0}
     </div>
     <div class="price-cols">
       <div class="price-col">
-        <span class="pcard-badge badge-blue" style="align-self:flex-start">🔍 Inspect</span>
+        <span class="pcard-badge badge-blue" style="align-self:flex-start">✏️ Inspect</span>
         <h3>Free</h3>
         <p class="price-sub-lbl">No account required</p>
         <div class="big-price"><span class="n" style="color:var(--green)">$0</span></div>
@@ -784,8 +784,8 @@ footer{background:var(--ink);padding:42px 0 0}
           <li>Writing session reconstruction</li>
           <li>Paste detection + novelty scoring</li>
           <li>Struggle moment detection</li>
-          <li>Revision playback</li>
-          <li>Paste before/after comparison</li>
+          <li class="na">Paste before/after comparison</li>
+          <li class="na">Revision playback window</li>
           <li class="na">StyleMatch authorship comparison</li>
           <li class="na">Verify deep analysis reports</li>
         </ul>
@@ -800,12 +800,21 @@ footer{background:var(--ink);padding:42px 0 0}
         <p class="price-alt">or $49.99/year — save 17%</p>
         <ul class="price-feats">
           <li>Everything in Inspect</li>
+          <li>Paste before/after comparison</li>
+          <li>Revision playback window</li>
           <li>Eight research-based stylometric metrics</li>
-          <li>Controlled vs. submitted comparison</li>
-          <li>Divergence ratings per metric</li>
-          <li>Struggle moments on revision timeline</li>
-          <li>Printable PDF with research citations</li>
-          <li>Auto-fill from open document</li>
+          <li>Controlled vs. submitted sample comparison</li>
+          <li>Grammatical function word profile (Burrows' Delta)</li>
+          <li>Discourse marker &amp; reasoning habit analysis</li>
+          <li>Punctuation fingerprint — 6 punctuation types</li>
+          <li>Sentence length + rhythm (avg &amp; SD)</li>
+          <li>Type-token ratio + Flesch-Kincaid grade level</li>
+          <li>Informality markers — contractions &amp; first-person rate</li>
+          <li>Divergence ratings per metric: Similar / Notable / Divergent</li>
+          <li>Struggle moments visible on revision timeline</li>
+          <li>Auto-fill from open Google Classroom document</li>
+          <li>Printable PDF with full research citations</li>
+          <li>All analysis runs locally — no text ever transmitted</li>
           <li class="na">Verify deep analysis reports</li>
         </ul>
         <a href="#" class="btn btn-gold btn-full">Get StyleMatch</a>
@@ -818,11 +827,21 @@ footer{background:var(--ink);padding:42px 0 0}
         <p class="price-alt">Starter: 10 reports for $6</p>
         <ul class="price-feats">
           <li>Everything in Inspect</li>
-          <li>Consistency Report — 6 dimensions, 29-chunk heatmap</li>
-          <li>Baseline Deviation Report — 10 dimensions vs. controlled sample</li>
-          <li>Anomalous / Notable / Within Range per dimension</li>
-          <li>AI-suggested follow-up questions</li>
-          <li>Printable PDF with 10 research citations</li>
+          <li><strong>Consistency Report</strong> — single-essay internal analysis</li>
+          <li>Essay chunked into segments (~150 words each)</li>
+          <li>6 dimensions scored per chunk: Register, Vocabulary, Sentence Complexity, Argument Depth, Error Density, Cohesion</li>
+          <li>Stylometric heatmap across all chunks</li>
+          <li>Writer baseline profile — characteristic style fingerprint</li>
+          <li><strong>Baseline Deviation Report</strong> — controlled vs. submitted</li>
+          <li>10 research-grounded dimensions of comparison</li>
+          <li>Anomalous / Notable / Within Range rating per dimension</li>
+          <li>Error &amp; mechanics fingerprint — idiosyncratic habits</li>
+          <li>Nominal vs. verbal style + characteristic phrase recurrence</li>
+          <li>Syntactic patterning &amp; cohesive device profile</li>
+          <li>AI-suggested follow-up questions for the student</li>
+          <li>Recommended next steps for the educator</li>
+          <li>Printable PDF with 10 peer-reviewed research citations</li>
+          <li>Report ID + timestamp for institutional records</li>
           <li>No text retained — credits never expire</li>
         </ul>
         <a href="#" class="btn btn-teal btn-full">Buy Verify Credits</a>
