@@ -131,10 +131,10 @@ body.overlay-active .cards-overlay{opacity:1;pointer-events:all}
 /* ── Open card — fixed modal ── */
 .pcard.is-open{
   position:fixed;z-index:160;
-  top:50%;left:50%;
+  top:calc(50% + 30px);left:50%;
   transform:translate(-50%,-50%) scale(1) !important;
-  width:min(920px,94vw);
-  max-height:90vh;
+  width:min(900px,92vw);
+  max-height:80vh;
   overflow-y:auto;
   cursor:default;
   border-radius:16px;
