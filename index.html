@@ -55,7 +55,7 @@ nav{position:sticky;top:0;z-index:200;background:rgba(255,255,255,.96);backdrop-
 
 /* ─── Hero ────────────────────────────────────────────────────── */
 .hero{background:linear-gradient(155deg,#f0f5fc 0%,#fff 50%,#fdf8ee 100%);padding:72px 0 60px}
-.hero-inner{max-width:1140px;margin:0 auto;padding:0 28px;display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}
+.hero-inner{max-width:1140px;margin:0 auto;padding:0 28px;display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start}
 .hero h1{font-family:'Lora',serif;font-size:clamp(28px,3.5vw,44px);font-weight:700;line-height:1.18;color:var(--ink);margin-bottom:18px}
 .hero h1 em{color:var(--blue)}
 .hero-sub{font-size:16.5px;color:var(--ink-2);line-height:1.65;margin-bottom:28px;max-width:480px}
@@ -63,10 +63,13 @@ nav{position:sticky;top:0;z-index:200;background:rgba(255,255,255,.96);backdrop-
 .hero-trust{display:flex;flex-wrap:wrap;gap:14px}
 .hero-trust span{font-size:12px;color:var(--ink-3);display:flex;align-items:center;gap:5px}
 .hero-trust span::before{content:'✓';color:var(--green);font-weight:700;font-size:11px}
-.hero-preview-card{background:#fff;border:1.5px solid var(--rule);border-radius:12px;padding:16px 20px;display:flex;align-items:center;gap:14px;box-shadow:var(--shadow)}
-.hpc-icon{font-size:22px;flex-shrink:0}
-.hpc-title{font-size:13px;font-weight:700;color:var(--ink);margin-bottom:2px}
-.hpc-desc{font-size:12px;color:var(--ink-3)}
+.hero-preview-card{background:#fff;border:1.5px solid var(--rule);border-radius:12px;padding:16px 20px;display:flex;align-items:flex-start;gap:14px;box-shadow:var(--shadow)}
+.hpc-icon{font-size:22px;flex-shrink:0;margin-top:2px}
+.hpc-title{font-size:13px;font-weight:700;color:var(--ink);margin-bottom:6px}
+.hpc-desc{font-size:12px;color:var(--ink-3);margin-bottom:6px}
+.hpc-bullets{list-style:none;display:flex;flex-direction:column;gap:3px;margin-top:5px}
+.hpc-bullets li{font-size:11.5px;color:var(--ink-3);display:flex;align-items:flex-start;gap:5px;line-height:1.35}
+.hpc-bullets li::before{content:'·';color:var(--blue);font-weight:700;flex-shrink:0;font-size:14px;line-height:1.1}
 
 /* ─── Tagline ─────────────────────────────────────────────────── */
 .tagline-strip{background:var(--blue);padding:20px 28px;text-align:center}
@@ -393,18 +396,48 @@ footer{background:var(--ink);padding:42px 0 0}
       </div>
     </div>
     <div style="display:flex;flex-direction:column;gap:11px">
+
       <div class="hero-preview-card">
         <div class="hpc-icon">🔍</div>
-        <div><div class="hpc-title">Inspect &nbsp;<span style="color:var(--green);font-weight:700;font-size:11.5px">Free</span></div><div class="hpc-desc">See exactly how the document was written — every revision, paste, and pause.</div></div>
+        <div style="flex:1">
+          <div class="hpc-title">Inspect &nbsp;<span style="color:var(--green);font-weight:700;font-size:11.5px">Free</span></div>
+          <ul class="hpc-bullets">
+            <li>Full revision timeline — every edit, session, and pause</li>
+            <li>Paste event detection with novelty scoring</li>
+            <li>⚡ Struggle moment detection</li>
+            <li>Revision playback — watch it being written</li>
+          </ul>
+        </div>
       </div>
+
       <div class="hero-preview-card">
         <div class="hpc-icon">✍️</div>
-        <div><div class="hpc-title">StyleMatch &nbsp;<span style="color:var(--gold-dk);font-size:11.5px">$4.99/mo</span></div><div class="hpc-desc">Compare two writing samples. Six stylometric metrics. One verdict.</div></div>
+        <div style="flex:1">
+          <div class="hpc-title">StyleMatch &nbsp;<span style="color:var(--gold-dk);font-size:11.5px">$4.99/mo</span></div>
+          <div class="hpc-desc">Compares two writing samples — in-class vs. submitted — using six stylometric metrics to assess whether the same person wrote both.</div>
+          <ul class="hpc-bullets">
+            <li>Function word profile, punctuation fingerprint, sentence rhythm</li>
+            <li>Paste comparison &amp; struggle point analysis built in</li>
+            <li>CONSISTENT / CAUTION / FLAGGED verdict</li>
+            <li>Printable report — all analysis stays in your browser</li>
+          </ul>
+        </div>
       </div>
+
       <div class="hero-preview-card">
         <div class="hpc-icon">📊</div>
-        <div><div class="hpc-title">Verify &nbsp;<span style="color:var(--teal);font-size:11.5px">From $0.60/report</span></div><div class="hpc-desc">AI-assisted analysis. A structured report you can stand behind.</div></div>
+        <div style="flex:1">
+          <div class="hpc-title">Verify &nbsp;<span style="color:var(--teal);font-size:11.5px">From $0.60/report</span></div>
+          <div class="hpc-desc">Builds on Inspect &amp; StyleMatch data to produce a formal, AI-assisted report for institutional conversations.</div>
+          <ul class="hpc-bullets">
+            <li>Synthesizes revision history, paste events &amp; stylometric signals</li>
+            <li>Two report styles: Summary and Full Documentation</li>
+            <li>Structured findings: summary, signals, recommendation</li>
+            <li>No text retained — credits never expire</li>
+          </ul>
+        </div>
       </div>
+
     </div>
   </div>
 </section>
@@ -574,7 +607,7 @@ footer{background:var(--ink);padding:42px 0 0}
         </div>
         <div class="pcard-footer">
           <div class="price-line"><span class="price-big">$4.99</span><span class="price-unit">/month &nbsp;·&nbsp; $49.99/year</span></div>
-          <a href="#pricing" class="btn btn-gold btn-full" onclick="event.stopPropagation()">See pricing</a>
+          <a href="#pricing" class="btn btn-gold btn-full" onclick="event.stopPropagation();_close(true)">See pricing</a>
           <p class="expand-hint">Click card to see sample report ↓</p>
         </div>
 
@@ -623,7 +656,7 @@ footer{background:var(--ink);padding:42px 0 0}
             <div class="exp-price-row">
               <div class="exp-price-big">$4.99<span style="font-size:15px;font-weight:400;color:var(--ink-3)">/month</span></div>
               <div class="exp-price-sub">or $49.99/year — save 17%</div>
-              <a href="#pricing" class="btn btn-gold btn-full" onclick="event.stopPropagation()">See full pricing ↓</a>
+              <a href="#pricing" class="btn btn-gold btn-full" onclick="event.stopPropagation();_close(true)">See full pricing ↓</a>
             </div>
             <div class="exp-disclaimer">StyleMatch is a probabilistic tool. Genre-constrained writing (lab reports, TOK essays) may show inflated similarity scores. Always apply professional judgment. Reports include a mandatory disclaimer.</div>
           </div>
@@ -653,7 +686,7 @@ footer{background:var(--ink);padding:42px 0 0}
         </div>
         <div class="pcard-footer">
           <div class="price-line"><span class="price-big">$6</span><span class="price-unit">— 10 reports (starter)</span></div>
-          <a href="#pricing" class="btn btn-teal btn-full" onclick="event.stopPropagation()">See credit packs</a>
+          <a href="#pricing" class="btn btn-teal btn-full" onclick="event.stopPropagation();_close(true)">See credit packs</a>
           <p class="expand-hint">Click card to see sample report ↓</p>
         </div>
 
@@ -703,7 +736,7 @@ footer{background:var(--ink);padding:42px 0 0}
             <div class="exp-price-row">
               <div class="exp-price-big">$0.60<span style="font-size:14px;font-weight:400;color:var(--ink-3)">/report</span></div>
               <div class="exp-price-sub">Starter: 10 for $6 &nbsp;·&nbsp; Semester: 35 for $18 &nbsp;·&nbsp; Year: 100 for $45</div>
-              <a href="#pricing" class="btn btn-teal btn-full" onclick="event.stopPropagation()">See all credit packs ↓</a>
+              <a href="#pricing" class="btn btn-teal btn-full" onclick="event.stopPropagation();_close(true)">See all credit packs ↓</a>
             </div>
             <div class="exp-disclaimer">Verify transmits submitted text to PaperTrail's secure backend and the Anthropic API for processing. Text is not retained after the report is generated. See our Privacy Policy for full details.</div>
           </div>
