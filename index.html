@@ -3,272 +3,854 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>PaperTrail Academic — See How It Was Really Written</title>
-  <meta name="description" content="PaperTrail is a free Chrome extension that gives teachers structured, documentable insight into how student writing was produced in Google Docs." />
+  <title>PaperTrail Academic — Know How It Was Written</title>
+  <meta name="description" content="PaperTrail Academic gives teachers structured, documentable tools to understand how student writing was produced. Inspect, StyleMatch, and Verify — all inside Google Docs." />
   <link rel="icon" href="icon128.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
+
+<style>
+/* ─── Reset & Tokens ─────────────────────────────────────────── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --blue:#4A6FA5; --blue-dk:#3a5882; --blue-lt:#e8eef6;
+  --gold:#C9A84C; --gold-dk:#a8892f; --gold-lt:#fdf6e3;
+  --teal:#2a7a6b; --teal-lt:#e6f4f1;
+  --ink:#1a2235;  --ink-2:#3d4f6e;   --ink-3:#6b7a96;
+  --rule:#dce4ef; --bg:#f9fafc; --white:#fff;
+  --green:#34a853; --red:#ea4335; --yellow:#fbbc04;
+  --shadow:0 4px 24px rgba(74,111,165,.10);
+  --shadow-lg:0 16px 56px rgba(74,111,165,.18);
+}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;color:var(--ink);background:var(--white);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%}
+.container{max-width:1140px;margin:0 auto;padding:0 28px}
+.eyebrow{font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--blue);margin-bottom:10px}
+
+/* ─── Buttons ─────────────────────────────────────────────────── */
+.btn{display:inline-flex;align-items:center;gap:7px;padding:12px 22px;border-radius:6px;font-family:'DM Sans',sans-serif;font-size:13.5px;font-weight:600;cursor:pointer;transition:all .18s ease;border:none;white-space:nowrap;text-decoration:none}
+.btn-gold{background:var(--gold);color:#fff}.btn-gold:hover{background:var(--gold-dk);transform:translateY(-1px);box-shadow:0 4px 16px rgba(201,168,76,.35)}
+.btn-blue{background:var(--blue);color:#fff}.btn-blue:hover{background:var(--blue-dk);transform:translateY(-1px)}
+.btn-teal{background:var(--teal);color:#fff}.btn-teal:hover{background:#1e5c50;transform:translateY(-1px)}
+.btn-ghost{background:transparent;color:var(--blue);border:1.5px solid var(--blue)}.btn-ghost:hover{background:var(--blue-lt)}
+.btn-ghost-gold{background:transparent;color:var(--gold-dk);border:1.5px solid var(--gold)}.btn-ghost-gold:hover{background:var(--gold-lt)}
+.btn-sm{padding:8px 16px;font-size:12.5px}
+.btn-full{width:100%;justify-content:center}
+
+/* ─── Nav ─────────────────────────────────────────────────────── */
+nav{position:sticky;top:0;z-index:200;background:rgba(255,255,255,.96);backdrop-filter:blur(10px);border-bottom:1px solid var(--rule)}
+.nav-inner{max-width:1140px;margin:0 auto;padding:0 28px;height:60px;display:flex;align-items:center;gap:28px}
+.nav-logo{display:flex;align-items:center;gap:9px;margin-right:auto}
+.nav-logo img{width:26px;height:26px}
+.nav-wm{font-family:'Lora',serif;font-size:16px;font-weight:700;color:var(--ink)}
+.nav-wm em{color:var(--blue);font-style:italic}
+.nl{font-size:13px;font-weight:500;color:var(--ink-2);transition:color .15s}
+.nl:hover{color:var(--blue)}
+.nl.cta{background:var(--gold);color:#fff;padding:7px 16px;border-radius:5px;font-weight:600}
+.nl.cta:hover{background:var(--gold-dk)}
+
+/* ─── Hero ────────────────────────────────────────────────────── */
+.hero{background:linear-gradient(155deg,#f0f5fc 0%,#fff 50%,#fdf8ee 100%);padding:72px 0 60px}
+.hero-inner{max-width:1140px;margin:0 auto;padding:0 28px;display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}
+.hero h1{font-family:'Lora',serif;font-size:clamp(28px,3.5vw,44px);font-weight:700;line-height:1.18;color:var(--ink);margin-bottom:18px}
+.hero h1 em{color:var(--blue)}
+.hero-sub{font-size:16.5px;color:var(--ink-2);line-height:1.65;margin-bottom:28px;max-width:480px}
+.hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:24px}
+.hero-trust{display:flex;flex-wrap:wrap;gap:14px}
+.hero-trust span{font-size:12px;color:var(--ink-3);display:flex;align-items:center;gap:5px}
+.hero-trust span::before{content:'✓';color:var(--green);font-weight:700;font-size:11px}
+.hero-preview-card{background:#fff;border:1.5px solid var(--rule);border-radius:12px;padding:16px 20px;display:flex;align-items:center;gap:14px;box-shadow:var(--shadow)}
+.hpc-icon{font-size:22px;flex-shrink:0}
+.hpc-title{font-size:13px;font-weight:700;color:var(--ink);margin-bottom:2px}
+.hpc-desc{font-size:12px;color:var(--ink-3)}
+
+/* ─── Tagline ─────────────────────────────────────────────────── */
+.tagline-strip{background:var(--blue);padding:20px 28px;text-align:center}
+.tagline-strip p{font-family:'Lora',serif;font-size:17px;font-style:italic;color:#fff}
+.tagline-strip em{color:var(--gold);font-style:normal;font-weight:600}
+
+/* ═══════════════════════════════════════════════════════════════
+   PRODUCT CARDS — three columns, expand-to-modal
+══════════════════════════════════════════════════════════════════ */
+.products-section{padding:64px 0 0;background:var(--bg)}
+.products-hdr{text-align:center;margin-bottom:36px}
+.products-hdr h2{font-family:'Lora',serif;font-size:clamp(24px,3vw,34px);color:var(--ink);margin-bottom:8px}
+.products-hdr h2 em{color:var(--blue)}
+.products-hdr p{font-size:15px;color:var(--ink-2);max-width:500px;margin:0 auto}
+
+.cards-arena{max-width:1140px;margin:0 auto;padding:0 28px}
+.cards-row{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+
+/* ── Base card ── */
+.pcard{
+  background:#fff;border:1.5px solid var(--rule);border-radius:14px;
+  overflow:hidden;display:flex;flex-direction:column;cursor:pointer;
+  transition:box-shadow .25s ease, transform .25s ease, opacity .3s ease, filter .3s ease;
+  position:relative;z-index:1;
+}
+.pcard:hover:not(.is-open):not(.is-bg){box-shadow:var(--shadow-lg);transform:translateY(-4px)}
+.pcard-stripe{height:5px}
+.stripe-blue{background:var(--blue)}
+.stripe-gold{background:var(--gold)}
+.stripe-teal{background:var(--teal)}
+.pcard-top{padding:22px 20px 16px}
+.pcard-badge{display:inline-flex;align-items:center;gap:6px;font-size:10px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;padding:3px 10px;border-radius:20px}
+.badge-blue{background:var(--blue-lt);color:var(--blue)}
+.badge-gold{background:var(--gold-lt);color:var(--gold-dk)}
+.badge-teal{background:var(--teal-lt);color:var(--teal)}
+.badge-free{background:#e8f5e9;color:#2e7d32}
+.pcard h3{font-family:'Lora',serif;font-size:20px;font-weight:700;color:var(--ink);margin-bottom:5px;line-height:1.2}
+.card-tagline{font-size:12px;font-style:italic;color:var(--ink-3);margin-bottom:10px}
+.card-desc{font-size:13px;color:var(--ink-2);line-height:1.55}
+.pcard-features{padding:0 20px 16px}
+.pcard-features ul{list-style:none;display:flex;flex-direction:column;gap:6px}
+.pcard-features li{font-size:12.5px;color:var(--ink-2);display:flex;align-items:flex-start;gap:7px;line-height:1.35}
+.pcard-features li::before{content:'✓';color:var(--green);font-weight:700;font-size:10.5px;flex-shrink:0;margin-top:2px}
+.pcard-footer{padding:14px 20px 18px;border-top:1px solid var(--rule);margin-top:auto}
+.price-line{display:flex;align-items:baseline;gap:5px;margin-bottom:11px}
+.price-big{font-family:'Lora',serif;font-size:22px;font-weight:700;color:var(--ink)}
+.price-unit{font-size:11.5px;color:var(--ink-3)}
+.price-free{font-size:14px;font-weight:700;color:var(--green)}
+.expand-hint{font-size:11px;color:var(--ink-3);text-align:center;margin-top:9px;opacity:.7}
+
+/* ── Overlay ── */
+.cards-overlay{position:fixed;inset:0;background:rgba(15,25,45,.5);backdrop-filter:blur(4px);z-index:150;opacity:0;pointer-events:none;transition:opacity .35s ease}
+body.overlay-active .cards-overlay{opacity:1;pointer-events:all}
+
+/* ── Background cards when one is open ── */
+.cards-row.has-open .pcard.is-bg{opacity:.38;filter:saturate(.3);transform:scale(.965);pointer-events:none}
+
+/* ── Open card — fixed modal ── */
+.pcard.is-open{
+  position:fixed;z-index:160;
+  top:50%;left:50%;
+  transform:translate(-50%,-50%) scale(1) !important;
+  width:min(920px,94vw);
+  max-height:90vh;
+  overflow-y:auto;
+  cursor:default;
+  border-radius:16px;
+  box-shadow:0 28px 90px rgba(15,25,45,.32);
+  display:block;
+  animation:cardPop .38s cubic-bezier(.22,.84,.44,1) forwards;
+}
+@keyframes cardPop{
+  from{opacity:0;transform:translate(-50%,-50%) scale(.88)}
+  to  {opacity:1;transform:translate(-50%,-50%) scale(1)}
+}
+
+/* ── Expanded layout inside open card ── */
+.pcard-expanded{display:none}
+.pcard.is-open .pcard-expanded{display:grid;grid-template-columns:1fr 1fr}
+.pcard.is-open .pcard-features{display:none}
+.pcard.is-open .pcard-footer{display:none}
+.pcard.is-open .expand-hint{display:none}
+.pcard.is-open .pcard-top{padding:26px 26px 20px;border-bottom:1px solid var(--rule)}
+
+.exp-left{padding:22px;border-right:1px solid var(--rule);background:var(--bg)}
+.exp-right{padding:22px 26px;overflow-y:auto}
+.exp-right h4{font-family:'Lora',serif;font-size:17px;color:var(--ink);margin-bottom:14px;line-height:1.25}
+.exp-features{list-style:none;display:flex;flex-direction:column;gap:9px;margin-bottom:20px}
+.exp-features li{font-size:13px;color:var(--ink-2);display:flex;align-items:flex-start;gap:8px;line-height:1.42}
+.exp-features li::before{content:'✓';color:var(--green);font-weight:700;font-size:11.5px;flex-shrink:0;margin-top:2px}
+.exp-price-row{border-top:1px solid var(--rule);padding-top:16px;margin-bottom:14px}
+.exp-price-big{font-family:'Lora',serif;font-size:28px;font-weight:700;color:var(--ink);margin-bottom:4px}
+.exp-price-sub{font-size:12px;color:var(--ink-3);margin-bottom:14px}
+.exp-disclaimer{font-size:11px;color:var(--ink-3);line-height:1.5;padding:9px 11px;background:#fffbf0;border:1px solid #f0e4b0;border-radius:6px}
+
+/* Close button */
+.card-close{position:absolute;top:12px;right:12px;width:28px;height:28px;border-radius:50%;background:rgba(0,0,0,.08);display:none;align-items:center;justify-content:center;font-size:14px;color:var(--ink-2);cursor:pointer;transition:background .15s;border:none;z-index:10}
+.card-close:hover{background:rgba(0,0,0,.16)}
+.pcard.is-open .card-close{display:flex}
+
+/* ═══════════════════════════════════════════════════════════════
+   INSPECT SIDEBAR MOCKUP
+══════════════════════════════════════════════════════════════════ */
+.gdoc-frame{background:#fff;border-radius:9px;border:1px solid var(--rule);overflow:hidden;display:flex;height:360px;font-family:'DM Sans',sans-serif}
+.gdoc-page{flex:1;padding:18px 14px;border-right:1px solid var(--rule);background:#fff;overflow:hidden}
+.gdoc-toolbar{height:26px;background:#f8f9fa;border-bottom:1px solid #e8eaed;margin:-18px -14px 13px;display:flex;align-items:center;padding:0 10px;gap:5px}
+.gdoc-dot{width:6px;height:6px;border-radius:50%;background:#dadce0}
+.gdoc-fname{font-size:9.5px;font-weight:600;color:#5f6368;margin-left:4px}
+.gline{height:8px;background:#e8eaed;border-radius:3px;margin-bottom:6px}
+.gline.title{height:11px;width:58%;background:#bcc0c8;margin-bottom:13px}
+.gline.full{width:90%}.gline.long{width:80%}.gline.med{width:66%}.gline.short{width:46%}
+.gline.hl{background:#fff3cd;position:relative}
+.gline.hl::after{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--yellow);border-radius:2px 0 0 2px}
+.gpara{height:11px}
+.mock-sb{width:210px;display:flex;flex-direction:column;background:#f8fafe;flex-shrink:0}
+.mock-sb-head{background:var(--blue);color:#fff;padding:8px 10px;display:flex;align-items:center;gap:6px;font-size:11.5px;font-weight:700;flex-shrink:0}
+.sb-ico{width:15px;height:15px;background:rgba(255,255,255,.22);border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:8px}
+.mock-tabs{display:flex;border-bottom:1px solid var(--rule);background:#fff;flex-shrink:0}
+.mock-tab{flex:1;padding:5px 2px;font-size:9px;font-weight:600;text-align:center;color:var(--ink-3);border-bottom:2px solid transparent}
+.mock-tab.on{color:var(--blue);border-bottom-color:var(--blue)}
+.sb-body{flex:1;overflow:hidden;padding:9px;display:flex;flex-direction:column;gap:7px}
+.sb-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:5px}
+.sb-stat{background:#fff;border:1px solid var(--rule);border-radius:5px;padding:6px 3px;text-align:center}
+.sv{font-size:14px;font-weight:700;color:var(--blue);line-height:1}
+.sl{font-size:8px;color:var(--ink-3);margin-top:2px}
+.sb-tl{background:#fff;border:1px solid var(--rule);border-radius:5px;padding:6px 8px}
+.sb-tl-lbl{font-size:8px;font-weight:600;color:var(--ink-3);text-transform:uppercase;letter-spacing:.07em;margin-bottom:4px}
+.sb-tl-bar{height:14px;border-radius:7px;background:#eee;overflow:hidden;display:flex}
+.tl-seg{height:100%}
+.tl-dots{display:flex;gap:3px;margin-top:4px;flex-wrap:wrap;align-items:center}
+.tl-dot{width:4px;height:4px;border-radius:50%;background:var(--ink-3);opacity:.4}
+.tl-dot.flag{background:var(--yellow);opacity:1}
+.tl-bolt{font-size:7px;line-height:1}
+.sb-paste{background:#fff;border:1px solid var(--rule);border-radius:5px;padding:6px 8px;border-left:3px solid var(--yellow)}
+.sb-paste-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:2px}
+.sb-paste-lbl{font-size:9px;font-weight:700;color:var(--ink-2)}
+.sb-paste-bdg{font-size:8px;font-weight:700;background:#fce8e6;color:var(--red);padding:1px 5px;border-radius:8px}
+.sb-paste-txt{font-size:8px;color:var(--ink-3);line-height:1.4;font-style:italic}
+.sb-struggle{background:#fff;border:1px solid var(--rule);border-radius:5px;padding:6px 8px;border-left:3px solid var(--gold)}
+.sb-struggle-lbl{font-size:9px;font-weight:700;color:var(--ink-2);margin-bottom:2px}
+.sb-struggle-det{font-size:8px;color:var(--ink-3);line-height:1.4}
+.sb-diff{background:#fff;border:1px solid var(--rule);border-radius:5px;padding:6px 8px}
+.sb-diff-lbl{font-size:8px;font-weight:700;color:var(--ink-3);text-transform:uppercase;letter-spacing:.07em;margin-bottom:3px}
+.diff-line{font-size:8px;font-family:monospace;line-height:1.5;padding:1px 3px;border-radius:2px;margin-bottom:1px}
+.diff-add{background:#e6ffec;color:#1e6e34}
+.diff-del{background:#ffebe9;color:#9c1a0e;text-decoration:line-through}
+.diff-neu{color:var(--ink-3)}
+.sb-session{background:#fff;border:1px solid var(--rule);border-radius:5px;padding:5px 8px;display:flex;align-items:center;gap:6px}
+.ss-dot{width:6px;height:6px;border-radius:50%;background:var(--green);flex-shrink:0}
+.ss-title{font-size:9px;font-weight:600;color:var(--ink-2)}
+.ss-sub{font-size:8px;color:var(--ink-3)}
+
+/* ═══════════════════════════════════════════════════════════════
+   STYLEMATCH REPORT MOCKUP
+══════════════════════════════════════════════════════════════════ */
+.sm-mock{background:#fff;border-radius:9px;border:1px solid var(--rule);overflow:hidden;font-family:'DM Sans',sans-serif}
+.sm-head{background:var(--blue);padding:11px 15px;display:flex;align-items:center;justify-content:space-between}
+.sm-head-title{color:#fff;font-size:11.5px;font-weight:700}
+.verdict-badge{font-size:9px;font-weight:800;letter-spacing:.08em;padding:3px 10px;border-radius:20px}
+.vc{background:#fff3cd;color:#856404}
+.sm-body{padding:13px 15px}
+.sm-score-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.sm-score-n{font-family:'Lora',serif;font-size:36px;font-weight:700;color:var(--blue);line-height:1}
+.sm-score-lbl{font-size:9.5px;color:var(--ink-3);line-height:1.4}
+.sm-score-meta{font-size:9.5px;color:var(--ink-3);line-height:1.5;text-align:right}
+.sm-meter{height:7px;background:#e8edf4;border-radius:4px;overflow:hidden;margin-bottom:13px}
+.sm-meter-fill{height:100%;background:linear-gradient(90deg,var(--red) 0%,var(--yellow) 50%,var(--green) 100%);border-radius:4px}
+.sm-metrics{display:flex;flex-direction:column;gap:5px}
+.sm-row{display:flex;align-items:center;gap:6px}
+.sm-name{font-size:9.5px;color:var(--ink-2);width:118px;flex-shrink:0}
+.sm-bar-wrap{flex:1;height:5px;background:#eee;border-radius:3px;overflow:hidden}
+.sm-bar{height:100%;border-radius:3px}
+.bh{background:var(--green)}.bm{background:var(--yellow)}.bl{background:var(--red)}
+.sm-val{font-size:9.5px;font-weight:700;color:var(--ink-2);width:24px;text-align:right;flex-shrink:0}
+.sm-note{margin-top:10px;padding:7px 9px;background:#fffbf0;border:1px solid #f0e4b0;border-radius:5px;font-size:8.5px;color:#7a6020;line-height:1.5}
+
+/* ═══════════════════════════════════════════════════════════════
+   VERIFY REPORT MOCKUP
+══════════════════════════════════════════════════════════════════ */
+.vfy-mock{background:#fff;border-radius:9px;border:1px solid var(--rule);overflow:hidden;font-family:'DM Sans',sans-serif}
+.vfy-head{background:var(--teal);padding:11px 15px;display:flex;align-items:center;justify-content:space-between}
+.vfy-head-title{color:#fff;font-size:11.5px;font-weight:700}
+.vfy-body{padding:13px 15px}
+.vfy-section{margin-bottom:12px}
+.vfy-sec-label{font-size:8px;font-weight:700;color:var(--ink-3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:5px}
+.vfy-finding{font-size:10.5px;color:var(--ink-2);line-height:1.55;padding:7px 9px;background:var(--bg);border-radius:6px;border-left:3px solid var(--teal);margin-bottom:5px}
+.vfy-signals{display:flex;flex-direction:column;gap:5px}
+.vfy-signal{display:flex;align-items:flex-start;gap:6px;font-size:9.5px;color:var(--ink-2);line-height:1.4}
+.vfy-sig-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;margin-top:3px}
+.vfy-divider{height:1px;background:var(--rule);margin:10px 0}
+.vfy-meta{font-size:8.5px;color:var(--ink-3);line-height:1.6}
+
+/* ─── Pricing ─────────────────────────────────────────────────── */
+.pricing-row{background:#fff;border-top:1px solid var(--rule);padding:52px 0}
+.pricing-hdr{text-align:center;margin-bottom:32px}
+.pricing-hdr h2{font-family:'Lora',serif;font-size:clamp(22px,2.5vw,30px);color:var(--ink);margin-bottom:8px}
+.pricing-hdr h2 em{color:var(--blue)}
+.pricing-hdr p{font-size:14.5px;color:var(--ink-2);max-width:480px;margin:0 auto}
+.price-cols{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-bottom:24px}
+.price-col{background:var(--bg);border:1.5px solid var(--rule);border-radius:12px;padding:22px 20px;display:flex;flex-direction:column;gap:11px}
+.price-col.featured{background:var(--blue);border-color:var(--blue);box-shadow:0 8px 32px rgba(74,111,165,.22)}
+.price-col h3{font-family:'Lora',serif;font-size:18px;color:var(--ink)}
+.price-col.featured h3{color:#fff}
+.price-sub-lbl{font-size:11.5px;color:var(--ink-3)}
+.price-col.featured .price-sub-lbl{color:rgba(255,255,255,.6)}
+.big-price{display:flex;align-items:baseline;gap:4px}
+.big-price .n{font-family:'Lora',serif;font-size:32px;font-weight:700;color:var(--ink)}
+.price-col.featured .big-price .n{color:var(--gold)}
+.big-price .u{font-size:11.5px;color:var(--ink-3)}
+.price-col.featured .big-price .u{color:rgba(255,255,255,.6)}
+.price-alt{font-size:11px;color:var(--ink-3)}
+.price-col.featured .price-alt{color:rgba(255,255,255,.5)}
+.price-feats{list-style:none;display:flex;flex-direction:column;gap:7px;flex:1}
+.price-feats li{font-size:12.5px;color:var(--ink-2);display:flex;align-items:flex-start;gap:7px;line-height:1.35}
+.price-col.featured .price-feats li{color:rgba(255,255,255,.87)}
+.price-feats li::before{content:'✓';color:var(--green);font-weight:700;font-size:11px;flex-shrink:0;margin-top:2px}
+.price-col.featured .price-feats li::before{color:#a8f0c6}
+.price-feats li.na{color:var(--ink-3);opacity:.55}
+.price-feats li.na::before{content:'—';color:currentColor;font-weight:400}
+.packs-wrap{padding:22px 24px;background:var(--teal-lt);border:1.5px solid #b2d8d2;border-radius:12px}
+.packs-label{font-size:12.5px;font-weight:700;color:var(--teal);margin-bottom:3px}
+.packs-sublabel{font-size:12px;color:var(--ink-3);margin-bottom:16px}
+.packs-row{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.pack{border:1.5px solid #b2d8d2;border-radius:9px;padding:14px 12px;text-align:center;background:#fff}
+.pack:hover{border-color:var(--teal)}
+.pack-name{font-size:9.5px;font-weight:700;color:var(--ink-3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:5px}
+.pack-count{font-family:'Lora',serif;font-size:26px;font-weight:700;color:var(--teal);line-height:1;margin-bottom:1px}
+.pack-unit{font-size:9.5px;color:var(--ink-3);margin-bottom:7px}
+.pack-price-n{font-size:17px;font-weight:700;color:var(--ink)}
+.pack-per{font-size:9.5px;color:var(--ink-3);margin-bottom:10px}
+
+/* ─── Schools + Contact ───────────────────────────────────────── */
+.schools-contact{background:linear-gradient(135deg,#1e3a5f 0%,var(--blue) 100%);padding:60px 0}
+.sc-inner{max-width:1140px;margin:0 auto;padding:0 28px;display:grid;grid-template-columns:1fr 1fr;gap:52px;align-items:start}
+.sc-schools h2,.sc-contact h2{font-family:'Lora',serif;font-size:clamp(20px,2.5vw,28px);color:#fff;margin-bottom:10px;line-height:1.25}
+.sc-schools h2 em,.sc-contact h2 em{color:var(--gold)}
+.sc-p{font-size:13.5px;color:rgba(255,255,255,.75);line-height:1.65;margin-bottom:13px}
+.sc-list{list-style:none;display:flex;flex-direction:column;gap:8px;margin-bottom:20px}
+.sc-list li{font-size:13px;color:rgba(255,255,255,.87);display:flex;align-items:flex-start;gap:8px;line-height:1.4}
+.sc-list li::before{content:'✓';color:var(--gold);font-weight:700;flex-shrink:0;margin-top:1px}
+.trust-badges{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:20px}
+.tb{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);border-radius:8px;padding:12px 8px;text-align:center}
+.tb-icon{font-size:18px;margin-bottom:4px}
+.tb-label{font-size:9.5px;font-weight:700;color:#fff;text-transform:uppercase;letter-spacing:.06em;line-height:1.3}
+.contact-cards{display:flex;flex-direction:column;gap:10px}
+.cc{display:flex;align-items:center;gap:12px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:9px;padding:14px 16px;transition:background .2s}
+.cc:hover{background:rgba(255,255,255,.18)}
+.cc-ico{font-size:22px;flex-shrink:0}
+.cc h4{font-size:13px;font-weight:700;color:#fff;margin-bottom:2px}
+.cc p{font-size:11.5px;color:rgba(255,255,255,.6)}
+
+/* ─── Footer ──────────────────────────────────────────────────── */
+footer{background:var(--ink);padding:42px 0 0}
+.ftr-inner{max-width:1140px;margin:0 auto;padding:0 28px 34px;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:32px}
+.ftr-logo{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.ftr-logo img{width:23px;height:23px}
+.ftr-wm{font-family:'Lora',serif;font-size:14.5px;font-weight:700;color:#fff}
+.ftr-wm em{color:var(--gold);font-style:italic}
+.ftr-tag{font-size:12.5px;color:rgba(255,255,255,.42);line-height:1.6;font-style:italic}
+.ftr-col h4{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,.35);margin-bottom:12px}
+.ftr-col ul{list-style:none;display:flex;flex-direction:column;gap:8px}
+.ftr-col ul a{font-size:12.5px;color:rgba(255,255,255,.62);transition:color .15s}
+.ftr-col ul a:hover{color:#fff}
+.ftr-bottom{border-top:1px solid rgba(255,255,255,.1);padding:15px 28px;max-width:1140px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
+.ftr-bottom span{font-size:11.5px;color:rgba(255,255,255,.36)}
+.ftr-bottom a{color:rgba(255,255,255,.5);text-decoration:none}
+.ftr-bottom a:hover{color:#fff}
+
+/* ─── Responsive ──────────────────────────────────────────────── */
+@media(max-width:960px){
+  .hero-inner{grid-template-columns:1fr}
+  .cards-row{grid-template-columns:1fr}
+  .price-cols{grid-template-columns:1fr}
+  .packs-row{grid-template-columns:1fr}
+  .sc-inner{grid-template-columns:1fr}
+  .ftr-inner{grid-template-columns:1fr 1fr}
+  .trust-badges{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:640px){
+  .nav-inner .nl:not(.cta){display:none}
+  .ftr-inner{grid-template-columns:1fr}
+  .pcard.is-open .pcard-expanded{grid-template-columns:1fr}
+  .exp-left{border-right:none;border-bottom:1px solid var(--rule)}
+  .gdoc-page{display:none}
+  .mock-sb{width:100%}
+}
+</style>
 </head>
 <body>
 
-<!-- NAV -->
+<!-- ═══ NAV ═══════════════════════════════════════════════════════ -->
 <nav>
   <div class="nav-inner">
     <a href="/" class="nav-logo">
       <img src="icon128.png" alt="PaperTrail Academic" />
       <span class="nav-wm">PaperTrail <em>Academic</em></span>
     </a>
-    <a href="#features" class="nl">Features</a>
-    <a href="#privacy"  class="nl">Privacy</a>
-    <a href="#contact"  class="nl">Contact</a>
+    <a href="#products" class="nl">Products</a>
+    <a href="#pricing"  class="nl">Pricing</a>
+    <a href="#schools"  class="nl">For Schools</a>
+    <a href="/privacy-policy" class="nl">Privacy</a>
     <a href="https://chromewebstore.google.com/detail/papertrail/kgkjmhfoijiiplbmablcjbooopndjbgm"
        class="nl cta" target="_blank" rel="noopener">Add to Chrome — Free</a>
   </div>
 </nav>
 
-<!-- MISSION -->
-<section class="mission">
-  <div class="mission-inner">
-    <p class="eyebrow">Our Mission</p>
-    <div class="mission-rule"></div>
-    <h2>Bringing <em>confidence</em> back to writing done outside the classroom</h2>
-    <div class="mission-body">
-      <p>Something changed. Teachers who spent careers helping students find their voice now spend energy wondering whether the work in front of them actually belongs to the student who submitted it. AI tools, contract cheating, and simple copy-paste have made that question harder to answer — and harder to document.</p>
-      <p><strong>PaperTrail Academic exists for that moment of doubt.</strong> Not to accuse. Not to replace teacher judgment. But to give teachers a structured, repeatable, documentable way to look at the evidence — and to have a fair, defensible conversation with a student, a parent, or an administrator.</p>
-      <p>Every tool we build is guided by one principle: <strong>the evidence should speak clearly, and the judgment should stay yours.</strong></p>
-    </div>
-    <a href="#features" class="btn btn-blue">See what PaperTrail does &darr;</a>
-  </div>
-</section>
-
-<!-- HERO -->
+<!-- ═══ HERO ════════════════════════════════════════════════════════ -->
 <section class="hero">
   <div class="hero-inner">
-    <div class="hero-content">
-      <p class="hero-eyebrow">PaperTrail Academic</p>
-      <h1>Turnitin tells you if it was <em>copied.</em><br>PaperTrail tells you if it was <em>theirs.</em></h1>
-      <p class="hero-sub">A free Chrome extension built directly inside Google Docs that shows teachers exactly how a document was produced — every revision, every paste, every pause. Evidence you can document. Judgment that stays yours.</p>
+    <div>
+      <p class="eyebrow">PaperTrail Academic</p>
+      <h1>You've read thousands of student essays.<br><em>Trust that instinct — then document it.</em></h1>
+      <p class="hero-sub">Three tools built inside Google Docs that give teachers structured, repeatable, documentable insight into how student writing was produced. The evidence speaks clearly. The judgment stays yours.</p>
       <div class="hero-actions">
         <a href="https://chromewebstore.google.com/detail/papertrail/kgkjmhfoijiiplbmablcjbooopndjbgm"
            class="btn btn-gold" target="_blank" rel="noopener">&#11015; Add to Chrome — It's Free</a>
-        <a href="#features" class="btn btn-ghost">See the features &darr;</a>
+        <a href="#products" class="btn btn-ghost">See the tools ↓</a>
       </div>
       <div class="hero-trust">
-        <span>No account required</span>
+        <span>No account required to start</span>
         <span>No student data stored</span>
-        <span>Works in Google Docs &amp; Classroom</span>
-        <span>Completely free</span>
+        <span>Works inside Google Docs</span>
+        <span>Built by a teacher</span>
       </div>
     </div>
-    <div class="hero-visual">
-      <div class="mock-sb">
-        <div class="mock-tb">&#128269; PaperTrail <em>&nbsp;Inspect</em></div>
-        <div class="mock-bd">
-          <div class="mock-row">
-            <div class="mock-stat"><div class="mock-sv">47</div><div class="mock-sl">Revisions</div></div>
-            <div class="mock-stat"><div class="mock-sv">23m</div><div class="mock-sl">Active time</div></div>
-            <div class="mock-stat"><div class="mock-sv">3</div><div class="mock-sl">Pastes</div></div>
-          </div>
-          <div class="mock-sec">
-            <div class="mock-st">&#9889; Struggle Moments</div>
-            <div class="mock-sc"><div class="mock-sc-l">&#9889; High-Density Revision &middot; Para 2</div><div class="mock-sc-t">412 chars rewritten &middot; 8 revisions &middot; 4m elapsed</div></div>
-          </div>
-          <div class="mock-sec">
-            <div class="mock-st">&#128203; Paste Events</div>
-            <div class="mock-pc"><div class="mock-pc-l">Paste #1 &mdash; 847 chars &middot; 82% High novelty</div><div class="mock-pc-t">"The social contract, as Rousseau described, represents a fundamental agreement&hellip;"</div></div>
-          </div>
-          <div class="mock-sec">
-            <div class="mock-st">&#128197; Writing Timeline</div>
-            <div class="mock-bar">
-              <div class="mock-bs" style="width:8%;background:#4A6FA5"></div>
-              <div class="mock-bs" style="width:3%;background:#e2e8f0"></div>
-              <div class="mock-bs" style="width:22%;background:#4A6FA5"></div>
-              <div class="mock-bs" style="width:2%;background:#e2e8f0"></div>
-              <div class="mock-bs" style="width:35%;background:#C9A84C"></div>
-              <div class="mock-bs" style="width:5%;background:#e2e8f0"></div>
-              <div class="mock-bs" style="width:18%;background:#4A6FA5"></div>
-            </div>
-          </div>
-        </div>
+    <div style="display:flex;flex-direction:column;gap:11px">
+      <div class="hero-preview-card">
+        <div class="hpc-icon">🔍</div>
+        <div><div class="hpc-title">Inspect &nbsp;<span style="color:var(--green);font-weight:700;font-size:11.5px">Free</span></div><div class="hpc-desc">See exactly how the document was written — every revision, paste, and pause.</div></div>
+      </div>
+      <div class="hero-preview-card">
+        <div class="hpc-icon">✍️</div>
+        <div><div class="hpc-title">StyleMatch &nbsp;<span style="color:var(--gold-dk);font-size:11.5px">$4.99/mo</span></div><div class="hpc-desc">Compare two writing samples. Six stylometric metrics. One verdict.</div></div>
+      </div>
+      <div class="hero-preview-card">
+        <div class="hpc-icon">📊</div>
+        <div><div class="hpc-title">Verify &nbsp;<span style="color:var(--teal);font-size:11.5px">From $0.60/report</span></div><div class="hpc-desc">AI-assisted analysis. A structured report you can stand behind.</div></div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- TAGLINE -->
 <div class="tagline-strip">
-  <p>Not a verdict machine. A structured, repeatable, <em>documentable</em> data point for teacher judgment.</p>
+  <p>A structured, repeatable, <em>documentable</em> data point for the hardest conversation in teaching.</p>
 </div>
 
-<!-- FEATURES -->
-<section class="section features-bg" id="features">
+<!-- ═══ PRODUCT CARDS ═══════════════════════════════════════════════ -->
+<section class="products-section" id="products">
   <div class="container">
-    <div class="section-hdr">
-      <p class="eyebrow">PaperTrail Inspect</p>
-      <h2 class="section-title">See how it was really written</h2>
-      <p class="section-sub">Everything you need to understand a student's writing process — installed in seconds, no account required.</p>
-    </div>
-    <div class="feat-grid">
-
-      <div class="feat-card">
-        <span class="feat-icon">&#128197;</span>
-        <h3>Full Revision Timeline</h3>
-        <p>Every edit, session, and pause — laid out chronologically. See exactly when work happened, how long it took, and how the document evolved from first keystroke to final submission.</p>
-      </div>
-
-      <div class="feat-card">
-        <span class="feat-icon">&#128203;</span>
-        <h3>Paste Event Detection</h3>
-        <p>Every paste event is flagged with a timestamp, character count, and novelty score — showing what percentage of the pasted text was new to the document. High novelty suggests external sourcing.</p>
-      </div>
-
-      <div class="feat-card">
-        <span class="feat-icon">&#9889;</span>
-        <h3>Struggle Moments</h3>
-        <p>Regions of heavy revision — repeated rewrites, deletions, and reworking — are automatically detected and flagged. These are among the strongest signals of genuine engagement with the writing process.</p>
-      </div>
-
-      <div class="feat-card">
-        <span class="feat-icon">&#9654;&#65039;</span>
-        <h3>Revision Playback</h3>
-        <p>Watch the document being written from the very first character to the final version — like looking over the student's shoulder in real time. Pause, rewind, and jump to any moment.</p>
-      </div>
-
-      <div class="feat-card">
-        <span class="feat-icon">&#128270;</span>
-        <h3>Paste Comparison</h3>
-        <p>For every paste event, see the document state before and after — side by side. Understand exactly what was replaced, inserted, or added from an external source.</p>
-      </div>
-
-      <div class="feat-card">
-        <span class="feat-icon">&#128202;</span>
-        <h3>Deep Writing Metrics</h3>
-        <p>Deletion ratio, revision density, writing session breakdown, and activity flags — a full analytical picture of how the document was built, not just what it looks like now.</p>
-      </div>
-
+    <div class="products-hdr">
+      <p class="eyebrow">The PaperTrail Suite</p>
+      <h2>Three tools. One question: <em>Did they write this?</em></h2>
+      <p>Click any card to see a full preview and feature breakdown.</p>
     </div>
   </div>
-</section>
 
-<!-- FEATURE SPLITS -->
-<section class="section hiw">
-  <div class="container">
+  <div class="cards-overlay" id="cardsOverlay"></div>
 
-    <div class="fsplit">
-      <div>
-        <p class="ft-ey">Struggle Moments</p>
-        <h2 class="ft-h">&#9889; Where the real writing <em>happened</em></h2>
-        <p class="ft-p">Struggle moments are regions where a student revised heavily — high deletion, rewriting, or repeated edits across a short span of time. They're one of the strongest signals of genuine engagement with the writing process.</p>
-        <p class="ft-p">PaperTrail automatically identifies these regions and marks them on the writing timeline. Click any &#9889; bolt in playback to jump directly to that moment and watch the revision unfold in real time.</p>
-        <div class="chips">
-          <span class="chip">Revision density</span>
-          <span class="chip">Document position</span>
-          <span class="chip">Elapsed time</span>
-          <span class="chip">Linked to playback</span>
-        </div>
-      </div>
-      <div>
-        <div class="mwin">
-          <div class="mwin-bar">
-            <div class="dot" style="background:#ff5f57"></div>
-            <div class="dot" style="background:#febc2e"></div>
-            <div class="dot" style="background:#28c840"></div>
-            <span class="mwin-title">&#9889; Struggle Moments</span>
-          </div>
-          <div class="mwin-body">
-            <div class="str-card"><div class="slbl">&#9889; High-Density Revision</div><div class="sdet">412 chars rewritten across 8 revisions &middot; 4m 12s elapsed &middot; Paragraph 2</div><div class="spos">Early-draft position &middot; Likely thesis or topic sentence rework</div></div>
-            <div class="str-card"><div class="slbl">&#9889; Extended Rewrite</div><div class="sdet">287 chars deleted &amp; replaced &middot; 6 revisions &middot; Paragraph 4</div><div class="spos">Mid-document &middot; Evidence paragraph significantly reworked</div></div>
-            <div class="str-card" style="opacity:.5"><div class="slbl">&#9889; Minor Revision Cluster</div><div class="sdet">94 chars across 3 revisions &middot; Conclusion</div><div class="spos">Late-draft polish &middot; Normal revision behavior</div></div>
-          </div>
-        </div>
-      </div>
-    </div>
+  <div class="cards-arena">
+    <div class="cards-row" id="cardsRow">
 
-    <div class="fsplit flip">
-      <div>
-        <p class="ft-ey">Paste Comparison</p>
-        <h2 class="ft-h">See exactly what <em>changed</em></h2>
-        <p class="ft-p">When a paste event is detected, PaperTrail shows you exactly what was pasted, when, and how novel that text is relative to the rest of the document. A high novelty score means most pasted words were new to the document — a strong signal of external sourcing.</p>
-        <p class="ft-p">The paste comparison viewer shows the document before and after each event, side by side, so you can see precisely what was replaced or inserted.</p>
-        <div class="chips">
-          <span class="chip">Novelty scoring</span>
-          <span class="chip">Before / after view</span>
-          <span class="chip">Character count</span>
-          <span class="chip">Timestamp &amp; author</span>
-        </div>
-      </div>
-      <div>
-        <div class="mwin">
-          <div class="mwin-bar">
-            <div class="dot" style="background:#ff5f57"></div>
-            <div class="dot" style="background:#febc2e"></div>
-            <div class="dot" style="background:#28c840"></div>
-            <span class="mwin-title">&#128203; Paste Comparison &mdash; Event #2</span>
+      <!-- ══ INSPECT ══ -->
+      <div class="pcard" id="card-inspect" onclick="openCard('inspect',event)">
+        <button class="card-close" onclick="closeCard(event)">✕</button>
+        <div class="pcard-stripe stripe-blue"></div>
+        <div class="pcard-top">
+          <div style="display:flex;gap:7px;flex-wrap:wrap;margin-bottom:11px">
+            <span class="pcard-badge badge-blue">🔍 Inspect</span>
+            <span class="pcard-badge badge-free">Free</span>
           </div>
-          <div class="mwin-body">
-            <div style="margin-bottom:12px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
-              <span style="font-size:11.5px;font-weight:700;color:#ea4335">847 chars pasted</span>
-              <span style="font-size:10px;padding:2px 8px;border-radius:8px;background:#fce8e6;color:#ea4335;font-weight:700">82% High novelty</span>
-              <span style="font-size:10px;color:#6b7a96">Nov 14 &middot; 9:42 PM</span>
+          <h3>How was it written?</h3>
+          <p class="card-tagline">"Something about this essay doesn't add up."</p>
+          <p class="card-desc">Reconstruct the full revision history of any Google Doc — every session, paste, and pause — into a clear, documentable timeline.</p>
+        </div>
+        <div class="pcard-features">
+          <ul>
+            <li>Full revision timeline &amp; writing sessions</li>
+            <li>Paste detection with novelty scoring</li>
+            <li>⚡ Struggle moment detection</li>
+            <li>Revision playback — watch it being written</li>
+          </ul>
+        </div>
+        <div class="pcard-footer">
+          <div class="price-line"><span class="price-free">Free — no account needed</span></div>
+          <a href="https://chromewebstore.google.com/detail/papertrail/kgkjmhfoijiiplbmablcjbooopndjbgm"
+             class="btn btn-blue btn-full" target="_blank" rel="noopener" onclick="event.stopPropagation()">&#11015; Add to Chrome</a>
+          <p class="expand-hint">Click card to see full preview ↓</p>
+        </div>
+
+        <div class="pcard-expanded">
+          <div class="exp-left">
+            <div class="gdoc-frame">
+              <div class="gdoc-page">
+                <div class="gdoc-toolbar">
+                  <div class="gdoc-dot"></div><div class="gdoc-dot"></div><div class="gdoc-dot"></div>
+                  <span class="gdoc-fname">The Social Contract — Final Draft</span>
+                </div>
+                <div class="gline title"></div>
+                <div class="gline full"></div><div class="gline long"></div><div class="gline med"></div><div class="gline full"></div>
+                <div class="gpara"></div>
+                <div class="gline hl full"></div><div class="gline hl long"></div><div class="gline hl med"></div>
+                <div class="gpara"></div>
+                <div class="gline full"></div><div class="gline long"></div><div class="gline short"></div>
+                <div class="gpara"></div>
+                <div class="gline full"></div><div class="gline med"></div><div class="gline long"></div>
+              </div>
+              <div class="mock-sb">
+                <div class="mock-sb-head"><div class="sb-ico">📄</div>Inspect</div>
+                <div class="mock-tabs">
+                  <div class="mock-tab on">Summary</div>
+                  <div class="mock-tab">Pastes</div>
+                  <div class="mock-tab">Flags</div>
+                </div>
+                <div class="sb-body">
+                  <div class="sb-stats">
+                    <div class="sb-stat"><div class="sv">47</div><div class="sl">Revisions</div></div>
+                    <div class="sb-stat"><div class="sv">23m</div><div class="sl">Active</div></div>
+                    <div class="sb-stat"><div class="sv" style="color:var(--red)">3</div><div class="sl">Pastes</div></div>
+                  </div>
+                  <div class="sb-tl">
+                    <div class="sb-tl-lbl">📅 Timeline</div>
+                    <div class="sb-tl-bar">
+                      <div class="tl-seg" style="width:8%;background:var(--blue)"></div>
+                      <div class="tl-seg" style="width:3%;background:#e2e8f0"></div>
+                      <div class="tl-seg" style="width:22%;background:var(--blue)"></div>
+                      <div class="tl-seg" style="width:2%;background:#e2e8f0"></div>
+                      <div class="tl-seg" style="width:35%;background:var(--gold)"></div>
+                      <div class="tl-seg" style="width:5%;background:#e2e8f0"></div>
+                      <div class="tl-seg" style="width:18%;background:var(--blue)"></div>
+                    </div>
+                    <div class="tl-dots">
+                      <div class="tl-dot"></div><div class="tl-dot"></div><div class="tl-dot flag"></div>
+                      <span class="tl-bolt">⚡</span><div class="tl-dot"></div><div class="tl-dot flag"></div>
+                      <span class="tl-bolt">⚡</span><div class="tl-dot"></div><div class="tl-dot"></div>
+                    </div>
+                  </div>
+                  <div class="sb-paste">
+                    <div class="sb-paste-hd">
+                      <span class="sb-paste-lbl">📋 Paste #2 — 847 chars</span>
+                      <span class="sb-paste-bdg">82% Novel</span>
+                    </div>
+                    <div class="sb-paste-txt">"The social contract, as Rousseau described, represents a fundamental agreement…"</div>
+                  </div>
+                  <div class="sb-struggle">
+                    <div class="sb-struggle-lbl">⚡ High-Density Revision · Para 2</div>
+                    <div class="sb-struggle-det">412 chars rewritten · 8 revisions · 4m 12s · Early-draft position</div>
+                  </div>
+                  <div class="sb-diff">
+                    <div class="sb-diff-lbl">Revision #31 diff</div>
+                    <div class="diff-line diff-del">the argument remains unclear to scholars</div>
+                    <div class="diff-line diff-add">the philosophical implications of this debate</div>
+                    <div class="diff-line diff-neu">have been studied in modern contexts.</div>
+                  </div>
+                  <div class="sb-session">
+                    <div class="ss-dot"></div>
+                    <div><div class="ss-title">Session 2 · Nov 14, 9:38 PM</div><div class="ss-sub">18m · 1,240 chars · 2 pastes</div></div>
+                  </div>
+                </div>
+              </div>
             </div>
-            <div class="cmp-grid">
-              <div class="cmp-col bef"><div class="cmp-t">Before paste</div><p>&hellip;the philosophical implications of this argument remain unclear to many modern scholars who have studied the period.</p></div>
-              <div class="cmp-col aft"><div class="cmp-t">After paste</div><p>&hellip;the philosophical implications remain unclear. The social contract, as Rousseau described, represents a fundamental agreement between the individual and the collective, wherein natural freedoms are exchanged for civil protections guaranteed by the state.</p></div>
+          </div>
+          <div class="exp-right">
+            <h4>Everything you need to understand a writing process</h4>
+            <ul class="exp-features">
+              <li>Full revision timeline — every edit laid out chronologically</li>
+              <li>Writing session reconstruction — when they worked and for how long</li>
+              <li>Paste event detection — flagged with timestamp, character count, and novelty score</li>
+              <li>⚡ Struggle moment detection — regions of heavy revision signalling genuine engagement</li>
+              <li>Revision playback — watch the document being written from the first character</li>
+              <li>Paste before/after comparison — see exactly what was replaced</li>
+              <li>Deletion ratio and revision density metrics</li>
+              <li>Activity flags — unusual patterns automatically surfaced</li>
+            </ul>
+            <div class="exp-price-row">
+              <div class="exp-price-big" style="color:var(--green)">Free</div>
+              <div class="exp-price-sub">No account required. Installs in seconds.</div>
+              <a href="https://chromewebstore.google.com/detail/papertrail/kgkjmhfoijiiplbmablcjbooopndjbgm"
+                 class="btn btn-blue btn-full" target="_blank" rel="noopener" onclick="event.stopPropagation()">&#11015; Add to Chrome — Free</a>
             </div>
+            <div class="exp-disclaimer">Inspect reads Google Docs revision metadata. Requires Editor or Owner access to the document. No document content is stored or transmitted.</div>
           </div>
         </div>
       </div>
+
+      <!-- ══ STYLEMATCH ══ -->
+      <div class="pcard" id="card-stylematch" onclick="openCard('stylematch',event)">
+        <button class="card-close" onclick="closeCard(event)">✕</button>
+        <div class="pcard-stripe stripe-gold"></div>
+        <div class="pcard-top">
+          <div style="display:flex;gap:7px;flex-wrap:wrap;margin-bottom:11px">
+            <span class="pcard-badge badge-gold">✍️ StyleMatch</span>
+            <span class="pcard-badge" style="background:#f3e8ff;color:#6d28d9">Plus</span>
+          </div>
+          <h3>Who wrote it?</h3>
+          <p class="card-tagline">"This doesn't sound like them."</p>
+          <p class="card-desc">Compare two writing samples using six peer-reviewed stylometric metrics — all computed locally. No text is ever transmitted anywhere.</p>
+        </div>
+        <div class="pcard-features">
+          <ul>
+            <li>Function word profile (Burrows' Delta)</li>
+            <li>Punctuation fingerprint + sentence rhythm</li>
+            <li>CONSISTENT / CAUTION / FLAGGED verdict</li>
+            <li>Printable PDF report with research citations</li>
+          </ul>
+        </div>
+        <div class="pcard-footer">
+          <div class="price-line"><span class="price-big">$4.99</span><span class="price-unit">/month &nbsp;·&nbsp; $49.99/year</span></div>
+          <a href="#pricing" class="btn btn-gold btn-full" onclick="event.stopPropagation()">See pricing</a>
+          <p class="expand-hint">Click card to see sample report ↓</p>
+        </div>
+
+        <div class="pcard-expanded">
+          <div class="exp-left">
+            <div class="sm-mock">
+              <div class="sm-head">
+                <span class="sm-head-title">✍️ StyleMatch Report — J. Martinez</span>
+                <span class="verdict-badge vc">⚠ CAUTION</span>
+              </div>
+              <div class="sm-body">
+                <div class="sm-score-row">
+                  <div>
+                    <div class="sm-score-n">61</div>
+                    <div class="sm-score-lbl">Composite Score<br><span style="color:var(--yellow);font-weight:700">CAUTION (50–74)</span></div>
+                  </div>
+                  <div class="sm-score-meta">Sample A: 847 words<br>Sample B: 1,204 words<br>Nov 14, 2025</div>
+                </div>
+                <div class="sm-meter"><div class="sm-meter-fill" style="width:61%"></div></div>
+                <div class="sm-metrics">
+                  <div class="sm-row"><span class="sm-name">Function Words</span><div class="sm-bar-wrap"><div class="sm-bar bm" style="width:58%"></div></div><span class="sm-val">58</span></div>
+                  <div class="sm-row"><span class="sm-name">Punctuation</span><div class="sm-bar-wrap"><div class="sm-bar bh" style="width:78%"></div></div><span class="sm-val">78</span></div>
+                  <div class="sm-row"><span class="sm-name">Sent. Length (avg)</span><div class="sm-bar-wrap"><div class="sm-bar bm" style="width:64%"></div></div><span class="sm-val">64</span></div>
+                  <div class="sm-row"><span class="sm-name">Sent. Rhythm (SD)</span><div class="sm-bar-wrap"><div class="sm-bar bl" style="width:42%"></div></div><span class="sm-val">42</span></div>
+                  <div class="sm-row"><span class="sm-name">Type-Token Ratio</span><div class="sm-bar-wrap"><div class="sm-bar bm" style="width:55%"></div></div><span class="sm-val">55</span></div>
+                  <div class="sm-row"><span class="sm-name">FK Grade Level</span><div class="sm-bar-wrap"><div class="sm-bar bh" style="width:82%"></div></div><span class="sm-val">82</span></div>
+                  <div class="sm-row"><span class="sm-name">Informality Markers</span><div class="sm-bar-wrap"><div class="sm-bar bh" style="width:76%"></div></div><span class="sm-val">76</span></div>
+                </div>
+                <div class="sm-note">⚠ Analytical data point — not a finding of fact. Educator judgment required. Not suitable as sole basis for any disciplinary action.</div>
+              </div>
+            </div>
+          </div>
+          <div class="exp-right">
+            <h4>Six metrics. Research-backed. Entirely private.</h4>
+            <ul class="exp-features">
+              <li><strong>Function Word Profile (35%)</strong> — Burrows' Delta; cosine similarity over 30 most common function words</li>
+              <li><strong>Punctuation Fingerprint (20%)</strong> — comma, semicolon, em-dash rates per 1,000 characters</li>
+              <li><strong>Sentence Length + Rhythm (15%)</strong> — average and standard deviation; Coh-Metrix methodology</li>
+              <li><strong>Type-Token Ratio (15%)</strong> — vocabulary richness; stable per individual writer</li>
+              <li><strong>Flesch-Kincaid Grade Level (10%)</strong> — reading complexity consistency</li>
+              <li><strong>Informality Markers (5%)</strong> — contraction rate and first-person pronoun use</li>
+              <li>All computation runs locally — no text is ever transmitted</li>
+              <li>Minimum 500 words per sample for reliable results</li>
+              <li>Printable PDF report with full research citations</li>
+            </ul>
+            <div class="exp-price-row">
+              <div class="exp-price-big">$4.99<span style="font-size:15px;font-weight:400;color:var(--ink-3)">/month</span></div>
+              <div class="exp-price-sub">or $49.99/year — save 17%</div>
+              <a href="#pricing" class="btn btn-gold btn-full" onclick="event.stopPropagation()">See full pricing ↓</a>
+            </div>
+            <div class="exp-disclaimer">StyleMatch is a probabilistic tool. Genre-constrained writing (lab reports, TOK essays) may show inflated similarity scores. Always apply professional judgment. Reports include a mandatory disclaimer.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ VERIFY ══ -->
+      <div class="pcard" id="card-verify" onclick="openCard('verify',event)">
+        <button class="card-close" onclick="closeCard(event)">✕</button>
+        <div class="pcard-stripe stripe-teal"></div>
+        <div class="pcard-top">
+          <div style="display:flex;gap:7px;flex-wrap:wrap;margin-bottom:11px">
+            <span class="pcard-badge badge-teal">📊 Verify</span>
+            <span class="pcard-badge" style="background:#e8f4f1;color:var(--teal)">Credits</span>
+          </div>
+          <h3>Can I document it?</h3>
+          <p class="card-tagline">"I need something I can hand to my department head."</p>
+          <p class="card-desc">AI-assisted deep analysis that produces a structured, printable report designed for formal documentation and institutional conversations.</p>
+        </div>
+        <div class="pcard-features">
+          <ul>
+            <li>AI-assisted narrative analysis</li>
+            <li>Structured printable report</li>
+            <li>No text retained after analysis</li>
+            <li>Pay-per-report — credits never expire</li>
+          </ul>
+        </div>
+        <div class="pcard-footer">
+          <div class="price-line"><span class="price-big">$6</span><span class="price-unit">— 10 reports (starter)</span></div>
+          <a href="#pricing" class="btn btn-teal btn-full" onclick="event.stopPropagation()">See credit packs</a>
+          <p class="expand-hint">Click card to see sample report ↓</p>
+        </div>
+
+        <div class="pcard-expanded">
+          <div class="exp-left">
+            <div class="vfy-mock">
+              <div class="vfy-head">
+                <span class="vfy-head-title">📊 Verify Report — Essay #7, S. Okonkwo</span>
+              </div>
+              <div class="vfy-body">
+                <div class="vfy-section">
+                  <div class="vfy-sec-label">Summary Finding</div>
+                  <div class="vfy-finding">The submitted essay presents notable stylistic inconsistencies relative to the student's prior work. Structural complexity and vocabulary level exceed the baseline from this semester's class writing samples.</div>
+                </div>
+                <div class="vfy-divider"></div>
+                <div class="vfy-section">
+                  <div class="vfy-sec-label">Signals Detected</div>
+                  <div class="vfy-signals">
+                    <div class="vfy-signal"><div class="vfy-sig-dot" style="background:var(--red)"></div><span>Vocabulary complexity significantly above prior samples (FK Grade 11.4 vs. avg 8.2)</span></div>
+                    <div class="vfy-signal"><div class="vfy-sig-dot" style="background:var(--red)"></div><span>1,847 words submitted; 14 total edits over 6 minutes</span></div>
+                    <div class="vfy-signal"><div class="vfy-sig-dot" style="background:var(--yellow)"></div><span>Two high-novelty paste events (74% and 91% novel content)</span></div>
+                    <div class="vfy-signal"><div class="vfy-sig-dot" style="background:var(--yellow)"></div><span>No struggle moments detected — atypical for a complex argument essay</span></div>
+                    <div class="vfy-signal"><div class="vfy-sig-dot" style="background:var(--green)"></div><span>Document opened and edited on a single occasion</span></div>
+                  </div>
+                </div>
+                <div class="vfy-divider"></div>
+                <div class="vfy-section">
+                  <div class="vfy-sec-label">Recommendation</div>
+                  <div class="vfy-finding" style="border-left-color:var(--yellow)">Consider requesting an in-class writing sample on the same topic for stylometric comparison. Professional judgment required — this is an analytical data point, not a finding of fact.</div>
+                </div>
+                <div class="vfy-meta">PaperTrail Verify · Anthropic Claude API · Text not retained · Report ID: VFY-2025-1114-0091</div>
+              </div>
+            </div>
+          </div>
+          <div class="exp-right">
+            <h4>A report you can stand behind</h4>
+            <ul class="exp-features">
+              <li>AI-assisted narrative analysis of the submitted writing sample</li>
+              <li>Cross-references revision history data from Inspect</li>
+              <li>Structured findings — summary, signals, recommendation</li>
+              <li>Designed to support a formal conversation with administration or parents</li>
+              <li>Submitted text processed securely — not retained after analysis</li>
+              <li>Powered by Anthropic Claude API; terms prohibit training on submitted content</li>
+              <li>Credits never expire — use when the situation calls for it</li>
+              <li>Report ID and timestamp for institutional recordkeeping</li>
+            </ul>
+            <div class="exp-price-row">
+              <div class="exp-price-big">$0.60<span style="font-size:14px;font-weight:400;color:var(--ink-3)">/report</span></div>
+              <div class="exp-price-sub">Starter: 10 for $6 &nbsp;·&nbsp; Semester: 35 for $18 &nbsp;·&nbsp; Year: 100 for $45</div>
+              <a href="#pricing" class="btn btn-teal btn-full" onclick="event.stopPropagation()">See all credit packs ↓</a>
+            </div>
+            <div class="exp-disclaimer">Verify transmits submitted text to PaperTrail's secure backend and the Anthropic API for processing. Text is not retained after the report is generated. See our Privacy Policy for full details.</div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /cards-row -->
+  </div><!-- /cards-arena -->
+</section>
+
+<!-- ═══ PRICING ══════════════════════════════════════════════════════ -->
+<section class="pricing-row" id="pricing">
+  <div class="container">
+    <div class="pricing-hdr">
+      <p class="eyebrow">Pricing</p>
+      <h2>Start free. <em>Upgrade when you need to.</em></h2>
+      <p>Inspect is free forever, no account required. StyleMatch Plus and Verify are for when the situation calls for more.</p>
+    </div>
+    <div class="price-cols">
+      <div class="price-col">
+        <span class="pcard-badge badge-blue" style="align-self:flex-start">🔍 Inspect</span>
+        <h3>Free</h3>
+        <p class="price-sub-lbl">No account required</p>
+        <div class="big-price"><span class="n" style="color:var(--green)">$0</span></div>
+        <ul class="price-feats">
+          <li>Full revision timeline</li>
+          <li>Writing session reconstruction</li>
+          <li>Paste detection + novelty scoring</li>
+          <li>Struggle moment detection</li>
+          <li>Revision playback</li>
+          <li>Deep writing metrics</li>
+          <li class="na">StyleMatch authorship comparison</li>
+          <li class="na">Verify AI reports</li>
+        </ul>
+        <a href="https://chromewebstore.google.com/detail/papertrail/kgkjmhfoijiiplbmablcjbooopndjbgm"
+           class="btn btn-blue btn-full" target="_blank" rel="noopener">&#11015; Add to Chrome — Free</a>
+      </div>
+      <div class="price-col featured">
+        <span class="pcard-badge" style="align-self:flex-start;background:rgba(255,255,255,.18);color:#fff">✍️ StyleMatch Plus</span>
+        <h3>Plus</h3>
+        <p class="price-sub-lbl">Authorship analysis</p>
+        <div class="big-price"><span class="n">$4.99</span><span class="u">/month</span></div>
+        <p class="price-alt">or $49.99/year — save 17%</p>
+        <ul class="price-feats">
+          <li>Everything in Free</li>
+          <li>StyleMatch authorship comparison</li>
+          <li>Six stylometric metrics</li>
+          <li>CONSISTENT / CAUTION / FLAGGED verdict</li>
+          <li>Printable PDF report</li>
+          <li>Auto-fill from open document</li>
+          <li>Research citations in report</li>
+          <li class="na">Verify AI-assisted reports</li>
+        </ul>
+        <a href="#" class="btn btn-gold btn-full">Get StyleMatch Plus</a>
+      </div>
+      <div class="price-col">
+        <span class="pcard-badge badge-teal" style="align-self:flex-start">📊 Verify</span>
+        <h3>Pay per report</h3>
+        <p class="price-sub-lbl">Formal documentation</p>
+        <div class="big-price"><span class="n">$0.60</span><span class="u">/report</span></div>
+        <p class="price-alt">Starter: 10 reports for $6</p>
+        <ul class="price-feats">
+          <li>Everything in Free</li>
+          <li>AI-assisted narrative analysis</li>
+          <li>Structured printable report</li>
+          <li>For formal documentation</li>
+          <li>No text retained after analysis</li>
+          <li>Credits never expire</li>
+          <li class="na">StyleMatch included separately</li>
+        </ul>
+        <a href="#" class="btn btn-teal btn-full">Buy Verify Credits</a>
+      </div>
     </div>
 
+    <div class="packs-wrap">
+      <div class="packs-label">📊 Verify Credit Packs</div>
+      <div class="packs-sublabel">Credits never expire. Use as the situation calls for it — no subscription required.</div>
+      <div class="packs-row">
+        <div class="pack">
+          <div class="pack-name">Starter</div>
+          <div class="pack-count">10</div><div class="pack-unit">reports</div>
+          <div class="pack-price-n">$6.00</div><div class="pack-per">$0.60/report</div>
+          <a href="#" class="btn btn-ghost btn-sm btn-full">Buy Now</a>
+        </div>
+        <div class="pack">
+          <div class="pack-name">Semester</div>
+          <div class="pack-count">35</div><div class="pack-unit">reports</div>
+          <div class="pack-price-n">$18.00</div><div class="pack-per">$0.51/report</div>
+          <a href="#" class="btn btn-teal btn-sm btn-full">Buy Now</a>
+        </div>
+        <div class="pack">
+          <div class="pack-name">Year Supply</div>
+          <div class="pack-count">100</div><div class="pack-unit">reports</div>
+          <div class="pack-price-n">$45.00</div><div class="pack-per">$0.45/report</div>
+          <a href="#" class="btn btn-ghost btn-sm btn-full">Buy Now</a>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
-<!-- PRIVACY -->
-<div class="priv-strip" id="privacy">
-  <div class="priv-inner">
-    <div class="priv-item"><span class="priv-ico">&#128274;</span><div><h4>No student text stored</h4><p>All analysis runs entirely in your browser. No writing sample is ever transmitted to any server. Your students' work stays private.</p></div></div>
-    <div class="priv-item"><span class="priv-ico">&#128100;</span><div><h4>No student accounts</h4><p>Students never interact with PaperTrail. No student logins, no student data collection, no student tracking of any kind.</p></div></div>
-    <div class="priv-item"><span class="priv-ico">&#128196;</span><div><h4>FERPA-conscious design</h4><p>Built by a teacher, for teachers. Every decision has been made with student privacy front of mind — not bolted on after the fact.</p></div></div>
-    <div class="priv-item"><span class="priv-ico">&#128683;</span><div><h4>No ads. Ever.</h4><p>PaperTrail Academic does not run ads, does not sell data, and does not share anything with third parties.</p></div></div>
-  </div>
-</div>
-
-<!-- COMING SOON -->
-<section class="coming-soon">
-  <div class="container">
-    <div class="cs-inner">
-      <p class="eyebrow" style="color:var(--gold)">What's Next</p>
-      <h2>More tools are on the way</h2>
-      <p>PaperTrail Inspect is just the beginning. We're building additional tools to give teachers even deeper insight into student writing — including authorship analysis and AI-assisted reporting. Stay tuned, or get notified when new features launch.</p>
-      <a href="mailto:hello@papertrailacademic.com?subject=Keep me posted on new PaperTrail features"
-         class="btn btn-gold">&#9993; Notify Me When New Features Launch</a>
+<!-- ═══ FOR SCHOOLS + CONTACT ════════════════════════════════════════ -->
+<section class="schools-contact" id="schools">
+  <div class="sc-inner">
+    <div class="sc-schools">
+      <p class="eyebrow" style="color:var(--gold)">For Schools &amp; Departments</p>
+      <h2>Built to pass <em>the IT review.</em></h2>
+      <p class="sc-p">When a teacher brings PaperTrail to their department head or IT coordinator, we want the answer to be easy.</p>
+      <ul class="sc-list">
+        <li>StyleMatch runs entirely client-side — no student text ever leaves the browser</li>
+        <li>No student accounts, logins, or data collection of any kind</li>
+        <li>Inspect reads revision metadata only — not document content</li>
+        <li>Verify text processed securely and not retained after analysis</li>
+        <li>No advertising, no data resale, no third-party tracking</li>
+        <li>Teacher accounts only — students never interact with the product</li>
+      </ul>
+      <a href="mailto:hello@papertrailacademic.com?subject=School or Department Inquiry" class="btn btn-gold">Contact us for school &amp; department inquiries</a>
+      <div class="trust-badges">
+        <div class="tb"><div class="tb-icon">🔒</div><div class="tb-label">FERPA<br>Conscious</div></div>
+        <div class="tb"><div class="tb-icon">🇨🇦</div><div class="tb-label">PIPEDA<br>Considered</div></div>
+        <div class="tb"><div class="tb-icon">🇪🇺</div><div class="tb-label">GDPR<br>Aware</div></div>
+        <div class="tb"><div class="tb-icon">🚫</div><div class="tb-label">Zero Student<br>Data</div></div>
+      </div>
     </div>
-  </div>
-</section>
-
-<!-- CONTACT -->
-<section class="section-sm contact-sec" id="contact">
-  <div class="container">
-    <div class="contact-inner">
-      <h2>Get in <em>touch</em></h2>
-      <p>Questions about how PaperTrail works, privacy concerns, or school and department inquiries — we'd love to hear from you. PaperTrail Academic is built by a teacher, and every email gets a real reply.</p>
-      <div class="cchannels">
-        <a href="mailto:hello@papertrailacademic.com" class="ccard">
-          <span class="ccard-ico">&#9993;&#65039;</span>
-          <div class="ccard-txt"><h4>General Inquiries</h4><p>hello@papertrailacademic.com</p></div>
+    <div class="sc-contact">
+      <p class="eyebrow" style="color:var(--gold)">Get in Touch</p>
+      <h2>Every email gets a <em>real reply.</em></h2>
+      <p class="sc-p">Questions about how PaperTrail works, privacy concerns, school and department inquiries — PaperTrail Academic is built by a teacher.</p>
+      <div class="contact-cards">
+        <a href="mailto:hello@papertrailacademic.com" class="cc">
+          <span class="cc-ico">✉️</span>
+          <div><h4>General Inquiries</h4><p>hello@papertrailacademic.com</p></div>
         </a>
-        <a href="mailto:hello@papertrailacademic.com?subject=School or Department Inquiry" class="ccard">
-          <span class="ccard-ico">&#127979;</span>
-          <div class="ccard-txt"><h4>School &amp; Department</h4><p>Group &amp; volume inquiries</p></div>
+        <a href="mailto:hello@papertrailacademic.com?subject=School or Department Inquiry" class="cc">
+          <span class="cc-ico">🏫</span>
+          <div><h4>School &amp; Department</h4><p>Group inquiries, IT review, volume pricing</p></div>
+        </a>
+        <a href="mailto:hello@papertrailacademic.com?subject=Privacy Question" class="cc">
+          <span class="cc-ico">🔒</span>
+          <div><h4>Privacy &amp; Compliance</h4><p>FERPA, PIPEDA, GDPR questions</p></div>
         </a>
       </div>
     </div>
   </div>
 </section>
 
-<!-- FOOTER -->
+<!-- ═══ FOOTER ═══════════════════════════════════════════════════════ -->
 <footer>
   <div class="ftr-inner">
     <div>
@@ -276,30 +858,89 @@
         <img src="icon128.png" alt="PaperTrail Academic" />
         <span class="ftr-wm">PaperTrail <em>Academic</em></span>
       </div>
-      <p class="ftr-tag">Turnitin tells you if it was copied.<br>PaperTrail tells you if it was theirs.</p>
+      <p class="ftr-tag">You've read thousands of student essays.<br>Trust that instinct — then document it.</p>
     </div>
     <div class="ftr-col">
-      <h4>Product</h4>
+      <h4>Products</h4>
       <ul>
-        <li><a href="#features">Features</a></li>
-        <li><a href="#privacy">Privacy</a></li>
+        <li><a href="/inspect">Inspect</a></li>
+        <li><a href="/stylematch">StyleMatch</a></li>
+        <li><a href="/verify">Verify</a></li>
         <li><a href="https://chromewebstore.google.com/detail/papertrail/kgkjmhfoijiiplbmablcjbooopndjbgm" target="_blank" rel="noopener">Chrome Web Store</a></li>
       </ul>
     </div>
     <div class="ftr-col">
-      <h4>Contact</h4>
+      <h4>For Schools</h4>
       <ul>
-        <li><a href="mailto:hello@papertrailacademic.com">hello@papertrailacademic.com</a></li>
-        <li><a href="mailto:hello@papertrailacademic.com?subject=School or Department Inquiry">School inquiries</a></li>
+        <li><a href="/for-schools">Privacy &amp; Compliance</a></li>
+        <li><a href="mailto:hello@papertrailacademic.com?subject=School or Department Inquiry">School Inquiries</a></li>
+        <li><a href="mailto:hello@papertrailacademic.com?subject=Privacy Question">FERPA / PIPEDA / GDPR</a></li>
+      </ul>
+    </div>
+    <div class="ftr-col">
+      <h4>Legal</h4>
+      <ul>
         <li><a href="/privacy-policy">Privacy Policy</a></li>
+        <li><a href="/terms-of-service">Terms of Service</a></li>
+        <li><a href="mailto:hello@papertrailacademic.com">Contact</a></li>
       </ul>
     </div>
   </div>
   <div class="ftr-bottom">
-    <span>&copy; 2026 PaperTrail Academic. All rights reserved.</span>
-    <span><a href="/privacy-policy">Privacy Policy</a> &nbsp;&middot;&nbsp; <a href="mailto:hello@papertrailacademic.com">Contact</a></span>
+    <span>&copy; 2026 PaperTrail Academic. All rights reserved. Operated by Michael Smith.</span>
+    <span>
+      <a href="/privacy-policy">Privacy Policy</a> &nbsp;&middot;&nbsp;
+      <a href="/terms-of-service">Terms of Service</a> &nbsp;&middot;&nbsp;
+      <a href="mailto:hello@papertrailacademic.com">Contact</a>
+    </span>
   </div>
 </footer>
+
+<script>
+const overlay = document.getElementById('cardsOverlay');
+const row     = document.getElementById('cardsRow');
+let   openId  = null;
+
+function openCard(id, e) {
+  if (e && e.target.closest('.card-close')) return;
+  if (openId === id) return;
+  if (openId) _close(false);
+
+  openId = id;
+  const card = document.getElementById('card-' + id);
+  const cards = [...row.querySelectorAll('.pcard')];
+
+  cards.forEach(c => {
+    if (c !== card) c.classList.add('is-bg');
+  });
+
+  card.classList.add('is-open');
+  row.classList.add('has-open');
+  document.body.classList.add('overlay-active');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeCard(e) {
+  if (e) { e.stopPropagation(); e.preventDefault(); }
+  _close(true);
+}
+
+function _close(clearId = true) {
+  if (!openId) return;
+  const card = document.getElementById('card-' + openId);
+  const cards = [...row.querySelectorAll('.pcard')];
+
+  card.classList.remove('is-open');
+  cards.forEach(c => c.classList.remove('is-bg'));
+  row.classList.remove('has-open');
+  document.body.classList.remove('overlay-active');
+  document.body.style.overflow = '';
+  if (clearId) openId = null;
+}
+
+overlay.addEventListener('click', () => _close(true));
+document.addEventListener('keydown', e => { if (e.key === 'Escape') _close(true); });
+</script>
 
 </body>
 </html>
