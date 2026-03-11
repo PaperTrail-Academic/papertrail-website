@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Email Confirmed — PaperTrail Academic</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Lora:wght@600;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --blue: #4A6FA5;
+      --gold: #C9A84C;
+      --teal: #2a7a6b;
+      --ink:  #1a2235;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: #f5f7fa;
+      color: var(--ink);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── Nav ── */
+    nav {
+      background: var(--ink);
+      padding: 16px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-logo {
+      font-family: 'Lora', serif;
+      font-size: 18px;
+      font-weight: 700;
+      color: #fff;
+      text-decoration: none;
+      letter-spacing: 0.2px;
+    }
+    .nav-logo em { color: var(--gold); font-style: italic; }
+
+    /* ── Main ── */
+    main {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 60px 24px;
+    }
+
+    .card {
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 4px 24px rgba(26,34,53,.08);
+      padding: 52px 48px;
+      max-width: 480px;
+      width: 100%;
+      text-align: center;
+    }
+
+    .checkmark {
+      width: 64px;
+      height: 64px;
+      background: #e8f5f1;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 24px;
+    }
+    .checkmark svg { width: 32px; height: 32px; }
+
+    h1 {
+      font-family: 'Lora', serif;
+      font-size: 26px;
+      font-weight: 700;
+      color: var(--ink);
+      margin-bottom: 12px;
+      line-height: 1.3;
+    }
+
+    .subtitle {
+      font-size: 15px;
+      color: #5a6478;
+      line-height: 1.6;
+      margin-bottom: 32px;
+    }
+
+    .instruction {
+      background: #f0f4f9;
+      border-radius: 10px;
+      padding: 18px 20px;
+      margin-bottom: 32px;
+      font-size: 14px;
+      color: var(--ink);
+      line-height: 1.6;
+      text-align: left;
+    }
+    .instruction strong { color: var(--blue); }
+
+    .btn-primary {
+      display: inline-block;
+      background: var(--blue);
+      color: #fff;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 15px;
+      font-weight: 600;
+      padding: 13px 28px;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: background .15s;
+    }
+    .btn-primary:hover { background: #3d5d8a; }
+
+    .fine-print {
+      margin-top: 20px;
+      font-size: 12px;
+      color: #9aa0b0;
+      line-height: 1.5;
+    }
+    .fine-print a { color: var(--blue); text-decoration: none; }
+    .fine-print a:hover { text-decoration: underline; }
+
+    /* ── Footer ── */
+    footer {
+      text-align: center;
+      padding: 20px;
+      font-size: 12px;
+      color: #9aa0b0;
+    }
+    footer a { color: var(--blue); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a class="nav-logo" href="https://papertrailacademic.com">PaperTrail <em>Academic</em></a>
+  </nav>
+
+  <main>
+    <div class="card">
+
+      <div class="checkmark">
+        <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="16" cy="16" r="16" fill="#2a7a6b" opacity="0.15"/>
+          <path d="M9 16.5l5 5 9-9" stroke="#2a7a6b" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+
+      <h1>Email confirmed.</h1>
+
+      <p class="subtitle">
+        Your PaperTrail Academic account is ready to use.
+        Head back to the extension in Chrome to sign in.
+      </p>
+
+      <div class="instruction">
+        <strong>Next step:</strong> Click the PaperTrail icon
+        in your Chrome toolbar, then sign in with your email
+        and password to get started.
+      </div>
+
+      <a class="btn-primary" href="https://papertrailacademic.com">
+        Back to PaperTrail →
+      </a>
+
+      <p class="fine-print">
+        Questions? <a href="mailto:support@papertrailacademic.com">support@papertrailacademic.com</a>
+      </p>
+
+    </div>
+  </main>
+
+  <footer>
+    &copy; 2026 PaperTrail Academic &nbsp;·&nbsp;
+    <a href="https://papertrailacademic.com/privacy-policy/">Privacy Policy</a> &nbsp;·&nbsp;
+    <a href="https://papertrailacademic.com/terms-of-service/">Terms of Service</a>
+  </footer>
+
+</body>
+</html>
