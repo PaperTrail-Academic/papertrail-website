@@ -191,7 +191,8 @@
       <li>Forwarded to the Anthropic API for AI-assisted analysis</li>
       <li>Returned as a structured report saved to your account</li>
     </ul>
-    <p><strong>The full essay text is not retained by PaperTrail after the report is generated. Anthropic's standard API retention policy applies to their processing of submitted text — see <a href="https://privacy.claude.com/en/articles/7996866-how-long-do-you-store-my-organization-s-data" target="_blank" rel="noopener">Anthropic's data retention policy</a>.</strong> Only report metadata is retained — scores, timestamps, and any label you assigned. Anthropic processes submitted text under terms that prohibit using it for model training. See <a href="https://www.anthropic.com/privacy" target="_blank" rel="noopener">anthropic.com/privacy</a> for their full policy.</p>
+    <p><strong>The full essay text is not retained by PaperTrail after the report is generated.</strong> Only report metadata is retained — scores, timestamps, and any label you assigned.</p>
+    <p>Anthropic processes submitted text under its commercial API terms, which prohibit using API inputs for model training. As of September 2025, Anthropic retains API inputs for 7 days before automatic deletion. See <a href="https://www.anthropic.com/privacy" target="_blank" rel="noopener">anthropic.com/privacy</a> for their full policy.</p>
     <p>If your institution requires it, you should anonymize student-identifying information from text before submitting through Verify.</p>
   </div>
 
@@ -205,8 +206,9 @@
   <div class="doc-section">
     <h2>Chrome Extension Permissions</h2>
     <p>PaperTrail requests the following Chrome permissions in order to function:</p>
-    <p><strong>activeTab and scripting</strong> — required to inject the revision analysis tool into the active Google Docs page.</p>
-    <p><strong>tabs</strong> — required to open the playback window in a new tab and to detect when the user is on a Google Docs or Google Classroom page.</p>
+    <p><strong>activeTab and tabs</strong> — required to inject the revision analysis tool into the active Google Docs page, open the playback window in a new tab, and detect when the user is on a Google Docs or Google Classroom page.</p>
+    <p><strong>webNavigation</strong> — required to detect when the teacher navigates to a Google Docs page so the extension can activate automatically.</p>
+    <p><strong>identity</strong> — required to authenticate teachers via Google Sign-In for StyleMatch and Verify features.</p>
     <p><strong>unlimitedStorage</strong> — required to temporarily hold revision data for large documents, which can contain tens of thousands of entries. This data is cleared when the session ends.</p>
     <p><strong>Host permissions for docs.google.com and classroom.google.com</strong> — required to operate on Google Docs and Google Classroom pages.</p>
   </div>
