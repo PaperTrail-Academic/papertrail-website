@@ -303,6 +303,8 @@ body.overlay-active .cards-overlay{opacity:1;pointer-events:all}
 .price-col.featured .price-feats li::before{color:#a8f0c6}
 .price-feats li.na{color:var(--ink-3);opacity:.55}
 .price-feats li.na::before{content:'—';color:currentColor;font-weight:400}
+.price-feats li.na-soft{color:var(--ink-3);font-style:italic}
+.price-feats li.na-soft::before{content:'🔗';font-style:normal;font-size:9px}
 .packs-wrap{padding:22px 24px;background:var(--teal-lt);border:1.5px solid #b2d8d2;border-radius:12px}
 .packs-label{font-size:12.5px;font-weight:700;color:var(--teal);margin-bottom:3px}
 .packs-sublabel{font-size:12px;color:var(--ink-3);margin-bottom:16px}
@@ -436,9 +438,10 @@ footer{background:var(--ink);padding:42px 0 0}
         <div style="flex:1">
           <div class="hpc-title">Inspect &nbsp;<span style="color:var(--green);font-weight:700;font-size:11.5px">Free</span></div>
           <ul class="hpc-bullets">
-            <li>Full revision timeline — every edit, session, and pause</li>
-            <li>Paste event detection with novelty scoring</li>
-            <li>⚡ Struggle moment detection</li>
+            <li>Full revision timeline — every edit laid out chronologically</li>
+            <li>Paste detection and paste log</li>
+            <li>Session history — date and time the student opened and worked on the document</li>
+            <li>Deep analytics — characters per minute, deletion ratio, and more</li>
             <li>Revision playback — watch it being written</li>
           </ul>
           <div style="margin-top:8px"><a href="/inspect" onclick="event.stopPropagation()" style="font-size:11.5px;color:var(--blue);font-weight:600;text-decoration:none">Learn more →</a></div>
@@ -513,10 +516,10 @@ footer{background:var(--ink);padding:42px 0 0}
         </div>
         <div class="pcard-features">
           <ul>
-            <li>Full revision timeline &amp; writing sessions</li>
-            <li>Paste detection with novelty scoring</li>
-            <li>⚡ Struggle moment detection</li>
+            <li>Full revision timeline &amp; paste log</li>
+            <li>Session history — when and how long they worked</li>
             <li>Revision playback — watch it being written</li>
+            <li>Deep analytics — chars per minute, deletion ratio &amp; more</li>
           </ul>
         </div>
         <div class="pcard-footer">
@@ -602,12 +605,10 @@ footer{background:var(--ink);padding:42px 0 0}
             <h4>Everything you need to understand a writing process</h4>
             <ul class="exp-features">
               <li>Full revision timeline — every edit laid out chronologically</li>
-              <li>Writing session reconstruction — when they worked and for how long</li>
-              <li>Paste event detection — flagged with timestamp, character count, and novelty score</li>
-              <li>⚡ Struggle moment detection — regions of heavy revision signalling genuine engagement</li>
+              <li>Paste detection and paste log — flagged with timestamp and character count</li>
+              <li>Session history — date and time the student opened and worked on the document</li>
               <li>Revision playback — watch the document being written from the first character</li>
-              <li>Paste before/after comparison — see exactly what was replaced</li>
-              <li>Deletion ratio and revision density metrics</li>
+              <li>Deep analytics — characters per minute, deletion ratio, revision density</li>
               <li>Activity flags — unusual patterns automatically surfaced</li>
             </ul>
             <div class="exp-price-row">
@@ -637,7 +638,8 @@ footer{background:var(--ink);padding:42px 0 0}
         <div class="pcard-features">
           <ul>
             <li>Eight research-based metrics including function words &amp; discourse markers</li>
-            <li>Struggle moments visible on the revision timeline</li>
+            <li>⚡ Struggle moment detection on the revision timeline</li>
+            <li>Paste novelty analysis — flags low-originality paste events</li>
             <li>Divergence ratings per metric: Similar / Notable / Divergent</li>
             <li>Printable PDF report with research citations</li>
           </ul>
@@ -686,7 +688,8 @@ footer{background:var(--ink);padding:42px 0 0}
               <li><strong>Type-Token Ratio</strong> — vocabulary range; interpreted cautiously across different text lengths</li>
               <li><strong>Flesch-Kincaid Grade Level</strong> — reading complexity; stable across tasks for the same writer</li>
               <li><strong>Informality Markers</strong> — contraction rate &amp; first-person pronoun rate</li>
-              <li>Struggle moments identified on the revision timeline</li>
+              <li>⚡ Struggle moment detection — regions of heavy revision on the timeline signalling genuine engagement</li>
+              <li>Paste novelty analysis — flags paste events with low originality relative to the document</li>
               <li>All computation runs locally — no text ever transmitted</li>
               <li>Minimum 500 words per sample required</li>
             </ul>
@@ -817,9 +820,12 @@ footer{background:var(--ink);padding:42px 0 0}
         <div class="big-price"><span class="n" style="color:var(--green)">$0</span></div>
         <ul class="price-feats">
           <li>Full revision timeline</li>
-          <li>Writing session reconstruction</li>
-          <li>Paste detection + novelty scoring</li>
-          <li>Struggle moment detection</li>
+          <li>Paste detection and paste log</li>
+          <li>Session history</li>
+          <li>Deep analytics</li>
+          <li>Revision playback</li>
+          <li class="na">Struggle moment detection</li>
+          <li class="na">Paste novelty analysis</li>
           <li class="na">StyleMatch authorship comparison</li>
           <li class="na">Verify deep analysis reports</li>
         </ul>
@@ -834,6 +840,8 @@ footer{background:var(--ink);padding:42px 0 0}
         <p class="price-alt">or $49.99/year — save 17%</p>
         <ul class="price-feats">
           <li>Everything in Inspect</li>
+          <li>⚡ Struggle moment detection</li>
+          <li>Paste novelty analysis</li>
           <li>Eight research-based stylometric metrics</li>
           <li>Controlled vs. submitted sample comparison</li>
           <li>Divergence ratings per metric: Similar / Notable / Divergent</li>
@@ -850,15 +858,12 @@ footer{background:var(--ink);padding:42px 0 0}
         <p class="price-alt">Starter: 10 reports for $6</p>
         <ul class="price-feats">
           <li>Everything in Inspect</li>
-          <li>Consistency Report — internal analysis of a single essay</li>
-          <li>Stylometric heatmap across all chunks</li>
-          <li>Writer baseline profile — characteristic style fingerprint</li>
-          <li>Baseline Deviation Report — controlled vs. submitted</li>
-          <li>10 research-grounded dimensions, rated Anomalous / Notable / Within Range</li>
-          <li>Error &amp; mechanics fingerprint — idiosyncratic habits tracked</li>
+          <li>Consistency Report — chunks essay into segments, scores 6 dimensions each</li>
+          <li>Stylometric heatmap &amp; writer baseline profile</li>
           <li>AI-suggested follow-up questions for the student conversation</li>
-          <li>Printable PDF with Report ID for institutional records</li>
+          <li>Printable PDF with Report ID for records</li>
           <li>No text retained — credits never expire</li>
+          <li class="na-soft">Baseline Deviation Report — requires StyleMatch subscription</li>
         </ul>
         <a href="#" class="btn btn-teal btn-full">Buy Verify Credits</a>
       </div>
@@ -906,7 +911,7 @@ footer{background:var(--ink);padding:42px 0 0}
         <li>No advertising, no data resale, no third-party tracking</li>
         <li>Teacher accounts only — students never interact with the product</li>
       </ul>
-      <a href="mailto:hello@papertrailacademic.com?subject=School or Department Inquiry" class="btn btn-gold">Contact us for school &amp; department inquiries</a>
+      <a href="/cdn-cgi/l/email-protection#2f474a4343406f5f4e5f4a5d5b5d4e46434e4c4e4b4a42464c014c4042105c5a4d454a4c5b127c4c474040430f405d0f6b4a5f4e5d5b424a415b0f66415e5a465d56" class="btn btn-gold">Contact us for school &amp; department inquiries</a>
       <div class="trust-badges">
         <div class="tb"><div class="tb-icon">🔒</div><div class="tb-label">FERPA<br>Conscious</div></div>
         <div class="tb"><div class="tb-icon">🇪🇺</div><div class="tb-label">GDPR<br>Aware</div></div>
@@ -918,15 +923,15 @@ footer{background:var(--ink);padding:42px 0 0}
       <h2>Every email gets a <em>real reply.</em></h2>
       <p class="sc-p">Questions about how PaperTrail works, privacy concerns, school and department inquiries — PaperTrail Academic is built by a teacher.</p>
       <div class="contact-cards">
-        <a href="mailto:hello@papertrailacademic.com" class="cc">
+        <a href="/cdn-cgi/l/email-protection#3d55585151527d4d5c4d584f494f5c54515c5e5c595850545e135e5250" class="cc">
           <span class="cc-ico">✉️</span>
-          <div><h4>General Inquiries</h4><p>hello@papertrailacademic.com</p></div>
+          <div><h4>General Inquiries</h4><p><span class="__cf_email__" data-cfemail="9af2fff6f6f5daeafbeaffe8eee8fbf3f6fbf9fbfefff7f3f9b4f9f5f7">[email&#160;protected]</span></p></div>
         </a>
-        <a href="mailto:hello@papertrailacademic.com?subject=School or Department Inquiry" class="cc">
+        <a href="/cdn-cgi/l/email-protection#6008050c0c0f201001100512141201090c01030104050d09034e030f0d5f1315020a0503145d3303080f0f0c400f12402405100112140d050e1440290e1115091219" class="cc">
           <span class="cc-ico">🏫</span>
           <div><h4>School &amp; Department</h4><p>Group inquiries, IT review, volume pricing</p></div>
         </a>
-        <a href="mailto:hello@papertrailacademic.com?subject=Privacy Question" class="cc">
+        <a href="/cdn-cgi/l/email-protection#c8a0ada4a4a788b8a9b8adbabcbaa9a1a4a9aba9acada5a1abe6aba7a5f7bbbdaaa2adabbcf598baa1bea9abb1e899bdadbbbca1a7a6" class="cc">
           <span class="cc-ico">🔒</span>
           <div><h4>Privacy &amp; Compliance</h4><p>FERPA, PIPEDA, GDPR questions</p></div>
         </a>
@@ -958,8 +963,8 @@ footer{background:var(--ink);padding:42px 0 0}
       <h4>For Schools</h4>
       <ul>
         <li><a href="/for-schools">Privacy &amp; Compliance</a></li>
-        <li><a href="mailto:hello@papertrailacademic.com?subject=School or Department Inquiry">School Inquiries</a></li>
-        <li><a href="mailto:hello@papertrailacademic.com?subject=Privacy Question">FERPA / PIPEDA / GDPR</a></li>
+        <li><a href="/cdn-cgi/l/email-protection#7119141d1d1e310110011403050310181d10121015141c18125f121e1c4e0204131b1412054c2212191e1e1d511e03513514011003051c141f0551381f0004180308">School Inquiries</a></li>
+        <li><a href="/cdn-cgi/l/email-protection#731b161f1f1c3303120316010701121a1f12101217161e1a105d101c1e4c000611191610074e23011a0512100a5322061600071a1c1d">FERPA / PIPEDA / GDPR</a></li>
       </ul>
     </div>
     <div class="ftr-col">
@@ -967,7 +972,7 @@ footer{background:var(--ink);padding:42px 0 0}
       <ul>
         <li><a href="/privacy-policy">Privacy Policy</a></li>
         <li><a href="/terms-of-service">Terms of Service</a></li>
-        <li><a href="mailto:hello@papertrailacademic.com">Contact</a></li>
+        <li><a href="/cdn-cgi/l/email-protection#5c34393030331c2c3d2c392e282e3d35303d3f3d383931353f723f3331">Contact</a></li>
       </ul>
     </div>
   </div>
@@ -976,12 +981,12 @@ footer{background:var(--ink);padding:42px 0 0}
     <span>
       <a href="/privacy-policy">Privacy Policy</a> &nbsp;&middot;&nbsp;
       <a href="/terms-of-service">Terms of Service</a> &nbsp;&middot;&nbsp;
-      <a href="mailto:hello@papertrailacademic.com">Contact</a>
+      <a href="/cdn-cgi/l/email-protection#d6beb3babab996a6b7a6b3a4a2a4b7bfbab7b5b7b2b3bbbfb5f8b5b9bb">Contact</a>
     </span>
   </div>
 </footer>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 const overlay = document.getElementById('cardsOverlay');
 const row     = document.getElementById('cardsRow');
 let   openId  = null;
@@ -1042,23 +1047,4 @@ document.querySelectorAll('.hero-preview-card').forEach(card => {
 });
 
 // ── Products dropdown — JS toggle so gap doesn't break it ────────
-(function(){
-  const dd  = document.getElementById('navDropdown');
-  const trigger = document.getElementById('navDropdownTrigger');
-  if (!dd) return;
-  let closeTimer;
-
-  function open()  { clearTimeout(closeTimer); dd.classList.add('open'); }
-  function close() { closeTimer = setTimeout(() => dd.classList.remove('open'), 120); }
-
-  trigger.addEventListener('mouseenter', open);
-  trigger.addEventListener('mouseleave', close);
-  dd.querySelector('.nav-dd-menu').addEventListener('mouseenter', open);
-  dd.querySelector('.nav-dd-menu').addEventListener('mouseleave', close);
-  trigger.addEventListener('click', () => dd.classList.toggle('open'));
-  document.addEventListener('click', e => { if (!dd.contains(e.target)) dd.classList.remove('open'); });
-})();
-</script>
-
-</body>
-</html>
+(function
