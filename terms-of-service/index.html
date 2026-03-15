@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Terms of Service — PaperTrail Academic</title>
-  <meta name="description" content="Terms of Service for PaperTrail Academic — the tools educators use to understand how student writing was produced." />
+  <meta name="description" content="Terms of Service for PaperTrail Academic — how you may use the service, what we do with any text you submit, and how payments work." />
   <link rel="icon" href="/icon128.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -30,12 +30,13 @@
     /* ─── Nav ─────────────────────────────────────────────────────── */
     nav{position:sticky;top:0;z-index:200;background:rgba(255,255,255,.96);backdrop-filter:blur(10px);border-bottom:1px solid var(--rule)}
     .nav-inner{max-width:1140px;margin:0 auto;padding:0 28px;height:60px;display:flex;align-items:center;gap:28px}
-    .nav-logo{display:flex;align-items:center;gap:9px;margin-right:auto}
+    .nav-logo{display:flex;align-items:center;gap:9px;margin-right:auto;text-decoration:none}
     .nav-logo img{width:26px;height:26px}
     .nav-wm{font-family:'Lora',serif;font-size:16px;font-weight:700;color:var(--ink)}
     .nav-wm em{color:var(--blue);font-style:italic}
     .nl{font-size:13px;font-weight:500;color:var(--ink-2);transition:color .15s;text-decoration:none}
     .nl:hover{color:var(--blue);text-decoration:none}
+    .nl.active{color:var(--blue);font-weight:600}
     .nl.cta{background:var(--gold);color:#fff;padding:7px 16px;border-radius:5px;font-weight:600}
     .nl.cta:hover{background:var(--gold-dk);text-decoration:none}
     .nav-dropdown{position:relative}
@@ -52,7 +53,7 @@
     .dd-sub{font-size:11px;color:var(--ink-3);font-weight:400}
     .dd-divider{height:1px;background:var(--rule);margin:4px 0}
 
-    /* ─── Page layout ─────────────────────────────────────────────── */
+    /* ─── Page header ─────────────────────────────────────────────── */
     .page-header{background:linear-gradient(135deg,var(--blue-lt) 0%,#fff 100%);border-bottom:1px solid var(--rule);padding:48px 28px 40px}
     .page-header-inner{max-width:760px;margin:0 auto}
     .breadcrumb{font-size:12px;color:var(--ink-3);margin-bottom:14px}
@@ -60,42 +61,38 @@
     .breadcrumb a:hover{color:var(--blue)}
     .breadcrumb span{margin:0 6px;opacity:.5}
     .page-header h1{font-family:'Lora',serif;font-size:clamp(26px,3vw,36px);font-weight:700;color:var(--ink);margin-bottom:10px}
-    .page-header .meta{font-size:13px;color:var(--ink-3);display:flex;flex-wrap:wrap;gap:16px}
-    .page-header .meta span{display:flex;align-items:center;gap:5px}
+    .page-header .meta{font-size:13px;color:var(--ink-3)}
 
+    /* ─── Document ────────────────────────────────────────────────── */
     .doc-wrap{max-width:760px;margin:0 auto;padding:48px 28px 80px}
 
-    /* ─── Document styles ─────────────────────────────────────────── */
     .lead-note{background:var(--blue-lt);border-left:4px solid var(--blue);border-radius:0 8px 8px 0;padding:16px 20px;margin-bottom:40px;font-size:14px;line-height:1.7;color:var(--ink-2)}
     .lead-note strong{color:var(--ink)}
 
-    .toc{background:#fff;border:1.5px solid var(--rule);border-radius:10px;padding:20px 24px;margin-bottom:44px}
-    .toc h2{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--ink-3);margin-bottom:12px}
-    .toc ol{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:5px 24px;padding:0}
-    .toc ol li{font-size:12.5px}
-    .toc ol li a{color:var(--ink-2);text-decoration:none;transition:color .15s}
-    .toc ol li a:hover{color:var(--blue);text-decoration:none}
-    .toc ol li .sec-num{color:var(--ink-3);font-size:11px;margin-right:4px}
+    .toc{background:#fff;border:1.5px solid var(--rule);border-radius:8px;padding:20px 24px;margin-bottom:40px}
+    .toc h3{font-family:'Lora',serif;font-size:13px;font-weight:700;color:var(--ink-3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px}
+    .toc ol{padding-left:18px;display:flex;flex-direction:column;gap:5px}
+    .toc ol li{font-size:13px;color:var(--ink-2)}
+    .toc ol li a{color:var(--ink-2)}
+    .toc ol li a:hover{color:var(--blue)}
 
-    .doc-section{margin-bottom:44px;scroll-margin-top:80px}
-    .doc-section h2{font-family:'Lora',serif;font-size:20px;font-weight:700;color:var(--ink);margin-bottom:14px;padding-bottom:10px;border-bottom:2px solid var(--rule);display:flex;align-items:baseline;gap:10px}
-    .doc-section h2 .sec-num{font-size:13px;font-weight:600;color:var(--blue);font-family:'DM Sans',sans-serif;flex-shrink:0}
+    .doc-section{margin-bottom:40px;scroll-margin-top:80px}
+    .doc-section h2{font-family:'Lora',serif;font-size:19px;font-weight:700;color:var(--ink);margin-bottom:12px;padding-bottom:10px;border-bottom:2px solid var(--rule)}
     .doc-section p{font-size:14.5px;line-height:1.8;color:var(--ink-2);margin-bottom:12px}
     .doc-section p:last-child{margin-bottom:0}
     .doc-section strong{color:var(--ink);font-weight:600}
-    .doc-section ul,.doc-section ol{margin:10px 0 14px 0;padding-left:20px;display:flex;flex-direction:column;gap:7px}
-    .doc-section ul li,.doc-section ol li{font-size:14px;line-height:1.7;color:var(--ink-2)}
+    .doc-section ul,
+    .doc-section ol{margin:10px 0 14px 0;padding-left:20px;display:flex;flex-direction:column;gap:7px}
+    .doc-section ul li,
+    .doc-section ol li{font-size:14px;line-height:1.7;color:var(--ink-2)}
 
-    .callout{background:#fff;border:1.5px solid var(--rule);border-radius:8px;padding:16px 20px;margin:16px 0}
-    .callout.warn{border-color:#f0e4b0;background:#fffbf0}
-    .callout.warn p{color:#7a6020;font-size:13.5px}
-    .callout.blue{border-color:var(--blue);background:var(--blue-lt)}
-    .callout.blue p{color:var(--ink-2)}
-    .callout strong{color:var(--ink)}
-
-    .all-caps-block{font-size:13.5px;line-height:1.75;color:var(--ink-2);font-weight:500}
-
-    .doc-divider{height:1px;background:var(--rule);margin:8px 0 44px}
+    .tier-table{width:100%;border-collapse:collapse;margin:16px 0 20px;font-size:13.5px}
+    .tier-table th{text-align:left;font-weight:600;color:var(--ink);background:var(--blue-lt);padding:9px 12px;border:1px solid var(--rule)}
+    .tier-table td{padding:8px 12px;border:1px solid var(--rule);color:var(--ink-2);vertical-align:top}
+    .tier-table tr:nth-child(even) td{background:#fafbfd}
+    .yes{color:var(--green);font-weight:600}
+    .no{color:var(--ink-3)}
+    .ltd{color:var(--gold-dk);font-weight:600}
 
     .doc-footer-note{text-align:center;font-size:12.5px;color:var(--ink-3);font-style:italic;padding:24px 0 0;border-top:1px solid var(--rule);line-height:1.7}
 
@@ -116,15 +113,15 @@
     .ftr-bottom a{color:rgba(255,255,255,.5);text-decoration:none}
     .ftr-bottom a:hover{color:#fff}
 
-    @media(max-width:700px){
-      .toc ol{grid-template-columns:1fr}
-      .ftr-inner{grid-template-columns:1fr 1fr}
-    }
     @media(max-width:480px){
       .nav-inner .nl:not(.cta){display:none}
       .ftr-inner{grid-template-columns:1fr}
       .doc-wrap{padding:32px 20px 60px}
       .page-header{padding:32px 20px 28px}
+      .tier-table{font-size:12px}
+    }
+    @media(max-width:700px){
+      .ftr-inner{grid-template-columns:1fr 1fr}
     }
   </style>
 </head>
@@ -135,7 +132,7 @@
   <div class="nav-inner">
     <a href="/" class="nav-logo">
       <img src="/icon128.png" alt="PaperTrail Academic" />
-      <span class="nav-wm">PaperTrail <em>Academic</em></span>
+      <span class="nav-wm">PaperTrail&trade; <em>Academic</em></span>
     </a>
     <div class="nav-dropdown" id="navDropdown">
       <span class="nl" id="navDropdownTrigger">Products <span class="dd-caret">▾</span></span>
@@ -175,11 +172,7 @@
       Terms of Service
     </div>
     <h1>Terms of Service</h1>
-    <div class="meta">
-      <span>Effective date: March 10, 2026</span>
-      <span>Last updated: March 10, 2026</span>
-      <span>Operator: Michael Smith / PaperTrail Academic</span>
-    </div>
+    <div class="meta">Effective date: March 10, 2026 &nbsp;·&nbsp; Last updated: March 2026 &nbsp;·&nbsp; Operator: Michael Smith / PaperTrail Academic</div>
   </div>
 </div>
 
@@ -190,61 +183,55 @@
     <strong>Plain-language summary:</strong> PaperTrail&trade; Academic is built by a teacher, for teachers. These terms cover how you can use the service, what we do with any text you submit, and how payments work. The key points: StyleMatch never transmits your text anywhere. Verify does transmit text to generate a report, but does not retain it. All decisions made using PaperTrail reports are yours — the tool provides a data point, never a verdict.
   </div>
 
-  <div class="toc" aria-label="Table of contents" role="navigation">
-    <h2>Contents</h2>
+  <div class="toc">
+    <h3>Contents</h3>
     <ol>
-      <li><a href="#s1"><span class="sec-num">1.</span> Agreement to Terms</a></li>
-      <li><a href="#s2"><span class="sec-num">2.</span> Who May Use This Service</a></li>
-      <li><a href="#s3"><span class="sec-num">3.</span> Description of Service</a></li>
-      <li><a href="#s4"><span class="sec-num">4.</span> No Verdict. Educator Judgment Required.</a></li>
-      <li><a href="#s5"><span class="sec-num">5.</span> Accounts and Access</a></li>
-      <li><a href="#s6"><span class="sec-num">6.</span> Subscriptions and Payments</a></li>
-      <li><a href="#s7"><span class="sec-num">7.</span> Acceptable Use</a></li>
-      <li><a href="#s8"><span class="sec-num">8.</span> Data, Privacy, and Student Text</a></li>
-      <li><a href="#s9"><span class="sec-num">9.</span> Intellectual Property</a></li>
-      <li><a href="#s10"><span class="sec-num">10.</span> Third-Party Services</a></li>
-      <li><a href="#s11"><span class="sec-num">11.</span> Disclaimer of Warranties</a></li>
-      <li><a href="#s12"><span class="sec-num">12.</span> Limitation of Liability</a></li>
-      <li><a href="#s13"><span class="sec-num">13.</span> Indemnification</a></li>
-      <li><a href="#s14"><span class="sec-num">14.</span> Changes to Terms</a></li>
-      <li><a href="#s15"><span class="sec-num">15.</span> Termination</a></li>
-      <li><a href="#s16"><span class="sec-num">16.</span> Governing Law and Disputes</a></li>
-      <li><a href="#s17"><span class="sec-num">17.</span> Miscellaneous</a></li>
+      <li><a href="#s1">Agreement to Terms</a></li>
+      <li><a href="#s2">Who May Use This Service</a></li>
+      <li><a href="#s3">Description of Service</a></li>
+      <li><a href="#s4">No Verdict. Educator Judgment Required.</a></li>
+      <li><a href="#s5">Accounts and Access</a></li>
+      <li><a href="#s6">Subscriptions and Payments</a></li>
+      <li><a href="#s7">Acceptable Use</a></li>
+      <li><a href="#s8">Data, Privacy, and Student Text</a></li>
+      <li><a href="#s9">Intellectual Property</a></li>
+      <li><a href="#s10">Third-Party Services</a></li>
+      <li><a href="#s11">Disclaimer of Warranties</a></li>
+      <li><a href="#s12">Limitation of Liability</a></li>
+      <li><a href="#s13">Indemnification</a></li>
+      <li><a href="#s14">Changes to Terms</a></li>
+      <li><a href="#s15">Termination</a></li>
+      <li><a href="#s16">Governing Law and Disputes</a></li>
+      <li><a href="#s17">Miscellaneous</a></li>
     </ol>
   </div>
 
-  <!-- 1 -->
   <div class="doc-section" id="s1">
-    <h2><span class="sec-num">1.</span> Agreement to Terms</h2>
-    <p>By installing PaperTrail StyleMatch, creating an account, or using any PaperTrail Academic product or service (collectively, the "Service"), you agree to be bound by these Terms of Service ("Terms"). If you do not agree, do not use the Service.</p>
+    <h2>1. Agreement to Terms</h2>
+    <p>By installing PaperTrail, creating an account, or using any PaperTrail Academic product or service (collectively, the "Service"), you agree to be bound by these Terms of Service ("Terms"). If you do not agree, do not use the Service.</p>
     <p>These Terms constitute a legally binding agreement between you ("User," "you") and Michael Smith operating as PaperTrail Academic ("PaperTrail Academic," "we," "us," or "our").</p>
   </div>
 
-  <!-- 2 -->
   <div class="doc-section" id="s2">
-    <h2><span class="sec-num">2.</span> Who May Use This Service</h2>
+    <h2>2. Who May Use This Service</h2>
     <p><strong>The Service is intended for use by educators and education professionals only.</strong></p>
     <p>You must be 18 years of age or older to create an account. The Service is not directed at students and must not be used directly by students. If you are using this Service in a professional capacity, you represent that you have the authority to do so under your institution's policies.</p>
     <p>PaperTrail Academic does not knowingly collect data from or about students directly. All interactions with the Service are through the educator's account.</p>
   </div>
 
-  <!-- 3 -->
   <div class="doc-section" id="s3">
-    <h2><span class="sec-num">3.</span> Description of Service</h2>
-    <p>PaperTrail Academic provides Chrome browser extension tools for stylometric authorship analysis within Google Docs. The Service includes:</p>
+    <h2>3. Description of Service</h2>
+    <p>PaperTrail Academic provides Chrome browser extension tools for writing analysis and authorship consistency review within Google Docs. The Service includes:</p>
     <ul>
-      <li><strong>PaperTrail Inspect:</strong> Revision history analysis, writing session reconstruction, and behavioral pattern detection based on Google Docs revision data.</li>
-      <li><strong>StyleMatch:</strong> Local, on-device stylometric comparison of two writing samples to assess authorship consistency. No text is transmitted when using StyleMatch.</li>
-      <li><strong>Verify:</strong> AI-assisted writing analysis that transmits submitted text to a third-party AI provider (Anthropic, Inc.) for processing. See Section 8 for details.</li>
+      <li><strong>PaperTrail Inspect:</strong> Revision history analysis, writing session reconstruction, and behavioral pattern detection based on Google Docs revision data. Core Inspect features are available to all users without an account. Paste analysis and struggle moment detection are Inspect features that require an active StyleMatch subscription to access.</li>
+      <li><strong>StyleMatch:</strong> Local, on-device stylometric comparison of two writing samples across eight metrics to assess authorship consistency. No text is transmitted when using StyleMatch. Users who create a free account receive three complimentary StyleMatch runs. Unlimited StyleMatch access requires an active subscription.</li>
+      <li><strong>Verify:</strong> AI-assisted writing analysis that transmits submitted text to a third-party AI provider (Anthropic, Inc.) for processing. Available as a Consistency Report (single sample) or a Baseline Deviation Report (comparative, requires a StyleMatch report as input). See Section 8 for data handling details.</li>
     </ul>
   </div>
 
-  <!-- 4 -->
   <div class="doc-section" id="s4">
-    <h2><span class="sec-num">4.</span> No Verdict. Educator Judgment Required.</h2>
-    <div class="callout warn">
-      <p><strong>PaperTrail reports are analytical data points, not findings of fact.</strong></p>
-    </div>
+    <h2>4. No Verdict. Educator Judgment Required.</h2>
+    <p><strong>PaperTrail reports are analytical data points, not findings of fact.</strong></p>
     <p>The Service produces similarity scores, metrics, and AI-assisted observations. These outputs:</p>
     <ul>
       <li>Are subject to error and known limitations of stylometric and AI-based analysis</li>
@@ -256,37 +243,91 @@
     <p>Every report generated by the Service includes a mandatory disclaimer. That disclaimer is not formality — it reflects a genuine limitation of the technology.</p>
   </div>
 
-  <!-- 5 -->
   <div class="doc-section" id="s5">
-    <h2><span class="sec-num">5.</span> Accounts and Access</h2>
-    <p><strong>Registration.</strong> You must create an account to access paid features. You agree to provide accurate information and keep your credentials secure.</p>
-    <p><strong>Account tiers.</strong> The Service offers a free tier with limited features, and paid tiers (StyleMatch Plus and Verify Reports) described on the <a href="/#pricing">pricing page</a>. Feature availability is determined by your current subscription status.</p>
+    <h2>5. Accounts and Access</h2>
+    <p><strong>Registration.</strong> An account is required to access StyleMatch and Verify features. You agree to provide accurate information and keep your credentials secure.</p>
+    <p><strong>Feature tiers.</strong> Access to features is determined by your current account and subscription status, as follows:</p>
+
+    <table class="tier-table">
+      <thead>
+        <tr>
+          <th>Feature</th>
+          <th>No account</th>
+          <th>Free account</th>
+          <th>Verify credits only</th>
+          <th>StyleMatch subscriber</th>
+          <th>StyleMatch + Verify</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Inspect (core)</td>
+          <td class="yes">✓ Full</td>
+          <td class="yes">✓ Full</td>
+          <td class="yes">✓ Full</td>
+          <td class="yes">✓ Full</td>
+          <td class="yes">✓ Full</td>
+        </tr>
+        <tr>
+          <td>Paste analysis &amp; struggle moments</td>
+          <td class="no">—</td>
+          <td class="no">—</td>
+          <td class="no">—</td>
+          <td class="yes">✓</td>
+          <td class="yes">✓</td>
+        </tr>
+        <tr>
+          <td>StyleMatch</td>
+          <td class="no">—</td>
+          <td class="ltd">3 runs</td>
+          <td class="ltd">3 runs (if unused)</td>
+          <td class="yes">✓ Unlimited</td>
+          <td class="yes">✓ Unlimited</td>
+        </tr>
+        <tr>
+          <td>Verify Consistency Report</td>
+          <td class="no">—</td>
+          <td class="no">—</td>
+          <td class="yes">✓</td>
+          <td class="no">—</td>
+          <td class="yes">✓</td>
+        </tr>
+        <tr>
+          <td>Verify Baseline Deviation Report</td>
+          <td class="no">—</td>
+          <td class="no">—</td>
+          <td class="no">—</td>
+          <td class="no">—</td>
+          <td class="yes">✓</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>Feature availability is subject to change. Material changes will be communicated in advance per Section 14.</p>
     <p><strong>One account per person.</strong> Accounts are for individual use and may not be shared, transferred, or used by more than one person.</p>
     <p><strong>Account termination.</strong> We reserve the right to suspend or terminate accounts that violate these Terms, engage in fraudulent activity, or attempt to circumvent access controls.</p>
   </div>
 
-  <!-- 6 -->
   <div class="doc-section" id="s6">
-    <h2><span class="sec-num">6.</span> Subscriptions and Payments</h2>
-    <p><strong>Billing.</strong> Paid subscriptions are processed by Lemon Squeezy, our payment processor and Merchant of Record. By purchasing a subscription or credit pack, you agree to Lemon Squeezy's Terms of Service and Privacy Policy, available at <a href="https://www.lemonsqueezy.com" target="_blank" rel="noopener">lemonsqueezy.com</a>.</p>
+    <h2>6. Subscriptions and Payments</h2>
+    <p><strong>Billing.</strong> Paid subscriptions and credit packs are processed by Lemon Squeezy, our payment processor and Merchant of Record. By purchasing a subscription or credit pack, you agree to Lemon Squeezy's Terms of Service and Privacy Policy, available at <a href="https://www.lemonsqueezy.com" target="_blank" rel="noopener">lemonsqueezy.com</a>.</p>
     <p><strong>Lemon Squeezy as Merchant of Record.</strong> Lemon Squeezy handles all payment processing, invoicing, and applicable sales tax and VAT obligations for purchases made through the Service. PaperTrail Academic is not responsible for tax collection on your purchase — Lemon Squeezy assumes this responsibility.</p>
     <p><strong>Pricing.</strong></p>
     <ul>
-      <li>StyleMatch Plus Monthly: $4.99/month</li>
-      <li>StyleMatch Plus Annual: $49.99/year</li>
+      <li>StyleMatch Monthly: $4.99/month</li>
+      <li>StyleMatch Annual: $49.99/year</li>
       <li>Verify Starter Pack: $6.00 (10 reports)</li>
       <li>Verify Semester Pack: $18.00 (35 reports)</li>
       <li>Verify Year Supply Pack: $45.00 (100 reports)</li>
     </ul>
     <p>Prices are in USD and subject to change with notice. Changes to subscription pricing will be communicated at least 30 days in advance.</p>
     <p><strong>Verify credits</strong> are non-expiring and non-transferable. They are tied to your account and cannot be moved to another account or refunded once consumed.</p>
-    <p><strong>Subscriptions</strong> renew automatically at the end of each billing period. You may cancel at any time; cancellation takes effect at the end of the current billing period. No partial-period refunds are issued.</p>
+    <p><strong>Subscriptions</strong> renew automatically at the end of each billing period. You may cancel at any time; cancellation takes effect at the end of the current billing period. No partial-period refunds are issued. Upon cancellation, your account reverts to the free account tier.</p>
     <p><strong>Refunds.</strong> Refund requests may be submitted to <a href="mailto:hello@papertrailacademic.com">hello@papertrailacademic.com</a> within 7 days of purchase, provided no reports have been generated under the purchased plan or credit pack. Credits consumed prior to a refund request are non-refundable. We handle refund requests on a case-by-case basis and reserve the right to decline requests that do not meet this criteria.</p>
   </div>
 
-  <!-- 7 -->
   <div class="doc-section" id="s7">
-    <h2><span class="sec-num">7.</span> Acceptable Use</h2>
+    <h2>7. Acceptable Use</h2>
     <p>You agree not to:</p>
     <ul>
       <li>Use the Service to harass, target, or make unfounded accusations against any student or individual</li>
@@ -298,20 +339,17 @@
     </ul>
   </div>
 
-  <!-- 8 -->
   <div class="doc-section" id="s8">
-    <h2><span class="sec-num">8.</span> Data, Privacy, and Student Text</h2>
-    <div class="callout blue">
-      <p><strong>StyleMatch (on-device):</strong> All stylometric computations are performed locally in your browser. No text you enter into the StyleMatch panel is transmitted to PaperTrail Academic or any third party. This feature is privacy-safe by design.</p>
-    </div>
+    <h2>8. Data, Privacy, and Student Text</h2>
+    <p><strong>StyleMatch (on-device):</strong> All stylometric computations are performed locally in your browser. No text you enter into the StyleMatch panel is transmitted to PaperTrail Academic or any third party. This feature is privacy-safe by design.</p>
     <p><strong>Verify (AI-assisted analysis):</strong> When you run a Verify report, the text you submit is:</p>
     <ol>
       <li>Transmitted to PaperTrail Academic's secure backend (Supabase, hosted on AWS infrastructure)</li>
       <li>Forwarded to Anthropic, Inc.'s API for AI-assisted analysis</li>
       <li>Returned as a structured report and saved to your account's report history</li>
     </ol>
-    <p>Text submitted through Verify is <strong>not stored by PaperTrail Academic</strong> beyond the metadata required to save your report (report ID, scores, timestamps, and any student name/assignment label you enter). The full essay text is not retained by PaperTrail after the report is generated. Anthropic's standard API retention policy applies to their processing — see <a href="https://privacy.claude.com/en/articles/7996866-how-long-do-you-store-my-organization-s-data" target="_blank" rel="noopener">Anthropic's data retention policy</a>..</p>
-    <p>Anthropic processes submitted text in accordance with their Privacy Policy (<a href="https://www.anthropic.com/privacy" target="_blank" rel="noopener">anthropic.com/privacy</a>). PaperTrail Academic uses Anthropic's API under terms that prohibit using submitted content for model training.</p>
+    <p>Text submitted through Verify is <strong>not stored by PaperTrail Academic</strong> beyond the metadata required to save your report (report ID, scores, timestamps, and any student name or assignment label you enter). The full essay text is not retained by PaperTrail after the report is generated.</p>
+    <p>Anthropic processes submitted text under its commercial API terms, which prohibit using API inputs for model training. As of September 2025, Anthropic retains API inputs for 7 days before automatic deletion. See <a href="https://www.anthropic.com/privacy" target="_blank" rel="noopener">anthropic.com/privacy</a> for their full policy.</p>
     <p><strong>Your responsibility.</strong> You are responsible for ensuring that your use of Verify complies with:</p>
     <ul>
       <li>Your institution's data governance and acceptable use policies</li>
@@ -319,22 +357,18 @@
       <li>Any consent or notice requirements your institution has established for processing student work</li>
     </ul>
     <p>Where your institution's policy requires it, you should anonymize student-identifying information from text samples before submitting them through Verify.</p>
-    <div class="callout">
-      <p><strong>EU Users.</strong> If you are located in the European Union or processing data subject to GDPR, you acknowledge that text submitted through Verify is processed in the United States by Anthropic, Inc. and by Supabase (AWS). By using Verify, you represent that you have a lawful basis for this processing under GDPR.</p>
-    </div>
+    <p><strong>EU Users.</strong> If you are located in the European Union or processing data subject to GDPR, you acknowledge that text submitted through Verify is processed in the United States by Anthropic, Inc. and by Supabase (AWS). By using Verify, you represent that you have a lawful basis for this processing under GDPR.</p>
   </div>
 
-  <!-- 9 -->
   <div class="doc-section" id="s9">
-    <h2><span class="sec-num">9.</span> Intellectual Property</h2>
+    <h2>9. Intellectual Property</h2>
     <p><strong>Our IP.</strong> The Service, including all code, algorithms, UI design, report templates, scoring methodology, and branding, is the intellectual property of Michael Smith / PaperTrail Academic. All rights reserved.</p>
     <p><strong>Your content.</strong> You retain all rights to the text you submit through the Service. By submitting text through Verify, you grant PaperTrail Academic a limited, non-exclusive license to process that text solely for the purpose of generating your requested report. This license does not include the right to store, reproduce, or share your submitted text.</p>
     <p><strong>Report output.</strong> Reports generated by the Service are for your professional use. You may include them in institutional records, documentation, or communications related to your professional duties. You may not redistribute or resell report output.</p>
   </div>
 
-  <!-- 10 -->
   <div class="doc-section" id="s10">
-    <h2><span class="sec-num">10.</span> Third-Party Services</h2>
+    <h2>10. Third-Party Services</h2>
     <p>The Service relies on the following third-party providers. Their terms and privacy policies govern their respective portions of the Service:</p>
     <ul>
       <li><strong>Supabase</strong> (<a href="https://supabase.com" target="_blank" rel="noopener">supabase.com</a>) — authentication and database</li>
@@ -345,10 +379,9 @@
     <p>PaperTrail Academic is not responsible for the practices, availability, or actions of these third-party providers.</p>
   </div>
 
-  <!-- 11 -->
   <div class="doc-section" id="s11">
-    <h2><span class="sec-num">11.</span> Disclaimer of Warranties</h2>
-    <p class="all-caps-block"><strong>THE SERVICE IS PROVIDED "AS IS" AND "AS AVAILABLE" WITHOUT WARRANTIES OF ANY KIND, EXPRESS OR IMPLIED.</strong></p>
+    <h2>11. Disclaimer of Warranties</h2>
+    <p><strong>THE SERVICE IS PROVIDED "AS IS" AND "AS AVAILABLE" WITHOUT WARRANTIES OF ANY KIND, EXPRESS OR IMPLIED.</strong></p>
     <p>PaperTrail Academic does not warrant that:</p>
     <ul>
       <li>The Service will be uninterrupted, error-free, or available at any particular time</li>
@@ -359,10 +392,9 @@
     <p>Stylometric analysis is a probabilistic tool with known error rates. It is not forensic evidence. <strong>You use the Service and its outputs entirely at your own risk.</strong></p>
   </div>
 
-  <!-- 12 -->
   <div class="doc-section" id="s12">
-    <h2><span class="sec-num">12.</span> Limitation of Liability</h2>
-    <p class="all-caps-block"><strong>TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, PAPERTRAIL ACADEMIC AND ITS OPERATOR (MICHAEL SMITH) SHALL NOT BE LIABLE FOR ANY:</strong></p>
+    <h2>12. Limitation of Liability</h2>
+    <p><strong>TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, PAPERTRAIL ACADEMIC AND ITS OPERATOR (MICHAEL SMITH) SHALL NOT BE LIABLE FOR ANY:</strong></p>
     <ul>
       <li>Indirect, incidental, consequential, or punitive damages</li>
       <li>Loss of data, revenue, reputation, or opportunity</li>
@@ -373,9 +405,8 @@
     <p>Some jurisdictions do not allow limitation of liability for certain types of damages. In such jurisdictions, our liability is limited to the greatest extent permitted by law.</p>
   </div>
 
-  <!-- 13 -->
   <div class="doc-section" id="s13">
-    <h2><span class="sec-num">13.</span> Indemnification</h2>
+    <h2>13. Indemnification</h2>
     <p>You agree to indemnify and hold harmless PaperTrail Academic and Michael Smith from any claims, damages, costs, or expenses (including reasonable legal fees) arising from:</p>
     <ul>
       <li>Your use of the Service</li>
@@ -385,30 +416,26 @@
     </ul>
   </div>
 
-  <!-- 14 -->
   <div class="doc-section" id="s14">
-    <h2><span class="sec-num">14.</span> Changes to Terms</h2>
+    <h2>14. Changes to Terms</h2>
     <p>We may update these Terms from time to time. We will notify users of material changes by email or by a notice within the Service at least 14 days before the change takes effect. Continued use of the Service after the effective date constitutes acceptance of the updated Terms.</p>
   </div>
 
-  <!-- 15 -->
   <div class="doc-section" id="s15">
-    <h2><span class="sec-num">15.</span> Termination</h2>
+    <h2>15. Termination</h2>
     <p>We may suspend or terminate your access to the Service at any time for violation of these Terms. You may terminate your account at any time by contacting <a href="mailto:hello@papertrailacademic.com">hello@papertrailacademic.com</a>. Upon termination, your subscription will not be refunded for the remaining period except as provided in Section 6.</p>
     <p>Sections 4, 9, 11, 12, and 13 survive termination.</p>
   </div>
 
-  <!-- 16 -->
   <div class="doc-section" id="s16">
-    <h2><span class="sec-num">16.</span> Governing Law and Disputes</h2>
+    <h2>16. Governing Law and Disputes</h2>
     <p>These Terms are governed by the laws of the Province of Ontario, Canada, without regard to conflict of law principles.</p>
     <p>Any dispute arising from these Terms or your use of the Service shall first be addressed by contacting <a href="mailto:hello@papertrailacademic.com">hello@papertrailacademic.com</a>. If a dispute cannot be resolved informally, it shall be submitted to binding arbitration in Ontario, Canada, under the Arbitration Act, 1991 (Ontario).</p>
     <p>Nothing in this section prevents either party from seeking injunctive or equitable relief in a court of competent jurisdiction where necessary to protect intellectual property or confidential information.</p>
   </div>
 
-  <!-- 17 -->
   <div class="doc-section" id="s17">
-    <h2><span class="sec-num">17.</span> Miscellaneous</h2>
+    <h2>17. Miscellaneous</h2>
     <p><strong>Entire agreement.</strong> These Terms, together with our <a href="/privacy-policy">Privacy Policy</a>, constitute the entire agreement between you and PaperTrail Academic regarding the Service.</p>
     <p><strong>Severability.</strong> If any provision of these Terms is found unenforceable, the remaining provisions remain in full force.</p>
     <p><strong>No waiver.</strong> Failure to enforce any provision of these Terms does not constitute a waiver of our right to enforce it in the future.</p>
@@ -417,10 +444,11 @@
 
   <div class="doc-footer-note">
     PaperTrail Academic is a sole proprietorship operated by Michael Smith.<br>
-    "PaperTrail," "PaperTrail StyleMatch," "PaperTrail Inspect," and "PaperTrail Academic" are used as trade names. All rights reserved.
+    "PaperTrail," "PaperTrail StyleMatch," "PaperTrail Inspect," and "PaperTrail Academic" are used as trade names. All rights reserved.<br>
+    Also see: <a href="/privacy-policy">Privacy Policy</a>
   </div>
 
-</div><!-- /doc-wrap -->
+</div>
 
 <!-- ═══ FOOTER ═══════════════════════════════════════════════════════ -->
 <footer>
