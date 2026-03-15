@@ -138,11 +138,10 @@ nav{position:sticky;top:0;z-index:200;background:rgba(255,255,255,.96);backdrop-
 .smb-chev{font-size:9px;color:var(--ink-3)}
 
 .smb-pastes{padding:5px 9px 6px}
-.smb-pcard{border:1px solid #e4e8ee;border-radius:6px;padding:7px 9px;margin-bottom:4px;display:flex;align-items:center;justify-content:space-between}
+.smb-pcard{border:1px solid #e4e8ee;border-radius:6px;padding:7px 9px;margin-bottom:4px}
 .smb-pcard:last-child{margin-bottom:0}
 .smb-ptitle{font-size:10px;font-weight:700;color:var(--ink-2)}
 .smb-pmeta{font-size:8.5px;color:var(--ink-3);margin-top:1px}
-.novelty{font-size:8.5px;font-weight:700;padding:2px 7px;border-radius:9px;background:#fff3cd;color:#856404;white-space:nowrap}
 
 .smb-row{padding:9px 11px;border-top:1px solid #f0f0f0;display:flex;align-items:center;justify-content:space-between}
 .smb-row-lbl{font-size:10px;font-weight:700;color:var(--ink-2);display:flex;align-items:center;gap:6px}
@@ -404,16 +403,16 @@ footer{background:var(--ink);padding:42px 0 0}
 
       <div class="smb-pastes">
         <div class="smb-pcard">
-          <div><div class="smb-ptitle">Paste #2 — 5581 chars</div><div class="smb-pmeta">Jan 14, 2026, 11:21 AM · Unknown</div></div>
-          <div class="novelty">68% Med novelty</div>
+          <div class="smb-ptitle">Paste #2 — 5581 chars</div>
+          <div class="smb-pmeta">Jan 14, 2026, 11:21 AM · Unknown source</div>
         </div>
         <div class="smb-pcard">
-          <div><div class="smb-ptitle">Paste #3 — 359 chars</div><div class="smb-pmeta">Jan 18, 2026, 2:42 PM · Unknown</div></div>
-          <div class="novelty">68% Med novelty</div>
+          <div class="smb-ptitle">Paste #3 — 359 chars</div>
+          <div class="smb-pmeta">Jan 18, 2026, 2:42 PM · Unknown source</div>
         </div>
         <div class="smb-pcard">
-          <div><div class="smb-ptitle">Paste #4 — 579 chars</div><div class="smb-pmeta">Jan 18, 2026, 11:51 PM · Unknown</div></div>
-          <div class="novelty">65% Med novelty</div>
+          <div class="smb-ptitle">Paste #4 — 579 chars</div>
+          <div class="smb-pmeta">Jan 18, 2026, 11:51 PM · Unknown source</div>
         </div>
       </div>
 
@@ -449,8 +448,8 @@ footer{background:var(--ink);padding:42px 0 0}
         <div class="feat-item">
           <div class="feat-icon">📋</div>
           <div>
-            <h3>Paste Detection &amp; Novelty Scoring</h3>
-            <p>Every paste event is detected and scored for novelty — how much of the pasted content was new versus already present in the document. Size, timing, and novelty percentage are all surfaced clearly in the sidebar.</p>
+            <h3>Paste Detection</h3>
+            <p>Every paste event is detected and logged — size, timestamp, and whether the source was internal or external to the document. All of this is surfaced clearly in the sidebar.</p>
           </div>
         </div>
         <div class="feat-item">
@@ -803,8 +802,8 @@ footer{background:var(--ink);padding:42px 0 0}
       <h4>For Schools</h4>
       <ul>
         <li><a href="/for-schools">Privacy &amp; Compliance</a></li>
-        <li><a href="mailto:hello@papertrailacademic.com?subject=School or Department Inquiry">School Inquiries</a></li>
-        <li><a href="mailto:hello@papertrailacademic.com?subject=Privacy Question">FERPA / PIPEDA / GDPR</a></li>
+        <li><a href="/cdn-cgi/l/email-protection#254d4049494a6555445540575157444c494446444140484c460b464a481a5650474f4046511876464d4a4a49054a570561405544575148404b51056c4b54504c575c">School Inquiries</a></li>
+        <li><a href="/cdn-cgi/l/email-protection#bfd7dad3d3d0ffcfdecfdacdcbcdded6d3dedcdedbdad2d6dc91dcd0d280cccaddd5dadccb82efcdd6c9dedcc69feecadacccbd6d0d1">FERPA / PIPEDA / GDPR</a></li>
       </ul>
     </div>
     <div class="ftr-col">
@@ -812,19 +811,11 @@ footer{background:var(--ink);padding:42px 0 0}
       <ul>
         <li><a href="/privacy-policy">Privacy Policy</a></li>
         <li><a href="/terms-of-service">Terms of Service</a></li>
-        <li><a href="mailto:hello@papertrailacademic.com">Contact</a></li>
+        <li><a href="/cdn-cgi/l/email-protection#93fbf6fffffcd3e3f2e3f6e1e7e1f2fafff2f0f2f7f6fefaf0bdf0fcfe">Contact</a></li>
       </ul>
     </div>
   </div>
   <div class="ftr-bottom">
     <span>&copy; 2026 PaperTrail Academic. All rights reserved. Operated by Michael Smith.</span>
     <span>
-      <a href="/privacy-policy">Privacy Policy</a> &nbsp;&middot;&nbsp;
-      <a href="/terms-of-service">Terms of Service</a> &nbsp;&middot;&nbsp;
-      <a href="mailto:hello@papertrailacademic.com">Contact</a>
-    </span>
-  </div>
-</footer>
-
-</body>
-</html>
+      <a href="/privacy-policy">Privacy Polic
