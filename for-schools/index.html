@@ -564,4 +564,36 @@
       <ul>
         <li><a href="/privacy-policy">Privacy Policy</a></li>
         <li><a href="/terms-of-service">Terms of Service</a></li>
-        <li><a href="/cdn-cgi/l/email-protection#076f626b6b684777
+        <li><a href="mailto:hello@papertrailacademic.com">Contact</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="ftr-bottom">
+    <span>&copy; 2026 PaperTrail Academic. All rights reserved. Operated by Michael Smith.</span>
+    <span>
+      <a href="/privacy-policy">Privacy Policy</a> &nbsp;&middot;&nbsp;
+      <a href="/terms-of-service">Terms of Service</a> &nbsp;&middot;&nbsp;
+      <a href="mailto:hello@papertrailacademic.com">Contact</a>
+    </span>
+  </div>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+<script>
+(function(){
+  const dd      = document.getElementById('navDropdown');
+  const trigger = document.getElementById('navDropdownTrigger');
+  if (!dd || !trigger) return;
+  let closeTimer;
+  function open()  { clearTimeout(closeTimer); dd.classList.add('open'); }
+  function close() { closeTimer = setTimeout(() => dd.classList.remove('open'), 120); }
+  trigger.addEventListener('mouseenter', open);
+  trigger.addEventListener('mouseleave', close);
+  dd.querySelector('.nav-dd-menu').addEventListener('mouseenter', open);
+  dd.querySelector('.nav-dd-menu').addEventListener('mouseleave', close);
+  trigger.addEventListener('click', () => dd.classList.toggle('open'));
+  document.addEventListener('click', e => { if (!dd.contains(e.target)) dd.classList.remove('open'); });
+})();
+</script>
+</body>
+</html>
