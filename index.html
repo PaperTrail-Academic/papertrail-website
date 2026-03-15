@@ -1047,4 +1047,17 @@ document.querySelectorAll('.hero-preview-card').forEach(card => {
 });
 
 // ── Products dropdown — JS toggle so gap doesn't break it ────────
-(function
+(function(){
+  const dd = document.getElementById('navDropdown');
+  const trigger = document.getElementById('navDropdownTrigger');
+  if (!dd || !trigger) return;
+  let closeTimer;
+  function open()  { clearTimeout(closeTimer); dd.classList.add('open'); }
+  function close() { closeTimer = setTimeout(() => dd.classList.remove('open'), 120); }
+  trigger.addEventListener('mouseenter', open);
+  trigger.addEventListener('mouseleave', close);
+  dd.querySelector('.nav-dd-menu').addEventListener('mouseenter', open);
+  dd.querySelector('.nav-dd-menu').addEventListener('mouseleave', close);
+  trigger.addEventListener('click', () => dd.classList.toggle('open'));
+  document.addEventListener('click', e => { if (!dd.contains(e.target)) dd.classList.remove('open'); });
+})();
