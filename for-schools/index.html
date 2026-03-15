@@ -285,7 +285,7 @@
     <div class="cbadge"><span class="cbadge-icon">🇺🇸</span><div class="cbadge-text"><strong>FERPA</strong><span>How it applies</span></div></div>
     <div class="cbadge"><span class="cbadge-icon">🇨🇦</span><div class="cbadge-text"><strong>Canadian Privacy Law</strong><span>How it applies</span></div></div>
     <div class="cbadge"><span class="cbadge-icon">🇪🇺</span><div class="cbadge-text"><strong>GDPR</strong><span>How it applies</span></div></div>
-    <div class="cbadge"><span class="cbadge-icon">🚫</span><div class="cbadge-text"><strong>Zero student data</strong><span>collected or stored</span></div></div>
+    <div class="cbadge"><span class="cbadge-icon">🚫</span><div class="cbadge-text"><strong>Zero student data</strong><span>collected by PaperTrail</span></div></div>
   </div>
 </div>
 
@@ -319,8 +319,8 @@
         <span class="arch-icon">🔬</span>
         <h3>Verify</h3>
         <p>Verify is the only tool that transmits text. When a teacher runs a Verify report, the submitted text is sent to PaperTrail's secure backend (Supabase / AWS), forwarded to the Anthropic API for analysis, and returned as a report.</p>
-        <p><strong>The text is processed to generate a report and is not retained by PaperTrail. Anthropic's standard API retention policy applies — see <a href="https://privacy.claude.com/en/articles/7996866-how-long-do-you-store-my-organization-s-data" target="_blank" rel="noopener">Anthropic's data retention policy</a>..</strong> Only report metadata is stored (scores, timestamps, the label the teacher assigned). Teachers should anonymize student names before submitting if their institution requires it.</p>
-        <span class="arch-verdict verdict-handled">→ Transmitted, not retained</span>
+        <p><strong>The text is not retained by PaperTrail after the report is generated.</strong> Only report metadata is stored (scores, timestamps, the label the teacher assigned). Anthropic retains API inputs for 7 days under their commercial API terms, which prohibit using API inputs for model training. Teachers should anonymize student names before submitting if their institution requires it.</p>
+        <span class="arch-verdict verdict-handled">→ Transmitted, not retained by PaperTrail</span>
       </div>
 
     </div>
@@ -377,8 +377,8 @@
         <h3>FERPA</h3>
         <div class="reg-subtitle">United States — Family Educational Rights and Privacy Act</div>
         <p>FERPA protects personally identifiable information in education records. PaperTrail does not collect, store, or transmit student PII. Inspect reads only Google Docs revision metadata — timestamps and anonymized edit markers — which are not education records under FERPA. StyleMatch runs entirely locally with no transmission of any kind.</p>
-        <p>Verify transmits essay text to generate a report. The teacher controls what is submitted; no student name or ID is required or collected by PaperTrail. The text is processed to generate a report and is not retained by PaperTrail. Anthropic's standard API retention policy applies — see <a href="https://privacy.claude.com/en/articles/7996866-how-long-do-you-store-my-organization-s-data" target="_blank" rel="noopener">Anthropic's data retention policy</a>. We recommend anonymizing student names from essay text before submitting.</p>
-        <div class="reg-note">A Data Processing Agreement (DPA) is available on request. Contact <a href="mailto:hello@papertrailacademic.com">hello@papertrailacademic.com</a>.</div>
+        <p>Verify transmits essay text to generate a report. The teacher controls what is submitted; no student name or ID is required or collected by PaperTrail. The text is not retained by PaperTrail after the report is generated. Anthropic retains API inputs for 7 days under their commercial API terms, which prohibit using this data for model training. We recommend anonymizing student names from essay text before submitting.</p>
+        <div class="reg-note">A Data Processing Agreement (DPA) is available on request. Contact <a href="/cdn-cgi/l/email-protection#94fcf1f8f8fbd4e4f5e4f1e6e0e6f5fdf8f5f7f5f0f1f9fdf7baf7fbf9"><span class="__cf_email__" data-cfemail="abc3cec7c7c4ebdbcadbced9dfd9cac2c7cac8cacfcec6c2c885c8c4c6">[email&#160;protected]</span></a>.</div>
       </div>
 
       <div class="reg-card">
@@ -386,8 +386,8 @@
         <h3>Canadian Privacy Law</h3>
         <div class="reg-subtitle">PIPEDA and provincial equivalents</div>
         <p>Inspect and StyleMatch collect no personal information and raise no privacy concerns under PIPEDA or provincial legislation — there is nothing to transmit or store.</p>
-        <p>Verify transmits essay text to US-based infrastructure (Supabase/AWS and Anthropic). The text is processed to generate a report and is not retained by PaperTrail. Anthropic's standard API retention policy applies — see <a href="https://privacy.claude.com/en/articles/7996866-how-long-do-you-store-my-organization-s-data" target="_blank" rel="noopener">Anthropic's data retention policy</a>. Canadian schools using Verify should confirm that their board's acceptable use policy permits transmitting student work to US-based AI services — the same question that applies to any AI writing tool.</p>
-        <div class="reg-note">A DPA is available on request. Contact <a href="mailto:hello@papertrailacademic.com">hello@papertrailacademic.com</a>.</div>
+        <p>Verify transmits essay text to US-based infrastructure (Supabase/AWS and Anthropic). The text is not retained by PaperTrail after the report is generated. Anthropic retains API inputs for 7 days under their commercial API terms, which prohibit using this data for model training. Canadian schools using Verify should confirm that their board's acceptable use policy permits transmitting student work to US-based AI services — the same question that applies to any AI writing tool.</p>
+        <div class="reg-note">A DPA is available on request. Contact <a href="/cdn-cgi/l/email-protection#4c24292020230c3c2d3c293e383e2d25202d2f2d282921252f622f2321"><span class="__cf_email__" data-cfemail="6d05080101022d1d0c1d081f191f0c04010c0e0c090800040e430e0200">[email&#160;protected]</span></a>.</div>
       </div>
 
       <div class="reg-card">
@@ -395,8 +395,8 @@
         <h3>GDPR</h3>
         <div class="reg-subtitle">European Union — General Data Protection Regulation</div>
         <p>Inspect and StyleMatch involve no personal data transmission and require no GDPR analysis beyond what applies to Google Docs itself.</p>
-        <p>Verify transmits text to US-based processors (Supabase/AWS and Anthropic, Inc.). EU schools using Verify should confirm they have a lawful basis for this processing under GDPR Article 6. Text submitted through Verify is not retained by PaperTrail after the report is generated. We recommend anonymizing student-identifying information before submission.</p>
-        <div class="reg-note">A DPA for EU data processing is available on request. Contact <a href="mailto:hello@papertrailacademic.com">hello@papertrailacademic.com</a>.</div>
+        <p>Verify transmits text to US-based processors (Supabase/AWS and Anthropic, Inc.). EU schools using Verify should confirm they have a lawful basis for this processing under GDPR Article 6. The text is not retained by PaperTrail after the report is generated. Anthropic retains API inputs for 7 days and does not use them for model training. Anthropic's commercial API terms incorporate Standard Contractual Clauses (SCCs) for international data transfers. We recommend anonymizing student-identifying information before submission.</p>
+        <div class="reg-note">A DPA for EU data processing is available on request. Contact <a href="/cdn-cgi/l/email-protection#6109040d0d0e211100110413151300080d00020005040c08024f020e0c"><span class="__cf_email__" data-cfemail="97fff2fbfbf8d7e7f6e7f2e5e3e5f6fefbf6f4f6f3f2fafef4b9f4f8fa">[email&#160;protected]</span></a>.</div>
       </div>
 
     </div>
@@ -435,8 +435,7 @@
           <strong>Volume options:</strong> Discuss with us directly
         </div>
         <p>We can discuss invoicing arrangements, purchase orders, and how credits can be allocated across a department. Response time is typically within one business day.</p>
-        <a href="mailto:hello@papertrailacademic.com?subject=School or Department Inquiry"
-           class="btn btn-gold">Contact us for department inquiries</a>
+        <a href="/cdn-cgi/l/email-protection#a4ccc1c8c8cbe4d4c5d4c1d6d0d6c5cdc8c5c7c5c0c1c9cdc78ac7cbc99bd7d1c6cec1c7d099f7c7cccbcbc884cbd684e0c1d4c5d6d0c9c1cad084edcad5d1cdd6dd" class="btn btn-gold">Contact us for department inquiries</a>
       </div>
 
     </div>
@@ -459,7 +458,7 @@
 
       <div class="faq-item">
         <button class="faq-q">Does PaperTrail require a school-level agreement or DPA? <span class="faq-caret">▾</span></button>
-        <div class="faq-a"><p>There is no mandatory school-level agreement required to use PaperTrail — teachers sign up individually under the standard Terms of Service. However, a Data Processing Agreement (DPA) is available on request for institutions that require one as part of their procurement or data governance process. Contact hello@papertrailacademic.com.</p></div>
+        <div class="faq-a"><p>There is no mandatory school-level agreement required to use PaperTrail — teachers sign up individually under the standard Terms of Service. However, a Data Processing Agreement (DPA) is available on request for institutions that require one as part of their procurement or data governance process. Contact <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="ff979a939390bf8f9e8f9a8d8b8d9e96939e9c9e9b9a92969cd19c9092">[email&#160;protected]</a>.</p></div>
       </div>
 
       <div class="faq-item">
@@ -469,7 +468,7 @@
 
       <div class="faq-item">
         <button class="faq-q">Is a Security Assessment or penetration test available? <span class="faq-caret">▾</span></button>
-        <div class="faq-a"><p>PaperTrail Academic is a small sole-proprietor product. A formal third-party security audit has not been commissioned. Authentication and database infrastructure is provided by Supabase, which publishes its own security documentation at supabase.com/security. Payment processing is handled entirely by Lemon Squeezy — PaperTrail Academic does not handle or store payment card data. If your institution has specific security review requirements, contact hello@papertrailacademic.com and we'll provide what documentation we can.</p></div>
+        <div class="faq-a"><p>PaperTrail Academic is a small sole-proprietor product. A formal third-party security audit has not been commissioned. Authentication and database infrastructure is provided by Supabase, which publishes its own security documentation at supabase.com/security. Payment processing is handled entirely by Lemon Squeezy — PaperTrail Academic does not handle or store payment card data. If your institution has specific security review requirements, contact <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="82eae7eeeeedc2f2e3f2e7f0f6f0e3ebeee3e1e3e6e7efebe1ace1edef">[email&#160;protected]</a> and we'll provide what documentation we can.</p></div>
       </div>
 
       <div class="faq-item">
@@ -479,20 +478,21 @@
 
       <div class="faq-item">
         <button class="faq-q">Is student writing used to train AI models? <span class="faq-caret">▾</span></button>
-        <div class="faq-a"><p>No. PaperTrail uses the Anthropic API under terms that prohibit using submitted content for model training. This is a standard API usage agreement, not a custom arrangement — Anthropic's commercial API terms do not permit using API inputs for training their models. StyleMatch and Inspect involve no AI and no transmission whatsoever.</p></div>
+        <div class="faq-a"><p>No. PaperTrail uses the Anthropic API under commercial terms that prohibit using submitted content for model training. This applies automatically to all API usage — it is not a custom arrangement. Anthropic retains API inputs for 7 days before automatic deletion, after which they are permanently removed from Anthropic's systems. StyleMatch and Inspect involve no AI and no transmission whatsoever.</p></div>
       </div>
 
       <div class="faq-item">
         <button class="faq-q">Does the extension require admin-level Google Workspace approval? <span class="faq-caret">▾</span></button>
-        <div class="faq-a"><p>This depends on your Google Workspace for Education configuration. Some domains require admin approval for Chrome extensions before teachers can install them. If your domain has this restriction, the PaperTrail Chrome extension will need to be allowlisted by your Google Workspace admin. The extension ID is <code style="font-size:12px;background:var(--bg);padding:2px 5px;border-radius:4px;color:var(--ink)">kgkjmhfoijiiplbmablcjbooopndjbgm</code>. Contact hello@papertrailacademic.com if you need supporting documentation for the approval request.</p></div>
+        <div class="faq-a"><p>This depends on your Google Workspace for Education configuration. Some domains require admin approval for Chrome extensions before teachers can install them. If your domain has this restriction, the PaperTrail Chrome extension will need to be allowlisted by your Google Workspace admin. The extension ID is <code style="font-size:12px;background:var(--bg);padding:2px 5px;border-radius:4px;color:var(--ink)">kgkjmhfoijiiplbmablcjbooopndjbgm</code>. Contact <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="751d1019191a3505140510070107141c191416141110181c165b161a18">[email&#160;protected]</a> if you need supporting documentation for the approval request.</p></div>
       </div>
 
       <div class="faq-item">
         <button class="faq-q">What permissions does the Chrome extension request, and why? <span class="faq-caret">▾</span></button>
         <div class="faq-a">
           <p>The extension requests the following permissions:</p>
-          <p><strong>activeTab and scripting</strong> — to inject the revision analysis tool into the active Google Docs page. Required for the sidebar to function.</p>
-          <p><strong>tabs</strong> — to open the revision playback window in a new tab and detect when the user is on a Google Docs page.</p>
+          <p><strong>activeTab and tabs</strong> — to inject the revision analysis tool into the active Google Docs page and open the revision playback window in a new tab.</p>
+          <p><strong>webNavigation</strong> — to detect when the teacher navigates to a Google Docs page so the extension can activate automatically.</p>
+          <p><strong>identity</strong> — to authenticate teachers via Google Sign-In for StyleMatch and Verify features.</p>
           <p><strong>unlimitedStorage</strong> — to temporarily hold revision data for large documents, which can contain tens of thousands of revision entries. This data is cleared when the session ends.</p>
           <p><strong>Host permissions for docs.google.com and classroom.google.com</strong> — required to operate on Google Docs and Google Classroom pages.</p>
         </div>
@@ -509,25 +509,24 @@
       <p class="eyebrow" style="color:var(--gold)">Get in Touch</p>
       <h2>Every question gets a <em>real reply.</em></h2>
       <p>PaperTrail Academic is built by a single AP/IB English teacher in Ontario. If you have questions that this page doesn't answer — about privacy, technical integration, or institutional purchasing — reach out directly. You'll hear back from the person who built it.</p>
-      <a href="mailto:hello@papertrailacademic.com?subject=School or Department Inquiry"
-         class="btn btn-gold btn-lg">Contact us about your school</a>
+      <a href="/cdn-cgi/l/email-protection#bad2dfd6d6d5facadbcadfc8cec8dbd3d6dbd9dbdedfd7d3d994d9d5d785c9cfd8d0dfd9ce87e9d9d2d5d5d69ad5c89afedfcadbc8ced7dfd4ce9af3d4cbcfd3c8c3" class="btn btn-gold btn-lg">Contact us about your school</a>
     </div>
     <div class="contact-cards">
-      <a href="mailto:hello@papertrailacademic.com?subject=School or Department Inquiry" class="cc">
+      <a href="/cdn-cgi/l/email-protection#1e767b7272715e6e7f6e7b6c6a6c7f77727f7d7f7a7b73777d307d7173216d6b7c747b7d6a234d7d767171723e716c3e5a7b6e7f6c6a737b706a3e57706f6b776c67" class="cc">
         <span class="cc-ico">🏫</span>
         <div><h4>Department &amp; School Inquiries</h4><p>Volume purchasing, DPA requests, IT review support</p></div>
       </a>
-      <a href="mailto:hello@papertrailacademic.com?subject=Privacy Question" class="cc">
+      <a href="/cdn-cgi/l/email-protection#2d45484141426d5d4c5d485f595f4c44414c4e4c494840444e034e4240125e584f47484e59107d5f445b4c4e540d7c58485e59444243" class="cc">
         <span class="cc-ico">🔒</span>
         <div><h4>Privacy &amp; Compliance</h4><p>FERPA, PIPEDA, GDPR — specific questions welcome</p></div>
       </a>
-      <a href="mailto:hello@papertrailacademic.com?subject=Chrome Extension Allowlist Request" class="cc">
+      <a href="/cdn-cgi/l/email-protection#660e030a0a092616071603141214070f0a07050702030b0f054805090b591513040c0305125b250e14090b0346231e120308150f090846270a0a09110a0f15124634031713031512" class="cc">
         <span class="cc-ico">🔧</span>
         <div><h4>IT &amp; Technical</h4><p>Extension allowlist documentation, security questions</p></div>
       </a>
-      <a href="mailto:hello@papertrailacademic.com" class="cc">
+      <a href="/cdn-cgi/l/email-protection#59313c353536192938293c2b2d2b383035383a383d3c34303a773a3634" class="cc">
         <span class="cc-ico">✉️</span>
-        <div><h4>General</h4><p>hello@papertrailacademic.com</p></div>
+        <div><h4>General</h4><p><span class="__cf_email__" data-cfemail="670f020b0b082717061702151315060e0b06040603020a0e044904080a">[email&#160;protected]</span></p></div>
       </a>
     </div>
   </div>
@@ -556,8 +555,8 @@
       <h4>For Schools</h4>
       <ul>
         <li><a href="/for-schools">Privacy &amp; Compliance</a></li>
-        <li><a href="mailto:hello@papertrailacademic.com?subject=School or Department Inquiry">School Inquiries</a></li>
-        <li><a href="mailto:hello@papertrailacademic.com?subject=Privacy Question">FERPA / PIPEDA / GDPR</a></li>
+        <li><a href="/cdn-cgi/l/email-protection#5038353c3c3f102031203522242231393c31333134353d39337e333f3d6f2325323a3533246d0333383f3f3c703f22701435203122243d353e2470193e2125392229">School Inquiries</a></li>
+        <li><a href="/cdn-cgi/l/email-protection#dab2bfb6b6b59aaabbaabfa8aea8bbb3b6bbb9bbbebfb7b3b9f4b9b5b7e5a9afb8b0bfb9aee78aa8b3acbbb9a3fa8bafbfa9aeb3b5b4">FERPA / PIPEDA / GDPR</a></li>
       </ul>
     </div>
     <div class="ftr-col">
@@ -565,47 +564,4 @@
       <ul>
         <li><a href="/privacy-policy">Privacy Policy</a></li>
         <li><a href="/terms-of-service">Terms of Service</a></li>
-        <li><a href="mailto:hello@papertrailacademic.com">Contact</a></li>
-      </ul>
-    </div>
-  </div>
-  <div class="ftr-bottom">
-    <span>&copy; 2026 PaperTrail Academic. All rights reserved. Operated by Michael Smith.</span>
-    <span>
-      <a href="/privacy-policy">Privacy Policy</a> &nbsp;&middot;&nbsp;
-      <a href="/terms-of-service">Terms of Service</a> &nbsp;&middot;&nbsp;
-      <a href="mailto:hello@papertrailacademic.com">Contact</a>
-    </span>
-  </div>
-</footer>
-
-<script>
-// Nav dropdown
-(function(){
-  const dd = document.getElementById('navDropdown');
-  const trigger = document.getElementById('navDropdownTrigger');
-  if (!dd) return;
-  let closeTimer;
-  function open()  { clearTimeout(closeTimer); dd.classList.add('open'); }
-  function close() { closeTimer = setTimeout(() => dd.classList.remove('open'), 120); }
-  trigger.addEventListener('mouseenter', open);
-  trigger.addEventListener('mouseleave', close);
-  dd.querySelector('.nav-dd-menu').addEventListener('mouseenter', open);
-  dd.querySelector('.nav-dd-menu').addEventListener('mouseleave', close);
-  trigger.addEventListener('click', () => dd.classList.toggle('open'));
-  document.addEventListener('click', e => { if (!dd.contains(e.target)) dd.classList.remove('open'); });
-})();
-
-// FAQ accordion
-document.querySelectorAll('.faq-q').forEach(btn => {
-  btn.addEventListener('click', () => {
-    const item = btn.closest('.faq-item');
-    const isOpen = item.classList.contains('open');
-    document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
-    if (!isOpen) item.classList.add('open');
-  });
-});
-</script>
-
-</body>
-</html>
+        <li><a href="/cdn-cgi/l/email-protection#076f626b6b684777
