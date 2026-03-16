@@ -49,7 +49,6 @@
       overflow: hidden;
     }
 
-    /* Background radial gradients matching site auth page */
     body::before {
       content: '';
       position: absolute;
@@ -60,7 +59,6 @@
       pointer-events: none;
     }
 
-    /* ── Card ─────────────────────────────────────────────────────── */
     .card {
       position: relative;
       background: var(--warm-white);
@@ -71,7 +69,6 @@
       box-shadow: var(--shadow-lg);
     }
 
-    /* ── Logo ─────────────────────────────────────────────────────── */
     .logo {
       text-align: center;
       margin-bottom: 32px;
@@ -90,7 +87,6 @@
       letter-spacing: 0.3px;
     }
 
-    /* ── Headings ─────────────────────────────────────────────────── */
     h1 {
       font-family: 'DM Serif Display', serif;
       font-size: 22px;
@@ -105,7 +101,6 @@
       line-height: 1.5;
     }
 
-    /* ── Form ─────────────────────────────────────────────────────── */
     .field { margin-bottom: 18px; }
     label {
       display: block;
@@ -128,7 +123,6 @@
     }
     input[type="password"]:focus { border-color: var(--blue); }
 
-    /* Password strength bar */
     .strength-wrap {
       margin-top: 6px;
       display: none;
@@ -152,7 +146,6 @@
       color: var(--ink-light);
     }
 
-    /* ── Button ───────────────────────────────────────────────────── */
     .btn {
       width: 100%;
       padding: 11px 18px;
@@ -170,7 +163,6 @@
     .btn:hover { background: var(--gold-light); }
     .btn:disabled { opacity: 0.45; cursor: not-allowed; }
 
-    /* ── Messages ─────────────────────────────────────────────────── */
     .msg {
       display: none;
       padding: 12px 14px;
@@ -183,7 +175,6 @@
     .msg.error   { background: var(--red-bg);   color: var(--red);   border: 1px solid rgba(192,57,43,0.2); }
     .msg.success { background: var(--green-bg); color: var(--green); border: 1px solid rgba(45,122,79,0.2); }
 
-    /* ── States ───────────────────────────────────────────────────── */
     #state-loading,
     #state-invalid,
     #state-form,
@@ -193,7 +184,6 @@
     #state-form.active,
     #state-done.active { display: block; }
 
-    /* Loading spinner */
     .spinner {
       width: 36px; height: 36px;
       border: 3px solid var(--border);
@@ -205,7 +195,6 @@
     @keyframes spin { to { transform: rotate(360deg); } }
     .loading-text { text-align: center; color: var(--ink-light); font-size: 14px; }
 
-    /* Done state */
     .done-icon {
       width: 48px; height: 48px;
       background: var(--green-bg);
@@ -228,7 +217,6 @@
     }
     .back-link:hover { text-decoration: underline; }
 
-    /* Invalid state */
     #state-invalid { text-align: center; }
     #state-invalid .err-icon {
       font-size: 32px;
@@ -244,27 +232,27 @@
   <!-- Logo -->
   <div class="logo">
     <a href="https://papertrailacademic.com">PaperTrail <span>Academic</span></a>
-    <div class="logo-sub">Reset your password</div>
+    <div class="logo-sub" id="logo-sub">Reset your password</div>
   </div>
 
   <!-- State: checking token -->
   <div id="state-loading" class="active">
     <div class="spinner"></div>
-    <p class="loading-text">Verifying reset link…</p>
+    <p class="loading-text" id="loading-text">Verifying link…</p>
   </div>
 
   <!-- State: invalid / expired token -->
   <div id="state-invalid">
     <div class="err-icon">🔗</div>
     <h1>Link expired</h1>
-    <p class="subtitle">This password reset link has expired or already been used. Reset links are valid for one hour.</p>
+    <p class="subtitle">This link has expired or already been used. Links are valid for one hour.</p>
     <a href="https://papertrailacademic.com" class="back-link">← Back to PaperTrail Academic</a>
   </div>
 
-  <!-- State: reset form -->
+  <!-- State: set password form -->
   <div id="state-form">
-    <h1>Choose a new password</h1>
-    <p class="subtitle">Enter a new password for your account.</p>
+    <h1 id="form-heading">Choose a new password</h1>
+    <p class="subtitle" id="form-subtitle">Enter a new password for your account.</p>
 
     <div id="form-error" class="msg error"></div>
 
@@ -282,14 +270,14 @@
       <input type="password" id="password2" placeholder="Repeat password" autocomplete="new-password" />
     </div>
 
-    <button class="btn" id="btn-reset">Set new password</button>
+    <button class="btn" id="btn-reset">Set password</button>
   </div>
 
   <!-- State: success -->
   <div id="state-done">
     <div class="done-icon">✓</div>
-    <h1>Password updated</h1>
-    <p class="subtitle">Your password has been changed. You can now sign in to the PaperTrail extension with your new password.</p>
+    <h1 id="done-heading">Password set</h1>
+    <p class="subtitle" id="done-subtitle">You can now sign in to the PaperTrail extension with your new password.</p>
     <a href="https://papertrailacademic.com" class="back-link">← Back to PaperTrail Academic</a>
   </div>
 
@@ -297,7 +285,7 @@
 
 <script>
   // ── Supabase config ──────────────────────────────────────────────
-  const SUPABASE_URL     = 'https://ktzrdhiqhidexunucuqp.supabase.co';
+  const SUPABASE_URL      = 'https://ktzrdhiqhidexunucuqp.supabase.co';
   const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt0enJkaGlxaGlkZXh1bnVjdXFwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI2MTQ2ODMsImV4cCI6MjA4ODE5MDY4M30.24Gbyh0C-wbDqQ31MD-ttXoCfLwjcWvjs9-UXAaqmHU';
 
   // ── State helpers ────────────────────────────────────────────────
@@ -318,7 +306,7 @@
 
   // ── Password strength ────────────────────────────────────────────
   document.getElementById('password').addEventListener('input', function () {
-    const val = this.value;
+    const val   = this.value;
     const wrap  = document.getElementById('strength-wrap');
     const fill  = document.getElementById('strength-fill');
     const label = document.getElementById('strength-label');
@@ -327,18 +315,18 @@
     wrap.classList.add('visible');
 
     let score = 0;
-    if (val.length >= 8)  score++;
-    if (val.length >= 12) score++;
-    if (/[A-Z]/.test(val)) score++;
-    if (/[0-9]/.test(val)) score++;
+    if (val.length >= 8)           score++;
+    if (val.length >= 12)          score++;
+    if (/[A-Z]/.test(val))         score++;
+    if (/[0-9]/.test(val))         score++;
     if (/[^A-Za-z0-9]/.test(val)) score++;
 
     const levels = [
-      { pct: '20%', color: '#e74c3c', text: 'Too short' },
-      { pct: '40%', color: '#e67e22', text: 'Weak' },
-      { pct: '60%', color: '#f1c40f', text: 'Fair' },
-      { pct: '80%', color: '#2ecc71', text: 'Good' },
-      { pct: '100%',color: '#27ae60', text: 'Strong' },
+      { pct: '20%',  color: '#e74c3c', text: 'Too short' },
+      { pct: '40%',  color: '#e67e22', text: 'Weak'      },
+      { pct: '60%',  color: '#f1c40f', text: 'Fair'      },
+      { pct: '80%',  color: '#2ecc71', text: 'Good'      },
+      { pct: '100%', color: '#27ae60', text: 'Strong'    },
     ];
     const level = levels[Math.min(score, 4)];
     fill.style.width      = level.pct;
@@ -346,30 +334,73 @@
     label.textContent     = level.text;
   });
 
-  // ── Parse token from URL hash ────────────────────────────────────
-  // Supabase sends:  #access_token=...&type=recovery&...
-  function parseHash() {
-    const hash   = window.location.hash.substring(1);
-    const params = new URLSearchParams(hash);
-    return {
-      accessToken: params.get('access_token'),
-      type:        params.get('type'),
-    };
-  }
+  // ── Token state ──────────────────────────────────────────────────
+  let recoveryToken = null; // set for hash-based recovery flow
+  let inviteSession = null; // set for token_hash invite flow
 
   // ── Init ─────────────────────────────────────────────────────────
-  let recoveryToken = null;
+  window.addEventListener('DOMContentLoaded', async () => {
 
-  window.addEventListener('DOMContentLoaded', () => {
-    const { accessToken, type } = parseHash();
+    // Check query string first (invite flow: ?token_hash=...&type=invite)
+    const qp        = new URLSearchParams(window.location.search);
+    const tokenHash = qp.get('token_hash');
+    const qpType    = qp.get('type');
 
-    if (!accessToken || type !== 'recovery') {
-      show('state-invalid');
-      return;
+    if (tokenHash && qpType === 'invite') {
+      // Invite flow — exchange token_hash for a session via verifyOtp
+      document.getElementById('loading-text').textContent = 'Verifying invitation…';
+      show('state-loading');
+
+      try {
+        const res = await fetch(SUPABASE_URL + '/auth/v1/verify', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'apikey':       SUPABASE_ANON_KEY,
+          },
+          body: JSON.stringify({ token_hash: tokenHash, type: 'invite' }),
+        });
+
+        const data = await res.json();
+
+        if (!res.ok || !data.access_token) {
+          show('state-invalid');
+          return;
+        }
+
+        // Store session so we can use it to set the password
+        inviteSession = data;
+
+        // Update UI for invite context
+        document.getElementById('logo-sub').textContent       = 'Welcome to PaperTrail Academic';
+        document.getElementById('form-heading').textContent   = 'Set your password';
+        document.getElementById('form-subtitle').textContent  = 'Choose a password to complete your account setup.';
+        document.getElementById('done-heading').textContent   = 'You\'re all set';
+        document.getElementById('done-subtitle').textContent  = 'Your account is ready. Open the PaperTrail extension in Chrome to get started.';
+
+        show('state-form');
+
+      } catch (err) {
+        console.error('[PaperTrail] Invite verify error:', err);
+        show('state-invalid');
+        return;
+      }
+
+    } else {
+      // Recovery flow — token comes in URL hash
+      const hash   = window.location.hash.substring(1);
+      const params = new URLSearchParams(hash);
+      const accessToken = params.get('access_token');
+      const hashType    = params.get('type');
+
+      if (!accessToken || hashType !== 'recovery') {
+        show('state-invalid');
+        return;
+      }
+
+      recoveryToken = accessToken;
+      show('state-form');
     }
-
-    recoveryToken = accessToken;
-    show('state-form');
 
     document.getElementById('btn-reset').addEventListener('click', handleReset);
     document.getElementById('password2').addEventListener('keydown', e => {
@@ -377,7 +408,7 @@
     });
   });
 
-  // ── Handle reset ─────────────────────────────────────────────────
+  // ── Handle password set / reset ───────────────────────────────────
   async function handleReset() {
     hideError();
 
@@ -395,14 +426,16 @@
     btn.disabled    = true;
     btn.textContent = 'Updating…';
 
+    // Use whichever token we have
+    const token = inviteSession ? inviteSession.access_token : recoveryToken;
+
     try {
-      // Use the access token to authenticate, then update password
       const res = await fetch(SUPABASE_URL + '/auth/v1/user', {
         method: 'PUT',
         headers: {
           'Content-Type':  'application/json',
           'apikey':        SUPABASE_ANON_KEY,
-          'Authorization': 'Bearer ' + recoveryToken,
+          'Authorization': 'Bearer ' + token,
         },
         body: JSON.stringify({ password }),
       });
@@ -419,10 +452,10 @@
 
     } catch (err) {
       showError('Network error. Please check your connection and try again.');
-      console.error('[PaperTrail] Password reset error:', err);
+      console.error('[PaperTrail] Password set error:', err);
     } finally {
       btn.disabled    = false;
-      btn.textContent = 'Set new password';
+      btn.textContent = 'Set password';
     }
   }
 </script>
