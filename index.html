@@ -4,6 +4,8 @@
   <script>
     if (window.location.hash.includes('type=recovery') || window.location.hash.includes('error=')) {
       window.location.replace('https://papertrailacademic.com/reset-password/' + window.location.hash);
+    } else if (window.location.hash.includes('type=signup')) {
+      window.location.replace('https://papertrailacademic.com/confirmed/' + window.location.hash);
     }
   </script>
   <meta charset="UTF-8" />
