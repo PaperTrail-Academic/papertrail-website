@@ -1,1 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Reset Password · PaperTrail Academic</title>
 
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:       #1a2744;
+      --navy-mid:   #253560;
+      --blue:       #4A6FA5;
+      --blue-light: #6b8fc4;
+      --gold:       #C9A84C;
+      --gold-light: #e8c96a;
+      --cream:      #faf8f4;
+      --warm-white: #fffefb;
+      --ink:        #1a1a2e;
+      --ink-mid:    #3d3d55;
+      --ink-light:  #7a7a96;
+      --border:     #e2ddd6;
+      --green:      #2d7a4f;
+      --green-bg:   #edf7f2;
+      --red:        #c0392b;
+      --red-bg:     #fdf0ee;
+      --shadow-lg:  0 8px 32px rgba(26,39,68,0.14);
+      --radius:     8px;
+      --radius-lg:  14px;
+    }
+
+    html { font-size: 16px; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--navy);
+      color: var(--ink);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Background radial gradients matching site auth page */
+    body::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 20% 50%, rgba(74,111,165,0.3) 0%, transparent 60%),
+        radial-gradient(ellipse at 80% 20%, rgba(201,168,76,0.15) 0%, transparent 50%);
+      pointer-events: none;
+    }
+
+    /* ── Card ─────────────────────────────────────────────────────── */
+    .card {
+      position: relative;
+      background: var(--warm-white);
+      border-radius: var(--radius-lg);
+      padding: 48px;
+      width: 420px;
+      max-width: calc(100vw - 32px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    /* ── Logo ─────────────────────────────────────────────────────── */
+    .logo {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+    .logo a {
+      text-decoration: none;
+      font-family: 'DM Serif Display', serif;
+      font-size: 26px;
+      color: var(--navy);
+    }
+    .logo a span { color: var(--gold); font-style: italic; }
+    .logo-sub {
+      font-size: 13px;
+      color: var(--ink-light);
+      margin-top: 4px;
+      letter-spacing: 0.3px;
+    }
+
+    /* ── Headings ─────────────────────────────────────────────────── */
+    h1 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 22px;
+      font-weight: 400;
+      color: var(--navy);
+      margin-bottom: 8px;
+    }
+    .subtitle {
+      font-size: 14px;
+      color: var(--ink-light);
+      margin-bottom: 28px;
+      line-height: 1.5;
+    }
+
+    /* ── Form ─────────────────────────────────────────────────────── */
+    .field { margin-bottom: 18px; }
+    label {
+      display: block;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--ink-mid);
+      margin-bottom: 6px;
+    }
+    input[type="password"] {
+      width: 100%;
+      padding: 10px 14px;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 15px;
+      color: var(--ink);
+      background: #fff;
+      transition: border-color 0.15s;
+      outline: none;
+    }
+    input[type="password"]:focus { border-color: var(--blue); }
+
+    /* Password strength bar */
+    .strength-wrap {
+      margin-top: 6px;
+      display: none;
+    }
+    .strength-wrap.visible { display: block; }
+    .strength-bar {
+      height: 3px;
+      border-radius: 2px;
+      background: var(--border);
+      overflow: hidden;
+      margin-bottom: 4px;
+    }
+    .strength-fill {
+      height: 100%;
+      border-radius: 2px;
+      width: 0%;
+      transition: width 0.3s, background 0.3s;
+    }
+    .strength-label {
+      font-size: 11px;
+      color: var(--ink-light);
+    }
+
+    /* ── Button ───────────────────────────────────────────────────── */
+    .btn {
+      width: 100%;
+      padding: 11px 18px;
+      border-radius: var(--radius);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 15px;
+      font-weight: 500;
+      cursor: pointer;
+      border: none;
+      background: var(--gold);
+      color: var(--navy);
+      transition: background 0.15s;
+      margin-top: 4px;
+    }
+    .btn:hover { background: var(--gold-light); }
+    .btn:disabled { opacity: 0.45; cursor: not-allowed; }
+
+    /* ── Messages ─────────────────────────────────────────────────── */
+    .msg {
+      display: none;
+      padding: 12px 14px;
+      border-radius: var(--radius);
+      font-size: 13px;
+      line-height: 1.5;
+      margin-bottom: 18px;
+    }
+    .msg.show { display: block; }
+    .msg.error   { background: var(--red-bg);   color: var(--red);   border: 1px solid rgba(192,57,43,0.2); }
+    .msg.success { background: var(--green-bg); color: var(--green); border: 1px solid rgba(45,122,79,0.2); }
+
+    /* ── States ───────────────────────────────────────────────────── */
+    #state-loading,
+    #state-invalid,
+    #state-form,
+    #state-done { display: none; }
+    #state-loading.active,
+    #state-invalid.active,
+    #state-form.active,
+    #state-done.active { display: block; }
+
+    /* Loading spinner */
+    .spinner {
+      width: 36px; height: 36px;
+      border: 3px solid var(--border);
+      border-top-color: var(--blue);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin: 8px auto 16px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .loading-text { text-align: center; color: var(--ink-light); font-size: 14px; }
+
+    /* Done state */
+    .done-icon {
+      width: 48px; height: 48px;
+      background: var(--green-bg);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 16px;
+      font-size: 22px;
+    }
+    #state-done { text-align: center; }
+    #state-done h1 { margin-bottom: 10px; }
+    #state-done .subtitle { margin-bottom: 24px; }
+    .back-link {
+      font-size: 13px;
+      color: var(--blue);
+      text-decoration: none;
+      display: inline-block;
+      margin-top: 16px;
+    }
+    .back-link:hover { text-decoration: underline; }
+
+    /* Invalid state */
+    #state-invalid { text-align: center; }
+    #state-invalid .err-icon {
+      font-size: 32px;
+      margin-bottom: 12px;
+    }
+    #state-invalid h1 { margin-bottom: 10px; }
+  </style>
+</head>
+<body>
+
+<div class="card">
+
+  <!-- Logo -->
+  <div class="logo">
+    <a href="https://papertrailacademic.com">PaperTrail <span>Academic</span></a>
+    <div class="logo-sub">Reset your password</div>
+  </div>
+
+  <!-- State: checking token -->
+  <div id="state-loading" class="active">
+    <div class="spinner"></div>
+    <p class="loading-text">Verifying reset link…</p>
+  </div>
+
+  <!-- State: invalid / expired token -->
+  <div id="state-invalid">
+    <div class="err-icon">🔗</div>
+    <h1>Link expired</h1>
+    <p class="subtitle">This password reset link has expired or already been used. Reset links are valid for one hour.</p>
+    <a href="https://papertrailacademic.com" class="back-link">← Back to PaperTrail Academic</a>
+  </div>
+
+  <!-- State: reset form -->
+  <div id="state-form">
+    <h1>Choose a new password</h1>
+    <p class="subtitle">Enter a new password for your account.</p>
+
+    <div id="form-error" class="msg error"></div>
+
+    <div class="field">
+      <label for="password">New password</label>
+      <input type="password" id="password" placeholder="At least 8 characters" autocomplete="new-password" />
+      <div class="strength-wrap" id="strength-wrap">
+        <div class="strength-bar"><div class="strength-fill" id="strength-fill"></div></div>
+        <div class="strength-label" id="strength-label"></div>
+      </div>
+    </div>
+
+    <div class="field">
+      <label for="password2">Confirm new password</label>
+      <input type="password" id="password2" placeholder="Repeat password" autocomplete="new-password" />
+    </div>
+
+    <button class="btn" id="btn-reset">Set new password</button>
+  </div>
+
+  <!-- State: success -->
+  <div id="state-done">
+    <div class="done-icon">✓</div>
+    <h1>Password updated</h1>
+    <p class="subtitle">Your password has been changed. You can now sign in to the PaperTrail extension with your new password.</p>
+    <a href="https://papertrailacademic.com" class="back-link">← Back to PaperTrail Academic</a>
+  </div>
+
+</div>
+
+<script>
+  // ── Supabase config ──────────────────────────────────────────────
+  const SUPABASE_URL     = 'https://ktzrdhiqhidexunucuqp.supabase.co';
+  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt0enJkaGlxaGlkZXh1bnVjdXFwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI2MTQ2ODMsImV4cCI6MjA4ODE5MDY4M30.24Gbyh0C-wbDqQ31MD-ttXoCfLwjcWvjs9-UXAaqmHU';
+
+  // ── State helpers ────────────────────────────────────────────────
+  function show(id) {
+    ['state-loading','state-invalid','state-form','state-done'].forEach(s => {
+      document.getElementById(s).classList.toggle('active', s === id);
+    });
+  }
+
+  function showError(msg) {
+    const el = document.getElementById('form-error');
+    el.textContent = msg;
+    el.classList.add('show');
+  }
+  function hideError() {
+    document.getElementById('form-error').classList.remove('show');
+  }
+
+  // ── Password strength ────────────────────────────────────────────
+  document.getElementById('password').addEventListener('input', function () {
+    const val = this.value;
+    const wrap  = document.getElementById('strength-wrap');
+    const fill  = document.getElementById('strength-fill');
+    const label = document.getElementById('strength-label');
+
+    if (!val) { wrap.classList.remove('visible'); return; }
+    wrap.classList.add('visible');
+
+    let score = 0;
+    if (val.length >= 8)  score++;
+    if (val.length >= 12) score++;
+    if (/[A-Z]/.test(val)) score++;
+    if (/[0-9]/.test(val)) score++;
+    if (/[^A-Za-z0-9]/.test(val)) score++;
+
+    const levels = [
+      { pct: '20%', color: '#e74c3c', text: 'Too short' },
+      { pct: '40%', color: '#e67e22', text: 'Weak' },
+      { pct: '60%', color: '#f1c40f', text: 'Fair' },
+      { pct: '80%', color: '#2ecc71', text: 'Good' },
+      { pct: '100%',color: '#27ae60', text: 'Strong' },
+    ];
+    const level = levels[Math.min(score, 4)];
+    fill.style.width      = level.pct;
+    fill.style.background = level.color;
+    label.textContent     = level.text;
+  });
+
+  // ── Parse token from URL hash ────────────────────────────────────
+  // Supabase sends:  #access_token=...&type=recovery&...
+  function parseHash() {
+    const hash   = window.location.hash.substring(1);
+    const params = new URLSearchParams(hash);
+    return {
+      accessToken: params.get('access_token'),
+      type:        params.get('type'),
+    };
+  }
+
+  // ── Init ─────────────────────────────────────────────────────────
+  let recoveryToken = null;
+
+  window.addEventListener('DOMContentLoaded', () => {
+    const { accessToken, type } = parseHash();
+
+    if (!accessToken || type !== 'recovery') {
+      show('state-invalid');
+      return;
+    }
+
+    recoveryToken = accessToken;
+    show('state-form');
+
+    document.getElementById('btn-reset').addEventListener('click', handleReset);
+    document.getElementById('password2').addEventListener('keydown', e => {
+      if (e.key === 'Enter') handleReset();
+    });
+  });
+
+  // ── Handle reset ─────────────────────────────────────────────────
+  async function handleReset() {
+    hideError();
+
+    const password  = document.getElementById('password').value;
+    const password2 = document.getElementById('password2').value;
+
+    if (!password || password.length < 8) {
+      showError('Password must be at least 8 characters.'); return;
+    }
+    if (password !== password2) {
+      showError('Passwords do not match.'); return;
+    }
+
+    const btn = document.getElementById('btn-reset');
+    btn.disabled    = true;
+    btn.textContent = 'Updating…';
+
+    try {
+      // Use the access token to authenticate, then update password
+      const res = await fetch(SUPABASE_URL + '/auth/v1/user', {
+        method: 'PUT',
+        headers: {
+          'Content-Type':  'application/json',
+          'apikey':        SUPABASE_ANON_KEY,
+          'Authorization': 'Bearer ' + recoveryToken,
+        },
+        body: JSON.stringify({ password }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        const msg = data?.message || data?.error_description || 'Something went wrong. Please try again.';
+        showError(msg);
+        return;
+      }
+
+      show('state-done');
+
+    } catch (err) {
+      showError('Network error. Please check your connection and try again.');
+      console.error('[PaperTrail] Password reset error:', err);
+    } finally {
+      btn.disabled    = false;
+      btn.textContent = 'Set new password';
+    }
+  }
+</script>
+</body>
+</html>
