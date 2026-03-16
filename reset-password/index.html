@@ -100,6 +100,8 @@
       margin-bottom: 28px;
       line-height: 1.5;
     }
+    .subtitle a { color: var(--blue); text-decoration: none; }
+    .subtitle a:hover { text-decoration: underline; }
 
     .field { margin-bottom: 18px; }
     label {
@@ -277,7 +279,7 @@
   <div id="state-done">
     <div class="done-icon">✓</div>
     <h1 id="done-heading">Password set</h1>
-    <p class="subtitle" id="done-subtitle">You can now sign in to the PaperTrail extension with your new password.</p>
+    <p class="subtitle" id="done-subtitle">Your password has been changed. You can now sign in to the PaperTrail extension with your new password.</p>
     <a href="https://papertrailacademic.com" class="back-link">← Back to PaperTrail Academic</a>
   </div>
 
@@ -335,8 +337,8 @@
   });
 
   // ── Token state ──────────────────────────────────────────────────
-  let recoveryToken = null; // set for hash-based recovery flow
-  let inviteSession = null; // set for token_hash invite flow
+  let recoveryToken = null;
+  let inviteSession = null;
 
   // ── Init ─────────────────────────────────────────────────────────
   window.addEventListener('DOMContentLoaded', async () => {
@@ -347,7 +349,6 @@
     const qpType    = qp.get('type');
 
     if (tokenHash && qpType === 'invite') {
-      // Invite flow — exchange token_hash for a session via verifyOtp
       document.getElementById('loading-text').textContent = 'Verifying invitation…';
       show('state-loading');
 
@@ -368,15 +369,15 @@
           return;
         }
 
-        // Store session so we can use it to set the password
         inviteSession = data;
 
-        // Update UI for invite context
-        document.getElementById('logo-sub').textContent       = 'Welcome to PaperTrail Academic';
-        document.getElementById('form-heading').textContent   = 'Set your password';
-        document.getElementById('form-subtitle').textContent  = 'Choose a password to complete your account setup.';
-        document.getElementById('done-heading').textContent   = 'You\'re all set';
-        document.getElementById('done-subtitle').textContent  = 'Your account is ready. Open the PaperTrail extension in Chrome to get started.';
+        // Invite-specific UI copy
+        document.getElementById('logo-sub').textContent      = 'Welcome to PaperTrail Academic';
+        document.getElementById('form-heading').textContent  = 'Set your password';
+        document.getElementById('form-subtitle').textContent = 'Choose a password to complete your account setup.';
+        document.getElementById('done-heading').textContent  = 'You\'re all set';
+        document.getElementById('done-subtitle').innerHTML   =
+          'Your account is ready. First, <a href="https://chromewebstore.google.com/detail/papertrail-academic/kgkjmhfoijiiplbmablcjbooopndjbgm" target="_blank">download PaperTrail Academic</a> from the Chrome Web Store. Then email me at <a href="mailto:hello@papertrailacademic.com">hello@papertrailacademic.com</a> and I\'ll set you up with free StyleMatch access and Verify credits.';
 
         show('state-form');
 
@@ -388,8 +389,8 @@
 
     } else {
       // Recovery flow — token comes in URL hash
-      const hash   = window.location.hash.substring(1);
-      const params = new URLSearchParams(hash);
+      const hash        = window.location.hash.substring(1);
+      const params      = new URLSearchParams(hash);
       const accessToken = params.get('access_token');
       const hashType    = params.get('type');
 
@@ -426,7 +427,6 @@
     btn.disabled    = true;
     btn.textContent = 'Updating…';
 
-    // Use whichever token we have
     const token = inviteSession ? inviteSession.access_token : recoveryToken;
 
     try {
