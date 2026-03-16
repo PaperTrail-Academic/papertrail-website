@@ -166,10 +166,6 @@
     const expiresAt    = params.get('expires_at');
     const type         = params.get('type');
 
-    console.log('[PaperTrail] hash:', hash);
-    console.log('[PaperTrail] accessToken present:', !!accessToken);
-    console.log('[PaperTrail] type:', type);
-
     if (!accessToken || (type !== 'signup' && type !== 'email_change')) {
       console.log('[PaperTrail] Guard hit — returning early. accessToken present:', !!accessToken, 'type:', type);
       return;
@@ -185,8 +181,7 @@
         }
       });
       if (!res.ok) {
-        console.log('[PaperTrail] Supabase /auth/v1/user failed:', res.status);
-        return;
+      return;
       }
       user = await res.json();
       console.log('[PaperTrail] user fetched:', user?.id, user?.email);
