@@ -167,7 +167,6 @@
     const type         = params.get('type');
 
     if (!accessToken || (type !== 'signup' && type !== 'email_change')) {
-      console.log('[PaperTrail] Guard hit — returning early. accessToken present:', !!accessToken, 'type:', type);
       return;
     }
 
@@ -184,18 +183,13 @@
       return;
       }
       user = await res.json();
-      console.log('[PaperTrail] user fetched:', user?.id, user?.email);
     } catch (e) {
-      console.log('[PaperTrail] Supabase fetch error:', e);
       return;
     }
 
     // Check chrome availability
-    console.log('[PaperTrail] chrome available:', typeof chrome !== 'undefined');
-    console.log('[PaperTrail] chrome.runtime available:', typeof chrome?.runtime !== 'undefined');
 
     if (typeof chrome === 'undefined' || !chrome.runtime) {
-      console.log('[PaperTrail] chrome.runtime not available — extension not installed or not Chrome');
       return;
     }
 
@@ -215,12 +209,9 @@
           }
         },
         function (response) {
-          console.log('[PaperTrail] sendMessage response:', response);
-          console.log('[PaperTrail] lastError:', chrome.runtime.lastError?.message);
         }
       );
     } catch (e) {
-      console.log('[PaperTrail] sendMessage error:', e);
     }
   }
 
