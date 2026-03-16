@@ -166,11 +166,14 @@
     const expiresAt    = params.get('expires_at');
     const type         = params.get('type');
 
-    // Only proceed for signup/email confirmation tokens
-    console.log('hash:', hash);
-console.log('accessToken:', accessToken);
-console.log('type:', type);
-if (!accessToken || (type !== 'signup' && type !== 'email_change')) return;
+    console.log('[PaperTrail] hash:', hash);
+    console.log('[PaperTrail] accessToken present:', !!accessToken);
+    console.log('[PaperTrail] type:', type);
+
+    if (!accessToken || (type !== 'signup' && type !== 'email_change')) {
+      console.log('[PaperTrail] Guard hit — returning early. accessToken present:', !!accessToken, 'type:', type);
+      return;
+    }
 
     // Fetch the user object
     let user;
@@ -181,12 +184,26 @@ if (!accessToken || (type !== 'signup' && type !== 'email_change')) return;
           'Authorization': 'Bearer ' + accessToken
         }
       });
-      if (!res.ok) return;
+      if (!res.ok) {
+        console.log('[PaperTrail] Supabase /auth/v1/user failed:', res.status);
+        return;
+      }
       user = await res.json();
-    } catch (e) { return; }
+      console.log('[PaperTrail] user fetched:', user?.id, user?.email);
+    } catch (e) {
+      console.log('[PaperTrail] Supabase fetch error:', e);
+      return;
+    }
 
-    // Send session to extension
-    if (typeof chrome === 'undefined' || !chrome.runtime) return;
+    // Check chrome availability
+    console.log('[PaperTrail] chrome available:', typeof chrome !== 'undefined');
+    console.log('[PaperTrail] chrome.runtime available:', typeof chrome?.runtime !== 'undefined');
+
+    if (typeof chrome === 'undefined' || !chrome.runtime) {
+      console.log('[PaperTrail] chrome.runtime not available — extension not installed or not Chrome');
+      return;
+    }
+
     try {
       chrome.runtime.sendMessage(
         EXTENSION_ID,
@@ -203,10 +220,13 @@ if (!accessToken || (type !== 'signup' && type !== 'email_change')) return;
           }
         },
         function (response) {
-          if (chrome.runtime.lastError) { /* extension not installed, fine */ }
+          console.log('[PaperTrail] sendMessage response:', response);
+          console.log('[PaperTrail] lastError:', chrome.runtime.lastError?.message);
         }
       );
-    } catch (e) { /* not Chrome or extension not installed, fine */ }
+    } catch (e) {
+      console.log('[PaperTrail] sendMessage error:', e);
+    }
   }
 
   tryAutoSignIn();
