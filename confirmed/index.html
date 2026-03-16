@@ -147,4 +147,67 @@
   </div>
 
   <div class="footer-note">
-    Questions? <a href="/cdn-cgi/l/email-protection#94fcf1f8f8fbd4e4f5e4f1e6e0e6f5fdf8f5f7f5f0f1f9fdf7baf7fbf9"><span class="__
+    Questions? <a href="mailto:support@papertrailacademic.com">support@papertrailacademic.com</a>
+  </div>
+
+</div>
+
+<script>
+(function () {
+  const EXTENSION_ID  = 'kgkjmhfoijiiplbmablcjbooopndjbgm';
+  const SUPABASE_URL  = 'https://ktzrdhiqhidexunucuqp.supabase.co';
+  const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt0enJkaGlxaGlkZXh1bnVjdXFwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI2MTQ2ODMsImV4cCI6MjA4ODE5MDY4M30.24Gbyh0C-wbDqQ31MD-ttXoCfLwjcWvjs9-UXAaqmHU';
+
+  async function tryAutoSignIn() {
+    const hash   = window.location.hash.slice(1);
+    const params = new URLSearchParams(hash);
+    const accessToken  = params.get('access_token');
+    const refreshToken = params.get('refresh_token');
+    const expiresAt    = params.get('expires_at');
+    const type         = params.get('type');
+
+    // Only proceed for signup/email confirmation tokens
+    if (!accessToken || (type !== 'signup' && type !== 'email_change')) return;
+
+    // Fetch the user object
+    let user;
+    try {
+      const res = await fetch(SUPABASE_URL + '/auth/v1/user', {
+        headers: {
+          'apikey': SUPABASE_ANON,
+          'Authorization': 'Bearer ' + accessToken
+        }
+      });
+      if (!res.ok) return;
+      user = await res.json();
+    } catch (e) { return; }
+
+    // Send session to extension
+    if (typeof chrome === 'undefined' || !chrome.runtime) return;
+    try {
+      chrome.runtime.sendMessage(
+        EXTENSION_ID,
+        {
+          type:    'STORE_SESSION_FROM_WEB',
+          session: {
+            access_token:  accessToken,
+            refresh_token: refreshToken,
+            expires_at:    expiresAt ? Number(expiresAt) : null
+          },
+          user: {
+            id:    user.id,
+            email: user.email
+          }
+        },
+        function (response) {
+          if (chrome.runtime.lastError) { /* extension not installed, fine */ }
+        }
+      );
+    } catch (e) { /* not Chrome or extension not installed, fine */ }
+  }
+
+  tryAutoSignIn();
+})();
+</script>
+</body>
+</html>
