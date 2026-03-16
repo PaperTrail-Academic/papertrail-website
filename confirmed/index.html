@@ -167,7 +167,10 @@
     const type         = params.get('type');
 
     // Only proceed for signup/email confirmation tokens
-    if (!accessToken || (type !== 'signup' && type !== 'email_change')) return;
+    console.log('hash:', hash);
+console.log('accessToken:', accessToken);
+console.log('type:', type);
+if (!accessToken || (type !== 'signup' && type !== 'email_change')) return;
 
     // Fetch the user object
     let user;
