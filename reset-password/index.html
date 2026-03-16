@@ -47,6 +47,7 @@
       justify-content: center;
       position: relative;
       overflow: hidden;
+      padding: 24px 0;
     }
 
     body::before {
@@ -64,7 +65,7 @@
       background: var(--warm-white);
       border-radius: var(--radius-lg);
       padding: 48px;
-      width: 420px;
+      width: 460px;
       max-width: calc(100vw - 32px);
       box-shadow: var(--shadow-lg);
     }
@@ -197,19 +198,102 @@
     @keyframes spin { to { transform: rotate(360deg); } }
     .loading-text { text-align: center; color: var(--ink-light); font-size: 14px; }
 
+    /* ── Done state — invite ───────────────────────────────────── */
+    #state-done { text-align: center; }
+
     .done-icon {
-      width: 48px; height: 48px;
+      width: 56px; height: 56px;
       background: var(--green-bg);
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      margin: 0 auto 16px;
-      font-size: 22px;
+      margin: 0 auto 20px;
+      font-size: 26px;
     }
-    #state-done { text-align: center; }
-    #state-done h1 { margin-bottom: 10px; }
-    #state-done .subtitle { margin-bottom: 24px; }
+    #state-done h1 { margin-bottom: 6px; }
+
+    .done-tagline {
+      font-size: 14px;
+      color: var(--ink-light);
+      margin-bottom: 32px;
+    }
+
+    /* Step list */
+    .steps {
+      text-align: left;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+    .step {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+    }
+    .step-num {
+      flex-shrink: 0;
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      background: var(--navy);
+      color: #fff;
+      font-size: 13px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 2px;
+    }
+    .step-body { flex: 1; }
+    .step-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--navy);
+      margin-bottom: 4px;
+    }
+    .step-desc {
+      font-size: 13px;
+      color: var(--ink-light);
+      line-height: 1.5;
+    }
+    .step-desc a { color: var(--blue); text-decoration: none; }
+    .step-desc a:hover { text-decoration: underline; }
+
+    .cws-btn {
+      display: inline-block;
+      background: var(--gold);
+      color: var(--navy);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      text-decoration: none;
+      padding: 13px 28px;
+      border-radius: var(--radius);
+      margin-top: 8px;
+      transition: background 0.15s;
+    }
+    .cws-btn:hover { background: var(--gold-light); }
+
+    .divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 24px 0;
+    }
+
+    .feedback-note {
+      font-size: 13px;
+      color: var(--ink-light);
+      line-height: 1.6;
+    }
+    .feedback-note a { color: var(--blue); text-decoration: none; }
+    .feedback-note a:hover { text-decoration: underline; }
+
+    /* ── Invalid state ─────────────────────────────────────────── */
+    #state-invalid { text-align: center; }
+    #state-invalid .err-icon { font-size: 32px; margin-bottom: 12px; }
+    #state-invalid h1 { margin-bottom: 10px; }
+
     .back-link {
       font-size: 13px;
       color: var(--blue);
@@ -219,12 +303,8 @@
     }
     .back-link:hover { text-decoration: underline; }
 
-    #state-invalid { text-align: center; }
-    #state-invalid .err-icon {
-      font-size: 32px;
-      margin-bottom: 12px;
-    }
-    #state-invalid h1 { margin-bottom: 10px; }
+    /* ── Recovery done state ───────────────────────────────────── */
+    #state-done.recovery { text-align: center; }
   </style>
 </head>
 <body>
@@ -278,9 +358,15 @@
   <!-- State: success -->
   <div id="state-done">
     <div class="done-icon">✓</div>
-    <h1 id="done-heading">Password set</h1>
-    <p class="subtitle" id="done-subtitle">Your password has been changed. You can now sign in to the PaperTrail extension with your new password.</p>
-    <a href="https://papertrailacademic.com" class="back-link">← Back to PaperTrail Academic</a>
+    <h1 id="done-heading">You're all set.</h1>
+    <p class="done-tagline" id="done-tagline">Here's how to get started:</p>
+
+    <div class="steps" id="done-steps">
+      <!-- Steps injected by JS depending on flow -->
+    </div>
+
+    <hr class="divider" id="done-divider" style="display:none;" />
+    <p class="feedback-note" id="done-feedback" style="display:none;"></p>
   </div>
 
 </div>
@@ -289,6 +375,7 @@
   // ── Supabase config ──────────────────────────────────────────────
   const SUPABASE_URL      = 'https://ktzrdhiqhidexunucuqp.supabase.co';
   const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt0enJkaGlxaGlkZXh1bnVjdXFwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI2MTQ2ODMsImV4cCI6MjA4ODE5MDY4M30.24Gbyh0C-wbDqQ31MD-ttXoCfLwjcWvjs9-UXAaqmHU';
+  const CWS_URL           = 'https://chromewebstore.google.com/detail/papertrail-academic/kgkjmhfoijiiplbmablcjbooopndjbgm';
 
   // ── State helpers ────────────────────────────────────────────────
   function show(id) {
@@ -340,10 +427,62 @@
   let recoveryToken = null;
   let inviteSession = null;
 
+  // ── Render done state ────────────────────────────────────────────
+  function renderInviteDone() {
+    document.getElementById('done-heading').textContent  = 'You\'re all set.';
+    document.getElementById('done-tagline').textContent = 'Here\'s how to get started:';
+
+    document.getElementById('done-steps').innerHTML = `
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <div class="step-title">Install PaperTrail Academic</div>
+          <div class="step-desc">
+            Add the extension to Chrome from the Web Store.
+            <br><br>
+            <a class="cws-btn" href="${CWS_URL}" target="_blank">Download PaperTrail Academic →</a>
+          </div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <div class="step-title">Open a Google Doc and sign in</div>
+          <div class="step-desc">
+            Click the PaperTrail icon in your Chrome toolbar. Sign in with your email address and the password you just created.
+          </div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <div class="step-title">Email me for free access</div>
+          <div class="step-desc">
+            Once you're signed in, email me at <a href="mailto:hello@papertrailacademic.com">hello@papertrailacademic.com</a> and I'll set you up with free StyleMatch access and Verify credits so you can explore everything.
+          </div>
+        </div>
+      </div>
+    `;
+
+    document.getElementById('done-divider').style.display  = '';
+    const feedback = document.getElementById('done-feedback');
+    feedback.style.display = '';
+    feedback.innerHTML = 'Questions or suggestions? I\'d love to hear from you — <a href="mailto:hello@papertrailacademic.com">hello@papertrailacademic.com</a>';
+  }
+
+  function renderRecoveryDone() {
+    document.getElementById('done-heading').textContent  = 'Password updated.';
+    document.getElementById('done-tagline').textContent = 'You can now sign in to the PaperTrail extension with your new password.';
+    document.getElementById('done-steps').innerHTML = `
+      <div style="text-align:center;margin-top:8px;">
+        <a href="https://papertrailacademic.com" class="back-link">← Back to PaperTrail Academic</a>
+      </div>
+    `;
+  }
+
   // ── Init ─────────────────────────────────────────────────────────
   window.addEventListener('DOMContentLoaded', async () => {
 
-    // Check query string first (invite flow: ?token_hash=...&type=invite)
     const qp        = new URLSearchParams(window.location.search);
     const tokenHash = qp.get('token_hash');
     const qpType    = qp.get('type');
@@ -371,13 +510,9 @@
 
         inviteSession = data;
 
-        // Invite-specific UI copy
         document.getElementById('logo-sub').textContent      = 'Welcome to PaperTrail Academic';
         document.getElementById('form-heading').textContent  = 'Set your password';
         document.getElementById('form-subtitle').textContent = 'Choose a password to complete your account setup.';
-        document.getElementById('done-heading').textContent  = 'You\'re all set';
-        document.getElementById('done-subtitle').innerHTML   =
-          'Your account is ready. First, <a href="https://chromewebstore.google.com/detail/papertrail-academic/kgkjmhfoijiiplbmablcjbooopndjbgm" target="_blank">download PaperTrail Academic</a> from the Chrome Web Store. Then email me at <a href="mailto:hello@papertrailacademic.com">hello@papertrailacademic.com</a> and I\'ll set you up with free StyleMatch access and Verify credits.';
 
         show('state-form');
 
@@ -388,7 +523,6 @@
       }
 
     } else {
-      // Recovery flow — token comes in URL hash
       const hash        = window.location.hash.substring(1);
       const params      = new URLSearchParams(hash);
       const accessToken = params.get('access_token');
@@ -446,6 +580,13 @@
         const msg = data?.message || data?.error_description || 'Something went wrong. Please try again.';
         showError(msg);
         return;
+      }
+
+      // Render appropriate success state
+      if (inviteSession) {
+        renderInviteDone();
+      } else {
+        renderRecoveryDone();
       }
 
       show('state-done');
