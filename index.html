@@ -1,7 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <script>if(window.location.hash.includes("type=recovery")){window.location.replace("https://papertrailacademic.com/reset-password/"+window.location.hash);}</script>
+  <script>
+    if (window.location.hash.includes('type=recovery') || window.location.hash.includes('error=')) {
+      window.location.replace('https://papertrailacademic.com/reset-password/' + window.location.hash);
+    }
+  </script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>PaperTrail Academic — Know How It Was Written</title>
