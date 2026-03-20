@@ -26,8 +26,6 @@
     a{color:var(--blue);text-decoration:none}
     a:hover{text-decoration:underline}
     img{display:block;max-width:100%}
-
-    /* ─── Nav ─────────────────────────────────────────────────────── */
     nav{position:sticky;top:0;z-index:200;background:rgba(255,255,255,.96);backdrop-filter:blur(10px);border-bottom:1px solid var(--rule)}
     .nav-inner{max-width:1140px;margin:0 auto;padding:0 28px;height:60px;display:flex;align-items:center;gap:28px}
     .nav-logo{display:flex;align-items:center;gap:9px;margin-right:auto;text-decoration:none}
@@ -52,8 +50,6 @@
     .dd-label{font-size:13px;font-weight:600;color:var(--ink);display:block;line-height:1.2}
     .dd-sub{font-size:11px;color:var(--ink-3);font-weight:400}
     .dd-divider{height:1px;background:var(--rule);margin:4px 0}
-
-    /* ─── Page header ─────────────────────────────────────────────── */
     .page-header{background:linear-gradient(135deg,var(--blue-lt) 0%,#fff 100%);border-bottom:1px solid var(--rule);padding:48px 28px 40px}
     .page-header-inner{max-width:760px;margin:0 auto}
     .breadcrumb{font-size:12px;color:var(--ink-3);margin-bottom:14px}
@@ -62,30 +58,22 @@
     .breadcrumb span{margin:0 6px;opacity:.5}
     .page-header h1{font-family:'Lora',serif;font-size:clamp(26px,3vw,36px);font-weight:700;color:var(--ink);margin-bottom:10px}
     .page-header .meta{font-size:13px;color:var(--ink-3)}
-
-    /* ─── Document ────────────────────────────────────────────────── */
     .doc-wrap{max-width:760px;margin:0 auto;padding:48px 28px 80px}
-
     .lead-note{background:var(--blue-lt);border-left:4px solid var(--blue);border-radius:0 8px 8px 0;padding:16px 20px;margin-bottom:40px;font-size:14px;line-height:1.7;color:var(--ink-2)}
     .lead-note strong{color:var(--ink)}
-
     .toc{background:#fff;border:1.5px solid var(--rule);border-radius:8px;padding:20px 24px;margin-bottom:40px}
     .toc h3{font-family:'Lora',serif;font-size:13px;font-weight:700;color:var(--ink-3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px}
     .toc ol{padding-left:18px;display:flex;flex-direction:column;gap:5px}
     .toc ol li{font-size:13px;color:var(--ink-2)}
     .toc ol li a{color:var(--ink-2)}
     .toc ol li a:hover{color:var(--blue)}
-
     .doc-section{margin-bottom:40px;scroll-margin-top:80px}
     .doc-section h2{font-family:'Lora',serif;font-size:19px;font-weight:700;color:var(--ink);margin-bottom:12px;padding-bottom:10px;border-bottom:2px solid var(--rule)}
     .doc-section p{font-size:14.5px;line-height:1.8;color:var(--ink-2);margin-bottom:12px}
     .doc-section p:last-child{margin-bottom:0}
     .doc-section strong{color:var(--ink);font-weight:600}
-    .doc-section ul,
-    .doc-section ol{margin:10px 0 14px 0;padding-left:20px;display:flex;flex-direction:column;gap:7px}
-    .doc-section ul li,
-    .doc-section ol li{font-size:14px;line-height:1.7;color:var(--ink-2)}
-
+    .doc-section ul,.doc-section ol{margin:10px 0 14px 0;padding-left:20px;display:flex;flex-direction:column;gap:7px}
+    .doc-section ul li,.doc-section ol li{font-size:14px;line-height:1.7;color:var(--ink-2)}
     .tier-table{width:100%;border-collapse:collapse;margin:16px 0 20px;font-size:13.5px}
     .tier-table th{text-align:left;font-weight:600;color:var(--ink);background:var(--blue-lt);padding:9px 12px;border:1px solid var(--rule)}
     .tier-table td{padding:8px 12px;border:1px solid var(--rule);color:var(--ink-2);vertical-align:top}
@@ -93,10 +81,10 @@
     .yes{color:var(--green);font-weight:600}
     .no{color:var(--ink-3)}
     .ltd{color:var(--gold-dk);font-weight:600}
-
+    .callout{background:#fff;border:1.5px solid var(--rule);border-radius:8px;padding:16px 20px;margin:16px 0}
+    .callout.blue{border-color:var(--blue);background:var(--blue-lt)}
+    .callout.blue p{color:var(--ink-2)}
     .doc-footer-note{text-align:center;font-size:12.5px;color:var(--ink-3);font-style:italic;padding:24px 0 0;border-top:1px solid var(--rule);line-height:1.7}
-
-    /* ─── Footer ──────────────────────────────────────────────────── */
     footer{background:var(--ink);padding:42px 0 0}
     .ftr-inner{max-width:1140px;margin:0 auto;padding:0 28px 34px;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:32px}
     .ftr-logo{display:flex;align-items:center;gap:8px;margin-bottom:8px}
@@ -112,22 +100,12 @@
     .ftr-bottom span{font-size:11.5px;color:rgba(255,255,255,.36)}
     .ftr-bottom a{color:rgba(255,255,255,.5);text-decoration:none}
     .ftr-bottom a:hover{color:#fff}
-
-    @media(max-width:480px){
-      .nav-inner .nl:not(.cta){display:none}
-      .ftr-inner{grid-template-columns:1fr}
-      .doc-wrap{padding:32px 20px 60px}
-      .page-header{padding:32px 20px 28px}
-      .tier-table{font-size:12px}
-    }
-    @media(max-width:700px){
-      .ftr-inner{grid-template-columns:1fr 1fr}
-    }
+    @media(max-width:480px){.nav-inner .nl:not(.cta){display:none}.ftr-inner{grid-template-columns:1fr}.doc-wrap{padding:32px 20px 60px}.page-header{padding:32px 20px 28px}.tier-table{font-size:12px}}
+    @media(max-width:700px){.ftr-inner{grid-template-columns:1fr 1fr}}
   </style>
 </head>
 <body>
 
-<!-- ═══ NAV ═══════════════════════════════════════════════════════ -->
 <nav>
   <div class="nav-inner">
     <a href="/" class="nav-logo">
@@ -158,12 +136,10 @@
     <a href="/#pricing" class="nl">Pricing</a>
     <a href="/for-schools" class="nl">For Schools</a>
     <a href="/privacy-policy" class="nl">Privacy</a>
-    <a href="https://chromewebstore.google.com/detail/papertrail/kgkjmhfoijiiplbmablcjbooopndjbgm"
-       class="nl cta" target="_blank" rel="noopener">Add to Chrome — Free</a>
+    <a href="https://chromewebstore.google.com/detail/papertrail/kgkjmhfoijiiplbmablcjbooopndjbgm" class="nl cta" target="_blank" rel="noopener">Add to Chrome — Free</a>
   </div>
 </nav>
 
-<!-- ═══ PAGE HEADER ════════════════════════════════════════════════ -->
 <div class="page-header">
   <div class="page-header-inner">
     <div class="breadcrumb">
@@ -176,11 +152,10 @@
   </div>
 </div>
 
-<!-- ═══ DOCUMENT ═══════════════════════════════════════════════════ -->
 <div class="doc-wrap">
 
   <div class="lead-note">
-    <strong>Plain-language summary:</strong> PaperTrail&trade; Academic is built by a teacher, for teachers. These terms cover how you can use the service, what we do with any text you submit, and how payments work. The key points: StyleMatch never transmits your text anywhere. Verify does transmit text to generate a report, but does not retain it. All decisions made using PaperTrail reports are yours — the tool provides a data point, never a verdict.
+    <strong>Plain-language summary:</strong> PaperTrail&trade; Academic is built by a teacher, for teachers. These terms cover how you can use the service, what we do with any text you submit, and how payments work. The key points: StyleMatch never transmits your text anywhere. Verify does transmit text to generate a report, but does not retain it. PaperTrail Write holds student writing transiently and purges it after the teacher downloads their session report. All decisions made using PaperTrail reports are yours — the tool provides a data point, never a verdict.
   </div>
 
   <div class="toc">
@@ -215,17 +190,18 @@
   <div class="doc-section" id="s2">
     <h2>2. Who May Use This Service</h2>
     <p><strong>The Service is intended for use by educators and education professionals only.</strong></p>
-    <p>You must be 18 years of age or older to create an account. The Service is not directed at students and must not be used directly by students. If you are using this Service in a professional capacity, you represent that you have the authority to do so under your institution's policies.</p>
-    <p>PaperTrail Academic does not knowingly collect data from or about students directly. All interactions with the Service are through the educator's account.</p>
+    <p>You must be 18 years of age or older to create a teacher account. The Chrome extension and PaperTrail Write teacher dashboard must not be used directly by students. Students participate in PaperTrail Write sessions only as directed by their teacher — they do not create accounts and are not subject to these Terms.</p>
+    <p>PaperTrail Academic does not knowingly collect data from or about students beyond what is necessary to operate a teacher-assigned writing session. All teacher-facing interactions with the Service are through the educator's account.</p>
   </div>
 
   <div class="doc-section" id="s3">
     <h2>3. Description of Service</h2>
-    <p>PaperTrail Academic provides Chrome browser extension tools for writing analysis and authorship consistency review within Google Docs. The Service includes:</p>
+    <p>PaperTrail Academic provides tools for writing monitoring, analysis, and authorship consistency review. The Service includes:</p>
     <ul>
-      <li><strong>PaperTrail Inspect:</strong> Revision history analysis, writing session reconstruction, and behavioral pattern detection based on Google Docs revision data. Core Inspect features are available to all users without an account. Paste analysis and struggle moment detection are Inspect features that require an active StyleMatch subscription to access.</li>
-      <li><strong>StyleMatch:</strong> Local, on-device stylometric comparison of two writing samples across eight metrics to assess authorship consistency. No text is transmitted when using StyleMatch. Users who create a free account receive three complimentary StyleMatch runs. Unlimited StyleMatch access requires an active subscription.</li>
-      <li><strong>Verify:</strong> AI-assisted writing analysis that transmits submitted text to a third-party AI provider (Anthropic, Inc.) for processing. Available as a Consistency Report (single sample) or a Baseline Deviation Report (comparative, requires a StyleMatch report as input). See Section 8 for data handling details.</li>
+      <li><strong>PaperTrail Inspect:</strong> Revision history analysis, writing session reconstruction, and behavioral pattern detection based on Google Docs revision data. Core Inspect features are available to all users without an account. Paste analysis and struggle moment detection require an active StyleMatch subscription.</li>
+      <li><strong>StyleMatch:</strong> Local, on-device stylometric comparison of two writing samples across eight metrics to assess authorship consistency. No text is transmitted when using StyleMatch. Users who create a free account receive three complimentary StyleMatch runs. Unlimited access requires an active subscription.</li>
+      <li><strong>Verify:</strong> AI-assisted writing analysis that transmits submitted text to a third-party AI provider (Anthropic, Inc.) for processing. Available as a Consistency Report or a Baseline Deviation Report. See Section 8 for data handling details.</li>
+      <li><strong>PaperTrail Write:</strong> A web application (<a href="https://write.papertrailacademic.com" target="_blank" rel="noopener">write.papertrailacademic.com</a>) for timed classroom writing sessions. Teachers create assignments, open sessions, and monitor student writing in real time. Students join via a code — no student account is required. Session data is stored transiently and purged automatically after the session ends. See Section 8 for data handling details.</li>
     </ul>
   </div>
 
@@ -245,8 +221,9 @@
 
   <div class="doc-section" id="s5">
     <h2>5. Accounts and Access</h2>
-    <p><strong>Registration.</strong> An account is required to access StyleMatch and Verify features. You agree to provide accurate information and keep your credentials secure.</p>
-    <p><strong>Feature tiers.</strong> Access to features is determined by your current account and subscription status, as follows:</p>
+    <p><strong>Registration.</strong> A teacher account is required to access StyleMatch, Verify, and PaperTrail Write features. You agree to provide accurate information and keep your credentials secure. You may sign in using email and password or via Google OAuth.</p>
+    <p><strong>PaperTrail Write — trial plan.</strong> New teacher accounts on PaperTrail Write begin on a free trial plan, which allows a limited number of assignments and class rosters. Trial limits are enforced server-side. Exceeding trial limits requires a paid plan.</p>
+    <p><strong>Feature tiers — Chrome extension.</strong> Access to Chrome extension features is determined by your current account and subscription status:</p>
 
     <table class="tier-table">
       <thead>
@@ -311,7 +288,7 @@
   <div class="doc-section" id="s6">
     <h2>6. Subscriptions and Payments</h2>
     <p><strong>Billing.</strong> Paid subscriptions and credit packs are processed by Lemon Squeezy, our payment processor and Merchant of Record. By purchasing a subscription or credit pack, you agree to Lemon Squeezy's Terms of Service and Privacy Policy, available at <a href="https://www.lemonsqueezy.com" target="_blank" rel="noopener">lemonsqueezy.com</a>.</p>
-    <p><strong>Lemon Squeezy as Merchant of Record.</strong> Lemon Squeezy handles all payment processing, invoicing, and applicable sales tax and VAT obligations for purchases made through the Service. PaperTrail Academic is not responsible for tax collection on your purchase — Lemon Squeezy assumes this responsibility.</p>
+    <p><strong>Lemon Squeezy as Merchant of Record.</strong> Lemon Squeezy handles all payment processing, invoicing, and applicable sales tax and VAT obligations. PaperTrail Academic is not responsible for tax collection on your purchase.</p>
     <p><strong>Pricing.</strong></p>
     <ul>
       <li>StyleMatch Monthly: $4.99/month</li>
@@ -319,11 +296,12 @@
       <li>Verify Starter Pack: $6.00 (10 reports)</li>
       <li>Verify Semester Pack: $18.00 (35 reports)</li>
       <li>Verify Year Supply Pack: $45.00 (100 reports)</li>
+      <li>PaperTrail Write Teacher Pro: pricing displayed at <a href="https://write.papertrailacademic.com" target="_blank" rel="noopener">write.papertrailacademic.com</a></li>
     </ul>
     <p>Prices are in USD and subject to change with notice. Changes to subscription pricing will be communicated at least 30 days in advance.</p>
     <p><strong>Verify credits</strong> are non-expiring and non-transferable. They are tied to your account and cannot be moved to another account or refunded once consumed.</p>
-    <p><strong>Subscriptions</strong> renew automatically at the end of each billing period. You may cancel at any time; cancellation takes effect at the end of the current billing period. No partial-period refunds are issued. Upon cancellation, your account reverts to the free account tier.</p>
-    <p><strong>Refunds.</strong> Refund requests may be submitted to <a href="/cdn-cgi/l/email-protection#b4dcd1d8d8dbf4c4d5c4d1c6c0c6d5ddd8d5d7d5d0d1d9ddd79ad7dbd9"><span class="__cf_email__" data-cfemail="cda5a8a1a1a28dbdacbda8bfb9bfaca4a1acaeaca9a8a0a4aee3aea2a0">[email&#160;protected]</span></a> within 7 days of purchase, provided no reports have been generated under the purchased plan or credit pack. Credits consumed prior to a refund request are non-refundable. We handle refund requests on a case-by-case basis and reserve the right to decline requests that do not meet this criteria.</p>
+    <p><strong>Subscriptions</strong> renew automatically at the end of each billing period. You may cancel at any time; cancellation takes effect at the end of the current billing period. No partial-period refunds are issued. Upon cancellation, your account reverts to the free or trial tier.</p>
+    <p><strong>Refunds.</strong> Refund requests may be submitted to <a href="mailto:hello@papertrailacademic.com">hello@papertrailacademic.com</a> within 7 days of purchase, provided no reports have been generated or sessions run under the purchased plan. Credits consumed prior to a refund request are non-refundable. We handle refund requests on a case-by-case basis.</p>
   </div>
 
   <div class="doc-section" id="s7">
@@ -335,6 +313,7 @@
       <li>Share, redistribute, or resell access to your account or any reports generated</li>
       <li>Use the Service to process text you do not have lawful authority to submit (see Section 8)</li>
       <li>Attempt to circumvent subscription gates or access tiers through technical means</li>
+      <li>Use PaperTrail Write in a manner that exposes student data beyond the intended teacher–student session context</li>
       <li>Use the Service in any manner that violates applicable law, including education privacy laws in your jurisdiction</li>
     </ul>
   </div>
@@ -348,22 +327,31 @@
       <li>Forwarded to Anthropic, Inc.'s API for AI-assisted analysis</li>
       <li>Returned as a structured report and saved to your account's report history</li>
     </ol>
-    <p>Text submitted through Verify is <strong>not stored by PaperTrail Academic</strong> beyond the metadata required to save your report (report ID, scores, timestamps, and any student name or assignment label you enter). The full essay text is not retained by PaperTrail after the report is generated.</p>
+    <p>Text submitted through Verify is <strong>not stored by PaperTrail Academic</strong> beyond the metadata required to save your report (report ID, scores, timestamps, and any student name or assignment label you enter). The full essay text is not retained after the report is generated.</p>
     <p>Anthropic processes submitted text under its commercial API terms, which prohibit using API inputs for model training. As of September 2025, Anthropic retains API inputs for 7 days before automatic deletion. See <a href="https://www.anthropic.com/privacy" target="_blank" rel="noopener">anthropic.com/privacy</a> for their full policy.</p>
-    <p><strong>Your responsibility.</strong> You are responsible for ensuring that your use of Verify complies with:</p>
+
+    <p><strong>PaperTrail Write (web application):</strong> PaperTrail Write is designed as a transit system, not a data vault. Student writing data is held transiently in a secure backend (Supabase, hosted on AWS) for the duration of the session.</p>
+
+    <div class="callout blue">
+      <p><strong>The teacher is the data custodian.</strong> After a session ends, the teacher downloads a session report containing student writing and process logs. Student submission data is then purged automatically from PaperTrail's servers — untimed sessions after 30 days, timed sessions after 7 days, and ended sessions within 24 hours. These purges are automatic and cannot be reversed.</p>
+    </div>
+
+    <p>For PaperTrail Write specifically:</p>
     <ul>
-      <li>Your institution's data governance and acceptable use policies</li>
-      <li>Applicable education privacy law in your jurisdiction (including but not limited to FERPA in the United States and GDPR in the European Union)</li>
-      <li>Any consent or notice requirements your institution has established for processing student work</li>
+      <li>Students join sessions using a code — no student account, email address, or personal identifier is required beyond their name as entered by the student</li>
+      <li>Teachers may optionally connect a Google Drive account to attach source documents to assignments. Only the specific file selected by the teacher is accessed; PaperTrail Write does not browse or index other Drive content</li>
+      <li>Student writing data is never used for any purpose other than displaying it to the assigned teacher</li>
+      <li>Student writing data is never sold, shared with third parties, or used to train any AI model</li>
     </ul>
-    <p>Where your institution's policy requires it, you should anonymize student-identifying information from text samples before submitting them through Verify.</p>
-    <p><strong>EU Users.</strong> If you are located in the European Union or processing data subject to GDPR, you acknowledge that text submitted through Verify is processed in the United States by Anthropic, Inc. and by Supabase (AWS). By using Verify, you represent that you have a lawful basis for this processing under GDPR.</p>
+
+    <p><strong>Your responsibility.</strong> You are responsible for ensuring that your use of the Service complies with your institution's data governance policies and applicable education privacy law in your jurisdiction (including but not limited to FERPA in the United States and GDPR in the European Union). Where required, you should anonymize student-identifying information before submitting text through Verify.</p>
+    <p><strong>EU Users.</strong> If you are located in the European Union or processing data subject to GDPR, you acknowledge that text submitted through Verify and PaperTrail Write is processed in the United States by Anthropic, Inc. and by Supabase (AWS). By using these features, you represent that you have a lawful basis for this processing under GDPR.</p>
   </div>
 
   <div class="doc-section" id="s9">
     <h2>9. Intellectual Property</h2>
     <p><strong>Our IP.</strong> The Service, including all code, algorithms, UI design, report templates, scoring methodology, and branding, is the intellectual property of Michael Smith / PaperTrail Academic. All rights reserved.</p>
-    <p><strong>Your content.</strong> You retain all rights to the text you submit through the Service. By submitting text through Verify, you grant PaperTrail Academic a limited, non-exclusive license to process that text solely for the purpose of generating your requested report. This license does not include the right to store, reproduce, or share your submitted text.</p>
+    <p><strong>Your content.</strong> You retain all rights to the text you submit through the Service. By submitting text through Verify or PaperTrail Write, you grant PaperTrail Academic a limited, non-exclusive license to process that text solely for the purpose of generating your requested report or operating your writing session. This license does not include the right to store, reproduce, or share your submitted text beyond what is necessary to operate the Service.</p>
     <p><strong>Report output.</strong> Reports generated by the Service are for your professional use. You may include them in institutional records, documentation, or communications related to your professional duties. You may not redistribute or resell report output.</p>
   </div>
 
@@ -371,10 +359,10 @@
     <h2>10. Third-Party Services</h2>
     <p>The Service relies on the following third-party providers. Their terms and privacy policies govern their respective portions of the Service:</p>
     <ul>
-      <li><strong>Supabase</strong> (<a href="https://supabase.com" target="_blank" rel="noopener">supabase.com</a>) — authentication and database</li>
-      <li><strong>Anthropic, Inc.</strong> (<a href="https://www.anthropic.com" target="_blank" rel="noopener">anthropic.com</a>) — AI analysis for Verify feature</li>
+      <li><strong>Supabase</strong> (<a href="https://supabase.com" target="_blank" rel="noopener">supabase.com</a>) — authentication, database, and file storage for PaperTrail Write and Verify</li>
+      <li><strong>Anthropic, Inc.</strong> (<a href="https://www.anthropic.com" target="_blank" rel="noopener">anthropic.com</a>) — AI analysis for the Verify feature</li>
       <li><strong>Lemon Squeezy</strong> (<a href="https://www.lemonsqueezy.com" target="_blank" rel="noopener">lemonsqueezy.com</a>) — payment processing and Merchant of Record</li>
-      <li><strong>Google</strong> — the Service operates within Google Docs; your use of Google Docs is governed by Google's Terms of Service</li>
+      <li><strong>Google</strong> — the Chrome extension operates within Google Docs; PaperTrail Write uses Google OAuth for teacher sign-in and optionally the Google Drive API for source document selection. Your use of Google services is governed by Google's Terms of Service</li>
     </ul>
     <p>PaperTrail Academic is not responsible for the practices, availability, or actions of these third-party providers.</p>
   </div>
@@ -388,6 +376,7 @@
       <li>Stylometric or AI-generated analysis results will be accurate, complete, or suitable for any particular purpose</li>
       <li>The Service will identify all instances of ghostwritten, AI-assisted, or externally edited work</li>
       <li>Reports will be admissible or sufficient for any institutional, legal, or disciplinary purpose</li>
+      <li>Student writing data will be retained for any minimum period before purge</li>
     </ul>
     <p>Stylometric analysis is a probabilistic tool with known error rates. It is not forensic evidence. <strong>You use the Service and its outputs entirely at your own risk.</strong></p>
   </div>
@@ -400,6 +389,7 @@
       <li>Loss of data, revenue, reputation, or opportunity</li>
       <li>Damages arising from disciplinary decisions, academic consequences, or institutional actions taken based on Service output</li>
       <li>Damages arising from inaccurate, incomplete, or misinterpreted report results</li>
+      <li>Loss of student writing data due to automatic purge, technical failure, or session expiry</li>
     </ul>
     <p><strong>OUR TOTAL LIABILITY TO YOU FOR ANY CLAIM ARISING FROM THE SERVICE SHALL NOT EXCEED THE AMOUNT YOU PAID TO PAPERTRAIL ACADEMIC IN THE 12 MONTHS PRECEDING THE CLAIM.</strong></p>
     <p>Some jurisdictions do not allow limitation of liability for certain types of damages. In such jurisdictions, our liability is limited to the greatest extent permitted by law.</p>
@@ -423,7 +413,7 @@
 
   <div class="doc-section" id="s15">
     <h2>15. Termination</h2>
-    <p>We may suspend or terminate your access to the Service at any time for violation of these Terms. You may terminate your account at any time by contacting <a href="/cdn-cgi/l/email-protection#8fe7eae3e3e0cfffeeffeafdfbfdeee6e3eeeceeebeae2e6eca1ece0e2"><span class="__cf_email__" data-cfemail="4e262b2222210e3e2f3e2b3c3a3c2f27222f2d2f2a2b23272d602d2123">[email&#160;protected]</span></a>. Upon termination, your subscription will not be refunded for the remaining period except as provided in Section 6.</p>
+    <p>We may suspend or terminate your access to the Service at any time for violation of these Terms. You may terminate your account at any time by contacting <a href="mailto:hello@papertrailacademic.com">hello@papertrailacademic.com</a>. Upon termination, your subscription will not be refunded for the remaining period except as provided in Section 6.</p>
     <p>Sections 4, 9, 11, 12, and 13 survive termination.</p>
   </div>
 
@@ -439,18 +429,17 @@
     <p><strong>Entire agreement.</strong> These Terms, together with our <a href="/privacy-policy">Privacy Policy</a>, constitute the entire agreement between you and PaperTrail Academic regarding the Service.</p>
     <p><strong>Severability.</strong> If any provision of these Terms is found unenforceable, the remaining provisions remain in full force.</p>
     <p><strong>No waiver.</strong> Failure to enforce any provision of these Terms does not constitute a waiver of our right to enforce it in the future.</p>
-    <p><strong>Contact.</strong> Questions about these Terms may be directed to <a href="/cdn-cgi/l/email-protection#e68e838a8a89a696879683949294878f8a87858782838b8f85c885898b"><span class="__cf_email__" data-cfemail="375f525b5b587747564752454345565e5b56545653525a5e541954585a">[email&#160;protected]</span></a>.</p>
+    <p><strong>Contact.</strong> Questions about these Terms may be directed to <a href="mailto:hello@papertrailacademic.com">hello@papertrailacademic.com</a>.</p>
   </div>
 
   <div class="doc-footer-note">
     PaperTrail Academic is a sole proprietorship operated by Michael Smith.<br>
-    "PaperTrail," "PaperTrail StyleMatch," "PaperTrail Inspect," and "PaperTrail Academic" are used as trade names. All rights reserved.<br>
+    "PaperTrail," "PaperTrail Write," "PaperTrail StyleMatch," "PaperTrail Inspect," and "PaperTrail Academic" are used as trade names. All rights reserved.<br>
     Also see: <a href="/privacy-policy">Privacy Policy</a>
   </div>
 
 </div>
 
-<!-- ═══ FOOTER ═══════════════════════════════════════════════════════ -->
 <footer>
   <div class="ftr-inner">
     <div>
@@ -466,6 +455,7 @@
         <li><a href="/inspect">Inspect</a></li>
         <li><a href="/stylematch">StyleMatch</a></li>
         <li><a href="/verify">Verify</a></li>
+        <li><a href="https://write.papertrailacademic.com" target="_blank" rel="noopener">Write</a></li>
         <li><a href="https://chromewebstore.google.com/detail/papertrail/kgkjmhfoijiiplbmablcjbooopndjbgm" target="_blank" rel="noopener">Chrome Web Store</a></li>
       </ul>
     </div>
@@ -473,8 +463,8 @@
       <h4>For Schools</h4>
       <ul>
         <li><a href="/for-schools">Privacy &amp; Compliance</a></li>
-        <li><a href="/cdn-cgi/l/email-protection#462e232a2a290636273623343234272f2a27252722232b2f256825292b793533242c2325327b15252e29292a662934660223362734322b232832660f2837332f343f">School Inquiries</a></li>
-        <li><a href="/cdn-cgi/l/email-protection#573f323b3b381727362732252325363e3b36343633323a3e347934383a682422353d3234236a07253e2136342e7706223224233e3839">FERPA / PIPEDA / GDPR</a></li>
+        <li><a href="mailto:hello@papertrailacademic.com?subject=School or Department Inquiry">School Inquiries</a></li>
+        <li><a href="mailto:hello@papertrailacademic.com?subject=Privacy Question">FERPA / PIPEDA / GDPR</a></li>
       </ul>
     </div>
     <div class="ftr-col">
@@ -482,7 +472,7 @@
       <ul>
         <li><a href="/privacy-policy">Privacy Policy</a></li>
         <li><a href="/terms-of-service">Terms of Service</a></li>
-        <li><a href="/cdn-cgi/l/email-protection#f199949d9d9eb18190819483858390989d90929095949c9892df929e9c">Contact</a></li>
+        <li><a href="mailto:hello@papertrailacademic.com">Contact</a></li>
       </ul>
     </div>
   </div>
@@ -491,4 +481,27 @@
     <span>
       <a href="/privacy-policy">Privacy Policy</a> &nbsp;&middot;&nbsp;
       <a href="/terms-of-service">Terms of Service</a> &nbsp;&middot;&nbsp;
-      <a href="/cdn-cgi/l/email-protection#bcd4d9d0d0d3fcccddcc
+      <a href="mailto:hello@papertrailacademic.com">Contact</a>
+    </span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  const dd = document.getElementById('navDropdown');
+  const trigger = document.getElementById('navDropdownTrigger');
+  if (!dd) return;
+  let closeTimer;
+  function open()  { clearTimeout(closeTimer); dd.classList.add('open'); }
+  function close() { closeTimer = setTimeout(() => dd.classList.remove('open'), 120); }
+  trigger.addEventListener('mouseenter', open);
+  trigger.addEventListener('mouseleave', close);
+  dd.querySelector('.nav-dd-menu').addEventListener('mouseenter', open);
+  dd.querySelector('.nav-dd-menu').addEventListener('mouseleave', close);
+  trigger.addEventListener('click', () => dd.classList.toggle('open'));
+  document.addEventListener('click', e => { if (!dd.contains(e.target)) dd.classList.remove('open'); });
+})();
+</script>
+
+</body>
+</html>
