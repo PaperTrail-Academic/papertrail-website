@@ -26,8 +26,6 @@
     a{color:var(--blue);text-decoration:none}
     a:hover{text-decoration:underline}
     img{display:block;max-width:100%}
-
-    /* ─── Nav ─────────────────────────────────────────────────────── */
     nav{position:sticky;top:0;z-index:200;background:rgba(255,255,255,.96);backdrop-filter:blur(10px);border-bottom:1px solid var(--rule)}
     .nav-inner{max-width:1140px;margin:0 auto;padding:0 28px;height:60px;display:flex;align-items:center;gap:28px}
     .nav-logo{display:flex;align-items:center;gap:9px;margin-right:auto;text-decoration:none}
@@ -52,8 +50,6 @@
     .dd-label{font-size:13px;font-weight:600;color:var(--ink);display:block;line-height:1.2}
     .dd-sub{font-size:11px;color:var(--ink-3);font-weight:400}
     .dd-divider{height:1px;background:var(--rule);margin:4px 0}
-
-    /* ─── Page header ─────────────────────────────────────────────── */
     .page-header{background:linear-gradient(135deg,var(--blue-lt) 0%,#fff 100%);border-bottom:1px solid var(--rule);padding:48px 28px 40px}
     .page-header-inner{max-width:760px;margin:0 auto}
     .breadcrumb{font-size:12px;color:var(--ink-3);margin-bottom:14px}
@@ -62,13 +58,9 @@
     .breadcrumb span{margin:0 6px;opacity:.5}
     .page-header h1{font-family:'Lora',serif;font-size:clamp(26px,3vw,36px);font-weight:700;color:var(--ink);margin-bottom:10px}
     .page-header .meta{font-size:13px;color:var(--ink-3)}
-
-    /* ─── Document ────────────────────────────────────────────────── */
     .doc-wrap{max-width:760px;margin:0 auto;padding:48px 28px 80px}
-
     .lead-note{background:var(--blue-lt);border-left:4px solid var(--blue);border-radius:0 8px 8px 0;padding:16px 20px;margin-bottom:40px;font-size:14px;line-height:1.7;color:var(--ink-2)}
     .lead-note strong{color:var(--ink)}
-
     .doc-section{margin-bottom:40px;scroll-margin-top:80px}
     .doc-section h2{font-family:'Lora',serif;font-size:19px;font-weight:700;color:var(--ink);margin-bottom:12px;padding-bottom:10px;border-bottom:2px solid var(--rule)}
     .doc-section p{font-size:14.5px;line-height:1.8;color:var(--ink-2);margin-bottom:12px}
@@ -76,14 +68,10 @@
     .doc-section strong{color:var(--ink);font-weight:600}
     .doc-section ul{margin:10px 0 14px 0;padding-left:20px;display:flex;flex-direction:column;gap:7px}
     .doc-section ul li{font-size:14px;line-height:1.7;color:var(--ink-2)}
-
     .callout{background:#fff;border:1.5px solid var(--rule);border-radius:8px;padding:16px 20px;margin:16px 0}
     .callout.blue{border-color:var(--blue);background:var(--blue-lt)}
     .callout.blue p{color:var(--ink-2)}
-
     .doc-footer-note{text-align:center;font-size:12.5px;color:var(--ink-3);font-style:italic;padding:24px 0 0;border-top:1px solid var(--rule);line-height:1.7}
-
-    /* ─── Footer ──────────────────────────────────────────────────── */
     footer{background:var(--ink);padding:42px 0 0}
     .ftr-inner{max-width:1140px;margin:0 auto;padding:0 28px 34px;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:32px}
     .ftr-logo{display:flex;align-items:center;gap:8px;margin-bottom:8px}
@@ -99,21 +87,12 @@
     .ftr-bottom span{font-size:11.5px;color:rgba(255,255,255,.36)}
     .ftr-bottom a{color:rgba(255,255,255,.5);text-decoration:none}
     .ftr-bottom a:hover{color:#fff}
-
-    @media(max-width:480px){
-      .nav-inner .nl:not(.cta){display:none}
-      .ftr-inner{grid-template-columns:1fr}
-      .doc-wrap{padding:32px 20px 60px}
-      .page-header{padding:32px 20px 28px}
-    }
-    @media(max-width:700px){
-      .ftr-inner{grid-template-columns:1fr 1fr}
-    }
+    @media(max-width:480px){.nav-inner .nl:not(.cta){display:none}.ftr-inner{grid-template-columns:1fr}.doc-wrap{padding:32px 20px 60px}.page-header{padding:32px 20px 28px}}
+    @media(max-width:700px){.ftr-inner{grid-template-columns:1fr 1fr}}
   </style>
 </head>
 <body>
 
-<!-- ═══ NAV ═══════════════════════════════════════════════════════ -->
 <nav>
   <div class="nav-inner">
     <a href="/" class="nav-logo">
@@ -144,12 +123,10 @@
     <a href="/#pricing" class="nl">Pricing</a>
     <a href="/for-schools" class="nl">For Schools</a>
     <a href="/privacy-policy" class="nl active">Privacy</a>
-    <a href="https://chromewebstore.google.com/detail/papertrail/kgkjmhfoijiiplbmablcjbooopndjbgm"
-       class="nl cta" target="_blank" rel="noopener">Add to Chrome — Free</a>
+    <a href="https://chromewebstore.google.com/detail/papertrail/kgkjmhfoijiiplbmablcjbooopndjbgm" class="nl cta" target="_blank" rel="noopener">Add to Chrome — Free</a>
   </div>
 </nav>
 
-<!-- ═══ PAGE HEADER ════════════════════════════════════════════════ -->
 <div class="page-header">
   <div class="page-header-inner">
     <div class="breadcrumb">
@@ -162,11 +139,10 @@
   </div>
 </div>
 
-<!-- ═══ DOCUMENT ═══════════════════════════════════════════════════ -->
 <div class="doc-wrap">
 
   <div class="lead-note">
-    <strong>The short version:</strong> PaperTrail does not collect, store, or transmit any personal data for Inspect or StyleMatch — everything runs locally in your browser. Verify transmits essay text to generate a report, but does not retain it. No student accounts. No advertising. No analytics.
+    <strong>The short version:</strong> PaperTrail does not collect, store, or transmit any personal data for Inspect or StyleMatch — everything runs locally in your browser. Verify transmits essay text to generate a report, but does not retain it. PaperTrail Write holds session data transiently and purges it after the teacher downloads their report. No advertising. No analytics.
   </div>
 
   <div class="doc-section">
@@ -185,7 +161,7 @@
 
   <div class="doc-section">
     <h2>Verify — Transmitted, Not Retained</h2>
-    <p>Verify is the only PaperTrail tool that transmits text. When you run a Verify report, the submitted text is:</p>
+    <p>Verify is the only PaperTrail Chrome extension tool that transmits text. When you run a Verify report, the submitted text is:</p>
     <ul>
       <li>Sent to PaperTrail Academic's secure backend (Supabase, hosted on AWS infrastructure)</li>
       <li>Forwarded to the Anthropic API for AI-assisted analysis</li>
@@ -200,7 +176,7 @@
     <h2>What PaperTrail Does Not Do</h2>
     <p>PaperTrail does not collect any personal information. It does not track usage, send analytics, display advertising, or sell data of any kind.</p>
     <p>PaperTrail does not modify any Google Doc or leave any record of having been used on a document. It does not access student information systems, gradebooks, or any Google Workspace admin data.</p>
-    <p>Students never interact with PaperTrail. No student accounts are created. No student data is collected by PaperTrail Academic directly.</p>
+    <p>No student accounts are created across any PaperTrail product. No student data is collected by PaperTrail Academic directly.</p>
   </div>
 
   <div class="doc-section">
@@ -214,15 +190,34 @@
   </div>
 
   <div class="doc-section">
+    <h2>PaperTrail Write — Web Application</h2>
+    <p>PaperTrail Write (<a href="https://write.papertrailacademic.com" target="_blank" rel="noopener">write.papertrailacademic.com</a>) is a separate web application for classroom writing sessions. It is not a Chrome extension. The following describes how it handles data.</p>
+
+    <p><strong>Teacher accounts</strong> — Teachers create accounts using email/password or Google Sign-In. Google Sign-In uses the standard OAuth 2.0 flow and requests only basic profile information (name and email address). PaperTrail Write does not request access to any Google Drive files at sign-in.</p>
+
+    <p><strong>Google Drive — source document upload</strong> — When a teacher chooses to attach a source document from Google Drive, PaperTrail Write requests read-only access (<code>drive.readonly</code>) to allow the teacher to select a file using the Google Picker. Only the selected file is accessed. Its contents are downloaded to the teacher's browser and uploaded to PaperTrail Write's secure storage (Supabase, hosted on AWS). PaperTrail Write does not browse, index, or retain access to any other files in the teacher's Drive.</p>
+
+    <p><strong>Student writing data</strong> — Students join sessions using a code provided by their teacher. No student account is created. Student-entered text, word counts, and writing process signals (such as paste events and time away) are stored transiently in PaperTrail Write's secure backend for the duration of the session.</p>
+
+    <div class="callout blue">
+      <p><strong>PaperTrail Write is designed as a transit system, not a data vault.</strong> After a session ends, the teacher downloads a session report. Student submission data is then purged from PaperTrail's servers. The teacher is the data custodian — they hold the report, not PaperTrail.</p>
+    </div>
+
+    <p>Untimed sessions are purged after 30 days. Timed sessions are purged after 7 days. Ended sessions are purged within 24 hours of the session ending. These purges are automatic and cannot be reversed.</p>
+
+    <p><strong>What PaperTrail Write does not do</strong> — It does not sell, share, or transmit student data to any third party. It does not use student writing for any purpose other than displaying it to the assigned teacher. It does not use student data to train any AI model.</p>
+  </div>
+
+  <div class="doc-section">
     <h2>Google Classroom and Student Data</h2>
     <p>PaperTrail respects the access permissions that Google enforces on all documents. It can only read revision history that the logged-in teacher already has permission to view. It does not access any student data beyond what is visible in the document's standard revision history.</p>
-    <p>Because Inspect and StyleMatch process data locally without transmission, they do not raise additional data governance concerns beyond those of Google Docs itself. For Verify, see the section above.</p>
+    <p>Because Inspect and StyleMatch process data locally without transmission, they do not raise additional data governance concerns beyond those of Google Docs itself. For Verify, see the section above. For PaperTrail Write, see the section above.</p>
     <p>Schools and IT coordinators with compliance questions should review our <a href="/for-schools">For Schools</a> page, which covers FERPA, PIPEDA, and GDPR considerations in plain language.</p>
   </div>
 
   <div class="doc-section">
     <h2>Children's Privacy</h2>
-    <p>PaperTrail does not knowingly collect any information from anyone, including minors. The extension is designed exclusively for use by educators. Document revision data accessed by Inspect is processed locally and discarded at the end of each session.</p>
+    <p>PaperTrail does not knowingly collect any information from minors beyond what is necessary to operate a teacher-assigned writing session. In PaperTrail Write, students enter only their name and their written work — no email address, no account, and no personal identifiers are required. Session data is purged automatically after the session ends. The Chrome extension is designed exclusively for use by educators and does not interact with students at all.</p>
   </div>
 
   <div class="doc-section">
@@ -237,14 +232,13 @@
   </div>
 
   <div class="doc-footer-note">
-    This privacy policy covers PaperTrail Academic's website and Chrome extension.<br>
+    This privacy policy covers PaperTrail Academic's website, Chrome extension, and PaperTrail Write web application.<br>
     PaperTrail Academic is operated by Michael Smith. &copy; 2026 All rights reserved.<br>
     Also see: <a href="/terms-of-service">Terms of Service</a>
   </div>
 
 </div>
 
-<!-- ═══ FOOTER ═══════════════════════════════════════════════════════ -->
 <footer>
   <div class="ftr-inner">
     <div>
@@ -260,6 +254,7 @@
         <li><a href="/inspect">Inspect</a></li>
         <li><a href="/stylematch">StyleMatch</a></li>
         <li><a href="/verify">Verify</a></li>
+        <li><a href="https://write.papertrailacademic.com" target="_blank" rel="noopener">Write</a></li>
         <li><a href="https://chromewebstore.google.com/detail/papertrail/kgkjmhfoijiiplbmablcjbooopndjbgm" target="_blank" rel="noopener">Chrome Web Store</a></li>
       </ul>
     </div>
