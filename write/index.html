@@ -271,7 +271,7 @@ footer{background:var(--ink);padding:42px 0 0}
           <div class="dd-divider"></div>
           <a href="/write" class="dd-item active">
             <span class="dd-icon">🖊️</span>
-            <span><span class="dd-label">Write <span style="color:var(--purple);font-size:10px">From $4.99/mo</span></span><span class="dd-sub">Timed writing sessions with process monitoring</span></span>
+            <span><span class="dd-label">Write <span style="color:var(--purple);font-size:10px">$49/yr</span></span><span class="dd-sub">Timed writing sessions with process monitoring</span></span>
           </a>
         </div>
       </div>
@@ -289,7 +289,7 @@ footer{background:var(--ink);padding:42px 0 0}
     <div>
       <div class="hero-eyebrow">
         <span class="hero-product-badge">🖊️ PaperTrail Write</span>
-        <span class="hero-price-tag">From $4.99/mo</span>
+        <span class="hero-price-tag">$49/yr</span>
       </div>
       <h1>Let them write.<br><em>Then see how they wrote.</em></h1>
       <p class="hero-sub">Write is a distraction-reduced, integrity-aware writing environment for in-class timed assignments. Students join with a code, write, and submit. You receive the essay alongside a structured process log — every paste event, every focus change, timed and documented.</p>
@@ -306,7 +306,7 @@ footer{background:var(--ink);padding:42px 0 0}
       </div>
     </div>
     <div class="write-mock-wrap">
-      <!-- Writing environment mockup -->
+      <!-- Animated writing environment mockup -->
       <div class="write-mock">
         <div class="wm-header">
           <div class="wm-brand">
@@ -314,57 +314,196 @@ footer{background:var(--ink);padding:42px 0 0}
             <span class="wm-brand-label">PaperTrail Write</span>
             <span class="wm-assignment">Essay: The Ethics of AI in Schools</span>
           </div>
-          <div class="wm-timer">38:14</div>
+          <div class="wm-timer" id="mockTimer">45:00</div>
         </div>
         <div class="wm-monitoring">
           <div class="wm-mon-dot"></div>
           <span class="wm-mon-label">This session is being documented</span>
         </div>
-        <div class="wm-writing">
-          <div class="wm-line w-82"></div>
-          <div class="wm-line w-95"></div>
-          <div class="wm-line w-88"></div>
-          <div class="wm-line w-74"></div>
-          <div class="wm-line w-90" style="margin-bottom:14px"></div>
-          <div class="wm-line w-82"></div>
-          <div class="wm-line w-95"></div>
-          <div class="wm-line paste w-90"></div>
-          <div class="wm-line w-58" style="margin-bottom:0"><!-- cursor --></div>
-          <span class="wm-cursor"></span>
+        <div class="wm-writing" id="mockWritingArea">
+          <div id="mockText" style="font-family:'DM Sans',sans-serif;font-size:11.5px;color:var(--ink);line-height:1.7;white-space:pre-wrap;word-break:break-word;min-height:160px"></div>
         </div>
         <div class="wm-footer">
-          <span class="wm-save">Work is saved automatically</span>
+          <span class="wm-save" id="mockSaveStatus">Work is saved automatically</span>
           <div class="wm-btns">
             <div class="wm-btn-ghost">Save Now</div>
-            <div class="wm-btn-submit">Submit Essay →</div>
+            <div class="wm-btn-submit" id="mockSubmitBtn">Submit Essay →</div>
           </div>
         </div>
       </div>
-      <!-- Process log preview -->
+      <!-- Animated process log -->
       <div class="log-mock">
         <div class="log-mock-hdr">Process Log — Teacher View (Jordan M.)</div>
-        <div class="log-entry">
-          <span class="log-time">09:04:12</span>
-          <span class="log-badge lb-start">SESSION START</span>
-          <span class="log-detail">Joined · Period 3</span>
-        </div>
-        <div class="log-entry">
-          <span class="log-time">09:06:38</span>
-          <span class="log-badge lb-paste">PASTE EVENT</span>
-          <span class="log-detail">214 chars · external source</span>
-        </div>
-        <div class="log-entry">
-          <span class="log-time">09:19:22</span>
-          <span class="log-badge lb-blur">FOCUS LOST</span>
-          <span class="log-detail">Window left · 42 seconds</span>
-        </div>
-        <div class="log-entry" style="margin-bottom:0">
-          <span class="log-time">09:46:02</span>
-          <span class="log-badge lb-submit">SUBMITTED</span>
-          <span class="log-detail">487 words · 41m 50s total</span>
-        </div>
+        <div id="mockLog" style="display:flex;flex-direction:column;gap:5px"></div>
       </div>
     </div>
+
+<style>
+.log-entry-anim {
+  display:flex;gap:9px;align-items:center;
+  animation: logSlideIn 0.4s cubic-bezier(.22,.84,.44,1) forwards;
+  opacity:0;
+}
+@keyframes logSlideIn {
+  from { opacity:0; transform:translateY(-6px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+.wm-writing #mockText .cursor {
+  display:inline-block;width:2px;height:13px;
+  background:var(--purple);border-radius:1px;
+  vertical-align:text-bottom;margin-left:1px;
+  animation:blink 1s step-end infinite;
+}
+.paste-flash {
+  background: #f3e8ff !important;
+  transition: background 0.5s ease;
+}
+</style>
+
+<script>
+(function() {
+  const essay = `Artificial intelligence has become one of the most debated tools in modern education. Proponents argue that AI can personalise learning, identify struggling students early, and free teachers from repetitive tasks. Critics, however, raise legitimate concerns about academic integrity, data privacy, and the risk of students outsourcing their thinking entirely.
+
+The central tension is not whether AI is useful — it clearly is — but whether its use in schools undermines the very skills education is meant to develop. Writing, for instance, is not just a product. It is a process of thinking. When a student uses an AI to generate a draft, they may submit something polished, but they have not necessarily thought through the argument themselves.
+
+This does not mean AI has no place in the classroom. Used transparently — as a tool for feedback, for exploring counterarguments, or for checking structure — it can scaffold genuine learning. The problem arises when it replaces the struggle, not when it supports it.
+
+Schools need clear, consistent policies. These should distinguish between AI as a research aid and AI as a ghostwriter. They should be communicated to students honestly, with reasons, not just rules. And they should be paired with assessment designs that make wholesale AI substitution difficult — timed writing, oral defences, iterative drafts with documented revisions.
+
+The goal is not to ban AI from schools. The goal is to ensure that students still learn to think.`;
+
+  const logEntries = [
+    { time: '09:04:12', badge: 'SESSION START', cls: 'lb-start', detail: 'Jordan M. · Period 3' },
+    { time: '09:07:45', badge: 'FIRST KEYSTROKE', cls: 'lb-start', detail: '93s after session opened' },
+    { time: '09:14:22', badge: 'PASTE EVENT', cls: 'lb-paste', detail: '312 chars · external source' },
+    { time: '09:31:08', badge: 'FOCUS LOST', cls: 'lb-blur', detail: 'Window left · 38 seconds' },
+    { time: '09:31:46', badge: 'FOCUS RETURNED', cls: 'lb-start', detail: 'Resumed writing' },
+    { time: '09:48:55', badge: 'SUBMITTED', cls: 'lb-submit', detail: '487 words · 44m 43s total' },
+  ];
+
+  const timerEl    = document.getElementById('mockTimer');
+  const textEl     = document.getElementById('mockText');
+  const logEl      = document.getElementById('mockLog');
+  const saveEl     = document.getElementById('mockSaveStatus');
+  const submitBtn  = document.getElementById('mockSubmitBtn');
+
+  // Checkpoints: [charIndex, logEntryIndex]
+  // log entry 0 fires immediately, entry 1 at char 0, entry 2 at ~30% through, etc.
+  const TOTAL_CHARS = essay.length;
+  const LOG_TRIGGERS = [
+    { at: 0,                      logIdx: 0 },
+    { at: 15,                     logIdx: 1 },
+    { at: Math.floor(TOTAL_CHARS * 0.28), logIdx: 2 },
+    { at: Math.floor(TOTAL_CHARS * 0.60), logIdx: 3 },
+    { at: Math.floor(TOTAL_CHARS * 0.62), logIdx: 4 },
+  ];
+
+  let charIdx = 0;
+  let logFired = new Set();
+  let timerSecs = 45 * 60;
+  let phase = 'typing'; // typing | submitted | resetting
+  let typeTimeout = null;
+  let timerInterval = null;
+  let resetTimeout = null;
+
+  // Typing speed: varies to feel human
+  function nextDelay() {
+    const ch = essay[charIdx] || '';
+    if (ch === '
+') return 180 + Math.random() * 120;
+    if (ch === '.' || ch === ',' || ch === '—') return 90 + Math.random() * 80;
+    if (ch === ' ') return 30 + Math.random() * 20;
+    return 28 + Math.random() * 40;
+  }
+
+  function addLogEntry(idx) {
+    if (logFired.has(idx)) return;
+    logFired.add(idx);
+    const e = logEntries[idx];
+    const row = document.createElement('div');
+    row.className = 'log-entry-anim';
+    row.innerHTML =
+      `<span class="log-time">${e.time}</span>` +
+      `<span class="log-badge ${e.cls}">${e.badge}</span>` +
+      `<span class="log-detail">${e.detail}</span>`;
+    logEl.appendChild(row);
+  }
+
+  function updateTimer() {
+    if (timerSecs <= 0) return;
+    timerSecs--;
+    const m = Math.floor(timerSecs / 60);
+    const s = timerSecs % 60;
+    timerEl.textContent = `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+  }
+
+  function flashPaste() {
+    textEl.classList.add('paste-flash');
+    setTimeout(() => textEl.classList.remove('paste-flash'), 800);
+  }
+
+  function typeChar() {
+    if (phase !== 'typing') return;
+
+    // Check log triggers
+    LOG_TRIGGERS.forEach(t => {
+      if (charIdx >= t.at) addLogEntry(t.logIdx);
+    });
+
+    // Paste flash when paste log fires
+    if (charIdx === LOG_TRIGGERS[2].at) flashPaste();
+
+    if (charIdx < essay.length) {
+      textEl.textContent = essay.slice(0, charIdx + 1);
+      charIdx++;
+      typeTimeout = setTimeout(typeChar, nextDelay());
+    } else {
+      // Finished typing — show submitted state
+      phase = 'submitted';
+      addLogEntry(5); // SUBMITTED
+      saveEl.textContent = '✓ Submitted successfully';
+      submitBtn.textContent = '✓ Submitted';
+      submitBtn.style.background = 'var(--green)';
+
+      // Wait 3.5s then reset
+      resetTimeout = setTimeout(reset, 3500);
+    }
+  }
+
+  function reset() {
+    phase = 'resetting';
+    clearTimeout(typeTimeout);
+
+    // Fade out text
+    textEl.style.transition = 'opacity 0.6s';
+    textEl.style.opacity = '0';
+    logEl.style.transition = 'opacity 0.6s';
+    logEl.style.opacity = '0';
+
+    setTimeout(() => {
+      charIdx = 0;
+      logFired = new Set();
+      timerSecs = 45 * 60;
+      timerEl.textContent = '45:00';
+      textEl.textContent = '';
+      logEl.innerHTML = '';
+      saveEl.textContent = 'Work is saved automatically';
+      submitBtn.textContent = 'Submit Essay →';
+      submitBtn.style.background = '';
+
+      textEl.style.opacity = '1';
+      logEl.style.opacity = '1';
+
+      phase = 'typing';
+      typeTimeout = setTimeout(typeChar, 600);
+    }, 700);
+  }
+
+  // Start
+  timerInterval = setInterval(updateTimer, 1000);
+  typeTimeout = setTimeout(typeChar, 800);
+})();
+</script>
   </div>
 </section>
 
