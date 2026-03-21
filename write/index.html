@@ -409,8 +409,7 @@ The goal is not to ban AI from schools. The goal is to ensure that students stil
   // Typing speed: varies to feel human
   function nextDelay() {
     const ch = essay[charIdx] || '';
-    if (ch === '
-') return 180 + Math.random() * 120;
+    if (ch === '\n') return 180 + Math.random() * 120;
     if (ch === '.' || ch === ',' || ch === '—') return 90 + Math.random() * 80;
     if (ch === ' ') return 30 + Math.random() * 20;
     return 28 + Math.random() * 40;
