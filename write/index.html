@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PaperTrail Write — Timed Writing Sessions with Process Monitoring</title>
+  <meta name="description" content="PaperTrail Write is a distraction-reduced, integrity-aware writing environment for in-class assignments. Teachers create timed sessions; students write; the process is documented." />
+  <link rel="icon" href="/icon128.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet" />
+
+<style>
+/* ─── Reset & Tokens ─────────────────────────────────────────── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --blue:#4A6FA5; --blue-dk:#3a5882; --blue-lt:#e8eef6;
+  --gold:#C9A84C; --gold-dk:#a8892f; --gold-lt:#fdf6e3;
+  --teal:#2a7a6b; --teal-lt:#e6f4f1;
+  --purple:#7B5EA7; --purple-dk:#634892; --purple-lt:#f0ebf9; --purple-xlt:#f8f5fd;
+  --ink:#1a2235; --ink-2:#3d4f6e; --ink-3:#6b7a96;
+  --rule:#dce4ef; --bg:#f9fafc; --white:#fff;
+  --green:#34a853; --red:#ea4335; --yellow:#fbbc04;
+  --shadow:0 4px 24px rgba(74,111,165,.10);
+  --shadow-lg:0 16px 56px rgba(74,111,165,.18);
+}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;color:var(--ink);background:var(--white);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%}
+.container{max-width:1100px;margin:0 auto;padding:0 28px}
+.eyebrow{font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--purple);margin-bottom:10px}
+
+/* ─── Buttons ─────────────────────────────────────────────────── */
+.btn{display:inline-flex;align-items:center;gap:7px;padding:12px 22px;border-radius:6px;font-family:'DM Sans',sans-serif;font-size:13.5px;font-weight:600;cursor:pointer;transition:all .18s ease;border:none;white-space:nowrap;text-decoration:none}
+.btn-purple{background:var(--purple);color:#fff}.btn-purple:hover{background:var(--purple-dk);transform:translateY(-1px);box-shadow:0 4px 16px rgba(123,94,167,.3)}
+.btn-ghost{background:transparent;color:var(--purple);border:1.5px solid var(--purple)}.btn-ghost:hover{background:var(--purple-lt)}
+.btn-sm{padding:8px 16px;font-size:12.5px}
+.btn-full{width:100%;justify-content:center}
+
+/* ─── Nav ─────────────────────────────────────────────────────── */
+nav{position:sticky;top:0;z-index:200;background:rgba(255,255,255,.96);backdrop-filter:blur(10px);border-bottom:1px solid var(--rule)}
+.nav-inner{max-width:1100px;margin:0 auto;padding:0 28px;height:60px;display:flex;align-items:center;gap:28px}
+.nav-logo{display:flex;align-items:center;gap:9px;margin-right:auto}
+.nav-logo img{width:26px;height:26px}
+.nav-wm{font-family:'Lora',serif;font-size:16px;font-weight:700;color:var(--ink)}
+.nav-wm em{color:var(--blue);font-style:italic}
+.nl{font-size:13px;font-weight:500;color:var(--ink-2);transition:color .15s}
+.nl:hover{color:var(--purple)}
+.nl.cta{background:var(--purple);color:#fff;padding:7px 16px;border-radius:5px;font-weight:600}
+.nl.cta:hover{background:var(--purple-dk)}
+.nav-dropdown{position:relative}
+.nav-dropdown>.nl{display:flex;align-items:center;gap:4px;cursor:pointer;user-select:none}
+.nav-dropdown>.nl .dd-caret{font-size:10px;opacity:.55;display:inline-block;transition:transform .2s}
+.nav-dropdown.open>.nl .dd-caret{transform:rotate(-180deg)}
+.nav-dd-menu{position:absolute;top:100%;left:50%;transform:translateX(-50%);padding-top:8px;opacity:0;pointer-events:none;transition:opacity .18s ease}
+.nav-dropdown.open .nav-dd-menu{opacity:1;pointer-events:all}
+.nav-dd-inner{background:#fff;border:1.5px solid var(--rule);border-radius:10px;box-shadow:var(--shadow-lg);padding:8px;min-width:240px}
+.dd-item{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:7px;text-decoration:none;transition:background .15s;color:var(--ink)}
+.dd-item:hover{background:var(--bg)}
+.dd-item.active{background:var(--purple-xlt)}
+.dd-icon{font-size:16px;flex-shrink:0}
+.dd-label{font-size:13px;font-weight:600;color:var(--ink);display:block;line-height:1.2}
+.dd-sub{font-size:11px;color:var(--ink-3);font-weight:400}
+.dd-divider{height:1px;background:var(--rule);margin:4px 0}
+
+/* ─── Hero ────────────────────────────────────────────────────── */
+.hero{background:linear-gradient(155deg,#f0ebf9 0%,#fff 55%,#f5f7fa 100%);padding:64px 0 52px;border-bottom:1px solid var(--rule)}
+.hero-inner{max-width:1100px;margin:0 auto;padding:0 28px;display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}
+.hero-eyebrow{display:flex;align-items:center;gap:8px;margin-bottom:14px}
+.hero-product-badge{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;background:var(--purple-lt);color:var(--purple);padding:4px 12px;border-radius:20px}
+.hero-price-tag{font-size:11.5px;color:var(--ink-3);font-weight:500}
+.hero h1{font-family:'Lora',serif;font-size:clamp(28px,3.5vw,46px);font-weight:700;line-height:1.15;color:var(--ink);margin-bottom:18px}
+.hero h1 em{color:var(--purple)}
+.hero-sub{font-size:16px;color:var(--ink-2);line-height:1.65;margin-bottom:28px;max-width:490px}
+.hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:22px}
+.hero-trust{display:flex;flex-direction:column;gap:8px}
+.hero-trust span{font-size:12.5px;color:var(--ink-3);display:flex;align-items:center;gap:6px}
+.hero-trust span::before{content:'✓';color:var(--green);font-weight:700;font-size:11px}
+
+/* ─── Hero mockup ─────────────────────────────────────────────── */
+.write-mock-wrap{display:flex;flex-direction:column;gap:12px}
+.write-mock{background:#fff;border-radius:12px;border:1px solid var(--rule);overflow:hidden;box-shadow:var(--shadow-lg);font-family:'DM Sans',sans-serif}
+.wm-header{background:var(--ink);padding:11px 16px;display:flex;align-items:center;justify-content:space-between}
+.wm-brand{display:flex;align-items:center;gap:8px}
+.wm-dot{width:7px;height:7px;border-radius:50%;background:var(--purple)}
+.wm-brand-label{font-size:10.5px;font-weight:700;color:rgba(255,255,255,.9)}
+.wm-assignment{font-size:9px;color:rgba(255,255,255,.45);margin-left:4px}
+.wm-timer{background:var(--purple);color:#fff;font-size:13px;font-weight:700;font-family:'DM Sans',sans-serif;padding:4px 11px;border-radius:5px;letter-spacing:.05em}
+.wm-monitoring{background:#2a1a3e;padding:5px 16px;display:flex;align-items:center;gap:7px}
+.wm-mon-dot{width:5px;height:5px;border-radius:50%;background:#a78bfa}
+.wm-mon-label{font-size:9px;color:rgba(167,139,250,.9)}
+.wm-writing{background:#fff;padding:18px 20px;min-height:160px;position:relative}
+.wm-line{height:8px;background:#e8edf4;border-radius:3px;margin-bottom:7px}
+.wm-line.w-90{width:90%}.wm-line.w-82{width:82%}.wm-line.w-95{width:95%}.wm-line.w-74{width:74%}.wm-line.w-88{width:88%}.wm-line.w-58{width:58%}
+.wm-line.paste{background:#f3e8ff;border-left:3px solid var(--purple)}
+.wm-cursor{display:inline-block;width:2px;height:14px;background:var(--purple);border-radius:1px;vertical-align:middle;animation:blink 1s step-end infinite}
+@keyframes blink{50%{opacity:0}}
+.wm-footer{background:#f8f9fa;border-top:1px solid var(--rule);padding:8px 16px;display:flex;align-items:center;justify-content:space-between}
+.wm-save{font-size:9px;color:var(--ink-3)}
+.wm-btns{display:flex;gap:7px}
+.wm-btn-ghost{background:#f0ebf9;color:var(--purple);font-size:9px;font-weight:600;padding:4px 11px;border-radius:4px;border:1px solid #d8cdf0}
+.wm-btn-submit{background:var(--purple);color:#fff;font-size:9px;font-weight:600;padding:4px 11px;border-radius:4px}
+
+/* ─── Process log mockup ─────────────────────────────────────── */
+.log-mock{background:#fff;border:1px solid var(--rule);border-radius:10px;padding:12px 14px;box-shadow:var(--shadow)}
+.log-mock-hdr{font-size:8.5px;font-weight:700;color:var(--ink-3);text-transform:uppercase;letter-spacing:.09em;margin-bottom:8px}
+.log-entry{display:flex;gap:9px;align-items:center;margin-bottom:5px}
+.log-time{font-size:8px;color:var(--ink-3);width:50px;flex-shrink:0;font-family:monospace}
+.log-badge{font-size:7.5px;font-weight:700;padding:2px 7px;border-radius:3px;flex-shrink:0;white-space:nowrap}
+.lb-start{background:#e8f5e9;color:#2e7d32}
+.lb-paste{background:#fff3cd;color:#856404}
+.lb-blur{background:#fce8e6;color:var(--red)}
+.lb-submit{background:#ede9f6;color:var(--purple)}
+.log-detail{font-size:8px;color:var(--ink-3)}
+
+/* ─── Feature strip ───────────────────────────────────────────── */
+.feature-strip{background:var(--purple);padding:20px 28px;text-align:center}
+.feature-strip p{font-family:'Lora',serif;font-size:17px;font-style:italic;color:#fff}
+.feature-strip em{color:#c9b8e8;font-style:normal;font-weight:600}
+
+/* ─── Features section ───────────────────────────────────────── */
+.features-section{padding:72px 0;background:var(--bg)}
+.features-hdr{text-align:center;margin-bottom:52px}
+.features-hdr h2{font-family:'Lora',serif;font-size:clamp(22px,2.8vw,32px);color:var(--ink);margin-bottom:10px}
+.features-hdr h2 em{color:var(--purple)}
+.features-hdr p{font-size:15px;color:var(--ink-2);max-width:520px;margin:0 auto;line-height:1.65}
+
+.features-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.feat-card{background:#fff;border:1.5px solid var(--rule);border-radius:12px;padding:22px 20px;transition:box-shadow .2s}
+.feat-card:hover{box-shadow:var(--shadow-lg)}
+.feat-card-icon{font-size:22px;margin-bottom:12px}
+.feat-card h3{font-family:'Lora',serif;font-size:17px;color:var(--ink);margin-bottom:8px;line-height:1.2}
+.feat-card p{font-size:13px;color:var(--ink-2);line-height:1.58}
+.feat-accent{border-top:3px solid var(--purple)}
+
+/* ─── How it works ───────────────────────────────────────────── */
+.how-section{padding:72px 0;background:#fff}
+.how-inner{max-width:1100px;margin:0 auto;padding:0 28px;display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center}
+.how-content h2{font-family:'Lora',serif;font-size:clamp(22px,2.8vw,32px);color:var(--ink);margin-bottom:14px;line-height:1.2}
+.how-content h2 em{color:var(--purple)}
+.how-content p{font-size:14.5px;color:var(--ink-2);line-height:1.65;margin-bottom:20px}
+.steps-list{list-style:none;display:flex;flex-direction:column;gap:16px}
+.step{display:flex;gap:14px;align-items:flex-start}
+.step-num{width:28px;height:28px;border-radius:50%;background:var(--purple);color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
+.step-body h4{font-size:13.5px;font-weight:700;color:var(--ink);margin-bottom:3px}
+.step-body p{font-size:12.5px;color:var(--ink-3);line-height:1.5}
+
+/* ─── Transparency section ───────────────────────────────────── */
+.transparency-section{padding:64px 0;background:var(--purple-xlt);border-top:1px solid #e0d5f0;border-bottom:1px solid #e0d5f0}
+.transparency-inner{max-width:860px;margin:0 auto;padding:0 28px;text-align:center}
+.transparency-inner h2{font-family:'Lora',serif;font-size:clamp(22px,2.8vw,30px);color:var(--ink);margin-bottom:12px}
+.transparency-inner h2 em{color:var(--purple)}
+.transparency-inner > p{font-size:14.5px;color:var(--ink-2);line-height:1.65;margin-bottom:36px;max-width:600px;margin-left:auto;margin-right:auto}
+.transparency-cols{display:grid;grid-template-columns:1fr 1fr;gap:20px;text-align:left}
+.t-col{background:#fff;border:1.5px solid var(--rule);border-radius:10px;padding:20px}
+.t-col h4{font-size:13px;font-weight:700;color:var(--ink);margin-bottom:12px;display:flex;align-items:center;gap:6px}
+.t-col ul{list-style:none;display:flex;flex-direction:column;gap:8px}
+.t-col ul li{font-size:12.5px;color:var(--ink-2);display:flex;align-items:flex-start;gap:7px;line-height:1.4}
+.t-yes li::before{content:'✓';color:var(--green);font-weight:700;font-size:11px;flex-shrink:0;margin-top:2px}
+.t-no li::before{content:'✕';color:var(--ink-3);font-weight:700;font-size:11px;flex-shrink:0;margin-top:2px;opacity:.5}
+.disclaimer-block{background:#fff;border-left:3px solid var(--ink-3);border-radius:0 8px 8px 0;padding:12px 16px;font-size:12.5px;color:var(--ink-3);line-height:1.6;margin-top:24px;text-align:left}
+
+/* ─── Compared to Google Docs ────────────────────────────────── */
+.compare-section{padding:72px 0;background:var(--bg)}
+.compare-hdr{text-align:center;margin-bottom:36px}
+.compare-hdr h2{font-family:'Lora',serif;font-size:clamp(22px,2.8vw,30px);color:var(--ink);margin-bottom:8px}
+.compare-hdr h2 em{color:var(--purple)}
+.compare-hdr p{font-size:14.5px;color:var(--ink-2)}
+.compare-table{max-width:860px;margin:0 auto;border:1.5px solid var(--rule);border-radius:12px;overflow:hidden;background:#fff}
+.ct-head{display:grid;grid-template-columns:2fr 1fr 1fr;background:var(--ink);padding:12px 20px}
+.ct-head span{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:rgba(255,255,255,.6)}
+.ct-head span:first-child{color:rgba(255,255,255,.4)}
+.ct-head span.hl{color:#c9b8e8}
+.ct-row{display:grid;grid-template-columns:2fr 1fr 1fr;padding:11px 20px;border-bottom:1px solid var(--rule);align-items:center}
+.ct-row:last-child{border-bottom:none}
+.ct-row:nth-child(even){background:#fafbfd}
+.ct-feature{font-size:13px;color:var(--ink-2)}
+.ct-val{font-size:12px;text-align:center;font-weight:600}
+.cv-yes{color:var(--green)}
+.cv-no{color:var(--ink-3);opacity:.55}
+.cv-hl{color:var(--purple)}
+
+/* ─── CTA ────────────────────────────────────────────────────── */
+.cta-section{background:linear-gradient(135deg,#3d2566 0%,var(--purple) 100%);padding:64px 0}
+.cta-inner{max-width:700px;margin:0 auto;padding:0 28px;text-align:center}
+.cta-inner h2{font-family:'Lora',serif;font-size:clamp(24px,3vw,36px);color:#fff;margin-bottom:12px;line-height:1.2}
+.cta-inner h2 em{color:#c9b8e8}
+.cta-inner p{font-size:15px;color:rgba(255,255,255,.75);margin-bottom:28px;line-height:1.65}
+.cta-actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.btn-white{background:#fff;color:var(--purple);font-weight:700}.btn-white:hover{background:#f8f5fd;transform:translateY(-1px)}
+.btn-ghost-white{background:transparent;color:#fff;border:1.5px solid rgba(255,255,255,.45)}.btn-ghost-white:hover{background:rgba(255,255,255,.1)}
+.cta-trust{display:flex;justify-content:center;gap:22px;margin-top:22px;flex-wrap:wrap}
+.cta-trust span{font-size:12px;color:rgba(255,255,255,.55);display:flex;align-items:center;gap:5px}
+.cta-trust span::before{content:'✓';color:rgba(255,255,255,.5);font-weight:700}
+
+/* ─── Cross-sells ─────────────────────────────────────────────── */
+.cross-section{padding:60px 0;background:#fff}
+.cross-hdr{text-align:center;margin-bottom:32px}
+.cross-hdr p{font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);margin-bottom:8px}
+.cross-hdr h2{font-family:'Lora',serif;font-size:clamp(20px,2.5vw,26px);color:var(--ink)}
+.cross-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.xcard{border:1.5px solid var(--rule);border-radius:11px;padding:20px;transition:box-shadow .2s;background:#fafbfd}
+.xcard:hover{box-shadow:var(--shadow-lg)}
+.xcard-icon{font-size:20px;margin-bottom:8px}
+.xcard h4{font-size:14.5px;font-weight:700;font-family:'Lora',serif;color:var(--ink);margin-bottom:5px}
+.xcard p{font-size:12.5px;color:var(--ink-3);line-height:1.5;margin-bottom:14px}
+.xcard-link{font-size:12.5px;font-weight:600}
+
+/* ─── Footer ──────────────────────────────────────────────────── */
+footer{background:var(--ink);padding:42px 0 0}
+.ftr-inner{max-width:1100px;margin:0 auto;padding:0 28px 34px;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:32px}
+.ftr-logo{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.ftr-logo img{width:23px;height:23px}
+.ftr-wm{font-family:'Lora',serif;font-size:14.5px;font-weight:700;color:#fff}
+.ftr-wm em{color:var(--gold);font-style:italic}
+.ftr-tag{font-size:12.5px;color:rgba(255,255,255,.42);line-height:1.6;font-style:italic}
+.ftr-col h4{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,.35);margin-bottom:12px}
+.ftr-col ul{list-style:none;display:flex;flex-direction:column;gap:8px}
+.ftr-col ul a{font-size:12.5px;color:rgba(255,255,255,.62);transition:color .15s}
+.ftr-col ul a:hover{color:#fff}
+.ftr-bottom{border-top:1px solid rgba(255,255,255,.1);padding:15px 28px;max-width:1100px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
+.ftr-bottom span{font-size:11.5px;color:rgba(255,255,255,.36)}
+.ftr-bottom a{color:rgba(255,255,255,.5);text-decoration:none}
+.ftr-bottom a:hover{color:#fff}
+
+/* ─── Responsive ──────────────────────────────────────────────── */
+@media(max-width:960px){
+  .hero-inner{grid-template-columns:1fr}
+  .how-inner{grid-template-columns:1fr}
+  .features-grid{grid-template-columns:1fr 1fr}
+  .cross-cards{grid-template-columns:1fr}
+  .transparency-cols{grid-template-columns:1fr}
+  .ftr-inner{grid-template-columns:1fr 1fr}
+}
+@media(max-width:640px){
+  .nav-inner .nl:not(.cta){display:none}
+  .features-grid{grid-template-columns:1fr}
+  .compare-table{font-size:12px}
+  .ftr-inner{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ NAV ═══════════════════════════════════════════════════════ -->
+<nav>
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">
+      <img src="/icon128.png" alt="PaperTrail Academic" />
+      <span class="nav-wm">PaperTrail&trade; <em>Academic</em></span>
+    </a>
+    <div class="nav-dropdown" id="navDropdown">
+      <span class="nl" id="navDropdownTrigger">Products <span class="dd-caret">▾</span></span>
+      <div class="nav-dd-menu">
+        <div class="nav-dd-inner">
+          <a href="/inspect" class="dd-item">
+            <span class="dd-icon">✏️</span>
+            <span><span class="dd-label">Inspect <span style="color:var(--green);font-size:10px;font-weight:700">Free</span></span><span class="dd-sub">Revision history, paste detection, playback</span></span>
+          </a>
+          <div class="dd-divider"></div>
+          <a href="/stylematch" class="dd-item">
+            <span class="dd-icon">🔍</span>
+            <span><span class="dd-label">StyleMatch <span style="color:var(--gold-dk);font-size:10px">$4.99/mo</span></span><span class="dd-sub">8-metric authorship consistency analysis</span></span>
+          </a>
+          <div class="dd-divider"></div>
+          <a href="/verify" class="dd-item">
+            <span class="dd-icon">🔬</span>
+            <span><span class="dd-label">Verify <span style="color:var(--teal);font-size:10px">From $0.60</span></span><span class="dd-sub">AI-assisted deep analysis &amp; reports</span></span>
+          </a>
+          <div class="dd-divider"></div>
+          <a href="/write" class="dd-item active">
+            <span class="dd-icon">🖊️</span>
+            <span><span class="dd-label">Write <span style="color:var(--purple);font-size:10px">From $4.99/mo</span></span><span class="dd-sub">Timed writing sessions with process monitoring</span></span>
+          </a>
+        </div>
+      </div>
+    </div>
+    <a href="/#pricing" class="nl">Pricing</a>
+    <a href="/for-schools" class="nl">For Schools</a>
+    <a href="/privacy-policy" class="nl">Privacy</a>
+    <a href="https://write.papertrailacademic.com" class="nl cta" target="_blank" rel="noopener">Open Write →</a>
+  </div>
+</nav>
+
+<!-- ═══ HERO ════════════════════════════════════════════════════════ -->
+<section class="hero">
+  <div class="hero-inner">
+    <div>
+      <div class="hero-eyebrow">
+        <span class="hero-product-badge">🖊️ PaperTrail Write</span>
+        <span class="hero-price-tag">From $4.99/mo</span>
+      </div>
+      <h1>Let them write.<br><em>Then see how they wrote.</em></h1>
+      <p class="hero-sub">Write is a distraction-reduced, integrity-aware writing environment for in-class timed assignments. Students join with a code, write, and submit. You receive the essay alongside a structured process log — every paste event, every focus change, timed and documented.</p>
+      <div class="hero-actions">
+        <a href="https://write.papertrailacademic.com" class="btn btn-purple" target="_blank" rel="noopener">Open Write →</a>
+        <a href="#features" class="btn btn-ghost">See what it captures ↓</a>
+      </div>
+      <div class="hero-trust">
+        <span>Students join with a code — no account needed</span>
+        <span>Students see exactly what is and isn't recorded before they begin</span>
+        <span>No clipboard contents, keystrokes, or screen activity captured</span>
+        <span>Submission data is purged after you download the session report</span>
+        <span>Built by a teacher, for the hardest conversation in teaching</span>
+      </div>
+    </div>
+    <div class="write-mock-wrap">
+      <!-- Writing environment mockup -->
+      <div class="write-mock">
+        <div class="wm-header">
+          <div class="wm-brand">
+            <div class="wm-dot"></div>
+            <span class="wm-brand-label">PaperTrail Write</span>
+            <span class="wm-assignment">Essay: The Ethics of AI in Schools</span>
+          </div>
+          <div class="wm-timer">38:14</div>
+        </div>
+        <div class="wm-monitoring">
+          <div class="wm-mon-dot"></div>
+          <span class="wm-mon-label">This session is being documented</span>
+        </div>
+        <div class="wm-writing">
+          <div class="wm-line w-82"></div>
+          <div class="wm-line w-95"></div>
+          <div class="wm-line w-88"></div>
+          <div class="wm-line w-74"></div>
+          <div class="wm-line w-90" style="margin-bottom:14px"></div>
+          <div class="wm-line w-82"></div>
+          <div class="wm-line w-95"></div>
+          <div class="wm-line paste w-90"></div>
+          <div class="wm-line w-58" style="margin-bottom:0"><!-- cursor --></div>
+          <span class="wm-cursor"></span>
+        </div>
+        <div class="wm-footer">
+          <span class="wm-save">Work is saved automatically</span>
+          <div class="wm-btns">
+            <div class="wm-btn-ghost">Save Now</div>
+            <div class="wm-btn-submit">Submit Essay →</div>
+          </div>
+        </div>
+      </div>
+      <!-- Process log preview -->
+      <div class="log-mock">
+        <div class="log-mock-hdr">Process Log — Teacher View (Jordan M.)</div>
+        <div class="log-entry">
+          <span class="log-time">09:04:12</span>
+          <span class="log-badge lb-start">SESSION START</span>
+          <span class="log-detail">Joined · Period 3</span>
+        </div>
+        <div class="log-entry">
+          <span class="log-time">09:06:38</span>
+          <span class="log-badge lb-paste">PASTE EVENT</span>
+          <span class="log-detail">214 chars · external source</span>
+        </div>
+        <div class="log-entry">
+          <span class="log-time">09:19:22</span>
+          <span class="log-badge lb-blur">FOCUS LOST</span>
+          <span class="log-detail">Window left · 42 seconds</span>
+        </div>
+        <div class="log-entry" style="margin-bottom:0">
+          <span class="log-time">09:46:02</span>
+          <span class="log-badge lb-submit">SUBMITTED</span>
+          <span class="log-detail">487 words · 41m 50s total</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ STRIP ════════════════════════════════════════════════════════ -->
+<div class="feature-strip">
+  <p>A writing space that <em>shows its work.</em> Not a surveillance tool — a structured, documentable process record.</p>
+</div>
+
+<!-- ═══ FEATURES ════════════════════════════════════════════════════ -->
+<section class="features-section" id="features">
+  <div class="container">
+    <div class="features-hdr">
+      <p class="eyebrow">What Write captures</p>
+      <h2>Five signals. One honest picture of <em>how the writing happened.</em></h2>
+      <p>Write doesn't surveil students — it documents the session with a narrow, transparent set of behavioral signals. Students are told exactly what these are before they begin.</p>
+    </div>
+    <div class="features-grid">
+
+      <div class="feat-card feat-accent">
+        <div class="feat-card-icon">⏱️</div>
+        <h3>Timed Sessions</h3>
+        <p>Set a duration when you create the assignment. Students see a live countdown. When time expires, the textarea locks — no extensions without a deliberate teacher action from the dashboard. Pause and resume are also available.</p>
+      </div>
+
+      <div class="feat-card feat-accent">
+        <div class="feat-card-icon">📋</div>
+        <h3>Paste Detection</h3>
+        <p>Every paste event is logged with a timestamp and character count. If the pasted content is deleted within a short window — a signal worth noting — that's recorded too. No clipboard contents are accessed; only the presence and size of the paste event.</p>
+      </div>
+
+      <div class="feat-card feat-accent">
+        <div class="feat-card-icon">🪟</div>
+        <h3>Focus-Loss Tracking</h3>
+        <p>If a student navigates away from the writing tab or minimises the window, the timestamp and duration are logged. The event is recorded — not blocked. Students are told this will happen before they begin.</p>
+      </div>
+
+      <div class="feat-card feat-accent">
+        <div class="feat-card-icon">⌚</div>
+        <h3>Time to First Keystroke</h3>
+        <p>The gap between the session starting and the first character typed. A student who starts writing immediately tells a different story from one who waits until the final minutes — without any content in between.</p>
+      </div>
+
+      <div class="feat-card feat-accent">
+        <div class="feat-card-icon">📄</div>
+        <h3>Session Reports</h3>
+        <p>On submission, you receive the full essay text alongside a structured process log: every captured event, timed and labeled. Download as a ZIP. Data is purged from the server after you download — you are the custodian of the record.</p>
+      </div>
+
+      <div class="feat-card feat-accent">
+        <div class="feat-card-icon">🔑</div>
+        <h3>Join-Code Access</h3>
+        <p>Students join with a short code you share — no account, no email, no registration. You control when the session opens and closes. Roster matching is optional: link a class list and students select their name from a dropdown.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══ HOW IT WORKS ════════════════════════════════════════════════ -->
+<section class="how-section">
+  <div class="how-inner">
+    <div class="how-content">
+      <p class="eyebrow">How it works</p>
+      <h2>Three steps — for the teacher. <em>One for the student.</em></h2>
+      <p>Write is built to be as frictionless as possible. Students shouldn't be thinking about the tool — they should be thinking about the writing.</p>
+      <ol class="steps-list">
+        <li class="step">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <h4>Create an assignment</h4>
+            <p>Name the assignment, set the duration, and optionally add a prompt and link a class roster. A join code is generated automatically.</p>
+          </div>
+        </li>
+        <li class="step">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <h4>Share the join code</h4>
+            <p>Write the code on the board or paste it into your LMS. Students go to write.papertrailacademic.com, enter the code, and they're in.</p>
+          </div>
+        </li>
+        <li class="step">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <h4>Students see the transparency screen</h4>
+            <p>Before they write a single word, students are shown exactly what is and isn't being captured. This screen is non-skippable and cannot be altered by the teacher.</p>
+          </div>
+        </li>
+        <li class="step">
+          <div class="step-num">4</div>
+          <div class="step-body">
+            <h4>Monitor live, download on submission</h4>
+            <p>Watch submissions arrive in real time from your teacher dashboard. When a student submits, the session report is waiting for you — essay text and full process log, ready to download.</p>
+          </div>
+        </li>
+      </ol>
+    </div>
+    <!-- Second mockup — teacher dashboard view -->
+    <div>
+      <div style="background:#fff;border:1.5px solid var(--rule);border-radius:12px;overflow:hidden;box-shadow:var(--shadow-lg);font-family:'DM Sans',sans-serif">
+        <!-- Dashboard header -->
+        <div style="background:var(--ink);padding:10px 14px;display:flex;align-items:center;justify-content:space-between">
+          <span style="font-size:10px;font-weight:700;color:rgba(255,255,255,.8)">Teacher Dashboard — Period 3</span>
+          <span style="font-size:9px;color:rgba(255,255,255,.4)">Essay: The Ethics of AI · 38:14 remaining</span>
+        </div>
+        <!-- Session stats bar -->
+        <div style="background:#f4f0fb;border-bottom:1px solid #e0d5f0;padding:8px 14px;display:flex;gap:20px">
+          <div style="text-align:center">
+            <div style="font-family:'Lora',serif;font-size:18px;font-weight:700;color:var(--purple)">24</div>
+            <div style="font-size:8px;color:var(--ink-3)">Joined</div>
+          </div>
+          <div style="text-align:center">
+            <div style="font-family:'Lora',serif;font-size:18px;font-weight:700;color:var(--green)">18</div>
+            <div style="font-size:8px;color:var(--ink-3)">Writing</div>
+          </div>
+          <div style="text-align:center">
+            <div style="font-family:'Lora',serif;font-size:18px;font-weight:700;color:var(--gold-dk)">4</div>
+            <div style="font-size:8px;color:var(--ink-3)">Submitted</div>
+          </div>
+          <div style="text-align:center">
+            <div style="font-family:'Lora',serif;font-size:18px;font-weight:700;color:var(--yellow)">3</div>
+            <div style="font-size:8px;color:var(--ink-3)">Paste events</div>
+          </div>
+        </div>
+        <!-- Student list -->
+        <div style="padding:8px 0">
+          <div style="font-size:8px;font-weight:700;color:var(--ink-3);text-transform:uppercase;letter-spacing:.08em;padding:4px 14px 6px">Students</div>
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:7px 14px;border-bottom:1px solid #f0f0f0">
+            <div style="display:flex;align-items:center;gap:7px">
+              <div style="width:6px;height:6px;border-radius:50%;background:var(--green)"></div>
+              <span style="font-size:11px;color:var(--ink-2)">Aisha K.</span>
+            </div>
+            <span style="font-size:9px;color:var(--ink-3)">312 words · writing</span>
+          </div>
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:7px 14px;border-bottom:1px solid #f0f0f0;background:#fffbf0">
+            <div style="display:flex;align-items:center;gap:7px">
+              <div style="width:6px;height:6px;border-radius:50%;background:var(--yellow)"></div>
+              <span style="font-size:11px;color:var(--ink-2)">Jordan M.</span>
+              <span style="font-size:8px;background:#fff3cd;color:#856404;padding:1px 5px;border-radius:3px;font-weight:700">1 paste</span>
+            </div>
+            <span style="font-size:9px;color:var(--ink-3)">487 words · writing</span>
+          </div>
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:7px 14px;border-bottom:1px solid #f0f0f0">
+            <div style="display:flex;align-items:center;gap:7px">
+              <div style="width:6px;height:6px;border-radius:50%;background:var(--blue)"></div>
+              <span style="font-size:11px;color:var(--ink-2)">Marcus T.</span>
+              <span style="font-size:8px;background:#e8f5e9;color:#2e7d32;padding:1px 5px;border-radius:3px;font-weight:700">Submitted</span>
+            </div>
+            <span style="font-size:9px;color:var(--ink-3)">521 words · 37m</span>
+          </div>
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:7px 14px">
+            <div style="display:flex;align-items:center;gap:7px">
+              <div style="width:6px;height:6px;border-radius:50%;background:var(--green)"></div>
+              <span style="font-size:11px;color:var(--ink-2)">Priya S.</span>
+            </div>
+            <span style="font-size:9px;color:var(--ink-3)">198 words · writing</span>
+          </div>
+        </div>
+        <!-- Pause/download bar -->
+        <div style="background:#f8f9fa;border-top:1px solid var(--rule);padding:8px 14px;display:flex;gap:8px;justify-content:flex-end">
+          <div style="background:#fff;border:1px solid var(--rule);color:var(--ink-2);font-size:9px;font-weight:600;padding:4px 12px;border-radius:4px">⏸ Pause Session</div>
+          <div style="background:var(--purple);color:#fff;font-size:9px;font-weight:600;padding:4px 12px;border-radius:4px">⬇ Download Reports</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ STUDENT TRANSPARENCY ════════════════════════════════════════ -->
+<section class="transparency-section">
+  <div class="transparency-inner">
+    <p class="eyebrow">Student transparency</p>
+    <h2>Students know exactly what's <em>being captured</em> — before they begin.</h2>
+    <p>Before the first keystroke, every student sees a non-skippable transparency screen. This isn't a setting teachers can toggle. It's part of the product — the same screen, every session, every student.</p>
+    <div class="transparency-cols">
+      <div class="t-col">
+        <h4>✓ &nbsp;What is captured</h4>
+        <ul class="t-yes">
+          <li>Time spent writing and total word count</li>
+          <li>Whether you left this page or switched windows, and for how long</li>
+          <li>Whether you pasted content into the writing area, and how much</li>
+          <li>Whether pasted content was removed shortly after being added</li>
+          <li>Time between session start and first keystroke</li>
+        </ul>
+      </div>
+      <div class="t-col">
+        <h4 style="color:var(--ink-3)">✕ &nbsp;What is not captured</h4>
+        <ul class="t-no">
+          <li>Your clipboard contents</li>
+          <li>Individual keystrokes or typing patterns</li>
+          <li>Screen activity, camera, or microphone</li>
+          <li>Anything from other tabs or applications</li>
+          <li>Any data after the teacher downloads the session report</li>
+        </ul>
+      </div>
+    </div>
+    <div class="disclaimer-block">This data is one input among many. Educator judgment governs all interpretation and any subsequent conversation with a student.</div>
+  </div>
+</section>
+
+<!-- ═══ COMPARED TO GOOGLE DOCS ════════════════════════════════════ -->
+<section class="compare-section">
+  <div class="container">
+    <div class="compare-hdr">
+      <p class="eyebrow">Why not just use Google Docs?</p>
+      <h2>A shared Google Doc doesn't document the <em>process.</em></h2>
+      <p style="font-size:14.5px;color:var(--ink-2)">You can see what was written. Write tells you how.</p>
+    </div>
+    <div class="compare-table">
+      <div class="ct-head">
+        <span>Capability</span>
+        <span>Google Docs</span>
+        <span class="hl">PaperTrail Write</span>
+      </div>
+      <div class="ct-row">
+        <span class="ct-feature">Timed session with automatic lock</span>
+        <span class="ct-val cv-no">—</span>
+        <span class="ct-val cv-hl">✓</span>
+      </div>
+      <div class="ct-row">
+        <span class="ct-feature">Paste events logged with timestamps</span>
+        <span class="ct-val cv-no">—</span>
+        <span class="ct-val cv-hl">✓</span>
+      </div>
+      <div class="ct-row">
+        <span class="ct-feature">Focus-loss / window-switch detection</span>
+        <span class="ct-val cv-no">—</span>
+        <span class="ct-val cv-hl">✓</span>
+      </div>
+      <div class="ct-row">
+        <span class="ct-feature">Time to first keystroke</span>
+        <span class="ct-val cv-no">—</span>
+        <span class="ct-val cv-hl">✓</span>
+      </div>
+      <div class="ct-row">
+        <span class="ct-feature">Join-code access, no student account</span>
+        <span class="ct-val cv-no">—</span>
+        <span class="ct-val cv-hl">✓</span>
+      </div>
+      <div class="ct-row">
+        <span class="ct-feature">Mandatory student transparency screen</span>
+        <span class="ct-val cv-no">—</span>
+        <span class="ct-val cv-hl">✓</span>
+      </div>
+      <div class="ct-row">
+        <span class="ct-feature">Spell check / grammar check off by default</span>
+        <span class="ct-val cv-no">—</span>
+        <span class="ct-val cv-hl">✓</span>
+      </div>
+      <div class="ct-row">
+        <span class="ct-feature">Teacher live session dashboard</span>
+        <span class="ct-val cv-no">—</span>
+        <span class="ct-val cv-hl">✓</span>
+      </div>
+      <div class="ct-row">
+        <span class="ct-feature">Submission text preserved</span>
+        <span class="ct-val cv-yes">✓</span>
+        <span class="ct-val cv-hl">✓</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CTA ════════════════════════════════════════════════════════ -->
+<section class="cta-section">
+  <div class="cta-inner">
+    <h2>Start your first <em>Write session</em> today.</h2>
+    <p>Create an assignment, share the code, and have your first session running in under two minutes. No Chrome extension required for teachers or students.</p>
+    <div class="cta-actions">
+      <a href="https://write.papertrailacademic.com" class="btn btn-white" target="_blank" rel="noopener">Open Write →</a>
+      <a href="/" class="btn btn-ghost-white">See all PaperTrail tools ↑</a>
+    </div>
+    <div class="cta-trust">
+      <span>No student accounts or data stored</span>
+      <span>Students see what's captured before writing</span>
+      <span>FERPA-conscious design</span>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CROSS-SELLS ════════════════════════════════════════════════ -->
+<section class="cross-section">
+  <div class="container">
+    <div class="cross-hdr">
+      <p>The PaperTrail Suite</p>
+      <h2>Write is the start of the picture — not the whole one.</h2>
+    </div>
+    <div class="cross-cards">
+      <a href="/inspect" class="xcard">
+        <div class="xcard-icon">✏️</div>
+        <h4>Inspect</h4>
+        <p>Student submitted work outside of class via Google Docs? Inspect reconstructs the full revision history — every session, paste, and pause — for any Google Doc you can access.</p>
+        <span class="xcard-link" style="color:var(--blue)">Free — no account needed →</span>
+      </a>
+      <a href="/stylematch" class="xcard">
+        <div class="xcard-icon">🔍</div>
+        <h4>StyleMatch</h4>
+        <p>Use a Write submission as the controlled in-class sample. Then compare it against a later Google Docs submission across eight stylometric metrics. Does this one actually sound like them?</p>
+        <span class="xcard-link" style="color:var(--gold-dk)">$4.99/mo →</span>
+      </a>
+      <a href="/verify" class="xcard">
+        <div class="xcard-icon">🔬</div>
+        <h4>Verify</h4>
+        <p>When the process log raises a question the data can't answer alone, Verify runs AI-assisted deep analysis — internal consistency scoring, ten-dimension comparison, and suggested follow-up questions.</p>
+        <span class="xcard-link" style="color:var(--teal)">From $0.60/report →</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ═══════════════════════════════════════════════════════ -->
+<footer>
+  <div class="ftr-inner">
+    <div>
+      <div class="ftr-logo">
+        <img src="/icon128.png" alt="PaperTrail Academic" />
+        <span class="ftr-wm">PaperTrail <em>Academic</em></span>
+      </div>
+      <p class="ftr-tag">You've read thousands of student essays.<br>Trust that instinct — then document it.</p>
+    </div>
+    <div class="ftr-col">
+      <h4>Products</h4>
+      <ul>
+        <li><a href="/inspect">Inspect</a></li>
+        <li><a href="/stylematch">StyleMatch</a></li>
+        <li><a href="/verify">Verify</a></li>
+        <li><a href="/write">Write</a></li>
+        <li><a href="https://chromewebstore.google.com/detail/papertrail/kgkjmhfoijiiplbmablcjbooopndjbgm" target="_blank" rel="noopener">Chrome Web Store</a></li>
+      </ul>
+    </div>
+    <div class="ftr-col">
+      <h4>For Schools</h4>
+      <ul>
+        <li><a href="/for-schools">Privacy &amp; Compliance</a></li>
+        <li><a href="mailto:schools@papertrailacademic.com">School Inquiries</a></li>
+        <li><a href="mailto:privacy@papertrailacademic.com">FERPA / PIPEDA / GDPR</a></li>
+      </ul>
+    </div>
+    <div class="ftr-col">
+      <h4>Legal</h4>
+      <ul>
+        <li><a href="/privacy-policy">Privacy Policy</a></li>
+        <li><a href="/terms-of-service">Terms of Service</a></li>
+        <li><a href="mailto:hello@papertrailacademic.com">Contact</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="ftr-bottom">
+    <span>&copy; 2026 PaperTrail Academic. All rights reserved. Operated by Michael Smith.</span>
+    <span>
+      <a href="/privacy-policy">Privacy Policy</a> &nbsp;&middot;&nbsp;
+      <a href="/terms-of-service">Terms of Service</a> &nbsp;&middot;&nbsp;
+      <a href="mailto:hello@papertrailacademic.com">Contact</a>
+    </span>
+  </div>
+</footer>
+
+<script>
+// ── Products dropdown — JS toggle ────────────────────────────────
+(function(){
+  const dd = document.getElementById('navDropdown');
+  const trigger = document.getElementById('navDropdownTrigger');
+  if (!dd || !trigger) return;
+  let closeTimer;
+  function open()  { clearTimeout(closeTimer); dd.classList.add('open'); }
+  function close() { closeTimer = setTimeout(() => dd.classList.remove('open'), 120); }
+  trigger.addEventListener('mouseenter', open);
+  trigger.addEventListener('mouseleave', close);
+  dd.querySelector('.nav-dd-menu').addEventListener('mouseenter', open);
+  dd.querySelector('.nav-dd-menu').addEventListener('mouseleave', close);
+  trigger.addEventListener('click', () => dd.classList.toggle('open'));
+  document.addEventListener('click', e => { if (!dd.contains(e.target)) dd.classList.remove('open'); });
+})();
+</script>
+</body>
+</html>
