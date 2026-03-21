@@ -27,6 +27,7 @@
   --blue:#4A6FA5; --blue-dk:#3a5882; --blue-lt:#e8eef6;
   --gold:#C9A84C; --gold-dk:#a8892f; --gold-lt:#fdf6e3;
   --teal:#2a7a6b; --teal-lt:#e6f4f1;
+  --purple:#7B5EA7; --purple-dk:#634892; --purple-lt:#f0ebf9;
   --ink:#1a2235;  --ink-2:#3d4f6e;   --ink-3:#6b7a96;
   --rule:#dce4ef; --bg:#f9fafc; --white:#fff;
   --green:#34a853; --red:#ea4335; --yellow:#fbbc04;
@@ -45,6 +46,7 @@ img{display:block;max-width:100%}
 .btn-gold{background:var(--gold);color:#fff}.btn-gold:hover{background:var(--gold-dk);transform:translateY(-1px);box-shadow:0 4px 16px rgba(201,168,76,.35)}
 .btn-blue{background:var(--blue);color:#fff}.btn-blue:hover{background:var(--blue-dk);transform:translateY(-1px)}
 .btn-teal{background:var(--teal);color:#fff}.btn-teal:hover{background:#1e5c50;transform:translateY(-1px)}
+.btn-purple{background:var(--purple);color:#fff}.btn-purple:hover{background:var(--purple-dk);transform:translateY(-1px)}
 .btn-ghost{background:transparent;color:var(--blue);border:1.5px solid var(--blue)}.btn-ghost:hover{background:var(--blue-lt)}
 .btn-ghost-gold{background:transparent;color:var(--gold-dk);border:1.5px solid var(--gold)}.btn-ghost-gold:hover{background:var(--gold-lt)}
 .btn-sm{padding:8px 16px;font-size:12.5px}
@@ -109,7 +111,7 @@ nav{position:sticky;top:0;z-index:200;background:rgba(255,255,255,.96);backdrop-
 .products-hdr p{font-size:15px;color:var(--ink-2);max-width:500px;margin:0 auto}
 
 .cards-arena{max-width:1140px;margin:0 auto;padding:0 28px}
-.cards-row{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.cards-row{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
 
 /* ── Base card ── */
 .pcard{
@@ -123,11 +125,13 @@ nav{position:sticky;top:0;z-index:200;background:rgba(255,255,255,.96);backdrop-
 .stripe-blue{background:var(--blue)}
 .stripe-gold{background:var(--gold)}
 .stripe-teal{background:var(--teal)}
+.stripe-purple{background:var(--purple)}
 .pcard-top{padding:22px 20px 16px}
 .pcard-badge{display:inline-flex;align-items:center;gap:6px;font-size:10px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;padding:3px 10px;border-radius:20px}
 .badge-blue{background:var(--blue-lt);color:var(--blue)}
 .badge-gold{background:var(--gold-lt);color:var(--gold-dk)}
 .badge-teal{background:var(--teal-lt);color:var(--teal)}
+.badge-purple{background:var(--purple-lt);color:var(--purple)}
 .badge-free{background:#e8f5e9;color:#2e7d32}
 .pcard h3{font-family:'Lora',serif;font-size:20px;font-weight:700;color:var(--ink);margin-bottom:5px;line-height:1.2}
 .card-tagline{font-size:12px;font-style:italic;color:var(--ink-3);margin-bottom:10px}
@@ -364,6 +368,9 @@ footer{background:var(--ink);padding:42px 0 0}
 .ftr-bottom a:hover{color:#fff}
 
 /* ─── Responsive ──────────────────────────────────────────────── */
+@media(max-width:1100px){
+  .cards-row{grid-template-columns:repeat(2,1fr)}
+}
 @media(max-width:960px){
   .hero-inner{grid-template-columns:1fr}
   .cards-row{grid-template-columns:1fr}
@@ -411,6 +418,11 @@ footer{background:var(--ink);padding:42px 0 0}
             <span class="dd-icon">🔬</span>
             <span><span class="dd-label">Verify <span style="color:var(--teal);font-size:10px">From $0.60</span></span><span class="dd-sub">AI-assisted deep analysis &amp; reports</span></span>
           </a>
+          <div class="dd-divider"></div>
+          <a href="/write" class="dd-item">
+            <span class="dd-icon">🖊️</span>
+            <span><span class="dd-label">Write <span style="color:var(--purple);font-size:10px">From $4.99/mo</span></span><span class="dd-sub">Timed writing sessions with process monitoring</span></span>
+          </a>
         </div>
       </div>
     </div>
@@ -428,7 +440,7 @@ footer{background:var(--ink);padding:42px 0 0}
     <div>
       <p class="eyebrow">PaperTrail&trade; Academic</p>
       <h1>You've read thousands of student essays.<br><em>Trust that instinct — then document it.</em></h1>
-      <p class="hero-sub">Three tools built inside Google Docs that give teachers structured, repeatable, documentable insight into how student writing was produced. The evidence speaks clearly. The judgment stays yours.</p>
+      <p class="hero-sub">Four tools that give teachers structured, repeatable, documentable insight into how student writing was produced — from process monitoring in the classroom to deep post-submission analysis. The evidence speaks clearly. The judgment stays yours.</p>
       <div class="hero-actions">
         <a href="https://chromewebstore.google.com/detail/papertrail/kgkjmhfoijiiplbmablcjbooopndjbgm"
            class="btn btn-gold" target="_blank" rel="noopener">&#11015; Add to Chrome — It's Free</a>
@@ -486,6 +498,21 @@ footer{background:var(--ink);padding:42px 0 0}
           </ul>
           <div style="margin-top:8px"><a href="/verify" onclick="event.stopPropagation()" style="font-size:11.5px;color:var(--teal);font-weight:600;text-decoration:none">Learn more →</a></div>
         </div>
+      <div class="hero-preview-card" onclick="heroOpenCard('write')" role="button" tabindex="0" aria-label="Learn more about Write">
+        <div class="hpc-icon">🖊️</div>
+        <div style="flex:1">
+          <div class="hpc-title">Write &nbsp;<span style="color:var(--purple);font-size:11.5px">From $4.99/mo</span></div>
+          <div class="hpc-desc">A distraction-reduced, integrity-aware writing environment. Students write in-class; teachers get a full process log on submission.</div>
+          <ul class="hpc-bullets">
+            <li>Timed writing sessions with join code access</li>
+            <li>Paste detection, focus-loss events, and behavioral log</li>
+            <li>Student transparency screen — they know what's recorded</li>
+            <li>Session reports with full process timeline</li>
+          </ul>
+          <div style="margin-top:8px"><a href="/write" onclick="event.stopPropagation()" style="font-size:11.5px;color:var(--purple);font-weight:600;text-decoration:none">Learn more →</a></div>
+        </div>
+      </div>
+
       </div>
 
     </div>
@@ -501,7 +528,7 @@ footer{background:var(--ink);padding:42px 0 0}
   <div class="container">
     <div class="products-hdr">
       <p class="eyebrow">The PaperTrail Suite</p>
-      <h2>Three tools. One question: <em>Did they write this?</em></h2>
+      <h2>Four tools. One question: <em>Did they write this?</em></h2>
       <p>Click any card to see a full preview and feature breakdown.</p>
     </div>
   </div>
@@ -810,6 +837,121 @@ footer{background:var(--ink);padding:42px 0 0}
         </div>
       </div>
 
+      <!-- ══ WRITE ══ -->
+      <div class="pcard" id="card-write" onclick="openCard('write',event)">
+        <button class="card-close" onclick="closeCard(event)">✕</button>
+        <div class="pcard-stripe stripe-purple"></div>
+        <div class="pcard-top">
+          <div style="display:flex;gap:7px;flex-wrap:wrap;margin-bottom:11px">
+            <span class="pcard-badge badge-purple">🖊️ Write</span>
+            <span class="pcard-badge" style="background:#ede9f6;color:var(--purple)">Web App</span>
+          </div>
+          <h3>Show your work.</h3>
+          <p class="card-tagline">"I want to see how they actually write."</p>
+          <p class="card-desc">A focused, timed writing environment for in-class assignments. Students write; the session records the process. Teachers see a full behavioral log on submission.</p>
+        </div>
+        <div class="pcard-features">
+          <ul>
+            <li>Timed sessions with teacher-controlled join code</li>
+            <li>Paste detection, focus-loss events &amp; process log</li>
+            <li>Student transparency screen — they know what's captured</li>
+            <li>Session reports: submission text + behavioral timeline</li>
+          </ul>
+        </div>
+        <div class="pcard-footer">
+          <div class="price-line"><span class="price-big" style="color:var(--purple)">$4.99</span><span class="price-unit">/mo</span></div>
+          <a href="/write" class="btn btn-purple btn-full" onclick="event.stopPropagation()">Learn More →</a>
+          <p class="expand-hint">Click card to see full preview ↓</p>
+        </div>
+
+        <div class="pcard-expanded">
+          <div class="exp-left">
+            <!-- Write session mockup -->
+            <div style="background:#f5f5f5;border-radius:9px;border:1px solid var(--rule);overflow:hidden;height:360px;font-family:'DM Sans',sans-serif;display:flex;flex-direction:column;">
+              <!-- Header bar -->
+              <div style="background:var(--ink);padding:10px 14px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0">
+                <div style="display:flex;align-items:center;gap:8px">
+                  <div style="width:7px;height:7px;border-radius:50%;background:var(--purple)"></div>
+                  <span style="font-size:10px;font-weight:700;color:rgba(255,255,255,.9)">PaperTrail Write</span>
+                  <span style="font-size:9px;color:rgba(255,255,255,.4);margin-left:4px">Essay: The Ethics of AI</span>
+                </div>
+                <div style="background:var(--purple);color:#fff;font-size:12px;font-weight:700;font-family:'DM Sans',sans-serif;padding:3px 9px;border-radius:5px;letter-spacing:.04em">38:14</div>
+              </div>
+              <!-- Monitoring bar -->
+              <div style="background:#2a1a3e;padding:5px 14px;display:flex;align-items:center;gap:6px;flex-shrink:0">
+                <div style="width:5px;height:5px;border-radius:50%;background:#a78bfa;animation:none"></div>
+                <span style="font-size:9px;color:rgba(167,139,250,.9)">This session is being documented</span>
+              </div>
+              <!-- Writing area -->
+              <div style="flex:1;background:#fff;padding:16px 18px;overflow:hidden;position:relative">
+                <div style="height:9px;background:#e2e8f0;border-radius:3px;margin-bottom:8px;width:82%"></div>
+                <div style="height:8px;background:#e2e8f0;border-radius:3px;margin-bottom:6px;width:95%"></div>
+                <div style="height:8px;background:#e2e8f0;border-radius:3px;margin-bottom:6px;width:88%"></div>
+                <div style="height:8px;background:#e2e8f0;border-radius:3px;margin-bottom:6px;width:72%"></div>
+                <div style="height:8px;background:#e2e8f0;border-radius:3px;margin-bottom:14px;width:90%"></div>
+                <div style="height:8px;background:#e2e8f0;border-radius:3px;margin-bottom:6px;width:85%"></div>
+                <div style="height:8px;background:#e2e8f0;border-radius:3px;margin-bottom:6px;width:78%"></div>
+                <div style="height:8px;background:#f3e8ff;border-radius:3px;margin-bottom:6px;width:60%;border-left:3px solid var(--purple)"></div>
+                <div style="position:absolute;bottom:0;right:0;left:0;background:linear-gradient(transparent, #fff);height:30px"></div>
+              </div>
+              <!-- Footer bar -->
+              <div style="background:#f8f9fa;border-top:1px solid var(--rule);padding:7px 14px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0">
+                <span style="font-size:9px;color:var(--ink-3)">Work is saved automatically</span>
+                <div style="display:flex;gap:6px">
+                  <div style="background:#f0ebf9;color:var(--purple);font-size:9px;font-weight:600;padding:3px 10px;border-radius:4px;border:1px solid #d8cdf0">Save Now</div>
+                  <div style="background:var(--purple);color:#fff;font-size:9px;font-weight:600;padding:3px 10px;border-radius:4px">Submit Essay →</div>
+                </div>
+              </div>
+            </div>
+            <!-- Process log preview -->
+            <div style="margin-top:10px;background:#fff;border:1px solid var(--rule);border-radius:8px;padding:9px 12px">
+              <div style="font-size:8px;font-weight:700;color:var(--ink-3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px">Process Log — Teacher View</div>
+              <div style="display:flex;flex-direction:column;gap:4px">
+                <div style="display:flex;gap:8px;font-size:8.5px;align-items:center">
+                  <span style="color:var(--ink-3);width:52px;flex-shrink:0">09:04:12</span>
+                  <span style="background:#e8f5e9;color:#2e7d32;padding:1px 6px;border-radius:3px;font-weight:700;font-size:8px">SESSION START</span>
+                  <span style="color:var(--ink-3)">Jordan M. — joined</span>
+                </div>
+                <div style="display:flex;gap:8px;font-size:8.5px;align-items:center">
+                  <span style="color:var(--ink-3);width:52px;flex-shrink:0">09:06:38</span>
+                  <span style="background:#fff3cd;color:#856404;padding:1px 6px;border-radius:3px;font-weight:700;font-size:8px">PASTE</span>
+                  <span style="color:var(--ink-3)">214 chars — external source</span>
+                </div>
+                <div style="display:flex;gap:8px;font-size:8.5px;align-items:center">
+                  <span style="color:var(--ink-3);width:52px;flex-shrink:0">09:18:55</span>
+                  <span style="background:#fce8e6;color:var(--red);padding:1px 6px;border-radius:3px;font-weight:700;font-size:8px">FOCUS LOST</span>
+                  <span style="color:var(--ink-3)">Window left — 42s</span>
+                </div>
+                <div style="display:flex;gap:8px;font-size:8.5px;align-items:center">
+                  <span style="color:var(--ink-3);width:52px;flex-shrink:0">09:46:02</span>
+                  <span style="background:#e8f5e9;color:#2e7d32;padding:1px 6px;border-radius:3px;font-weight:700;font-size:8px">SUBMITTED</span>
+                  <span style="color:var(--ink-3)">487 words — 41m 50s</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="exp-right">
+            <h4>What Write gives you that a shared Google Doc doesn't</h4>
+            <ul class="exp-features">
+              <li><strong>Timed sessions</strong> — set a duration; students see a countdown; the window locks on expiry. No extensions without a deliberate teacher action.</li>
+              <li><strong>Join-code access</strong> — students join via a short code, no account needed. Teachers control who can submit and when.</li>
+              <li><strong>Paste detection</strong> — every paste event is logged with a timestamp, character count, and whether the content was subsequently deleted.</li>
+              <li><strong>Focus-loss tracking</strong> — if a student leaves the writing tab, the duration and timestamp are recorded in the process log.</li>
+              <li><strong>Student transparency</strong> — a mandatory, non-skippable screen tells students exactly what is and isn't captured before they begin writing.</li>
+              <li><strong>Session reports</strong> — on submission, the teacher receives the full essay text alongside a structured process log. Reports can be downloaded as ZIP.</li>
+              <li><strong>No student accounts</strong> — students never register or log in. Nothing is stored beyond the teacher's download window.</li>
+              <li><strong>Plain text, no assistance</strong> — spell check, grammar check, and autocorrect are all off. Students write without AI-augmented support.</li>
+            </ul>
+            <div class="exp-price-row">
+              <div class="exp-price-big" style="color:var(--purple)">$4.99<span style="font-size:14px;font-weight:400;color:var(--ink-3)">/mo</span></div>
+              <div class="exp-price-sub">or $49.99/yr &nbsp;·&nbsp; Includes unlimited sessions</div>
+              <a href="/write" class="btn btn-purple btn-full" onclick="event.stopPropagation()">Go to Write →</a>
+            </div>
+            <div class="exp-disclaimer">Write captures behavioral metadata — paste events, focus changes, and timestamps. Students are shown exactly what is recorded before the session begins. No clipboard contents, keystrokes, or off-tab activity are accessible.</div>
+          </div>
+        </div>
+      </div>
+
     </div><!-- /cards-row -->
   </div><!-- /cards-arena -->
 </section>
@@ -975,6 +1117,7 @@ footer{background:var(--ink);padding:42px 0 0}
         <li><a href="/inspect">Inspect</a></li>
         <li><a href="/stylematch">StyleMatch</a></li>
         <li><a href="/verify">Verify</a></li>
+        <li><a href="/write">Write</a></li>
         <li><a href="https://chromewebstore.google.com/detail/papertrail/kgkjmhfoijiiplbmablcjbooopndjbgm" target="_blank" rel="noopener">Chrome Web Store</a></li>
       </ul>
     </div>
