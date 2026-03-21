@@ -106,6 +106,7 @@
     .arch-verdict{display:inline-flex;align-items:center;gap:6px;font-size:11.5px;font-weight:700;padding:4px 10px;border-radius:20px;align-self:flex-start;margin-top:auto}
     .verdict-safe{background:#e8f5e9;color:#1b5e20}
     .verdict-handled{background:#e8eef6;color:var(--blue-dk)}
+    .verdict-transient{background:#f0ebf9;color:#634892}
 
     /* ─── Privacy two-column ──────────────────────────────────────── */
     .privacy-split{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start}
@@ -300,7 +301,7 @@
     <div class="section-hdr">
       <p class="eyebrow" style="color:var(--blue)">Privacy Architecture</p>
       <h2>Where does the data go? <em>It depends on which tool.</em></h2>
-      <p>PaperTrail has four tools with meaningfully different data architectures. The short version: two of the four tools transmit nothing at all.</p>
+      <p>PaperTrail has four tools with meaningfully different data architectures. The short version: two transmit nothing at all; one transmits transiently and purges; one stores transiently until download.</p>
     </div>
     <div class="arch-grid">
 
@@ -328,6 +329,15 @@
         <span class="arch-verdict verdict-handled">→ Transmitted, not retained by PaperTrail</span>
       </div>
 
+      <div class="arch-card">
+        <span class="arch-icon">🖊️</span>
+        <h3>Write</h3>
+        <p>Write is a web app — not a Chrome extension — so it operates differently from the other tools. When a student joins a session and submits, PaperTrail stores two things transiently: the submitted essay text, and a behavioral log (paste events, focus-loss events, timestamps). Nothing else.</p>
+        <p><strong>Data is held only until the teacher downloads the session report, then purged automatically.</strong> If the teacher never downloads: timed sessions are scrubbed after 7 days; untimed sessions after 30 days. Ended sessions are purged within 24 hours as a backstop. Teachers receive an email warning before automatic purge.</p>
+        <p>Student names are entered by the student themselves at session join — they are not linked to any external account, email address, or institution record. No student creates an account. No student data is retained by PaperTrail after purge.</p>
+        <span class="arch-verdict verdict-transient">⏱ Stored transiently — purged on download or after set period</span>
+      </div>
+
     </div>
   </div>
 </section>
@@ -348,7 +358,7 @@
           <li>No student personal information (name, email, ID) is collected by PaperTrail Academic</li>
           <li>StyleMatch and Inspect process data entirely on the teacher's device — no student text reaches PaperTrail's servers</li>
           <li>Verify transmits essay text only, not student identity information (the teacher assigns a label)</li>
-          <li>Write captures behavioral metadata (paste events, focus changes, timestamps) and essay text on submission — stored transiently in Supabase until the teacher downloads the session report, then purged</li>
+          <li>Write captures behavioral metadata (paste events, focus changes, timestamps) and essay text on submission — stored transiently in Supabase until the teacher downloads the session report (purged immediately on download), or auto-purged after 7 days for timed sessions and 30 days for untimed sessions; teachers receive an email warning before auto-purge</li>
           <li>No student text is used for model training — PaperTrail uses Anthropic's API under terms that prohibit this</li>
           <li>PaperTrail does not build profiles on students, track students over time, or aggregate student data</li>
         </ul>
@@ -384,7 +394,7 @@
         <div class="reg-subtitle">United States — Family Educational Rights and Privacy Act</div>
         <p>FERPA protects personally identifiable information in education records. PaperTrail does not collect, store, or transmit student PII. Inspect reads only Google Docs revision metadata — timestamps and anonymized edit markers — which are not education records under FERPA. StyleMatch runs entirely locally with no transmission of any kind.</p>
         <p>Verify transmits essay text to generate a report. The teacher controls what is submitted; no student name or ID is required or collected by PaperTrail. The text is not retained by PaperTrail after the report is generated. Anthropic retains API inputs for 7 days under their commercial API terms, which prohibit using this data for model training. We recommend anonymizing student names from essay text before submitting.</p>
-        <p>Write captures behavioral metadata and submitted essay text, stored transiently in PaperTrail's Supabase backend until the teacher downloads the session report — at which point it is purged. Student names are entered by the student themselves and are not linked to any external account. No PII beyond the name the student provides is collected. The teacher is the data custodian.</p>
+        <p>Write captures behavioral metadata (paste events, focus changes, timestamps) and submitted essay text, stored transiently in PaperTrail's Supabase backend. Data is purged immediately when the teacher downloads the session report. If not downloaded: timed sessions are auto-purged after 7 days, untimed sessions after 30 days, and ended sessions within 24 hours — teachers receive an email warning before auto-purge occurs. Student names are entered by the student at session join and are not linked to any external account or institution record. No PII beyond the name the student provides is collected. The teacher is the data custodian.</p>
         <div class="reg-note">A Data Processing Agreement (DPA) is available on request. Contact <a href="/cdn-cgi/l/email-protection#94fcf1f8f8fbd4e4f5e4f1e6e0e6f5fdf8f5f7f5f0f1f9fdf7baf7fbf9"><span class="__cf_email__" data-cfemail="abc3cec7c7c4ebdbcadbced9dfd9cac2c7cac8cacfcec6c2c885c8c4c6">[email&#160;protected]</span></a>.</div>
       </div>
 
@@ -393,7 +403,7 @@
         <h3>Other Jurisdictions</h3>
         <div class="reg-subtitle">International and non-US/EU schools</div>
         <p>Inspect and StyleMatch collect no personal information and involve no data transmission — they raise no data protection concerns beyond those inherent in Google Docs itself, regardless of jurisdiction.</p>
-        <p>Write stores submitted essay text and behavioral metadata transiently on Supabase (AWS, US region) until the teacher downloads the session report. Schools using Write should confirm their acceptable use policy permits this transient storage. No data is retained after the teacher download.</p>
+        <p>Write stores submitted essay text and behavioral metadata transiently on Supabase (AWS, US region). Data is purged on teacher download, or auto-purged after 7 days (timed sessions) or 30 days (untimed sessions) if not downloaded. Schools using Write should confirm their acceptable use policy permits this transient US-based storage.</p>
         <p>Schools using Verify should confirm their institution's acceptable use policy permits transmitting student work to US-based AI services. This is the same question that applies to any AI writing tool used in your school. Anthropic retains API inputs for 7 days and does not use them for model training.</p>
         <div class="reg-note">A Data Processing Summary is available on request. Contact <a href="/cdn-cgi/l/email-protection#4c24292020230c3c2d3c293e383e2d25202d2f2d282921252f622f2321"><span class="__cf_email__" data-cfemail="6d05080101022d1d0c1d081f191f0c04010c0e0c090800040e430e0200">[email&#160;protected]</span></a>.</div>
       </div>
@@ -403,7 +413,7 @@
         <h3>GDPR</h3>
         <div class="reg-subtitle">European Union — General Data Protection Regulation</div>
         <p>Inspect and StyleMatch involve no personal data transmission and require no GDPR analysis beyond what applies to Google Docs itself.</p>
-        <p>Write stores essay text and behavioral metadata transiently on Supabase (AWS, US region) until teacher download. The teacher is the data custodian — data is purged on download, not retained by PaperTrail. EU schools using Write should confirm they have a lawful basis for this transient processing under GDPR Article 6.</p>
+        <p>Write stores essay text and behavioral metadata transiently on Supabase (AWS, US region). Data is purged immediately on teacher download; auto-purged after 7 days (timed sessions) or 30 days (untimed) if not downloaded; teachers receive an email warning before auto-purge. The teacher is the data custodian. EU schools using Write should confirm they have a lawful basis for this transient processing under GDPR Article 6 and that their use of US-based infrastructure is covered by their institution's DPA.</p>
         <p>Verify transmits text to US-based processors (Supabase/AWS and Anthropic, Inc.). EU schools using Verify should confirm they have a lawful basis for this processing under GDPR Article 6. The text is not retained by PaperTrail after the report is generated. Anthropic retains API inputs for 7 days and does not use them for model training. Anthropic's commercial API terms incorporate Standard Contractual Clauses (SCCs) for international data transfers. We recommend anonymizing student-identifying information before submission.</p>
         <div class="reg-note">A DPA for EU data processing is available on request. Contact <a href="/cdn-cgi/l/email-protection#6109040d0d0e211100110413151300080d00020005040c08024f020e0c"><span class="__cf_email__" data-cfemail="97fff2fbfbf8d7e7f6e7f2e5e3e5f6fefbf6f4f6f3f2fafef4b9f4f8fa">[email&#160;protected]</span></a>.</div>
       </div>
