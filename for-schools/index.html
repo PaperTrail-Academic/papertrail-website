@@ -222,6 +222,11 @@
             <span class="dd-icon">🔬</span>
             <span><span class="dd-label">Verify <span style="color:var(--teal);font-size:10px">From $0.60</span></span><span class="dd-sub">AI-assisted deep analysis &amp; reports</span></span>
           </a>
+          <div class="dd-divider"></div>
+          <a href="/write" class="dd-item">
+            <span class="dd-icon">🖊️</span>
+            <span><span class="dd-label">Write <span style="color:#7B5EA7;font-size:10px">$49/yr</span></span><span class="dd-sub">Timed writing sessions with process monitoring</span></span>
+          </a>
         </div>
       </div>
     </div>
@@ -295,7 +300,7 @@
     <div class="section-hdr">
       <p class="eyebrow" style="color:var(--blue)">Privacy Architecture</p>
       <h2>Where does the data go? <em>It depends on which tool.</em></h2>
-      <p>PaperTrail has three tools with meaningfully different data architectures. The short version: two of the three tools transmit nothing at all.</p>
+      <p>PaperTrail has four tools with meaningfully different data architectures. The short version: two of the four tools transmit nothing at all.</p>
     </div>
     <div class="arch-grid">
 
@@ -318,7 +323,7 @@
       <div class="arch-card">
         <span class="arch-icon">🔬</span>
         <h3>Verify</h3>
-        <p>Verify is the only tool that transmits text. When a teacher runs a Verify report, the submitted text is sent to PaperTrail's secure backend (Supabase / AWS), forwarded to the Anthropic API for analysis, and returned as a report.</p>
+        <p>Verify is the only tool in the Chrome extension that transmits text. When a teacher runs a Verify report, the submitted text is sent to PaperTrail's secure backend (Supabase / AWS), forwarded to the Anthropic API for analysis, and returned as a report.</p>
         <p><strong>The text is not retained by PaperTrail after the report is generated.</strong> Only report metadata is stored (scores, timestamps, the label the teacher assigned). Anthropic retains API inputs for 7 days under their commercial API terms, which prohibit using API inputs for model training. Teachers should anonymize student names before submitting if their institution requires it.</p>
         <span class="arch-verdict verdict-handled">→ Transmitted, not retained by PaperTrail</span>
       </div>
@@ -343,6 +348,7 @@
           <li>No student personal information (name, email, ID) is collected by PaperTrail Academic</li>
           <li>StyleMatch and Inspect process data entirely on the teacher's device — no student text reaches PaperTrail's servers</li>
           <li>Verify transmits essay text only, not student identity information (the teacher assigns a label)</li>
+          <li>Write captures behavioral metadata (paste events, focus changes, timestamps) and essay text on submission — stored transiently in Supabase until the teacher downloads the session report, then purged</li>
           <li>No student text is used for model training — PaperTrail uses Anthropic's API under terms that prohibit this</li>
           <li>PaperTrail does not build profiles on students, track students over time, or aggregate student data</li>
         </ul>
@@ -378,6 +384,7 @@
         <div class="reg-subtitle">United States — Family Educational Rights and Privacy Act</div>
         <p>FERPA protects personally identifiable information in education records. PaperTrail does not collect, store, or transmit student PII. Inspect reads only Google Docs revision metadata — timestamps and anonymized edit markers — which are not education records under FERPA. StyleMatch runs entirely locally with no transmission of any kind.</p>
         <p>Verify transmits essay text to generate a report. The teacher controls what is submitted; no student name or ID is required or collected by PaperTrail. The text is not retained by PaperTrail after the report is generated. Anthropic retains API inputs for 7 days under their commercial API terms, which prohibit using this data for model training. We recommend anonymizing student names from essay text before submitting.</p>
+        <p>Write captures behavioral metadata and submitted essay text, stored transiently in PaperTrail's Supabase backend until the teacher downloads the session report — at which point it is purged. Student names are entered by the student themselves and are not linked to any external account. No PII beyond the name the student provides is collected. The teacher is the data custodian.</p>
         <div class="reg-note">A Data Processing Agreement (DPA) is available on request. Contact <a href="/cdn-cgi/l/email-protection#94fcf1f8f8fbd4e4f5e4f1e6e0e6f5fdf8f5f7f5f0f1f9fdf7baf7fbf9"><span class="__cf_email__" data-cfemail="abc3cec7c7c4ebdbcadbced9dfd9cac2c7cac8cacfcec6c2c885c8c4c6">[email&#160;protected]</span></a>.</div>
       </div>
 
@@ -386,6 +393,7 @@
         <h3>Other Jurisdictions</h3>
         <div class="reg-subtitle">International and non-US/EU schools</div>
         <p>Inspect and StyleMatch collect no personal information and involve no data transmission — they raise no data protection concerns beyond those inherent in Google Docs itself, regardless of jurisdiction.</p>
+        <p>Write stores submitted essay text and behavioral metadata transiently on Supabase (AWS, US region) until the teacher downloads the session report. Schools using Write should confirm their acceptable use policy permits this transient storage. No data is retained after the teacher download.</p>
         <p>Schools using Verify should confirm their institution's acceptable use policy permits transmitting student work to US-based AI services. This is the same question that applies to any AI writing tool used in your school. Anthropic retains API inputs for 7 days and does not use them for model training.</p>
         <div class="reg-note">A Data Processing Summary is available on request. Contact <a href="/cdn-cgi/l/email-protection#4c24292020230c3c2d3c293e383e2d25202d2f2d282921252f622f2321"><span class="__cf_email__" data-cfemail="6d05080101022d1d0c1d081f191f0c04010c0e0c090800040e430e0200">[email&#160;protected]</span></a>.</div>
       </div>
@@ -395,6 +403,7 @@
         <h3>GDPR</h3>
         <div class="reg-subtitle">European Union — General Data Protection Regulation</div>
         <p>Inspect and StyleMatch involve no personal data transmission and require no GDPR analysis beyond what applies to Google Docs itself.</p>
+        <p>Write stores essay text and behavioral metadata transiently on Supabase (AWS, US region) until teacher download. The teacher is the data custodian — data is purged on download, not retained by PaperTrail. EU schools using Write should confirm they have a lawful basis for this transient processing under GDPR Article 6.</p>
         <p>Verify transmits text to US-based processors (Supabase/AWS and Anthropic, Inc.). EU schools using Verify should confirm they have a lawful basis for this processing under GDPR Article 6. The text is not retained by PaperTrail after the report is generated. Anthropic retains API inputs for 7 days and does not use them for model training. Anthropic's commercial API terms incorporate Standard Contractual Clauses (SCCs) for international data transfers. We recommend anonymizing student-identifying information before submission.</p>
         <div class="reg-note">A DPA for EU data processing is available on request. Contact <a href="/cdn-cgi/l/email-protection#6109040d0d0e211100110413151300080d00020005040c08024f020e0c"><span class="__cf_email__" data-cfemail="97fff2fbfbf8d7e7f6e7f2e5e3e5f6fefbf6f4f6f3f2fafef4b9f4f8fa">[email&#160;protected]</span></a>.</div>
       </div>
@@ -419,7 +428,8 @@
         <p>Teachers can subscribe to StyleMatch or purchase Verify credits immediately using a personal or school card. Payments are processed by Lemon Squeezy (Merchant of Record), who handles receipts and VAT.</p>
         <div class="price-callout">
           <strong>StyleMatch:</strong> $4.99/month or $49.99/year per teacher<br>
-          <strong>Verify credits:</strong> From $6 for 10 reports (credits never expire)
+          <strong>Verify credits:</strong> From $6 for 10 reports (credits never expire)<br>
+          <strong>Write:</strong> $49/year per teacher — unlimited sessions
         </div>
         <p>A receipt is issued by Lemon Squeezy at the time of purchase and is suitable for expense reimbursement.</p>
         <a href="https://chromewebstore.google.com/detail/papertrail/kgkjmhfoijiiplbmablcjbooopndjbgm"
@@ -429,7 +439,7 @@
       <div class="purchase-card">
         <h3>Department or School</h3>
         <div class="pc-sub">Multiple teachers — contact us for options</div>
-        <p>For departments wanting to equip multiple teachers with StyleMatch subscriptions, or schools looking to purchase a batch of Verify credits for department use, please reach out directly.</p>
+        <p>For departments wanting to equip multiple teachers with StyleMatch or Write subscriptions, or schools looking to purchase a batch of Verify credits for department use, please reach out directly.</p>
         <div class="price-callout">
           <strong>Verify Year Supply:</strong> 100 reports for $45 — suitable for a small department<br>
           <strong>Volume options:</strong> Discuss with us directly
@@ -548,6 +558,7 @@
         <li><a href="/inspect">Inspect</a></li>
         <li><a href="/stylematch">StyleMatch</a></li>
         <li><a href="/verify">Verify</a></li>
+        <li><a href="/write">Write</a></li>
         <li><a href="https://chromewebstore.google.com/detail/papertrail/kgkjmhfoijiiplbmablcjbooopndjbgm" target="_blank" rel="noopener">Chrome Web Store</a></li>
       </ul>
     </div>
@@ -564,7 +575,7 @@
       <ul>
         <li><a href="/privacy-policy">Privacy Policy</a></li>
         <li><a href="/terms-of-service">Terms of Service</a></li>
-        <li><a href="mailto:hello@papertrailacademic.com">Contact</a></li>
+        <li><a href="/cdn-cgi/l/email-protection#2149444d4d4e615140514453555340484d40424045444c48420f424e4c">Contact</a></li>
       </ul>
     </div>
   </div>
@@ -573,12 +584,12 @@
     <span>
       <a href="/privacy-policy">Privacy Policy</a> &nbsp;&middot;&nbsp;
       <a href="/terms-of-service">Terms of Service</a> &nbsp;&middot;&nbsp;
-      <a href="mailto:hello@papertrailacademic.com">Contact</a>
+      <a href="/cdn-cgi/l/email-protection#3b535e5757547b4b5a4b5e494f495a52575a585a5f5e56525815585456">Contact</a>
     </span>
   </div>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
 <script>
 (function(){
   const dd      = document.getElementById('navDropdown');
@@ -591,9 +602,3 @@
   trigger.addEventListener('mouseleave', close);
   dd.querySelector('.nav-dd-menu').addEventListener('mouseenter', open);
   dd.querySelector('.nav-dd-menu').addEventListener('mouseleave', close);
-  trigger.addEventListener('click', () => dd.classList.toggle('open'));
-  document.addEventListener('click', e => { if (!dd.contains(e.target)) dd.classList.remove('open'); });
-})();
-</script>
-</body>
-</html>
