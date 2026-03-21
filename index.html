@@ -79,7 +79,7 @@ nav{position:sticky;top:0;z-index:200;background:rgba(255,255,255,.96);backdrop-
 
 /* ─── Hero ────────────────────────────────────────────────────── */
 .hero{background:linear-gradient(155deg,#f0f5fc 0%,#fff 50%,#fdf8ee 100%);padding:72px 0 60px}
-.hero-inner{max-width:1140px;margin:0 auto;padding:0 28px;display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start}
+.hero-inner{max-width:1140px;margin:0 auto;padding:0 28px}
 .hero h1{font-family:'Lora',serif;font-size:clamp(28px,3.5vw,44px);font-weight:700;line-height:1.18;color:var(--ink);margin-bottom:18px}
 .hero h1 em{color:var(--blue)}
 .hero-sub{font-size:16.5px;color:var(--ink-2);line-height:1.65;margin-bottom:28px;max-width:480px}
@@ -87,13 +87,14 @@ nav{position:sticky;top:0;z-index:200;background:rgba(255,255,255,.96);backdrop-
 .hero-trust{display:flex;flex-wrap:wrap;gap:14px}
 .hero-trust span{font-size:12px;color:var(--ink-3);display:flex;align-items:center;gap:5px}
 .hero-trust span::before{content:'✓';color:var(--green);font-weight:700;font-size:11px}
-.hero-preview-card{background:#fff;border:1.5px solid var(--rule);border-left:4px solid var(--gold);border-radius:12px;padding:16px 20px;display:flex;align-items:flex-start;gap:14px;box-shadow:var(--shadow);cursor:pointer;transition:box-shadow .2s ease, transform .2s ease, border-color .2s ease;text-decoration:none;color:inherit}
+.hero-cards-row{max-width:1140px;margin:28px auto 0;padding:0 28px;display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.hero-preview-card{background:#fff;border:1.5px solid var(--rule);border-left:4px solid var(--gold);border-radius:12px;padding:13px 15px;display:flex;align-items:flex-start;gap:11px;box-shadow:var(--shadow);cursor:pointer;transition:box-shadow .2s ease, transform .2s ease, border-color .2s ease;text-decoration:none;color:inherit}
 .hero-preview-card:hover{box-shadow:var(--shadow-lg);transform:translateX(3px);border-left-color:var(--gold-dk)}
 .hpc-icon{font-size:22px;flex-shrink:0;margin-top:2px}
 .hpc-title{font-size:13px;font-weight:700;color:var(--ink);margin-bottom:6px}
-.hpc-desc{font-size:12px;color:var(--ink-3);margin-bottom:6px}
+.hpc-desc{font-size:11.5px;color:var(--ink-3);margin-bottom:5px}
 .hpc-bullets{list-style:none;display:flex;flex-direction:column;gap:3px;margin-top:5px}
-.hpc-bullets li{font-size:11.5px;color:var(--ink-3);display:flex;align-items:flex-start;gap:5px;line-height:1.35}
+.hpc-bullets li{font-size:11px;color:var(--ink-3);display:flex;align-items:flex-start;gap:5px;line-height:1.3}
 .hpc-bullets li::before{content:'·';color:var(--gold);font-weight:700;flex-shrink:0;font-size:14px;line-height:1.1}
 
 /* ─── Tagline ─────────────────────────────────────────────────── */
@@ -372,7 +373,7 @@ footer{background:var(--ink);padding:42px 0 0}
   .cards-row{grid-template-columns:repeat(2,1fr)}
 }
 @media(max-width:960px){
-  .hero-inner{grid-template-columns:1fr}
+  .hero-cards-row{grid-template-columns:1fr 1fr}
   .cards-row{grid-template-columns:1fr}
   .price-cols{grid-template-columns:1fr}
   .packs-row{grid-template-columns:1fr}
@@ -381,6 +382,7 @@ footer{background:var(--ink);padding:42px 0 0}
   .trust-badges{grid-template-columns:repeat(2,1fr)}
 }
 @media(max-width:640px){
+  .hero-cards-row{grid-template-columns:1fr}
   .nav-inner .nl:not(.cta){display:none}
   .ftr-inner{grid-template-columns:1fr}
   .pcard.is-open .pcard-expanded{grid-template-columns:1fr}
@@ -421,7 +423,7 @@ footer{background:var(--ink);padding:42px 0 0}
           <div class="dd-divider"></div>
           <a href="/write" class="dd-item">
             <span class="dd-icon">🖊️</span>
-            <span><span class="dd-label">Write <span style="color:var(--purple);font-size:10px">From $4.99/mo</span></span><span class="dd-sub">Timed writing sessions with process monitoring</span></span>
+            <span><span class="dd-label">Write <span style="color:var(--purple);font-size:10px">$49/yr</span></span><span class="dd-sub">Timed writing sessions with process monitoring</span></span>
           </a>
         </div>
       </div>
@@ -437,7 +439,7 @@ footer{background:var(--ink);padding:42px 0 0}
 <!-- ═══ HERO ════════════════════════════════════════════════════════ -->
 <section class="hero">
   <div class="hero-inner">
-    <div>
+    <div style="max-width:680px">
       <p class="eyebrow">PaperTrail&trade; Academic</p>
       <h1>You've read thousands of student essays.<br><em>Trust that instinct — then document it.</em></h1>
       <p class="hero-sub">Four tools that give teachers structured, repeatable, documentable insight into how student writing was produced — from process monitoring in the classroom to deep post-submission analysis. The evidence speaks clearly. The judgment stays yours.</p>
@@ -453,9 +455,10 @@ footer{background:var(--ink);padding:42px 0 0}
         <span>Built by a teacher</span>
       </div>
     </div>
-    <div style="display:flex;flex-direction:column;gap:11px">
+  </div>
+  <div class="hero-cards-row">
 
-      <div class="hero-preview-card" onclick="heroOpenCard('inspect')" role="button" tabindex="0" aria-label="Learn more about Inspect">
+      <div class="hero-preview-card" onclick="heroOpenCard('inspect')" role="button" tabindex="0" aria-label="Learn more about Inspect" style="border-left-color:var(--blue)">
         <div class="hpc-icon">✏️</div>
         <div style="flex:1">
           <div class="hpc-title">Inspect &nbsp;<span style="color:var(--green);font-weight:700;font-size:11.5px">Free</span></div>
@@ -470,7 +473,7 @@ footer{background:var(--ink);padding:42px 0 0}
         </div>
       </div>
 
-      <div class="hero-preview-card" onclick="heroOpenCard('stylematch')" role="button" tabindex="0" aria-label="Learn more about StyleMatch">
+      <div class="hero-preview-card" onclick="heroOpenCard('stylematch')" role="button" tabindex="0" aria-label="Learn more about StyleMatch" style="border-left-color:var(--gold)">
         <div class="hpc-icon">🔍</div>
         <div style="flex:1">
           <div class="hpc-title">StyleMatch&trade; &nbsp;<span style="color:var(--gold-dk);font-size:11.5px">$4.99/mo</span></div>
@@ -485,7 +488,7 @@ footer{background:var(--ink);padding:42px 0 0}
         </div>
       </div>
 
-      <div class="hero-preview-card" onclick="heroOpenCard('verify')" role="button" tabindex="0" aria-label="Learn more about Verify">
+      <div class="hero-preview-card" onclick="heroOpenCard('verify')" role="button" tabindex="0" aria-label="Learn more about Verify" style="border-left-color:var(--teal)">
         <div class="hpc-icon">🔬</div>
         <div style="flex:1">
           <div class="hpc-title">Verify &nbsp;<span style="color:var(--teal);font-size:11.5px">From $0.60/report</span></div>
@@ -498,24 +501,23 @@ footer{background:var(--ink);padding:42px 0 0}
           </ul>
           <div style="margin-top:8px"><a href="/verify" onclick="event.stopPropagation()" style="font-size:11.5px;color:var(--teal);font-weight:600;text-decoration:none">Learn more →</a></div>
         </div>
+      </div>
+
       <div class="hero-preview-card" onclick="heroOpenCard('write')" role="button" tabindex="0" aria-label="Learn more about Write">
         <div class="hpc-icon">🖊️</div>
         <div style="flex:1">
-          <div class="hpc-title">Write &nbsp;<span style="color:var(--purple);font-size:11.5px">From $4.99/mo</span></div>
-          <div class="hpc-desc">A distraction-reduced, integrity-aware writing environment. Students write in-class; teachers get a full process log on submission.</div>
+          <div class="hpc-title">Write &nbsp;<span style="color:var(--purple);font-size:11px">From $49/yr</span></div>
+          <div class="hpc-desc">Timed in-class writing sessions — students write, teachers get a full process log on submission.</div>
           <ul class="hpc-bullets">
-            <li>Timed writing sessions with join code access</li>
-            <li>Paste detection, focus-loss events, and behavioral log</li>
-            <li>Student transparency screen — they know what's recorded</li>
-            <li>Session reports with full process timeline</li>
+            <li>Paste detection &amp; focus-loss events</li>
+            <li>Join-code access — no student account</li>
+            <li>Student transparency screen</li>
+            <li>Session reports with behavioral timeline</li>
           </ul>
-          <div style="margin-top:8px"><a href="/write" onclick="event.stopPropagation()" style="font-size:11.5px;color:var(--purple);font-weight:600;text-decoration:none">Learn more →</a></div>
+          <div style="margin-top:7px"><a href="/write" onclick="event.stopPropagation()" style="font-size:11px;color:var(--purple);font-weight:600;text-decoration:none">Learn more →</a></div>
         </div>
       </div>
 
-      </div>
-
-    </div>
   </div>
 </section>
 
@@ -859,7 +861,7 @@ footer{background:var(--ink);padding:42px 0 0}
           </ul>
         </div>
         <div class="pcard-footer">
-          <div class="price-line"><span class="price-big" style="color:var(--purple)">$4.99</span><span class="price-unit">/mo</span></div>
+          <div class="price-line"><span class="price-big" style="color:var(--purple)">$49</span><span class="price-unit">/yr</span></div>
           <a href="/write" class="btn btn-purple btn-full" onclick="event.stopPropagation()">Learn More →</a>
           <p class="expand-hint">Click card to see full preview ↓</p>
         </div>
@@ -943,8 +945,8 @@ footer{background:var(--ink);padding:42px 0 0}
               <li><strong>Plain text, no assistance</strong> — spell check, grammar check, and autocorrect are all off. Students write without AI-augmented support.</li>
             </ul>
             <div class="exp-price-row">
-              <div class="exp-price-big" style="color:var(--purple)">$4.99<span style="font-size:14px;font-weight:400;color:var(--ink-3)">/mo</span></div>
-              <div class="exp-price-sub">or $49.99/yr &nbsp;·&nbsp; Includes unlimited sessions</div>
+              <div class="exp-price-big" style="color:var(--purple)">$49<span style="font-size:14px;font-weight:400;color:var(--ink-3)">/yr</span></div>
+              <div class="exp-price-sub">Includes unlimited sessions</div>
               <a href="/write" class="btn btn-purple btn-full" onclick="event.stopPropagation()">Go to Write →</a>
             </div>
             <div class="exp-disclaimer">Write captures behavioral metadata — paste events, focus changes, and timestamps. Students are shown exactly what is recorded before the session begins. No clipboard contents, keystrokes, or off-tab activity are accessible.</div>
