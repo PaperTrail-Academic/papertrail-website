@@ -148,7 +148,7 @@
 <div class="doc-wrap">
 
   <div class="lead-note">
-    <strong>The short version:</strong> PaperTrail does not collect, store, or transmit any personal data for Inspect or StyleMatch — everything runs locally in your browser. StyleMatch and Verify require an account (name and email). Verify transmits essay text to generate a report but does not retain it. PaperTrail Write holds session data transiently and purges it after the teacher downloads their report. No advertising. No analytics. No selling of data.
+    <strong>The short version:</strong> Inspect requires no account and transmits nothing — everything runs locally in your browser. StyleMatch and Verify require an account (name and email), but all StyleMatch analysis stays on your device and is never transmitted. Verify transmits essay text to generate a report but does not retain it. PaperTrail Write holds session data transiently and purges it after the teacher downloads their report. No advertising. No analytics. No selling of data.
   </div>
 
   <!-- ═══════════════════════════════════════════════
@@ -165,7 +165,7 @@
 
     <p><strong>Verify report metadata</strong> — When you run a Verify report, we store the report output (scores, dimension ratings, timestamps, and any label you assigned). The full essay text used to generate the report is not retained after generation.</p>
 
-    <p><strong>Local browser storage</strong> — The Chrome extension stores session data locally on your device using Chrome's built-in storage APIs (<code>chrome.storage.local</code>). This includes your login session, cached account state, and revision data for the current document. This data never leaves your device except as described in the sections below, and is cleared when you sign out or when the session ends.</p>
+    <p><strong>Local browser storage</strong> — The Chrome extension stores session data locally on your device using Chrome's built-in storage APIs (<code>chrome.storage.local</code>). This includes your login session, cached account state, and revision data for the current document. Document content and revision data never leave your device except as described in the sections below. Login session and account state are transmitted to PaperTrail Academic's backend only as necessary to authenticate you and check your subscription status. This data is cleared when you sign out or when the browser session ends.</p>
 
     <p><strong>Revision history data</strong> — PaperTrail reads document revision history from Google Docs using Google's built-in revision API — the same data that powers native revision history in Google Docs. This data (document content at various points in time, edit timestamps, and anonymised author identifiers) is accessed and processed entirely within your browser. It is not transmitted to PaperTrail Academic's servers.</p>
 
@@ -248,7 +248,7 @@
   <div class="doc-section" id="security">
     <h2>Security</h2>
 
-    <p>All data transmitted between the extension and PaperTrail Academic's backend is encrypted in transit using HTTPS/TLS. Account data stored on Supabase is encrypted at rest. Authentication tokens are stored securely using Chrome's built-in storage APIs and are not accessible to other extensions or websites.</p>
+    <p>All data transmitted between the extension and PaperTrail Academic's backend is encrypted in transit using HTTPS/TLS. Account data stored on Supabase is encrypted at rest. Authentication tokens are stored using Chrome's extension storage, which is isolated from websites and other extensions.</p>
 
     <p>PaperTrail Academic is operated by a single developer. Access to the backend database is restricted to that developer. No employees or contractors have routine access to user data.</p>
 
@@ -286,9 +286,11 @@
 
     <p><strong>identity</strong> — Required to authenticate teachers via Google Sign-In for StyleMatch and Verify features.</p>
 
-    <p><strong>storage and unlimitedStorage</strong> — Required to hold revision data for large documents (which can contain tens of thousands of revision entries) and to cache login session data locally. Revision data is cleared when the session ends. Session data is cleared on sign-out.</p>
+    <p><strong>storage and unlimitedStorage</strong> — Required to hold revision data for large documents (which can contain tens of thousands of revision entries) and to cache login session data locally. Revision data is stored locally and cleared when the extension reloads or the browser session ends.</p>
 
-    <p><strong>Host permissions for docs.google.com and classroom.google.com</strong> — Required to operate on Google Docs and Google Classroom pages. PaperTrail does not access any other domains.</p>
+    <p><strong>Host permissions for docs.google.com and classroom.google.com</strong> — Required to operate on Google Docs and Google Classroom pages.</p>
+
+    <p><strong>Host permission for ktzrdhiqhidexunucuqp.supabase.co</strong> — Required to communicate with PaperTrail Academic's secure backend (Supabase) for account authentication, subscription status checks, and Verify report generation. This connection is only used when you are signed in and actively using StyleMatch or Verify features.</p>
   </div>
 
   <!-- ═══════════════════════════════════════════════
