@@ -161,7 +161,7 @@
 
     <p><strong>Google Sign-In data</strong> — If you choose to sign in with Google, we receive your name and email address via Google's OAuth 2.0 flow. We do not receive your Google password, and we do not request access to Google Drive, Gmail, or any other Google service beyond basic profile information.</p>
 
-    <p><strong>Subscription and billing data</strong> — If you purchase a StyleMatch subscription or Verify credits, payment is handled entirely by Lemon Squeezy (our payment processor and merchant of record). PaperTrail Academic does not receive or store your credit card number or payment details. We receive a record of your subscription status and credit balance in order to unlock the appropriate features.</p>
+    <p><strong>Subscription and billing data</strong> — If you purchase a StyleMatch subscription or Verify credits, payment is handled entirely by Lemon Squeezy (our payment processor and merchant of record). PaperTrail Academic does not receive or store your credit card number or payment details. When a purchase is completed, our payment processor notifies PaperTrail Academic's backend via a secure webhook. PaperTrail Academic then updates your account's subscription status and Verify report credit balance in order to unlock the appropriate features. No payment or financial details are included in this notification.</p>
 
     <p><strong>Verify report metadata</strong> — When you run a Verify report, we store the report output (scores, dimension ratings, timestamps, and any label you assigned). The full essay text used to generate the report is not retained after generation.</p>
 
@@ -180,9 +180,9 @@
   <div class="doc-section" id="data-use">
     <h2>How We Use Your Information</h2>
 
-    <p><strong>Account data (name, email)</strong> — Used solely to authenticate you, associate your subscription and Verify credit balance with your account, and send transactional emails (purchase confirmations, account-related notices). We do not use your email address for marketing without your explicit consent, and we do not sell or rent it to any third party.</p>
+    <p><strong>Account data (name, email)</strong> — Used solely to authenticate you, associate your subscription status and Verify report credit balance with your account, and send transactional emails (purchase confirmations, account-related notices). We do not use your email address for marketing without your explicit consent, and we do not sell or rent it to any third party.</p>
 
-    <p><strong>Subscription and billing status</strong> — Used to determine which features are available to your account (StyleMatch access, Verify credit balance) and to process subscription renewals via Lemon Squeezy.</p>
+    <p><strong>Subscription and billing status</strong> — Used to determine which features are available to your account (StyleMatch access, Verify report credit balance) and to process subscription renewals via Lemon Squeezy.</p>
 
     <p><strong>Verify report metadata</strong> — Stored to allow you to retrieve past reports within the extension. Not used for any purpose other than displaying results to you.</p>
 
@@ -197,11 +197,11 @@
 
     <p>PaperTrail Academic does not sell, rent, or trade user data. Data is shared with third parties only in the following limited circumstances:</p>
 
-    <p><strong>Supabase</strong> — Our database and backend infrastructure provider (supabase.com). Account data (name, email, subscription status, credit balance) and Verify report metadata are stored on Supabase servers, which run on AWS infrastructure. Supabase processes this data solely to provide database and authentication services to PaperTrail Academic. See <a href="https://supabase.com/privacy" target="_blank" rel="noopener">supabase.com/privacy</a>.</p>
+    <p><strong>Supabase</strong> — Our database and backend infrastructure provider (supabase.com). Account data (name, email, subscription status, Verify report credit balance) and Verify report metadata are stored on Supabase servers, which run on AWS infrastructure. Supabase processes this data solely to provide database and authentication services to PaperTrail Academic. See <a href="https://supabase.com/privacy" target="_blank" rel="noopener">supabase.com/privacy</a>.</p>
 
     <p><strong>Anthropic</strong> — When you run a Verify report, essay text is forwarded to the Anthropic API for AI-assisted analysis. Anthropic processes submitted text under its commercial API terms, which prohibit using API inputs to train AI models. Anthropic retains API inputs for a limited period before automatic deletion. See <a href="https://www.anthropic.com/privacy" target="_blank" rel="noopener">anthropic.com/privacy</a> for their current retention policy.</p>
 
-    <p><strong>Lemon Squeezy</strong> — Our payment processor and merchant of record (lemonsqueezy.com). All payment transactions are handled directly by Lemon Squeezy. PaperTrail Academic receives only subscription status and credit balance updates via webhook. Lemon Squeezy is the legal seller of record for all purchases. See <a href="https://www.lemonsqueezy.com/privacy" target="_blank" rel="noopener">lemonsqueezy.com/privacy</a>.</p>
+    <p><strong>Lemon Squeezy</strong> — Our payment processor and merchant of record (lemonsqueezy.com). All payment transactions are handled directly by Lemon Squeezy. PaperTrail Academic receives only subscription status and Verify report credit balance updates via webhook. Lemon Squeezy is the legal seller of record for all purchases. See <a href="https://www.lemonsqueezy.com/privacy" target="_blank" rel="noopener">lemonsqueezy.com/privacy</a>.</p>
 
     <p><strong>Resend</strong> — Our transactional email provider (resend.com), used to send account-related emails (e.g., purchase confirmations). Email addresses are shared with Resend solely for this purpose.</p>
 
@@ -233,7 +233,7 @@
   <div class="doc-section" id="retention">
     <h2>Data Retention</h2>
 
-    <p><strong>Account data</strong> — Retained for as long as your account is active. When you delete your account, your name, email address, subscription status, and credit balance are permanently deleted from PaperTrail Academic's database. Account deletion is available from within the extension settings.</p>
+    <p><strong>Account data</strong> — Retained for as long as your account is active. When you delete your account, your name, email address, subscription status, and Verify report credit balance are permanently deleted from PaperTrail Academic's database. Account deletion is available from within the extension settings.</p>
 
     <p><strong>Verify report metadata</strong> — Retained until you delete the report or delete your account.</p>
 
@@ -263,7 +263,7 @@
 
     <p>You have the right to access, correct, or delete the personal data PaperTrail Academic holds about you. Specifically:</p>
 
-    <p><strong>Delete your account</strong> — You can delete your account at any time from within the extension settings (Settings → Delete Account). This permanently removes your name, email, subscription status, credit balance, and all stored report metadata. Deletion is immediate and cannot be reversed.</p>
+    <p><strong>Delete your account</strong> — You can delete your account at any time from within the extension settings (Settings → Delete Account). This permanently removes your name, email, subscription status, Verify report credit balance, and all stored report metadata. Deletion is immediate and cannot be reversed.</p>
 
     <p><strong>Access or correct your data</strong> — To request a copy of the data PaperTrail Academic holds about you, or to correct inaccurate information, email <a href="mailto:hello@papertrailacademic.com?subject=Data Request">hello@papertrailacademic.com</a>.</p>
 
