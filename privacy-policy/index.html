@@ -148,58 +148,171 @@
 <div class="doc-wrap">
 
   <div class="lead-note">
-    <strong>The short version:</strong> PaperTrail does not collect, store, or transmit any personal data for Inspect or StyleMatch — everything runs locally in your browser. Verify transmits essay text to generate a report, but does not retain it. PaperTrail Write holds session data transiently and purges it after the teacher downloads their report. No advertising. No analytics.
+    <strong>The short version:</strong> PaperTrail does not collect, store, or transmit any personal data for Inspect or StyleMatch — everything runs locally in your browser. StyleMatch and Verify require an account (name and email). Verify transmits essay text to generate a report but does not retain it. PaperTrail Write holds session data transiently and purges it after the teacher downloads their report. No advertising. No analytics. No selling of data.
   </div>
 
-  <div class="doc-section">
-    <h2>What PaperTrail Accesses</h2>
-    <p>PaperTrail reads revision history data from Google Docs using Google's built-in revision API — the same data that powers the native revision history feature inside Google Docs. This data includes document content at various points in time, edit timestamps, and anonymised author identifiers.</p>
-    <p>This data is accessed solely to display writing analysis results to the person using the extension. It is never transmitted to any server, stored beyond the current browser session, or shared with any third party.</p>
+  <!-- ═══════════════════════════════════════════════
+       1. INFORMATION WE COLLECT
+  ════════════════════════════════════════════════ -->
+  <div class="doc-section" id="data-collected">
+    <h2>Information We Collect</h2>
+
+    <p><strong>Account registration data</strong> — When you create a PaperTrail Academic account to use StyleMatch or Verify, we collect your name and email address. This information is stored in our secure database (Supabase, hosted on AWS infrastructure). No account is required to use Inspect.</p>
+
+    <p><strong>Google Sign-In data</strong> — If you choose to sign in with Google, we receive your name and email address via Google's OAuth 2.0 flow. We do not receive your Google password, and we do not request access to Google Drive, Gmail, or any other Google service beyond basic profile information.</p>
+
+    <p><strong>Subscription and billing data</strong> — If you purchase a StyleMatch subscription or Verify credits, payment is handled entirely by Lemon Squeezy (our payment processor and merchant of record). PaperTrail Academic does not receive or store your credit card number or payment details. We receive a record of your subscription status and credit balance in order to unlock the appropriate features.</p>
+
+    <p><strong>Verify report metadata</strong> — When you run a Verify report, we store the report output (scores, dimension ratings, timestamps, and any label you assigned). The full essay text used to generate the report is not retained after generation.</p>
+
+    <p><strong>Local browser storage</strong> — The Chrome extension stores session data locally on your device using Chrome's built-in storage APIs (<code>chrome.storage.local</code>). This includes your login session, cached account state, and revision data for the current document. This data never leaves your device except as described in the sections below, and is cleared when you sign out or when the session ends.</p>
+
+    <p><strong>Revision history data</strong> — PaperTrail reads document revision history from Google Docs using Google's built-in revision API — the same data that powers native revision history in Google Docs. This data (document content at various points in time, edit timestamps, and anonymised author identifiers) is accessed and processed entirely within your browser. It is not transmitted to PaperTrail Academic's servers.</p>
+
+    <p><strong>Verify essay text</strong> — When you run a Verify report, the essay text is transmitted over an encrypted connection (HTTPS) to PaperTrail Academic's secure backend for processing. See the Verify section below for full details.</p>
+
+    <p><strong>What we do not collect</strong> — PaperTrail does not collect usage analytics, browsing history, keystroke data, or any information beyond what is described above. No telemetry is sent from the extension.</p>
   </div>
 
-  <div class="doc-section">
-    <h2>StyleMatch&trade; — Text Never Leaves Your Browser</h2>
+  <!-- ═══════════════════════════════════════════════
+       2. HOW WE USE INFORMATION
+  ════════════════════════════════════════════════ -->
+  <div class="doc-section" id="data-use">
+    <h2>How We Use Your Information</h2>
+
+    <p><strong>Account data (name, email)</strong> — Used solely to authenticate you, associate your subscription and Verify credit balance with your account, and send transactional emails (purchase confirmations, account-related notices). We do not use your email address for marketing without your explicit consent, and we do not sell or rent it to any third party.</p>
+
+    <p><strong>Subscription and billing status</strong> — Used to determine which features are available to your account (StyleMatch access, Verify credit balance) and to process subscription renewals via Lemon Squeezy.</p>
+
+    <p><strong>Verify report metadata</strong> — Stored to allow you to retrieve past reports within the extension. Not used for any purpose other than displaying results to you.</p>
+
+    <p><strong>Verify essay text (in transit)</strong> — Transmitted to PaperTrail Academic's backend and forwarded to the Anthropic API for AI-assisted analysis. Not retained by PaperTrail Academic after the report is generated. Not used for any purpose other than generating the report you requested.</p>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════
+       3. INFORMATION SHARING & THIRD PARTIES
+  ════════════════════════════════════════════════ -->
+  <div class="doc-section" id="data-sharing">
+    <h2>Information Sharing and Third Parties</h2>
+
+    <p>PaperTrail Academic does not sell, rent, or trade user data. Data is shared with third parties only in the following limited circumstances:</p>
+
+    <p><strong>Supabase</strong> — Our database and backend infrastructure provider (supabase.com). Account data (name, email, subscription status, credit balance) and Verify report metadata are stored on Supabase servers, which run on AWS infrastructure. Supabase processes this data solely to provide database and authentication services to PaperTrail Academic. See <a href="https://supabase.com/privacy" target="_blank" rel="noopener">supabase.com/privacy</a>.</p>
+
+    <p><strong>Anthropic</strong> — When you run a Verify report, essay text is forwarded to the Anthropic API for AI-assisted analysis. Anthropic processes submitted text under its commercial API terms, which prohibit using API inputs to train AI models. Anthropic retains API inputs for a limited period before automatic deletion. See <a href="https://www.anthropic.com/privacy" target="_blank" rel="noopener">anthropic.com/privacy</a> for their current retention policy.</p>
+
+    <p><strong>Lemon Squeezy</strong> — Our payment processor and merchant of record (lemonsqueezy.com). All payment transactions are handled directly by Lemon Squeezy. PaperTrail Academic receives only subscription status and credit balance updates via webhook. Lemon Squeezy is the legal seller of record for all purchases. See <a href="https://www.lemonsqueezy.com/privacy" target="_blank" rel="noopener">lemonsqueezy.com/privacy</a>.</p>
+
+    <p><strong>Resend</strong> — Our transactional email provider (resend.com), used to send account-related emails (e.g., purchase confirmations). Email addresses are shared with Resend solely for this purpose.</p>
+
+    <p>No other third parties receive your data. PaperTrail Academic does not share data with advertising networks, data brokers, analytics providers, or any other parties.</p>
+
+    <p>We may disclose data if required to do so by law or in response to a valid legal process. We will notify affected users where legally permitted to do so.</p>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════
+       4. PRODUCT-BY-PRODUCT BREAKDOWN
+  ════════════════════════════════════════════════ -->
+  <div class="doc-section" id="products">
+    <h2>Product-by-Product Data Practices</h2>
+
+    <p><strong>✏️ Inspect</strong> — No account required. No data transmitted. Revision history is read from Google Docs and processed entirely within your browser. Nothing is stored on PaperTrail Academic's servers.</p>
+
+    <p><strong>🔍 StyleMatch™</strong> — Requires an account. All stylometric analysis is performed locally on your device using JavaScript. The text you paste into the StyleMatch panel is never transmitted to PaperTrail Academic or any third party — this is a design choice, not just a policy. Once you close the sidebar or navigate away, the text is cleared from memory.</p>
+
     <div class="callout blue">
-      <p><strong>All StyleMatch analysis is performed locally on your device.</strong> The text you paste into the StyleMatch panel is never transmitted to PaperTrail Academic or any third party. There is no server-side component to StyleMatch — this is a design choice, not just a policy.</p>
+      <p><strong>StyleMatch text never leaves your browser.</strong> There is no server-side component to StyleMatch analysis.</p>
     </div>
-    <p>When you run a StyleMatch comparison, all eight stylometric calculations happen in your browser using JavaScript. Once you close the sidebar or navigate away, the text is cleared from memory.</p>
+
+    <p><strong>🔬 Verify</strong> — Requires an account and Verify credits. Verify is the only Chrome extension tool that transmits essay text. When you run a Verify report, the submitted text is sent over HTTPS to PaperTrail Academic's secure backend, forwarded to the Anthropic API for analysis, and returned as a structured report saved to your account. The full essay text is not retained by PaperTrail Academic after the report is generated. Only report metadata (scores, ratings, timestamps, and any label you assigned) is stored. If your institution requires it, you should anonymize any student-identifying information before submitting text through Verify.</p>
   </div>
 
-  <div class="doc-section">
-    <h2>Verify — Transmitted, Not Retained</h2>
-    <p>Verify is the only PaperTrail Chrome extension tool that transmits text. When you run a Verify report, the submitted text is:</p>
-    <ul>
-      <li>Sent to PaperTrail Academic's secure backend (Supabase, hosted on AWS infrastructure)</li>
-      <li>Forwarded to the Anthropic API for AI-assisted analysis</li>
-      <li>Returned as a structured report saved to your account</li>
-    </ul>
-    <p><strong>The full essay text is not retained by PaperTrail after the report is generated.</strong> Only report metadata is retained — scores, timestamps, and any label you assigned.</p>
-    <p>Anthropic processes submitted text under its commercial API terms, which prohibit using API inputs for model training. As of September 2025, Anthropic retains API inputs for 7 days before automatic deletion. See <a href="https://www.anthropic.com/privacy" target="_blank" rel="noopener">anthropic.com/privacy</a> for their full policy.</p>
-    <p>If your institution requires it, you should anonymize student-identifying information from text before submitting through Verify.</p>
+  <!-- ═══════════════════════════════════════════════
+       5. DATA RETENTION
+  ════════════════════════════════════════════════ -->
+  <div class="doc-section" id="retention">
+    <h2>Data Retention</h2>
+
+    <p><strong>Account data</strong> — Retained for as long as your account is active. When you delete your account, your name, email address, subscription status, and credit balance are permanently deleted from PaperTrail Academic's database. Account deletion is available from within the extension settings.</p>
+
+    <p><strong>Verify report metadata</strong> — Retained until you delete the report or delete your account.</p>
+
+    <p><strong>Verify essay text</strong> — Not retained by PaperTrail Academic after report generation. Anthropic's retention period is governed by their own privacy policy.</p>
+
+    <p><strong>Local browser storage</strong> — Cleared when you sign out of the extension or uninstall it.</p>
   </div>
 
-  <div class="doc-section">
-    <h2>What PaperTrail Does Not Do</h2>
-    <p>PaperTrail does not collect any personal information. It does not track usage, send analytics, display advertising, or sell data of any kind.</p>
-    <p>PaperTrail does not modify any Google Doc or leave any record of having been used on a document. It does not access student information systems, gradebooks, or any Google Workspace admin data.</p>
-    <p>No student accounts are created across any PaperTrail product. No student data is collected by PaperTrail Academic directly.</p>
+  <!-- ═══════════════════════════════════════════════
+       6. SECURITY
+  ════════════════════════════════════════════════ -->
+  <div class="doc-section" id="security">
+    <h2>Security</h2>
+
+    <p>All data transmitted between the extension and PaperTrail Academic's backend is encrypted in transit using HTTPS/TLS. Account data stored on Supabase is encrypted at rest. Authentication tokens are stored securely using Chrome's built-in storage APIs and are not accessible to other extensions or websites.</p>
+
+    <p>PaperTrail Academic is operated by a single developer. Access to the backend database is restricted to that developer. No employees or contractors have routine access to user data.</p>
+
+    <p>Despite these measures, no system can guarantee absolute security. If you become aware of a security concern, please contact <a href="mailto:hello@papertrailacademic.com?subject=Security">hello@papertrailacademic.com</a>.</p>
   </div>
 
-  <div class="doc-section">
+  <!-- ═══════════════════════════════════════════════
+       7. YOUR RIGHTS & ACCOUNT DELETION
+  ════════════════════════════════════════════════ -->
+  <div class="doc-section" id="your-rights">
+    <h2>Your Rights and Account Controls</h2>
+
+    <p>You have the right to access, correct, or delete the personal data PaperTrail Academic holds about you. Specifically:</p>
+
+    <p><strong>Delete your account</strong> — You can delete your account at any time from within the extension settings (Settings → Delete Account). This permanently removes your name, email, subscription status, credit balance, and all stored report metadata. Deletion is immediate and cannot be reversed.</p>
+
+    <p><strong>Access or correct your data</strong> — To request a copy of the data PaperTrail Academic holds about you, or to correct inaccurate information, email <a href="mailto:hello@papertrailacademic.com?subject=Data Request">hello@papertrailacademic.com</a>.</p>
+
+    <p><strong>Cancel your subscription</strong> — You can cancel your StyleMatch subscription at any time via the billing portal linked within the extension. Cancellation stops future billing; access continues until the end of the current billing period.</p>
+
+    <p>Users in the EU, UK, or California may have additional rights under GDPR, UK GDPR, or CCPA respectively. PaperTrail Academic will honor all valid requests regardless of your location.</p>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════
+       8. CHROME EXTENSION PERMISSIONS
+  ════════════════════════════════════════════════ -->
+  <div class="doc-section" id="permissions">
     <h2>Chrome Extension Permissions</h2>
-    <p>PaperTrail requests the following Chrome permissions in order to function:</p>
-    <p><strong>activeTab and tabs</strong> — required to inject the revision analysis tool into the active Google Docs page, open the playback window in a new tab, and detect when the user is on a Google Docs or Google Classroom page.</p>
-    <p><strong>webNavigation</strong> — required to detect when the teacher navigates to a Google Docs page so the extension can activate automatically.</p>
-    <p><strong>identity</strong> — required to authenticate teachers via Google Sign-In for StyleMatch and Verify features.</p>
-    <p><strong>unlimitedStorage</strong> — required to temporarily hold revision data for large documents, which can contain tens of thousands of entries. This data is cleared when the session ends.</p>
-    <p><strong>Host permissions for docs.google.com and classroom.google.com</strong> — required to operate on Google Docs and Google Classroom pages.</p>
+
+    <p>PaperTrail requests only the permissions necessary for its described functionality:</p>
+
+    <p><strong>activeTab and tabs</strong> — Required to inject the revision analysis tool into the active Google Docs page, open the playback window in a new tab, and detect when the user is on a Google Docs or Google Classroom page.</p>
+
+    <p><strong>webNavigation</strong> — Required to detect when a teacher navigates to a Google Docs page so the extension can activate automatically.</p>
+
+    <p><strong>identity</strong> — Required to authenticate teachers via Google Sign-In for StyleMatch and Verify features.</p>
+
+    <p><strong>storage and unlimitedStorage</strong> — Required to hold revision data for large documents (which can contain tens of thousands of revision entries) and to cache login session data locally. Revision data is cleared when the session ends. Session data is cleared on sign-out.</p>
+
+    <p><strong>Host permissions for docs.google.com and classroom.google.com</strong> — Required to operate on Google Docs and Google Classroom pages. PaperTrail does not access any other domains.</p>
   </div>
 
-  <div class="doc-section">
-    <h2>PaperTrail Write — Web Application</h2>
-    <p>PaperTrail Write (<a href="https://write.papertrailacademic.com" target="_blank" rel="noopener">write.papertrailacademic.com</a>) is a separate web application for classroom writing sessions. It is not a Chrome extension. The following describes how it handles data.</p>
+  <!-- ═══════════════════════════════════════════════
+       9. LIMITED USE DISCLOSURE (CWS REQUIRED)
+  ════════════════════════════════════════════════ -->
+  <div class="doc-section" id="limited-use">
+    <h2>Chrome Web Store Limited Use Disclosure</h2>
 
-    <p><strong>Teacher accounts</strong> — Teachers create accounts using email/password or Google Sign-In. Google Sign-In uses the standard OAuth 2.0 flow and requests only basic profile information (name and email address). PaperTrail Write does not request access to any Google Drive files at sign-in.</p>
+    <div class="callout blue">
+      <p>PaperTrail Academic's use of information received from Google APIs complies with the <a href="https://developers.google.com/terms/api-services-user-data-policy" target="_blank" rel="noopener">Chrome Web Store User Data Policy</a>, including the Limited Use requirements.</p>
+    </div>
+
+    <p>Specifically: data accessed via Google APIs is used only to provide the features described in this policy and in the extension's Chrome Web Store listing. It is not used for advertising, it is not transferred to third parties except as described above (and only as necessary to provide the service), and it is not used to train AI models. No human at PaperTrail Academic reads user data obtained via Google APIs except as required to investigate a security or abuse concern, or as required by law.</p>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════
+       10. PAPERTRAIL WRITE
+  ════════════════════════════════════════════════ -->
+  <div class="doc-section" id="write">
+    <h2>PaperTrail Write — Web Application</h2>
+
+    <p>PaperTrail Write (<a href="https://write.papertrailacademic.com" target="_blank" rel="noopener">write.papertrailacademic.com</a>) is a separate web application for controlled classroom writing sessions. It is not a Chrome extension. The following describes how it handles data.</p>
+
+    <p><strong>Teacher accounts</strong> — Teachers create accounts using email and password or Google Sign-In. Google Sign-In uses the standard OAuth 2.0 flow and requests only basic profile information (name and email address). PaperTrail Write does not request access to Google Drive at sign-in.</p>
 
     <p><strong>Google Drive — source document upload</strong> — When a teacher chooses to attach a source document from Google Drive, PaperTrail Write requests read-only access (<code>drive.readonly</code>) to allow the teacher to select a file using the Google Picker. Only the selected file is accessed. Its contents are downloaded to the teacher's browser and uploaded to PaperTrail Write's secure storage (Supabase, hosted on AWS). PaperTrail Write does not browse, index, or retain access to any other files in the teacher's Drive.</p>
 
@@ -211,29 +324,48 @@
 
     <p>Untimed sessions are purged after 30 days. Timed sessions are purged after 7 days. Ended sessions are purged within 24 hours of the session ending. These purges are automatic and cannot be reversed.</p>
 
-    <p><strong>What PaperTrail Write does not do</strong> — It does not sell, share, or transmit student data to any third party. It does not use student writing for any purpose other than displaying it to the assigned teacher. It does not use student data to train any AI model.</p>
+    <p>PaperTrail Write does not sell, share, or transmit student data to any third party. It does not use student writing for any purpose other than displaying it to the assigned teacher. It does not use student data to train any AI model.</p>
   </div>
 
-  <div class="doc-section">
+  <!-- ═══════════════════════════════════════════════
+       11. GOOGLE CLASSROOM & STUDENT DATA
+  ════════════════════════════════════════════════ -->
+  <div class="doc-section" id="classroom">
     <h2>Google Classroom and Student Data</h2>
+
     <p>PaperTrail respects the access permissions that Google enforces on all documents. It can only read revision history that the logged-in teacher already has permission to view. It does not access any student data beyond what is visible in the document's standard revision history.</p>
-    <p>Because Inspect and StyleMatch process data locally without transmission, they do not raise additional data governance concerns beyond those of Google Docs itself. For Verify, see the section above. For PaperTrail Write, see the section above.</p>
+
+    <p>Because Inspect and StyleMatch process all data locally without transmission, they do not raise data governance concerns beyond those of Google Docs itself. For Verify, see above. For PaperTrail Write, see above.</p>
+
     <p>Schools and IT coordinators with compliance questions should review our <a href="/for-schools">For Schools</a> page, which covers FERPA, PIPEDA, and GDPR considerations in plain language.</p>
   </div>
 
-  <div class="doc-section">
+  <!-- ═══════════════════════════════════════════════
+       12. CHILDREN'S PRIVACY
+  ════════════════════════════════════════════════ -->
+  <div class="doc-section" id="childrens-privacy">
     <h2>Children's Privacy</h2>
+
     <p>PaperTrail does not knowingly collect any information from minors beyond what is necessary to operate a teacher-assigned writing session. In PaperTrail Write, students enter only their name and their written work — no email address, no account, and no personal identifiers are required. Session data is purged automatically after the session ends. The Chrome extension is designed exclusively for use by educators and does not interact with students at all.</p>
   </div>
 
-  <div class="doc-section">
+  <!-- ═══════════════════════════════════════════════
+       13. CHANGES TO THIS POLICY
+  ════════════════════════════════════════════════ -->
+  <div class="doc-section" id="changes">
     <h2>Changes to This Policy</h2>
-    <p>If PaperTrail's data practices change — for example, if new features involve data transmission — this policy will be updated and the date above will reflect the change. Material changes will also be communicated to registered users by email.</p>
+
+    <p>If PaperTrail's data practices change — for example, if new features involve data transmission — this policy will be updated and the date at the top of the page will reflect the change. Material changes will also be communicated to registered users by email before taking effect.</p>
   </div>
 
-  <div class="doc-section">
+  <!-- ═══════════════════════════════════════════════
+       14. CONTACT
+  ════════════════════════════════════════════════ -->
+  <div class="doc-section" id="contact">
     <h2>Contact</h2>
+
     <p>Questions about this privacy policy or how PaperTrail handles data can be directed to <a href="mailto:hello@papertrailacademic.com">hello@papertrailacademic.com</a>.</p>
+
     <p>For school and institutional inquiries — including DPA requests and compliance questions — see <a href="/for-schools">For Schools</a> or email <a href="mailto:hello@papertrailacademic.com?subject=Privacy Question">hello@papertrailacademic.com</a> with "Privacy Question" in the subject line.</p>
   </div>
 
