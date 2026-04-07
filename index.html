@@ -79,25 +79,22 @@ nav{position:sticky;top:0;z-index:200;background:rgba(255,255,255,.96);backdrop-
 .dd-divider{height:1px;background:var(--rule);margin:4px 0}
 
 /* ─── Hero ────────────────────────────────────────────────────── */
-.hero{background:linear-gradient(155deg,#f0f5fc 0%,#fff 50%,#fdf8ee 100%);padding:64px 0 56px}
-.hero-inner{max-width:1140px;margin:0 auto;padding:0 28px;display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
-.hero-text{}
-.hero h1{font-family:'Lora',serif;font-size:clamp(26px,3vw,42px);font-weight:700;line-height:1.18;color:var(--ink);margin-bottom:18px}
+.hero{background:linear-gradient(155deg,#f0f5fc 0%,#fff 50%,#fdf8ee 100%);padding:72px 0 60px}
+.hero-inner{max-width:1140px;margin:0 auto;padding:0 28px}
+.hero h1{font-family:'Lora',serif;font-size:clamp(28px,3.5vw,44px);font-weight:700;line-height:1.18;color:var(--ink);margin-bottom:18px}
 .hero h1 em{color:var(--blue)}
-.hero-sub{font-size:15.5px;color:var(--ink-2);line-height:1.65;margin-bottom:28px}
+.hero-sub{font-size:16.5px;color:var(--ink-2);line-height:1.65;margin-bottom:28px;max-width:480px}
 .hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:24px}
-.hero-trust{display:flex;flex-wrap:wrap;gap:12px}
-.hero-trust span{font-size:11.5px;color:var(--ink-3);display:flex;align-items:center;gap:5px}
+.hero-trust{display:flex;flex-wrap:wrap;gap:14px}
+.hero-trust span{font-size:12px;color:var(--ink-3);display:flex;align-items:center;gap:5px}
 .hero-trust span::before{content:'✓';color:var(--green);font-weight:700;font-size:11px}
-.hero-cards-row{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.hero-cards-row{max-width:1140px;margin:28px auto 0;padding:0 28px;display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
 .hero-preview-card{background:#fff;border:1.5px solid var(--rule);border-left:4px solid var(--gold);border-radius:12px;padding:13px 15px;display:flex;align-items:flex-start;gap:11px;box-shadow:var(--shadow);cursor:pointer;transition:box-shadow .2s ease, transform .2s ease, border-color .2s ease;text-decoration:none;color:inherit}
 .hero-preview-card:hover{box-shadow:var(--shadow-lg);transform:translateX(3px);border-left-color:var(--gold-dk)}
 .hpc-icon{font-size:22px;flex-shrink:0;margin-top:2px}
 .hpc-title{font-size:13px;font-weight:700;color:var(--ink);margin-bottom:6px}
-.hpc-desc{font-size:11.5px;color:var(--ink-3);margin-bottom:5px}
-.hpc-bullets{list-style:none;display:flex;flex-direction:column;gap:3px;margin-top:5px}
-.hpc-bullets li{font-size:11px;color:var(--ink-3);display:flex;align-items:flex-start;gap:5px;line-height:1.3}
-.hpc-bullets li::before{content:'·';color:var(--gold);font-weight:700;flex-shrink:0;font-size:14px;line-height:1.1}
+.hpc-hook{font-size:12px;color:var(--ink-2);line-height:1.5;margin:5px 0 8px}
+.hpc-link{font-size:11.5px;font-weight:600;text-decoration:none;display:inline-block}
 
 /* ─── Tagline ─────────────────────────────────────────────────── */
 .tagline-strip{background:var(--blue);padding:20px 28px;text-align:center}
@@ -124,19 +121,22 @@ nav{position:sticky;top:0;z-index:200;background:rgba(255,255,255,.96);backdrop-
   position:relative;z-index:1;
 }
 .pcard:hover:not(.is-open):not(.is-bg){box-shadow:var(--shadow-lg);transform:translateY(-4px)}
-.pcard-stripe{height:5px}
-.stripe-blue{background:var(--blue)}
-.stripe-gold{background:var(--gold)}
-.stripe-teal{background:var(--teal)}
-.stripe-purple{background:var(--purple)}
-.pcard-top{padding:22px 20px 16px}
-.pcard-badge{display:inline-flex;align-items:center;gap:6px;font-size:10px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;padding:3px 10px;border-radius:20px}
-.badge-blue{background:var(--blue-lt);color:var(--blue)}
-.badge-gold{background:var(--gold-lt);color:var(--gold-dk)}
-.badge-teal{background:var(--teal-lt);color:var(--teal)}
-.badge-purple{background:var(--purple-lt);color:var(--purple)}
-.badge-free{background:#e8f5e9;color:#2e7d32}
-.pcard h3{font-family:'Lora',serif;font-size:20px;font-weight:700;color:var(--ink);margin-bottom:5px;line-height:1.2}
+/* ── Card header banner (replaces thin stripe) ── */
+.pcard-banner{padding:14px 18px 12px;display:flex;align-items:center;justify-content:space-between;gap:8px}
+.pcard-banner-left{display:flex;align-items:center;gap:9px}
+.pcard-banner-icon{font-size:20px;line-height:1}
+.pcard-banner-name{font-family:'Lora',serif;font-size:20px;font-weight:700;color:#fff;line-height:1.1}
+.pcard-banner-pill{font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;padding:3px 10px;border-radius:20px;white-space:nowrap;flex-shrink:0}
+.banner-blue{background:var(--blue)}
+.banner-gold{background:var(--gold)}
+.banner-teal{background:var(--teal)}
+.banner-purple{background:var(--purple)}
+.pill-free{background:rgba(255,255,255,.22);color:#fff}
+.pill-sub{background:rgba(255,255,255,.22);color:#fff}
+.pill-credits{background:rgba(255,255,255,.22);color:#fff}
+.pill-webapp{background:rgba(255,255,255,.22);color:#fff}
+.pcard-top{padding:14px 18px 14px}
+.pcard h3{font-family:'Lora',serif;font-size:15px;font-weight:400;color:var(--ink-2);margin-bottom:5px;line-height:1.3;font-style:italic}
 .card-tagline{font-size:12px;font-style:italic;color:var(--ink-3);margin-bottom:10px}
 .card-desc{font-size:13px;color:var(--ink-2);line-height:1.55}
 .pcard-features{padding:0 20px 16px}
@@ -375,7 +375,6 @@ footer{background:var(--ink);padding:42px 0 0}
   .cards-row{grid-template-columns:repeat(2,1fr)}
 }
 @media(max-width:960px){
-  .hero-inner{grid-template-columns:1fr}
   .hero-cards-row{grid-template-columns:1fr 1fr}
   .cards-row{grid-template-columns:1fr}
   .price-cols{grid-template-columns:1fr}
@@ -385,7 +384,6 @@ footer{background:var(--ink);padding:42px 0 0}
   .trust-badges{grid-template-columns:repeat(2,1fr)}
 }
 @media(max-width:640px){
-  .hero-inner{gap:32px}
   .hero-cards-row{grid-template-columns:1fr}
   .nav-inner .nl:not(.cta){display:none}
   .ftr-inner{grid-template-columns:1fr}
@@ -443,7 +441,7 @@ footer{background:var(--ink);padding:42px 0 0}
 <!-- ═══ HERO ════════════════════════════════════════════════════════ -->
 <section class="hero">
   <div class="hero-inner">
-    <div class="hero-text">
+    <div style="max-width:680px">
       <p class="eyebrow">PaperTrail&trade; Academic</p>
       <h1>You've read thousands of student essays.<br><em>Trust that instinct — then document it.</em></h1>
       <p class="hero-sub">Four tools that give teachers structured, repeatable, documentable insight into how student writing was produced — from process monitoring in the classroom to deep post-submission analysis. The evidence speaks clearly. The judgment stays yours.</p>
@@ -459,69 +457,45 @@ footer{background:var(--ink);padding:42px 0 0}
         <span>Built by a teacher</span>
       </div>
     </div>
-    <div class="hero-cards-row">
+  </div>
+  <div class="hero-cards-row">
 
       <div class="hero-preview-card" onclick="heroOpenCard('inspect')" role="button" tabindex="0" aria-label="Learn more about Inspect" style="border-left-color:var(--blue)">
         <div class="hpc-icon">✏️</div>
         <div style="flex:1">
-          <div class="hpc-title">Inspect &nbsp;<span style="color:var(--green);font-weight:700;font-size:11.5px">Free</span></div>
-          <ul class="hpc-bullets">
-            <li>Full revision timeline — every edit laid out chronologically</li>
-            <li>Paste detection and paste log</li>
-            <li>Session history — date and time the student opened and worked on the document</li>
-            <li>Deep analytics — characters per minute, deletion ratio, and more</li>
-            <li>Revision playback — watch it being written</li>
-          </ul>
-          <div style="margin-top:8px"><a href="/inspect" onclick="event.stopPropagation()" style="font-size:11.5px;color:var(--blue);font-weight:600;text-decoration:none">Learn more →</a></div>
+          <div class="hpc-title">Inspect &nbsp;<span style="color:var(--green);font-weight:700;font-size:11px">Free</span></div>
+          <div class="hpc-hook">Reconstruct the full revision history of any Google Doc.</div>
+          <a href="/inspect" onclick="event.stopPropagation()" class="hpc-link" style="color:var(--blue)">Learn more →</a>
         </div>
       </div>
 
       <div class="hero-preview-card" onclick="heroOpenCard('stylematch')" role="button" tabindex="0" aria-label="Learn more about StyleMatch" style="border-left-color:var(--gold)">
         <div class="hpc-icon">🔍</div>
         <div style="flex:1">
-          <div class="hpc-title">StyleMatch&trade; &nbsp;<span style="color:var(--gold-dk);font-size:11.5px">$4.99/mo</span></div>
-          <div class="hpc-desc">Compares a controlled writing sample against submitted work across eight research-based stylometric metrics to assess authorship consistency.</div>
-          <ul class="hpc-bullets">
-            <li>Function words, punctuation fingerprint, sentence rhythm &amp; more</li>
-            <li>Struggle moments visible on the revision timeline</li>
-            <li>Divergence ratings: Similar / Notable / Divergent per metric</li>
-            <li>Printable report — all analysis stays in your browser</li>
-          </ul>
-          <div style="margin-top:8px"><a href="/stylematch" onclick="event.stopPropagation()" style="font-size:11.5px;color:var(--gold-dk);font-weight:600;text-decoration:none">Learn more →</a></div>
+          <div class="hpc-title">StyleMatch&trade; &nbsp;<span style="color:var(--gold-dk);font-size:11px">$4.99/mo</span></div>
+          <div class="hpc-hook">Eight-metric authorship analysis — entirely in your browser.</div>
+          <a href="/stylematch" onclick="event.stopPropagation()" class="hpc-link" style="color:var(--gold-dk)">Learn more →</a>
         </div>
       </div>
 
       <div class="hero-preview-card" onclick="heroOpenCard('verify')" role="button" tabindex="0" aria-label="Learn more about Verify" style="border-left-color:var(--teal)">
         <div class="hpc-icon">🔬</div>
         <div style="flex:1">
-          <div class="hpc-title">Verify &nbsp;<span style="color:var(--teal);font-size:11.5px">From $0.60/report</span></div>
-          <div class="hpc-desc">AI-assisted deep analysis — checks internal consistency within one essay, or compares it against a controlled sample across ten dimensions.</div>
-          <ul class="hpc-bullets">
-            <li>Consistency Report: chunks essay into segments, scores 6 dimensions each</li>
-            <li>Baseline Deviation Report: 10-dimension comparison vs. controlled sample</li>
-            <li>Suggests follow-up questions and next steps for the student conversation</li>
-            <li>No text retained — credits never expire</li>
-          </ul>
-          <div style="margin-top:8px"><a href="/verify" onclick="event.stopPropagation()" style="font-size:11.5px;color:var(--teal);font-weight:600;text-decoration:none">Learn more →</a></div>
+          <div class="hpc-title">Verify &nbsp;<span style="color:var(--teal);font-size:11px">From $0.60</span></div>
+          <div class="hpc-hook">AI-assisted deep consistency analysis. Two report types.</div>
+          <a href="/verify" onclick="event.stopPropagation()" class="hpc-link" style="color:var(--teal)">Learn more →</a>
         </div>
       </div>
 
-      <div class="hero-preview-card" onclick="heroOpenCard('write')" role="button" tabindex="0" aria-label="Learn more about Write">
+      <div class="hero-preview-card" onclick="heroOpenCard('write')" role="button" tabindex="0" aria-label="Learn more about Write" style="border-left-color:var(--purple)">
         <div class="hpc-icon">🖊️</div>
         <div style="flex:1">
-          <div class="hpc-title">Write &nbsp;<span style="color:var(--purple);font-size:11px">From $49/yr</span></div>
-          <div class="hpc-desc">Timed in-class writing sessions — students write, teachers get a full process log on submission.</div>
-          <ul class="hpc-bullets">
-            <li>Paste detection &amp; focus-loss events</li>
-            <li>Join-code access — no student account</li>
-            <li>Student transparency screen</li>
-            <li>Session reports with behavioral timeline</li>
-          </ul>
-          <div style="margin-top:7px"><a href="/write" onclick="event.stopPropagation()" style="font-size:11px;color:var(--purple);font-weight:600;text-decoration:none">Learn more →</a></div>
+          <div class="hpc-title">Write &nbsp;<span style="color:var(--purple);font-size:11px">$49/yr</span></div>
+          <div class="hpc-hook">Timed in-class writing sessions with a full process log.</div>
+          <a href="/write" onclick="event.stopPropagation()" class="hpc-link" style="color:var(--purple)">Learn more →</a>
         </div>
       </div>
 
-    </div>
   </div>
 </section>
 
@@ -547,14 +521,15 @@ footer{background:var(--ink);padding:42px 0 0}
       <!-- ══ INSPECT ══ -->
       <div class="pcard" id="card-inspect" onclick="openCard('inspect',event)">
         <button class="card-close" onclick="closeCard(event)">✕</button>
-        <div class="pcard-stripe stripe-blue"></div>
-        <div class="pcard-top">
-          <div style="display:flex;gap:7px;flex-wrap:wrap;margin-bottom:11px">
-            <span class="pcard-badge badge-blue">✏️ Inspect</span>
-            <span class="pcard-badge badge-free">Free</span>
+        <div class="pcard-banner banner-blue">
+          <div class="pcard-banner-left">
+            <span class="pcard-banner-icon">✏️</span>
+            <span class="pcard-banner-name">Inspect</span>
           </div>
-          <h3>How was it written?</h3>
-          <p class="card-tagline">"Something about this essay doesn't add up."</p>
+          <span class="pcard-banner-pill pill-free">Free</span>
+        </div>
+        <div class="pcard-top">
+          <h3>"Something about this essay doesn't add up."</h3>
           <p class="card-desc">Reconstruct the full revision history of any Google Doc — every session, paste, and pause — into a clear, documentable timeline.</p>
         </div>
         <div class="pcard-features">
@@ -668,14 +643,15 @@ footer{background:var(--ink);padding:42px 0 0}
       <!-- ══ STYLEMATCH ══ -->
       <div class="pcard" id="card-stylematch" onclick="openCard('stylematch',event)">
         <button class="card-close" onclick="closeCard(event)">✕</button>
-        <div class="pcard-stripe stripe-gold"></div>
-        <div class="pcard-top">
-          <div style="display:flex;gap:7px;flex-wrap:wrap;margin-bottom:11px">
-            <span class="pcard-badge badge-gold">🔍 StyleMatch&trade;</span>
-            <span class="pcard-badge" style="background:#f3e8ff;color:#6d28d9">Subscription</span>
+        <div class="pcard-banner banner-gold">
+          <div class="pcard-banner-left">
+            <span class="pcard-banner-icon">🔍</span>
+            <span class="pcard-banner-name">StyleMatch™</span>
           </div>
-          <h3>Does the writing match?</h3>
-          <p class="card-tagline">"This doesn't sound like them."</p>
+          <span class="pcard-banner-pill pill-sub">$4.99/mo</span>
+        </div>
+        <div class="pcard-top">
+          <h3>"This doesn't sound like them."</h3>
           <p class="card-desc">Compare a controlled writing sample against submitted work using eight research-based stylometric metrics — all computed locally in your browser. No text is ever transmitted.</p>
         </div>
         <div class="pcard-features">
@@ -749,14 +725,15 @@ footer{background:var(--ink);padding:42px 0 0}
       <!-- ══ VERIFY ══ -->
       <div class="pcard" id="card-verify" onclick="openCard('verify',event)">
         <button class="card-close" onclick="closeCard(event)">✕</button>
-        <div class="pcard-stripe stripe-teal"></div>
-        <div class="pcard-top">
-          <div style="display:flex;gap:7px;flex-wrap:wrap;margin-bottom:11px">
-            <span class="pcard-badge badge-teal">🔬 Verify</span>
-            <span class="pcard-badge" style="background:#e8f4f1;color:var(--teal)">Two report types</span>
+        <div class="pcard-banner banner-teal">
+          <div class="pcard-banner-left">
+            <span class="pcard-banner-icon">🔬</span>
+            <span class="pcard-banner-name">Verify</span>
           </div>
-          <h3>How consistent is the writing?</h3>
-          <p class="card-tagline">"I want to be thorough before I have this conversation."</p>
+          <span class="pcard-banner-pill pill-credits">From $0.60/report</span>
+        </div>
+        <div class="pcard-top">
+          <h3>"I want to be thorough before I have this conversation."</h3>
           <p class="card-desc">AI-assisted deep stylometric analysis — examine internal consistency within a single essay, or compare it against a controlled writing sample across ten research-grounded dimensions.</p>
         </div>
         <div class="pcard-features">
@@ -846,14 +823,15 @@ footer{background:var(--ink);padding:42px 0 0}
       <!-- ══ WRITE ══ -->
       <div class="pcard" id="card-write" onclick="openCard('write',event)">
         <button class="card-close" onclick="closeCard(event)">✕</button>
-        <div class="pcard-stripe stripe-purple"></div>
-        <div class="pcard-top">
-          <div style="display:flex;gap:7px;flex-wrap:wrap;margin-bottom:11px">
-            <span class="pcard-badge badge-purple">🖊️ Write</span>
-            <span class="pcard-badge" style="background:#ede9f6;color:var(--purple)">Web App</span>
+        <div class="pcard-banner banner-purple">
+          <div class="pcard-banner-left">
+            <span class="pcard-banner-icon">🖊️</span>
+            <span class="pcard-banner-name">Write</span>
           </div>
-          <h3>Show your work.</h3>
-          <p class="card-tagline">"I want to see how they actually write."</p>
+          <span class="pcard-banner-pill pill-webapp">$49/yr · Web App</span>
+        </div>
+        <div class="pcard-top">
+          <h3>"I want to see how they actually write."</h3>
           <p class="card-desc">A focused, timed writing environment for in-class assignments. Students write; the session records the process. Teachers see a full behavioral log on submission.</p>
         </div>
         <div class="pcard-features">
