@@ -137,17 +137,16 @@
 
   <div class="success-icon">✓</div>
 
-  <h1>You're confirmed.</h1>
+  <h1 id="card-title">You're confirmed.</h1>
+  <p id="card-body">Your PaperTrail Academic account is active. Thank you for joining — we built this for teachers like you.</p>
 
-  <p>Your PaperTrail Academic account is active. Thank you for joining — we built this for teachers like you.</p>
-
-  <div class="actions">
+  <div class="actions" id="card-actions">
     <a href="javascript:void(0)" onclick="window.close()" class="btn btn-primary">← Back to my document</a>
     <a href="https://papertrailacademic.com" class="btn btn-secondary">Go to PaperTrail Academic</a>
   </div>
 
   <div class="footer-note">
-    Questions? <a href="mailto:support@papertrailacademic.com">support@papertrailacademic.com</a>
+    Questions? <a href="mailto:hello@papertrailacademic.com">hello@papertrailacademic.com</a>
   </div>
 
 </div>
@@ -166,7 +165,17 @@
     const expiresAt    = params.get('expires_at');
     const type         = params.get('type');
 
-    if (!accessToken || (type !== 'signup' && type !== 'email_change')) {
+    // Handle magiclink: update messaging for website purchasers
+    if (type === 'magiclink') {
+      document.getElementById('card-title').textContent = 'You\'re signed in.';
+      document.getElementById('card-body').textContent  = 'Your purchase is ready. Install the Chrome extension, open it on any Google Doc, and your subscription or credits will be waiting.';
+      document.getElementById('card-actions').innerHTML =
+        '<a href="https://chromewebstore.google.com/detail/papertrail/kgkjmhfoijiiplbmablcjbooopndjbgm" target="_blank" class="btn btn-primary">⬇ Install the Chrome Extension</a>' +
+        '<a href="https://papertrailacademic.com" class="btn btn-secondary">Go to PaperTrail Academic</a>';
+    }
+
+    // Bail if no token or unrecognised type
+    if (!accessToken || (type !== 'signup' && type !== 'email_change' && type !== 'magiclink')) {
       return;
     }
 
@@ -179,19 +188,14 @@
           'Authorization': 'Bearer ' + accessToken
         }
       });
-      if (!res.ok) {
-      return;
-      }
+      if (!res.ok) { return; }
       user = await res.json();
     } catch (e) {
       return;
     }
 
-    // Check chrome availability
-
-    if (typeof chrome === 'undefined' || !chrome.runtime) {
-      return;
-    }
+    // Send session to extension if available
+    if (typeof chrome === 'undefined' || !chrome.runtime) { return; }
 
     try {
       chrome.runtime.sendMessage(
@@ -208,11 +212,9 @@
             email: user.email
           }
         },
-        function (response) {
-        }
+        function (response) {}
       );
-    } catch (e) {
-    }
+    } catch (e) {}
   }
 
   tryAutoSignIn();
