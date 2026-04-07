@@ -80,7 +80,7 @@ nav{position:sticky;top:0;z-index:200;background:rgba(255,255,255,.96);backdrop-
 
 /* ─── Hero ────────────────────────────────────────────────────── */
 .hero{background:linear-gradient(155deg,#f0f5fc 0%,#fff 50%,#fdf8ee 100%);padding:72px 0 60px}
-.hero-inner{max-width:1140px;margin:0 auto;padding:0 28px}
+.hero-inner{max-width:1140px;margin:0 auto;padding:0 28px;display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
 .hero h1{font-family:'Lora',serif;font-size:clamp(28px,3.5vw,44px);font-weight:700;line-height:1.18;color:var(--ink);margin-bottom:18px}
 .hero h1 em{color:var(--blue)}
 .hero-sub{font-size:16.5px;color:var(--ink-2);line-height:1.65;margin-bottom:28px;max-width:480px}
@@ -88,7 +88,7 @@ nav{position:sticky;top:0;z-index:200;background:rgba(255,255,255,.96);backdrop-
 .hero-trust{display:flex;flex-wrap:wrap;gap:14px}
 .hero-trust span{font-size:12px;color:var(--ink-3);display:flex;align-items:center;gap:5px}
 .hero-trust span::before{content:'✓';color:var(--green);font-weight:700;font-size:11px}
-.hero-cards-row{max-width:1140px;margin:28px auto 0;padding:0 28px;display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.hero-cards-row{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
 .hero-preview-card{background:#fff;border:1.5px solid var(--rule);border-left:4px solid var(--gold);border-radius:12px;padding:13px 15px;display:flex;align-items:flex-start;gap:11px;box-shadow:var(--shadow);cursor:pointer;transition:box-shadow .2s ease, transform .2s ease, border-color .2s ease;text-decoration:none;color:inherit}
 .hero-preview-card:hover{box-shadow:var(--shadow-lg);transform:translateX(3px);border-left-color:var(--gold-dk)}
 .hpc-icon{font-size:22px;flex-shrink:0;margin-top:2px}
@@ -441,7 +441,7 @@ footer{background:var(--ink);padding:42px 0 0}
 <!-- ═══ HERO ════════════════════════════════════════════════════════ -->
 <section class="hero">
   <div class="hero-inner">
-    <div style="max-width:680px">
+    <div class="hero-text">
       <p class="eyebrow">PaperTrail&trade; Academic</p>
       <h1>You've read thousands of student essays.<br><em>Trust that instinct — then document it.</em></h1>
       <p class="hero-sub">Four tools that give teachers structured, repeatable, documentable insight into how student writing was produced — from process monitoring in the classroom to deep post-submission analysis. The evidence speaks clearly. The judgment stays yours.</p>
@@ -457,8 +457,7 @@ footer{background:var(--ink);padding:42px 0 0}
         <span>Built by a teacher</span>
       </div>
     </div>
-  </div>
-  <div class="hero-cards-row">
+    <div class="hero-cards-row">
 
       <div class="hero-preview-card" onclick="heroOpenCard('inspect')" role="button" tabindex="0" aria-label="Learn more about Inspect" style="border-left-color:var(--blue)">
         <div class="hpc-icon">✏️</div>
