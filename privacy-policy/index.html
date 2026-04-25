@@ -106,7 +106,7 @@
         <div class="nav-dd-inner">
           <a href="/inspect" class="dd-item">
             <span class="dd-icon">✏️</span>
-            <span><span class="dd-label">Inspect <span style="color:var(--green);font-size:10px;font-weight:700">Free</span></span><span class="dd-sub">Revision history, paste detection, playback</span></span>
+            <span><span class="dd-label">Inspect <span style="color:var(--green);font-size:10px;font-weight:700">Free</span></span><span class="dd-sub">Revision history, paste detection, playback, Process View</span></span>
           </a>
           <div class="dd-divider"></div>
           <a href="/stylematch" class="dd-item">
@@ -141,14 +141,14 @@
       Privacy Policy
     </div>
     <h1>Privacy Policy</h1>
-    <div class="meta">Last updated: March 2026</div>
+    <div class="meta">Last updated: April 2026</div>
   </div>
 </div>
 
 <div class="doc-wrap">
 
   <div class="lead-note">
-    <strong>The short version:</strong> Inspect requires no account and transmits nothing — everything runs locally in your browser. StyleMatch and Verify require an account (name and email), but all StyleMatch analysis stays on your device and is never transmitted. Verify transmits essay text to generate a report but does not retain it. PaperTrail Write holds session data transiently and purges it after the teacher downloads their report. No advertising. No analytics. No selling of data.
+    <strong>The short version:</strong> Inspect requires no account and transmits nothing — everything, including the Process View report, runs locally in your browser. StyleMatch requires an account (name and email), but all StyleMatch analysis stays on your device and is never transmitted. Verify (Submitted and Compare reports) requires an account and transmits essay text to generate a report but does not retain it. PaperTrail Write holds session data transiently and purges it after the teacher downloads their report. No advertising. No analytics. No selling of data.
   </div>
 
   <!-- ═══════════════════════════════════════════════
@@ -157,19 +157,19 @@
   <div class="doc-section" id="data-collected">
     <h2>Information We Collect</h2>
 
-    <p><strong>Account registration data</strong> — When you create a PaperTrail Academic account to use StyleMatch or Verify, we collect your name and email address. This information is stored in our secure database (Supabase, hosted on AWS infrastructure). No account is required to use Inspect.</p>
+    <p><strong>Account registration data</strong> — When you create a PaperTrail Academic account to use StyleMatch or Verify, we collect your name and email address. This information is stored in our secure database (Supabase, hosted on AWS infrastructure). No account is required to use Inspect (which includes Process View).</p>
 
     <p><strong>Google Sign-In data</strong> — If you choose to sign in with Google, we receive your name and email address via Google's OAuth 2.0 flow. We do not receive your Google password, and we do not request access to Google Drive, Gmail, or any other Google service beyond basic profile information.</p>
 
     <p><strong>Subscription and billing data</strong> — If you purchase a StyleMatch subscription or Verify credits, payment is handled entirely by Lemon Squeezy (our payment processor and merchant of record). PaperTrail Academic does not receive or store your credit card number or payment details. When a purchase is completed, our payment processor notifies PaperTrail Academic's backend via a secure webhook. PaperTrail Academic then updates your account's subscription status and Verify report credit balance in order to unlock the appropriate features. No payment or financial details are included in this notification.</p>
 
-    <p><strong>Verify report metadata</strong> — When you run a Verify report, we store the report output (scores, dimension ratings, timestamps, and any label you assigned). The full essay text used to generate the report is not retained after generation.</p>
+    <p><strong>Verify report metadata</strong> — When you run a Verify Submitted or Verify Compare report, we store the report output (scores, dimension ratings, timestamps, and any label you assigned). The full essay text used to generate the report is not retained after generation. Process View reports are generated entirely client-side and are not stored on our servers.</p>
 
     <p><strong>Local browser storage</strong> — The Chrome extension stores session data locally on your device using Chrome's built-in storage APIs (<code>chrome.storage.local</code>). This includes your login session, cached account state, and revision data for the current document. Document content and revision data never leave your device except as described in the sections below. Login session and account state are transmitted to PaperTrail Academic's backend only as necessary to authenticate you and check your subscription status. This data is cleared when you sign out or when the browser session ends.</p>
 
-    <p><strong>Revision history data</strong> — PaperTrail reads document revision history from Google Docs using Google's built-in revision API — the same data that powers native revision history in Google Docs. This data (document content at various points in time, edit timestamps, and anonymised author identifiers) is accessed and processed entirely within your browser. It is not transmitted to PaperTrail Academic's servers.</p>
+    <p><strong>Revision history data</strong> — PaperTrail reads document revision history from Google Docs using Google's built-in revision API — the same data that powers native revision history in Google Docs. This data (document content at various points in time, edit timestamps, and anonymised author identifiers) is accessed and processed entirely within your browser. It is not transmitted to PaperTrail Academic's servers. Process View, Inspect, and StyleMatch all operate on this data locally; no part of it is transmitted.</p>
 
-    <p><strong>Verify essay text</strong> — When you run a Verify report, the essay text is transmitted over an encrypted connection (HTTPS) to PaperTrail Academic's secure backend for processing. See the Verify section below for full details.</p>
+    <p><strong>Verify essay text</strong> — When you run a Verify Submitted or Verify Compare report, the essay text is transmitted over an encrypted connection (HTTPS) to PaperTrail Academic's secure backend for processing. See the Verify section below for full details. Process View does not transmit any text or data.</p>
 
     <p><strong>What we do not collect</strong> — PaperTrail does not collect usage analytics, browsing history, keystroke data, or any information beyond what is described above. No telemetry is sent from the extension.</p>
   </div>
@@ -184,9 +184,9 @@
 
     <p><strong>Subscription and billing status</strong> — Used to determine which features are available to your account (StyleMatch access, Verify report credit balance) and to process subscription renewals via Lemon Squeezy.</p>
 
-    <p><strong>Verify report metadata</strong> — Stored to allow you to retrieve past reports within the extension. Not used for any purpose other than displaying results to you.</p>
+    <p><strong>Verify report metadata</strong> — Stored to allow you to retrieve past reports within the extension. Not used for any purpose other than displaying results to you. Applies only to Verify Submitted and Verify Compare reports; Process View generates no server-side metadata.</p>
 
-    <p><strong>Verify essay text (in transit)</strong> — Transmitted to PaperTrail Academic's backend and forwarded to the Anthropic API for AI-assisted analysis. Not retained by PaperTrail Academic after the report is generated. Not used for any purpose other than generating the report you requested.</p>
+    <p><strong>Verify essay text (in transit)</strong> — Transmitted to PaperTrail Academic's backend and forwarded to the Anthropic API for AI-assisted analysis. Not retained by PaperTrail Academic after the report is generated. Not used for any purpose other than generating the report you requested. Applies only to Verify Submitted and Verify Compare reports.</p>
   </div>
 
   <!-- ═══════════════════════════════════════════════
@@ -199,7 +199,7 @@
 
     <p><strong>Supabase</strong> — Our database and backend infrastructure provider (supabase.com). Account data (name, email, subscription status, Verify report credit balance) and Verify report metadata are stored on Supabase servers, which run on AWS infrastructure. Supabase processes this data solely to provide database and authentication services to PaperTrail Academic. See <a href="https://supabase.com/privacy" target="_blank" rel="noopener">supabase.com/privacy</a>.</p>
 
-    <p><strong>Anthropic</strong> — When you run a Verify report, essay text is forwarded to the Anthropic API for AI-assisted analysis. Anthropic processes submitted text under its commercial API terms, which prohibit using API inputs to train AI models. Anthropic retains API inputs for a limited period before automatic deletion. See <a href="https://www.anthropic.com/privacy" target="_blank" rel="noopener">anthropic.com/privacy</a> for their current retention policy.</p>
+    <p><strong>Anthropic</strong> — When you run a Verify Submitted or Verify Compare report, essay text is forwarded to the Anthropic API for AI-assisted analysis. Anthropic processes submitted text under its commercial API terms, which prohibit using API inputs to train AI models. Anthropic retains API inputs for a limited period before automatic deletion. See <a href="https://www.anthropic.com/privacy" target="_blank" rel="noopener">anthropic.com/privacy</a> for their current retention policy. Process View does not interact with Anthropic.</p>
 
     <p><strong>Lemon Squeezy</strong> — Our payment processor and merchant of record (lemonsqueezy.com). All payment transactions are handled directly by Lemon Squeezy. PaperTrail Academic receives only subscription status and Verify report credit balance updates via webhook. Lemon Squeezy is the legal seller of record for all purchases. See <a href="https://www.lemonsqueezy.com/privacy" target="_blank" rel="noopener">lemonsqueezy.com/privacy</a>.</p>
 
@@ -216,7 +216,11 @@
   <div class="doc-section" id="products">
     <h2>Product-by-Product Data Practices</h2>
 
-    <p><strong>✏️ Inspect</strong> — No account required. No data transmitted. Revision history is read from Google Docs and processed entirely within your browser. Nothing is stored on PaperTrail Academic's servers.</p>
+    <p><strong>✏️ Inspect</strong> — No account required. No data transmitted. Revision history is read from Google Docs and processed entirely within your browser. Nothing is stored on PaperTrail Academic's servers. Inspect includes the <strong>📊 Process View</strong> report — a printable, observational summary of how a document was assembled (sessions, paste activity, struggle moments, and research-cited writing-process metrics). Process View runs entirely client-side: no document text is transmitted, no AI is involved, and no data is sent to any server. The form fields on the printed report (Student, Assignment, Course, Teacher) are filled in by the teacher in the browser before printing and are never transmitted to PaperTrail Academic.</p>
+
+    <div class="callout blue">
+      <p><strong>Inspect and Process View transmit nothing.</strong> All revision data, paste analysis, struggle-moment detection, writing-process metrics, and report rendering happen inside your browser. There is no server-side component to any Inspect feature.</p>
+    </div>
 
     <p><strong>🔍 StyleMatch™</strong> — Requires an account. All stylometric analysis is performed locally on your device using JavaScript. The text you paste into the StyleMatch panel is never transmitted to PaperTrail Academic or any third party — this is a design choice, not just a policy. Once you close the sidebar or navigate away, the text is cleared from memory.</p>
 
@@ -224,7 +228,7 @@
       <p><strong>StyleMatch text never leaves your browser.</strong> There is no server-side component to StyleMatch analysis.</p>
     </div>
 
-    <p><strong>🔬 Verify</strong> — Requires an account and Verify credits. Verify is the only Chrome extension tool that transmits essay text. When you run a Verify report, the submitted text is sent over HTTPS to PaperTrail Academic's secure backend, forwarded to the Anthropic API for analysis, and returned as a structured report saved to your account. The full essay text is not retained by PaperTrail Academic after the report is generated. Only report metadata (scores, ratings, timestamps, and any label you assigned) is stored. If your institution requires it, you should anonymize any student-identifying information before submitting text through Verify.</p>
+    <p><strong>🔬 Verify</strong> — Requires an account and Verify credits. Verify offers two report types: <strong>Verify Submitted</strong> (analyses a single document for internal consistency) and <strong>Verify Compare</strong> (compares the submitted work against a controlled writing sample). Verify is the only Chrome extension feature that transmits essay text. When you run a Verify report, the submitted text is sent over HTTPS to PaperTrail Academic's secure backend, forwarded to the Anthropic API for analysis, and returned as a structured report saved to your account. The full essay text is not retained by PaperTrail Academic after the report is generated. Only report metadata (scores, ratings, timestamps, and any label you assigned) is stored. If your institution requires it, you should anonymize any student-identifying information before submitting text through Verify.</p>
   </div>
 
   <!-- ═══════════════════════════════════════════════
@@ -238,6 +242,8 @@
     <p><strong>Verify report metadata</strong> — Retained until you delete the report or delete your account.</p>
 
     <p><strong>Verify essay text</strong> — Not retained by PaperTrail Academic after report generation. Anthropic's retention period is governed by their own privacy policy.</p>
+
+    <p><strong>Process View reports</strong> — Not retained on PaperTrail Academic's servers at all. Reports are rendered in your browser and may be printed or saved as a PDF locally; nothing is sent to or stored on any server.</p>
 
     <p><strong>Local browser storage</strong> — Cleared when you sign out of the extension or uninstall it.</p>
   </div>
@@ -337,7 +343,7 @@
 
     <p>PaperTrail respects the access permissions that Google enforces on all documents. It can only read revision history that the logged-in teacher already has permission to view. It does not access any student data beyond what is visible in the document's standard revision history.</p>
 
-    <p>Because Inspect and StyleMatch process all data locally without transmission, they do not raise data governance concerns beyond those of Google Docs itself. For Verify, see above. For PaperTrail Write, see above.</p>
+    <p>Because Inspect (including Process View) and StyleMatch process all data locally without transmission, they do not raise data governance concerns beyond those of Google Docs itself. For Verify, see above. For PaperTrail Write, see above.</p>
 
     <p>Schools and IT coordinators with compliance questions should review our <a href="/for-schools">For Schools</a> page, which covers FERPA, PIPEDA, and GDPR considerations in plain language.</p>
   </div>
