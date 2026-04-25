@@ -391,6 +391,10 @@ footer{background:var(--ink);padding:42px 0 0}
   .exp-left{border-right:none;border-bottom:1px solid var(--rule)}
   .gdoc-page{display:none}
   .mock-sb{width:100%}
+  .signals-section [style*="grid-template-columns:repeat(3,1fr)"]{grid-template-columns:1fr !important;gap:14px !important}
+}
+@media(max-width:960px){
+  .signals-section [style*="grid-template-columns:repeat(3,1fr)"]{grid-template-columns:1fr 1fr !important}
 }
 </style>
 <script src="https://assets.lemonsqueezy.com/lemon.js" defer></script>
@@ -410,7 +414,7 @@ footer{background:var(--ink);padding:42px 0 0}
         <div class="nav-dd-inner">
           <a href="/inspect" class="dd-item">
             <span class="dd-icon">✏️</span>
-            <span><span class="dd-label">Inspect <span style="color:var(--green);font-size:10px;font-weight:700">Free</span></span><span class="dd-sub">Revision history, paste detection, playback</span></span>
+            <span><span class="dd-label">Inspect <span style="color:var(--green);font-size:10px;font-weight:700">Free</span></span><span class="dd-sub">Revision history, paste detection, playback, Process View</span></span>
           </a>
           <div class="dd-divider"></div>
           <a href="/stylematch" class="dd-item">
@@ -463,7 +467,7 @@ footer{background:var(--ink);padding:42px 0 0}
         <div class="hpc-icon">✏️</div>
         <div style="flex:1">
           <div class="hpc-title">Inspect &nbsp;<span style="color:var(--green);font-weight:700;font-size:11px">Free</span></div>
-          <div class="hpc-hook">Reconstruct the full revision history of any Google Doc.</div>
+          <div class="hpc-hook"><strong>How was this written?</strong> Sessions, pastes, struggle moments — and a printable Process View report.</div>
           <a href="/inspect" onclick="event.stopPropagation()" class="hpc-link" style="color:var(--blue)">Learn more →</a>
         </div>
       </div>
@@ -472,7 +476,7 @@ footer{background:var(--ink);padding:42px 0 0}
         <div class="hpc-icon">🔍</div>
         <div style="flex:1">
           <div class="hpc-title">StyleMatch&trade; &nbsp;<span style="color:var(--gold-dk);font-size:11px">$4.99/mo</span></div>
-          <div class="hpc-hook">Eight-metric authorship analysis — entirely in your browser.</div>
+          <div class="hpc-hook"><strong>Does this sound like them?</strong> Eight stylometric metrics compare submitted work to a known sample.</div>
           <a href="/stylematch" onclick="event.stopPropagation()" class="hpc-link" style="color:var(--gold-dk)">Learn more →</a>
         </div>
       </div>
@@ -481,7 +485,7 @@ footer{background:var(--ink);padding:42px 0 0}
         <div class="hpc-icon">🔬</div>
         <div style="flex:1">
           <div class="hpc-title">Verify &nbsp;<span style="color:var(--teal);font-size:11px">From $0.60</span></div>
-          <div class="hpc-hook">AI-assisted deep consistency analysis. Two report types.</div>
+          <div class="hpc-hook"><strong>Is the writing internally consistent?</strong> AI-assisted close reading. Two report types.</div>
           <a href="/verify" onclick="event.stopPropagation()" class="hpc-link" style="color:var(--teal)">Learn more →</a>
         </div>
       </div>
@@ -529,14 +533,15 @@ footer{background:var(--ink);padding:42px 0 0}
         </div>
         <div class="pcard-top">
           <h3>"Something about this essay doesn't add up."</h3>
-          <p class="card-desc">Reconstruct the full revision history of any Google Doc — every session, paste, and pause — into a clear, documentable timeline.</p>
+          <p class="card-desc">Reconstruct the full revision history of any Google Doc — every session, paste, and pause — into a clear, documentable timeline. Includes the printable Process View report you can hand to a department head.</p>
         </div>
         <div class="pcard-features">
           <ul>
-            <li>Full revision timeline &amp; paste log</li>
+            <li>Full revision timeline &amp; paste log with novelty scores</li>
             <li>Session history — when and how long they worked</li>
+            <li>⚡ Struggle moment detection — regions of heavy revision</li>
             <li>Revision playback — watch it being written</li>
-            <li>Deep analytics — chars per minute, deletion ratio &amp; more</li>
+            <li>📊 Process View — printable observational report (PDF)</li>
           </ul>
         </div>
         <div class="pcard-footer">
@@ -622,10 +627,11 @@ footer{background:var(--ink);padding:42px 0 0}
             <h4>Everything you need to understand a writing process</h4>
             <ul class="exp-features">
               <li>Full revision timeline — every edit laid out chronologically</li>
-              <li>Paste detection and paste log — flagged with timestamp and character count</li>
+              <li>Paste detection &amp; paste log — flagged with timestamp, character count, and novelty score</li>
               <li>Session history — date and time the student opened and worked on the document</li>
+              <li>⚡ Struggle moment detection — regions where the writer cycled through deletions and rewrites in the same place</li>
               <li>Revision playback — watch the document being written from the first character</li>
-              <li>Deep analytics — characters per minute, deletion ratio, revision density</li>
+              <li>📊 Process View report — a printable, observational PDF summarising sessions, paste activity, struggle moments, and five research-cited writing-process metrics. Form fields for student/assignment/course are filled in the browser before printing — no transmission.</li>
               <li>Activity flags — unusual patterns automatically surfaced</li>
             </ul>
             <div class="exp-price-row">
@@ -651,15 +657,15 @@ footer{background:var(--ink);padding:42px 0 0}
         </div>
         <div class="pcard-top">
           <h3>"This doesn't sound like them."</h3>
-          <p class="card-desc">Compare a controlled writing sample against submitted work using eight research-based stylometric metrics — all computed locally in your browser. No text is ever transmitted.</p>
+          <p class="card-desc">Inspect shows you <em>how</em> the document was written. StyleMatch answers a different question: <strong>does this writing sound like the same person?</strong> Compare a known sample (an in-class essay, a previous assignment) against the submitted work using eight research-based stylometric metrics. The only PaperTrail tool that compares two pieces of writing against each other.</p>
         </div>
         <div class="pcard-features">
           <ul>
-            <li>Eight research-based metrics including function words &amp; discourse markers</li>
-            <li>⚡ Struggle moment detection on the revision timeline</li>
-            <li>Paste novelty analysis — flags low-originality paste events</li>
+            <li>Eight stylometric metrics — function words, discourse markers, punctuation fingerprint, sentence rhythm, vocabulary, and more</li>
+            <li>Controlled-vs-submitted comparison — the structural feature Inspect cannot offer</li>
             <li>Divergence ratings per metric: Similar / Notable / Divergent</li>
-            <li>Printable PDF report with research citations</li>
+            <li>Printable PDF report with research citations and per-metric interpretation</li>
+            <li>Runs entirely in your browser — no text ever transmitted</li>
           </ul>
         </div>
         <div class="pcard-footer">
@@ -697,8 +703,9 @@ footer{background:var(--ink);padding:42px 0 0}
           </div>
           <div class="exp-right">
             <h4>Eight metrics. Research-backed. Entirely private.</h4>
+            <p style="font-size:13px;color:var(--ink-2);line-height:1.6;margin-bottom:12px"><strong>The question StyleMatch answers:</strong> does this submitted piece of writing carry the same stylistic fingerprint as a known sample by the same student? Inspect describes the writing process; StyleMatch compares two pieces of writing.</p>
             <ul class="exp-features">
-              <li><strong>Grammatical Function Words</strong> — Burrows' Delta over 30 core function words; among the most stable authorship signals</li>
+              <li><strong>Grammatical Function Words</strong> — Burrows' Delta over 30 core function words; among the most stable authorship signals in computational stylistics</li>
               <li><strong>Discourse Marker Profile</strong> — Burrows' Delta over 29 connectives &amp; stance markers; reflects reasoning habits</li>
               <li><strong>Punctuation Fingerprint</strong> — comma, semicolon, dash, colon, !, ? rates per 1,000 characters</li>
               <li><strong>Avg Sentence Length</strong> — characteristic length that persists across writing tasks</li>
@@ -706,8 +713,7 @@ footer{background:var(--ink);padding:42px 0 0}
               <li><strong>Type-Token Ratio</strong> — vocabulary range; interpreted cautiously across different text lengths</li>
               <li><strong>Flesch-Kincaid Grade Level</strong> — reading complexity; stable across tasks for the same writer</li>
               <li><strong>Informality Markers</strong> — contraction rate &amp; first-person pronoun rate</li>
-              <li>⚡ Struggle moment detection — regions of heavy revision on the timeline signalling genuine engagement</li>
-              <li>Paste novelty analysis — flags paste events with low originality relative to the document</li>
+              <li>Pairs naturally with Inspect's Process View report — together they answer <em>how was this written</em> and <em>does it sound like them</em></li>
               <li>All computation runs locally — no text ever transmitted</li>
               <li>Minimum 500 words per sample required</li>
             </ul>
@@ -939,6 +945,59 @@ footer{background:var(--ink);padding:42px 0 0}
   </div><!-- /cards-arena -->
 </section>
 
+<!-- ═══ THREE INDEPENDENT SIGNALS ════════════════════════════════════ -->
+<section class="signals-section" id="signals" style="background:linear-gradient(180deg,var(--bg) 0%,#fff 100%);padding:60px 0 40px;border-top:1px solid var(--rule)">
+  <div class="container">
+    <div style="max-width:780px;margin:0 auto;text-align:center;margin-bottom:36px">
+      <p class="eyebrow" style="color:var(--ink-3)">An evidence base, not a verdict</p>
+      <h2 style="font-family:'Lora',serif;font-size:clamp(24px,2.8vw,32px);font-weight:700;color:var(--ink);margin-bottom:14px;line-height:1.25">Three independent signals. <em style="color:var(--ink-2);font-style:italic;font-weight:600">Together, an honest evidence base.</em></h2>
+      <p style="font-size:15px;color:var(--ink-2);line-height:1.65">No single tool can determine whether work is authentic. PaperTrail is built around the idea that defensible educator judgment comes from <strong>multiple independent sources of evidence</strong> — each answering a different question.</p>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:18px;max-width:1080px;margin:0 auto">
+
+      <!-- Signal 1: Process View -->
+      <div style="background:#fff;border:1.5px solid var(--rule);border-radius:12px;padding:22px 22px 20px;border-top:4px solid var(--blue);display:flex;flex-direction:column;gap:10px">
+        <div style="display:flex;align-items:center;gap:8px">
+          <span style="font-size:22px">📊</span>
+          <span style="font-size:11px;font-weight:700;color:var(--blue);text-transform:uppercase;letter-spacing:.06em">Process View</span>
+          <span style="font-size:10px;background:#d4edda;color:#155724;padding:2px 8px;border-radius:8px;font-weight:700;margin-left:auto">FREE</span>
+        </div>
+        <h3 style="font-family:'Lora',serif;font-size:17px;font-weight:700;color:var(--ink);line-height:1.3;margin:0">How was this written?</h3>
+        <p style="font-size:13px;color:var(--ink-2);line-height:1.55;margin:0">Sessions, paste activity, struggle moments, and writing-process metrics — a printable observational report on how the document was assembled. Free, runs entirely in your browser.</p>
+      </div>
+
+      <!-- Signal 2: StyleMatch -->
+      <div style="background:#fff;border:1.5px solid var(--rule);border-radius:12px;padding:22px 22px 20px;border-top:4px solid var(--gold);display:flex;flex-direction:column;gap:10px">
+        <div style="display:flex;align-items:center;gap:8px">
+          <span style="font-size:22px">🔍</span>
+          <span style="font-size:11px;font-weight:700;color:var(--gold-dk);text-transform:uppercase;letter-spacing:.06em">StyleMatch</span>
+        </div>
+        <h3 style="font-family:'Lora',serif;font-size:17px;font-weight:700;color:var(--ink);line-height:1.3;margin:0">Does this sound like them?</h3>
+        <p style="font-size:13px;color:var(--ink-2);line-height:1.55;margin:0">Eight stylometric metrics compare the submitted writing to a known sample by the same student. The only PaperTrail tool that compares two pieces of writing against each other.</p>
+      </div>
+
+      <!-- Signal 3: Outside source-matching -->
+      <div style="background:var(--bg);border:1.5px dashed var(--ink-3);border-radius:12px;padding:22px 22px 20px;display:flex;flex-direction:column;gap:10px">
+        <div style="display:flex;align-items:center;gap:8px">
+          <span style="font-size:22px">📑</span>
+          <span style="font-size:11px;font-weight:700;color:var(--ink-2);text-transform:uppercase;letter-spacing:.06em">Source matching</span>
+          <span style="font-size:10px;background:transparent;color:var(--ink-3);padding:2px 8px;border-radius:8px;font-weight:600;margin-left:auto;border:1px solid var(--rule)">External</span>
+        </div>
+        <h3 style="font-family:'Lora',serif;font-size:17px;font-weight:700;color:var(--ink);line-height:1.3;margin:0">Did the words come from somewhere?</h3>
+        <p style="font-size:13px;color:var(--ink-2);line-height:1.55;margin:0">Tools like Turnitin or your institution's source-matching service answer a question PaperTrail does not — surfacing matches against published sources, prior submissions, and AI-generated text.</p>
+      </div>
+
+    </div>
+
+    <div style="max-width:760px;margin:30px auto 0;padding:18px 22px;background:#f0f7f6;border:1px solid #2a7a6b30;border-radius:10px;text-align:center">
+      <p style="font-size:13.5px;color:var(--ink-2);line-height:1.65;margin:0">A document that is <strong>flagged by source-matching</strong>, <strong>shows stylistic divergence</strong> in StyleMatch, AND <strong>shows surface editing only</strong> in Process View is a different conversation than any of those signals alone. The evidence stack is what makes the conversation defensible.</p>
+    </div>
+
+    <p style="text-align:center;font-size:11.5px;color:var(--ink-3);margin-top:24px;font-style:italic">Verify (AI-assisted close reading) is a fourth signal available when the situation calls for deeper analysis — see below.</p>
+  </div>
+</section>
+
 <!-- ═══ PRICING ══════════════════════════════════════════════════════ -->
 <section class="pricing-row" id="pricing">
   <div class="container">
@@ -955,12 +1014,12 @@ footer{background:var(--ink);padding:42px 0 0}
         <div class="big-price"><span class="n" style="color:var(--green)">$0</span></div>
         <ul class="price-feats">
           <li>Full revision timeline</li>
-          <li>Paste detection and paste log</li>
+          <li>Paste detection &amp; paste log</li>
           <li>Session history</li>
-          <li>Deep analytics</li>
+          <li>⚡ Struggle moment detection</li>
+          <li>Paste novelty analysis</li>
           <li>Revision playback</li>
-          <li class="na">Struggle moment detection</li>
-          <li class="na">Paste novelty analysis</li>
+          <li>📊 Process View report (PDF)</li>
           <li class="na">StyleMatch authorship comparison</li>
           <li class="na">Verify deep analysis reports</li>
         </ul>
@@ -970,17 +1029,17 @@ footer{background:var(--ink);padding:42px 0 0}
       <div class="price-col featured">
         <span class="pcard-badge" style="align-self:flex-start;background:rgba(255,255,255,.18);color:#fff">🔍 StyleMatch</span>
         <h3>Subscription</h3>
-        <p class="price-sub-lbl">Authorship consistency analysis</p>
+        <p class="price-sub-lbl">Stylistic comparison — does it sound like them?</p>
         <div class="big-price"><span class="n">$4.99</span><span class="u">/month</span></div>
         <p class="price-alt">or $49.99/year — save 17%</p>
         <ul class="price-feats">
           <li>Everything in Inspect</li>
-          <li>⚡ Struggle moment detection</li>
-          <li>Paste novelty analysis</li>
-          <li>Eight research-based stylometric metrics</li>
-          <li>Controlled vs. submitted sample comparison</li>
+          <li>The 8-metric stylometric comparison engine</li>
+          <li>Controlled-vs-submitted authorship analysis</li>
+          <li>Function words, discourse markers, punctuation fingerprint, sentence rhythm + 4 more</li>
           <li>Divergence ratings per metric: Similar / Notable / Divergent</li>
-          <li>Printable PDF — all analysis stays in your browser, no text transmitted</li>
+          <li>Printable PDF report with research citations</li>
+          <li>All analysis stays in your browser — no text transmitted</li>
           <li class="na">Verify deep analysis reports</li>
         </ul>
         <div style="display:flex;gap:8px;margin-top:4px">
@@ -993,17 +1052,17 @@ footer{background:var(--ink);padding:42px 0 0}
       <div class="price-col">
         <span class="pcard-badge badge-teal" style="align-self:flex-start">🔬 Verify</span>
         <h3>Pay per report</h3>
-        <p class="price-sub-lbl">Deep AI-assisted analysis</p>
+        <p class="price-sub-lbl">AI-assisted close reading</p>
         <div class="big-price"><span class="n">$0.60</span><span class="u">/report</span></div>
         <p class="price-alt">Starter: 10 reports for $6</p>
         <ul class="price-feats">
           <li>Everything in Inspect</li>
-          <li>Consistency Report — chunks essay into segments, scores 6 dimensions each</li>
+          <li><strong>Consistency Report</strong> — chunks essay into segments, scores 6 dimensions each</li>
+          <li><strong>Baseline Deviation Report</strong> — 10-dimension comparison vs. controlled sample</li>
           <li>Stylometric heatmap &amp; writer baseline profile</li>
           <li>AI-suggested follow-up questions for the student conversation</li>
           <li>Printable PDF with Report ID for records</li>
           <li>No text retained — credits never expire</li>
-          <li class="na-soft">Baseline Deviation Report — requires StyleMatch subscription</li>
         </ul>
         <a href="https://papertrailacademic.lemonsqueezy.com/checkout/buy/bb899eea-e9af-47ac-a757-052c5f189e8b"
            class="btn btn-teal btn-full lemonsqueezy-button">Buy Verify Credits</a>
@@ -1048,7 +1107,7 @@ footer{background:var(--ink);padding:42px 0 0}
       <h2>Built to pass <em>the IT review.</em></h2>
       <p class="sc-p">When a teacher brings PaperTrail to their department head or IT coordinator, we want the answer to be easy.</p>
       <ul class="sc-list">
-        <li>StyleMatch runs entirely client-side — no student text ever leaves the browser</li>
+        <li>Inspect (with the Process View report) and StyleMatch run entirely client-side — no student text ever leaves the browser</li>
         <li>No student accounts, logins, or data collection of any kind</li>
         <li>Inspect reads revision metadata only — not document content</li>
         <li>Verify text processed securely and not retained after analysis</li>
