@@ -212,7 +212,7 @@
         <div class="nav-dd-inner">
           <a href="/inspect" class="dd-item">
             <span class="dd-icon">✏️</span>
-            <span><span class="dd-label">Inspect <span style="color:var(--green);font-size:10px;font-weight:700">Free</span></span><span class="dd-sub">Revision history, paste detection, playback</span></span>
+            <span><span class="dd-label">Inspect <span style="color:var(--green);font-size:10px;font-weight:700">Free</span></span><span class="dd-sub">Revision history, paste detection, playback, Process View</span></span>
           </a>
           <div class="dd-divider"></div>
           <a href="/stylematch" class="dd-item">
@@ -271,7 +271,7 @@
         <span class="hero-fact-icon">📋</span>
         <div class="hero-fact-text">
           <strong>Inspect reads revision metadata, not document content</strong>
-          <span>Revision history data is the same data Google already exposes natively. Nothing is stored or transmitted.</span>
+          <span>Revision history data is the same data Google already exposes natively. Inspect, including the Process View report, runs entirely in the browser — nothing is stored or transmitted.</span>
         </div>
       </div>
       <div class="hero-fact">
@@ -302,7 +302,7 @@
     <div class="section-hdr">
       <p class="eyebrow" style="color:var(--blue)">Privacy Architecture</p>
       <h2>Where does the data go? <em>It depends on which tool.</em></h2>
-      <p>PaperTrail has four tools with meaningfully different data architectures. The short version: two transmit nothing at all; one transmits transiently and purges; one stores transiently until download.</p>
+      <p>PaperTrail has four tools with meaningfully different data architectures. The short version: two transmit nothing at all (Inspect, which includes the printable Process View report, and StyleMatch); one transmits transiently and purges (Verify); one stores transiently until download (Write).</p>
     </div>
     <div class="arch-grid">
 
@@ -310,7 +310,8 @@
         <span class="arch-icon">✏️</span>
         <h3>Inspect</h3>
         <p>Reads Google Docs revision metadata — the same data visible in Google's native "Version history" panel. This is accessed locally by the Chrome extension while the teacher has the document open.</p>
-        <p>No document text is read or processed. No data is stored anywhere. When the teacher closes the sidebar, everything is cleared from memory.</p>
+        <p>Inspect includes the <strong>📊 Process View</strong> report — a printable, observational summary of how a document was assembled (sessions, paste activity, struggle moments, and research-cited writing-process metrics). The report is generated and printed entirely in the teacher's browser. The form fields a teacher fills in before printing (Student, Assignment, Course) are typed into the browser and never transmitted.</p>
+        <p>No document text leaves the page. No data is stored anywhere. When the teacher closes the sidebar, everything is cleared from memory.</p>
         <span class="arch-verdict verdict-safe">✓ Nothing transmitted or stored</span>
       </div>
 
@@ -325,7 +326,7 @@
       <div class="arch-card">
         <span class="arch-icon">🔬</span>
         <h3>Verify</h3>
-        <p>Verify is the only tool in the Chrome extension that transmits text. When a teacher runs a Verify report, the submitted text is sent to PaperTrail's secure backend (Supabase / AWS), forwarded to the Anthropic API for analysis, and returned as a report.</p>
+        <p>Verify is the only feature in the Chrome extension that transmits text. Verify offers two report types: <strong>Verify Submitted</strong> (analyses a single document for internal consistency) and <strong>Verify Compare</strong> (compares the submitted work against a controlled writing sample). When a teacher runs either report, the submitted text is sent to PaperTrail's secure backend (Supabase / AWS), forwarded to the Anthropic API for analysis, and returned as a report.</p>
         <p><strong>The text is not retained by PaperTrail after the report is generated.</strong> Only report metadata is stored (scores, timestamps, the label the teacher assigned). Anthropic retains API inputs for 7 days under their commercial API terms, which prohibit using API inputs for model training. Teachers should anonymize student names before submitting if their institution requires it.</p>
         <span class="arch-verdict verdict-handled">→ Transmitted, not retained by PaperTrail</span>
       </div>
@@ -357,8 +358,8 @@
         <ul class="check-list">
           <li>Students never create an account or interact with PaperTrail in any way</li>
           <li>No student personal information (name, email, ID) is collected by PaperTrail Academic</li>
-          <li>StyleMatch and Inspect process data entirely on the teacher's device — no student text reaches PaperTrail's servers</li>
-          <li>Verify transmits essay text only, not student identity information (the teacher assigns a label)</li>
+          <li>StyleMatch and Inspect (including the Process View report) process data entirely on the teacher's device — no student text reaches PaperTrail's servers</li>
+          <li>Verify (Submitted and Compare reports) transmits essay text only, not student identity information (the teacher assigns a label)</li>
           <li>Write captures behavioral metadata (paste events, focus changes, timestamps) and essay text on submission — stored transiently in Supabase until the teacher downloads the session report (purged immediately on download), or auto-purged after 7 days for timed sessions and 30 days for untimed sessions; teachers receive an email warning before auto-purge</li>
           <li>No student text is used for model training — PaperTrail uses Anthropic's API under terms that prohibit this</li>
           <li>PaperTrail does not build profiles on students, track students over time, or aggregate student data</li>
@@ -393,8 +394,8 @@
         <div class="reg-flag">🇺🇸</div>
         <h3>FERPA</h3>
         <div class="reg-subtitle">United States — Family Educational Rights and Privacy Act</div>
-        <p>FERPA protects personally identifiable information in education records. PaperTrail does not collect, store, or transmit student PII. Inspect reads only Google Docs revision metadata — timestamps and anonymized edit markers — which are not education records under FERPA. StyleMatch runs entirely locally with no transmission of any kind.</p>
-        <p>Verify transmits essay text to generate a report. The teacher controls what is submitted; no student name or ID is required or collected by PaperTrail. The text is not retained by PaperTrail after the report is generated. Anthropic retains API inputs for 7 days under their commercial API terms, which prohibit using this data for model training. We recommend anonymizing student names from essay text before submitting.</p>
+        <p>FERPA protects personally identifiable information in education records. PaperTrail does not collect, store, or transmit student PII. Inspect reads only Google Docs revision metadata — timestamps and anonymized edit markers — which are not education records under FERPA. Both Inspect (including its Process View report) and StyleMatch run entirely locally with no transmission of any kind.</p>
+        <p>Verify (Submitted and Compare reports) transmits essay text to generate a report. The teacher controls what is submitted; no student name or ID is required or collected by PaperTrail. The text is not retained by PaperTrail after the report is generated. Anthropic retains API inputs for 7 days under their commercial API terms, which prohibit using this data for model training. We recommend anonymizing student names from essay text before submitting.</p>
         <p>Write captures behavioral metadata (paste events, focus changes, timestamps) and submitted essay text, stored transiently in PaperTrail's Supabase backend. Data is purged immediately when the teacher downloads the session report. If not downloaded: timed sessions are auto-purged after 7 days, untimed sessions after 30 days, and ended sessions within 24 hours — teachers receive an email warning before auto-purge occurs. Student names are entered by the student at session join and are not linked to any external account or institution record. No PII beyond the name the student provides is collected. The teacher is the data custodian.</p>
         <div class="reg-note">A Data Processing Agreement (DPA) is available on request. Contact <a href="/cdn-cgi/l/email-protection#94fcf1f8f8fbd4e4f5e4f1e6e0e6f5fdf8f5f7f5f0f1f9fdf7baf7fbf9"><span class="__cf_email__" data-cfemail="abc3cec7c7c4ebdbcadbced9dfd9cac2c7cac8cacfcec6c2c885c8c4c6">[email&#160;protected]</span></a>.</div>
       </div>
@@ -403,7 +404,7 @@
         <div class="reg-flag">🌍</div>
         <h3>Other Jurisdictions</h3>
         <div class="reg-subtitle">International and non-US/EU schools</div>
-        <p>Inspect and StyleMatch collect no personal information and involve no data transmission — they raise no data protection concerns beyond those inherent in Google Docs itself, regardless of jurisdiction.</p>
+        <p>Inspect (including the Process View report) and StyleMatch collect no personal information and involve no data transmission — they raise no data protection concerns beyond those inherent in Google Docs itself, regardless of jurisdiction.</p>
         <p>Write stores submitted essay text and behavioral metadata transiently on Supabase (AWS, US region). Data is purged on teacher download, or auto-purged after 7 days (timed sessions) or 30 days (untimed sessions) if not downloaded. Schools using Write should confirm their acceptable use policy permits this transient US-based storage.</p>
         <p>Schools using Verify should confirm their institution's acceptable use policy permits transmitting student work to US-based AI services. This is the same question that applies to any AI writing tool used in your school. Anthropic retains API inputs for 7 days and does not use them for model training.</p>
         <div class="reg-note">A Data Processing Summary is available on request. Contact <a href="/cdn-cgi/l/email-protection#4c24292020230c3c2d3c293e383e2d25202d2f2d282921252f622f2321"><span class="__cf_email__" data-cfemail="6d05080101022d1d0c1d081f191f0c04010c0e0c090800040e430e0200">[email&#160;protected]</span></a>.</div>
@@ -413,7 +414,7 @@
         <div class="reg-flag">🇪🇺</div>
         <h3>GDPR</h3>
         <div class="reg-subtitle">European Union — General Data Protection Regulation</div>
-        <p>Inspect and StyleMatch involve no personal data transmission and require no GDPR analysis beyond what applies to Google Docs itself.</p>
+        <p>Inspect (including the Process View report) and StyleMatch involve no personal data transmission and require no GDPR analysis beyond what applies to Google Docs itself.</p>
         <p>Write stores essay text and behavioral metadata transiently on Supabase (AWS, US region). Data is purged immediately on teacher download; auto-purged after 7 days (timed sessions) or 30 days (untimed) if not downloaded; teachers receive an email warning before auto-purge. The teacher is the data custodian. EU schools using Write should confirm they have a lawful basis for this transient processing under GDPR Article 6 and that their use of US-based infrastructure is covered by their institution's DPA.</p>
         <p>Verify transmits text to US-based processors (Supabase/AWS and Anthropic, Inc.). EU schools using Verify should confirm they have a lawful basis for this processing under GDPR Article 6. The text is not retained by PaperTrail after the report is generated. Anthropic retains API inputs for 7 days and does not use them for model training. Anthropic's commercial API terms incorporate Standard Contractual Clauses (SCCs) for international data transfers. We recommend anonymizing student-identifying information before submission.</p>
         <div class="reg-note">A DPA for EU data processing is available on request. Contact <a href="/cdn-cgi/l/email-protection#6109040d0d0e211100110413151300080d00020005040c08024f020e0c"><span class="__cf_email__" data-cfemail="97fff2fbfbf8d7e7f6e7f2e5e3e5f6fefbf6f4f6f3f2fafef4b9f4f8fa">[email&#160;protected]</span></a>.</div>
@@ -474,7 +475,7 @@
 
       <div class="faq-item">
         <button class="faq-q">Can students be identified from data PaperTrail collects? <span class="faq-caret">▾</span></button>
-        <div class="faq-a"><p>For Inspect and StyleMatch: no data is transmitted or collected at all, so this question doesn't apply. For Verify: the teacher submits essay text with a label they assign (e.g., "Student A, Essay 2"). PaperTrail does not collect student names, student IDs, or any other identifying information independently. The teacher controls what identifying information, if any, is included in the text they submit. We recommend anonymizing before submission where institution policy requires it.</p></div>
+        <div class="faq-a"><p>For Inspect (including the Process View report) and StyleMatch: no data is transmitted or collected at all, so this question doesn't apply. For Verify (Submitted and Compare reports): the teacher submits essay text with a label they assign (e.g., "Student A, Essay 2"). PaperTrail does not collect student names, student IDs, or any other identifying information independently. The teacher controls what identifying information, if any, is included in the text they submit. We recommend anonymizing before submission where institution policy requires it.</p></div>
       </div>
 
       <div class="faq-item">
@@ -499,7 +500,7 @@
 
       <div class="faq-item">
         <button class="faq-q">Is student writing used to train AI models? <span class="faq-caret">▾</span></button>
-        <div class="faq-a"><p>No. PaperTrail uses the Anthropic API under commercial terms that prohibit using submitted content for model training. This applies automatically to all API usage — it is not a custom arrangement. Anthropic retains API inputs for 7 days before automatic deletion, after which they are permanently removed from Anthropic's systems. StyleMatch and Inspect involve no AI and no transmission whatsoever.</p></div>
+        <div class="faq-a"><p>No. PaperTrail uses the Anthropic API under commercial terms that prohibit using submitted content for model training. This applies automatically to all API usage — it is not a custom arrangement. Anthropic retains API inputs for 7 days before automatic deletion, after which they are permanently removed from Anthropic's systems. StyleMatch, Inspect, and the Process View report involve no AI and no transmission whatsoever — they run entirely in the teacher's browser.</p></div>
       </div>
 
       <div class="faq-item">
