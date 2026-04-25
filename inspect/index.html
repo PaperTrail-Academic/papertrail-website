@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>PaperTrail Inspect — Free Revision History for Google Docs</title>
-  <meta name="description" content="See exactly how a student document was written — every session, paste event, and revision — inside Google Docs. Free, no account required." />
+  <title>PaperTrail Inspect — Free Revision History &amp; Printable Process Report for Google Docs</title>
+  <meta name="description" content="See exactly how a student document was written — every session, paste event, struggle moment, and revision — inside Google Docs. Includes a printable Process View report. Free, no account required." />
   <link rel="icon" href="/icon128.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -199,7 +199,7 @@ nav{position:sticky;top:0;z-index:200;background:rgba(255,255,255,.96);backdrop-
 .limits-hdr{max-width:620px;margin-bottom:36px}
 .limits-hdr h2{font-family:'Lora',serif;font-size:clamp(22px,2.8vw,30px);color:var(--ink);margin-bottom:10px}
 .limits-hdr p{font-size:14.5px;color:var(--ink-2);line-height:1.68}
-.limits-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.limits-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;max-width:880px;margin:0 auto}
 .limit-card{border:1.5px solid var(--rule);border-radius:10px;padding:20px;background:var(--bg)}
 .limit-card h4{font-size:14px;font-weight:600;color:var(--ink);margin-bottom:8px}
 .limit-card p{font-size:13px;color:var(--ink-2);line-height:1.65}
@@ -289,7 +289,7 @@ footer{background:var(--ink);padding:42px 0 0}
         <div class="nav-dd-inner">
           <a href="/inspect" class="dd-item">
             <span class="dd-icon">✏️</span>
-            <span><span class="dd-label">Inspect <span style="color:var(--green);font-size:10px;font-weight:700">Free</span></span><span class="dd-sub">Revision history, paste detection, playback</span></span>
+            <span><span class="dd-label">Inspect <span style="color:var(--green);font-size:10px;font-weight:700">Free</span></span><span class="dd-sub">Revision history, paste detection, playback, Process View</span></span>
           </a>
           <div class="dd-divider"></div>
           <a href="/stylematch" class="dd-item">
@@ -323,7 +323,7 @@ footer{background:var(--ink);padding:42px 0 0}
     <div>
       <div class="hero-badge">✏️ PaperTrail Inspect &nbsp;·&nbsp; Free</div>
       <h1>Something about<br>this essay doesn't<br>add up.</h1>
-      <p class="hero-sub">Inspect reconstructs the full revision history of any Google Doc — every writing session, paste event, and revision cluster — into a clear, documentable picture. Other tools charge for this. Inspect doesn't.</p>
+      <p class="hero-sub">Inspect reconstructs the full revision history of any Google Doc — every writing session, paste event, struggle moment, and revision cluster — into a clear, documentable picture. Generates a printable <strong>Process View report</strong> you can save as a PDF or hand to a department head. Other tools charge for this. Inspect doesn't.</p>
       <div class="hero-actions">
         <a href="https://chromewebstore.google.com/detail/papertrail/kgkjmhfoijiiplbmablcjbooopndjbgm"
            class="btn btn-blue btn-lg" target="_blank" rel="noopener">⬇ Add to Chrome — Free</a>
@@ -333,8 +333,8 @@ footer{background:var(--ink);padding:42px 0 0}
         <span>No account or login needed</span>
         <span>No student data stored — nothing leaves your browser</span>
         <span>Works in any Google Doc you have access to</span>
+        <span>Printable Process View report — fillable PDF, in your browser</span>
         <span>StyleMatch &amp; Verify unlock in the same extension</span>
-        <span>Built by a teacher, for the hardest conversation in teaching</span>
       </div>
     </div>
 
@@ -353,8 +353,10 @@ footer{background:var(--ink);padding:42px 0 0}
 
       <div class="smb-btns">
         <div class="smb-btn smb-btn-blue">▶ Open Playback Window</div>
-        <div class="smb-btn smb-btn-gold">🔍 StyleMatch — Compare Writing <div class="smb-btn-q">?</div></div>
-        <div class="smb-btn smb-btn-teal">🔬 Verify — AI Consistency Analysis <div class="smb-btn-q">?</div></div>
+        <div style="display:flex;gap:5px">
+          <div class="smb-btn smb-btn-gold" style="flex:1">🔍 StyleMatch™ <div class="smb-btn-q">?</div></div>
+          <div class="smb-btn smb-btn-teal" style="flex:1">📊 Process View <div class="smb-btn-q">?</div></div>
+        </div>
       </div>
 
       <div class="smb-status">
@@ -463,15 +465,15 @@ footer{background:var(--ink);padding:42px 0 0}
         <div class="feat-item">
           <div class="feat-icon">📋</div>
           <div>
-            <h3>Paste Detection</h3>
-            <p>Every paste event is detected and logged — size, timestamp, and whether the source was internal or external to the document. All of this is surfaced clearly in the sidebar.</p>
+            <h3>Paste Detection &amp; Novelty Scoring</h3>
+            <p>Every paste event is detected and logged — size, timestamp, source classification, and a <strong>novelty score</strong> showing how much of the pasted text was new to the document. Open the Paste Analysis window to read the actual pasted text alongside its classification.</p>
           </div>
         </div>
         <div class="feat-item">
-          <div class="feat-icon">📊</div>
+          <div class="feat-icon">⚡</div>
           <div>
-            <h3>Activity Report &amp; Correction Ratio</h3>
-            <p>An at-a-glance summary of edit patterns: total writing time across all sessions, how much was deleted relative to what was typed, and a picture of revision behaviour across the document's entire history.</p>
+            <h3>Struggle Moments &amp; Activity Report</h3>
+            <p>An at-a-glance summary of edit patterns: total writing time, deletion ratio, and revision behaviour across the document's history — plus <strong>struggle moments</strong> showing where the writer cycled through deletions and rewrites in the same place. The behavioural trace of revising in place.</p>
           </div>
         </div>
         <div class="feat-item">
@@ -479,6 +481,13 @@ footer{background:var(--ink);padding:42px 0 0}
           <div>
             <h3>Revision Playback</h3>
             <p>Watch the document being written from the first keystroke to the final version, at speeds from 1× to 200×. Paste events and struggle moments are marked on the playback timeline — jump directly to anything that caught your attention in the sidebar.</p>
+          </div>
+        </div>
+        <div class="feat-item">
+          <div class="feat-icon">📊</div>
+          <div>
+            <h3>Process View Report — Printable PDF</h3>
+            <p>One click generates an observational report you can save as a PDF or hand to a department head: sessions, paste activity (with the actual pasted text), struggle moments, and five research-cited writing-process metrics. Form fields for Student / Assignment / Course are filled in your browser before printing — <strong>no transmission, no AI, no verdict.</strong> Pairs naturally with a Turnitin report and a StyleMatch report as one of three independent signals.</p>
           </div>
         </div>
       </div>
@@ -706,24 +715,19 @@ footer{background:var(--ink);padding:42px 0 0}
   <div class="limits-inner">
     <div class="limits-hdr">
       <span class="eyebrow">Free Tier — What's Not Included</span>
-      <h2>What the free tier doesn't do</h2>
-      <p>Inspect is genuinely free — but it's the starting point, not the whole picture. Here's what you need StyleMatch or Verify for when the revision data raises a question it can't answer on its own.</p>
+      <h2>Where the free tier ends</h2>
+      <p>Inspect (with the Process View report) is genuinely free — you can use it on every document you teach, every term, with no account. But it answers one question: <em>how was this written?</em> Two paid tools answer different questions.</p>
     </div>
     <div class="limits-grid">
       <div class="limit-card">
         <h4>🔍 No authorship style comparison</h4>
-        <p>Inspect shows how a document was built — but it can't tell you whether the writing style matches the student's known voice. That requires a controlled sample and a metric comparison across two documents.</p>
+        <p>Inspect shows how a document was built. It can't tell you whether the writing style matches the student's known voice — that requires a controlled writing sample and a metric comparison across two documents.</p>
         <div class="lim-then"><span class="lim-arr">→</span><span>StyleMatch compares submitted work against an in-class sample across 8 stylometric metrics.</span></div>
       </div>
       <div class="limit-card">
-        <h4>🔬 No AI-assisted deep analysis</h4>
-        <p>Inspect reads metadata — it doesn't use AI. For sentence-level consistency scoring, internal coherence analysis, or suggested follow-up questions for a student conversation, you need Verify.</p>
+        <h4>🔬 No AI-assisted close reading</h4>
+        <p>Inspect reads metadata — it doesn't use AI. For sentence-level consistency scoring, internal coherence analysis, or AI-generated follow-up questions for a student conversation, you need Verify.</p>
         <div class="lim-then"><span class="lim-arr">→</span><span>Verify runs a Consistency Report or Baseline Deviation Report via the Anthropic API.</span></div>
-      </div>
-      <div class="limit-card">
-        <h4>📄 No printable authorship report</h4>
-        <p>Inspect data lives in the sidebar. There's no formatted, printable report for documentation or sharing with an administrator. Reports are a feature of StyleMatch and Verify.</p>
-        <div class="lim-then"><span class="lim-arr">→</span><span>StyleMatch generates a printable Authorship Consistency Report. Verify reports are also exportable.</span></div>
       </div>
     </div>
   </div>
@@ -733,23 +737,23 @@ footer{background:var(--ink);padding:42px 0 0}
 <section class="upgrade-section">
   <div class="upgrade-inner">
     <div class="upgrade-left">
-      <h2>When Inspect raises a question<br>the data can't answer alone</h2>
-      <p>Revision history tells you how the document was built. When you need to ask whether the writing sounds like the student — or want AI-assisted analysis before a difficult conversation — PaperTrail goes further. Both tools unlock in the same extension.</p>
+      <h2>When the data raises<br>a different question</h2>
+      <p>Inspect's Process View report tells you <em>how</em> the document was written. When you need to ask whether the writing <em>sounds like the student</em> — or want AI-assisted close reading before a difficult conversation — PaperTrail goes further. Both unlock in the same extension.</p>
     </div>
     <div class="upgrade-cards">
       <a href="/stylematch" class="ucard">
         <div class="ucard-icon">🔍</div>
         <div>
-          <h4>StyleMatch</h4>
-          <p>Compare a controlled in-class sample against submitted work across eight stylometric metrics. Does this essay actually sound like them?</p>
+          <h4>StyleMatch — Does this sound like them?</h4>
+          <p>Compare a controlled in-class sample against submitted work across eight stylometric metrics. The only PaperTrail tool that compares two pieces of writing against each other.</p>
           <div class="ucard-price">$4.99/mo or $49.99/yr</div>
         </div>
       </a>
       <a href="/verify" class="ucard">
         <div class="ucard-icon">🔬</div>
         <div>
-          <h4>Verify</h4>
-          <p>AI-assisted deep analysis — internal consistency within one essay, or ten-dimension comparison against a controlled sample. Generates follow-up questions for the student conversation.</p>
+          <h4>Verify — AI-assisted close reading</h4>
+          <p>Internal consistency within one essay, or ten-dimension comparison against a controlled sample. Generates AI-suggested follow-up questions for the student conversation.</p>
           <div class="ucard-price">From $0.60/report — credits never expire</div>
         </div>
       </a>
