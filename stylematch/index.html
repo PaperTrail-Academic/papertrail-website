@@ -247,6 +247,34 @@ footer{background:var(--ink);padding:42px 0 0}
 .ftr-bottom a{color:rgba(255,255,255,.5);text-decoration:none}
 .ftr-bottom a:hover{color:#fff}
 
+/* ─── Mobile drawer (hidden on desktop) ─────────────────────────── */
+.nav-hamburger{display:none;background:none;border:0;padding:8px;cursor:pointer;margin-left:auto;flex-direction:column;gap:4px;width:36px;height:36px;align-items:center;justify-content:center}
+.nav-hamburger span{display:block;width:22px;height:2px;background:var(--ink);border-radius:2px;transition:transform .2s ease, opacity .2s ease}
+.nav-hamburger.is-open span:nth-child(1){transform:translateY(6px) rotate(45deg)}
+.nav-hamburger.is-open span:nth-child(2){opacity:0}
+.nav-hamburger.is-open span:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
+.mobile-drawer{display:none;position:fixed;inset:0;z-index:1000}
+.mobile-drawer.is-open{display:block}
+.mobile-drawer-backdrop{position:absolute;inset:0;background:rgba(26,34,53,.5);animation:fadeIn .2s ease}
+.mobile-drawer-panel{position:absolute;top:0;right:0;height:100%;width:min(86%,360px);background:#fff;box-shadow:-8px 0 24px rgba(26,34,53,.18);overflow-y:auto;animation:slideIn .25s ease;display:flex;flex-direction:column}
+.mobile-drawer-head{display:flex;align-items:center;justify-content:space-between;padding:18px 20px;border-bottom:1px solid var(--rule)}
+.mobile-drawer-title{font-family:'Lora',serif;font-size:15px;font-weight:700;color:var(--ink);letter-spacing:.02em}
+.mobile-drawer-close{background:none;border:0;font-size:20px;color:var(--ink-2);cursor:pointer;padding:4px 8px;line-height:1}
+.mobile-drawer-section{padding:14px 12px;border-bottom:1px solid var(--rule)}
+.mobile-drawer-section:last-child{border-bottom:0}
+.mobile-drawer-section-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-3);padding:0 8px 8px}
+.mobile-drawer-item{display:flex;gap:12px;align-items:flex-start;padding:12px 8px;border-radius:8px;text-decoration:none;color:inherit}
+.mobile-drawer-item:hover,.mobile-drawer-item:active{background:#f4f7fb}
+.mobile-drawer-item .dd-icon{font-size:20px;line-height:1.1;flex-shrink:0}
+.mobile-drawer-item .dd-label{display:block;font-weight:700;color:var(--ink);font-size:14px;margin-bottom:2px}
+.mobile-drawer-item .dd-sub{display:block;font-size:12px;color:var(--ink-3);line-height:1.4}
+.mobile-drawer-link{display:block;padding:12px 8px;text-decoration:none;color:var(--ink);font-weight:600;font-size:14px;border-radius:8px}
+.mobile-drawer-link:hover,.mobile-drawer-link:active{background:#f4f7fb}
+.mobile-drawer-item.active .dd-label{color:var(--gold-dk)}
+.mobile-drawer-link.active{color:var(--blue)}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes slideIn{from{transform:translateX(100%)}to{transform:translateX(0)}}
+
 @media(max-width:1020px){
   .hero-inner,.fsplit{grid-template-columns:1fr}
   .hero .sm-sidebar,.fsplit .report-mock,.fsplit .report-caption{display:none}
@@ -260,7 +288,10 @@ footer{background:var(--ink);padding:42px 0 0}
   .ftr-inner{grid-template-columns:1fr 1fr}
 }
 @media(max-width:640px){
-  .nav-inner .nl:not(.cta){display:none}
+  .nav-inner .nav-dropdown,
+  .nav-inner > a.nl:not(.cta){display:none}
+  .nav-inner .nl.cta{margin-left:auto;font-size:13px;padding:8px 12px}
+  .nav-hamburger{display:flex}
   .limits-grid{grid-template-columns:1fr}
   .privacy-inner{grid-template-columns:1fr}
   .ftr-inner{grid-template-columns:1fr}
@@ -308,8 +339,46 @@ footer{background:var(--ink);padding:42px 0 0}
     <a href="/privacy-policy" class="nl">Privacy</a>
     <a href="https://chromewebstore.google.com/detail/papertrail/kgkjmhfoijiiplbmablcjbooopndjbgm"
        class="nl cta" target="_blank" rel="noopener">Add to Chrome — Free</a>
+    <button class="nav-hamburger" id="navHamburger" aria-label="Open menu" aria-expanded="false" aria-controls="mobileDrawer">
+      <span></span><span></span><span></span>
+    </button>
   </div>
 </nav>
+
+<!-- ═══ MOBILE DRAWER ═════════════════════════════════════════════ -->
+<div class="mobile-drawer" id="mobileDrawer" aria-hidden="true">
+  <div class="mobile-drawer-backdrop" id="mobileDrawerBackdrop"></div>
+  <div class="mobile-drawer-panel" role="dialog" aria-label="Site menu">
+    <div class="mobile-drawer-head">
+      <span class="mobile-drawer-title">Menu</span>
+      <button class="mobile-drawer-close" id="mobileDrawerClose" aria-label="Close menu">✕</button>
+    </div>
+    <div class="mobile-drawer-section">
+      <div class="mobile-drawer-section-label">Products</div>
+      <a href="/inspect" class="mobile-drawer-item">
+        <span class="dd-icon">✏️</span>
+        <span><span class="dd-label">Inspect <span style="color:var(--green);font-size:10px;font-weight:700">Free</span></span><span class="dd-sub">Revision history, paste detection, playback, Process View</span></span>
+      </a>
+      <a href="/stylematch" class="mobile-drawer-item active">
+        <span class="dd-icon">🔍</span>
+        <span><span class="dd-label">StyleMatch <span style="color:var(--gold-dk);font-size:10px">$4.99/mo</span></span><span class="dd-sub">8-metric authorship consistency analysis</span></span>
+      </a>
+      <a href="/verify" class="mobile-drawer-item">
+        <span class="dd-icon">🔬</span>
+        <span><span class="dd-label">Verify <span style="color:var(--teal);font-size:10px">From $0.60</span></span><span class="dd-sub">AI-assisted deep analysis &amp; reports</span></span>
+      </a>
+      <a href="/write" class="mobile-drawer-item">
+        <span class="dd-icon">🖊️</span>
+        <span><span class="dd-label">Write <span style="color:#7B5EA7;font-size:10px">$49/yr</span></span><span class="dd-sub">Timed writing sessions with process monitoring</span></span>
+      </a>
+    </div>
+    <div class="mobile-drawer-section">
+      <a href="/#pricing" class="mobile-drawer-link">Pricing</a>
+      <a href="/for-schools" class="mobile-drawer-link">For Schools</a>
+      <a href="/privacy-policy" class="mobile-drawer-link">Privacy</a>
+    </div>
+  </div>
+</div>
 
 <!-- HERO -->
 <section class="hero">
@@ -851,6 +920,36 @@ footer{background:var(--ink);padding:42px 0 0}
   dd.querySelector('.nav-dd-menu').addEventListener('mouseleave', close);
   trigger.addEventListener('click', () => dd.classList.toggle('open'));
   document.addEventListener('click', e => { if (!dd.contains(e.target)) dd.classList.remove('open'); });
+})();
+
+// ── Mobile drawer ────────────────────────────────────────────────
+(function(){
+  const drawer = document.getElementById('mobileDrawer');
+  const hamburger = document.getElementById('navHamburger');
+  const closeBtn = document.getElementById('mobileDrawerClose');
+  const backdrop = document.getElementById('mobileDrawerBackdrop');
+  if (!drawer || !hamburger) return;
+  function open(){
+    drawer.classList.add('is-open');
+    hamburger.classList.add('is-open');
+    hamburger.setAttribute('aria-expanded', 'true');
+    drawer.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  }
+  function close(){
+    drawer.classList.remove('is-open');
+    hamburger.classList.remove('is-open');
+    hamburger.setAttribute('aria-expanded', 'false');
+    drawer.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }
+  hamburger.addEventListener('click', () => {
+    drawer.classList.contains('is-open') ? close() : open();
+  });
+  closeBtn && closeBtn.addEventListener('click', close);
+  backdrop && backdrop.addEventListener('click', close);
+  drawer.querySelectorAll('a').forEach(a => a.addEventListener('click', close));
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
 })();
 </script>
 
