@@ -247,12 +247,17 @@
           <div class="dd-divider"></div>
           <a href="/stylematch" class="dd-item">
             <span class="dd-icon">🔍</span>
-            <span><span class="dd-label">StyleMatch <span style="color:var(--gold-dk);font-size:10px">$4.99/mo</span></span><span class="dd-sub">8-metric authorship consistency analysis</span></span>
+            <span><span class="dd-label">StyleMatch <span style="color:var(--gold-dk);font-size:10px">$1.99/mo</span></span><span class="dd-sub">8-metric authorship consistency analysis</span></span>
           </a>
           <div class="dd-divider"></div>
           <a href="/verify" class="dd-item">
             <span class="dd-icon">🔬</span>
             <span><span class="dd-label">Verify <span style="color:var(--teal);font-size:10px">From $0.60</span></span><span class="dd-sub">AI-assisted deep analysis &amp; reports</span></span>
+          </a>
+          <div class="dd-divider"></div>
+          <a href="/oral" class="dd-item">
+            <span class="dd-icon">🎙️</span>
+            <span><span class="dd-label">Oral Defense <span style="color:var(--teal);font-size:10px">2 Tokens</span></span><span class="dd-sub">Students account for their writing — out loud</span></span>
           </a>
           <div class="dd-divider"></div>
             <a href="/write" class="dd-item">
@@ -289,11 +294,15 @@
       </a>
       <a href="/stylematch" class="mobile-drawer-item">
         <span class="dd-icon">🔍</span>
-        <span><span class="dd-label">StyleMatch <span style="color:var(--gold-dk);font-size:10px">$4.99/mo</span></span><span class="dd-sub">8-metric authorship consistency analysis</span></span>
+        <span><span class="dd-label">StyleMatch <span style="color:var(--gold-dk);font-size:10px">$1.99/mo</span></span><span class="dd-sub">8-metric authorship consistency analysis</span></span>
       </a>
       <a href="/verify" class="mobile-drawer-item">
         <span class="dd-icon">🔬</span>
         <span><span class="dd-label">Verify <span style="color:var(--teal);font-size:10px">From $0.60</span></span><span class="dd-sub">AI-assisted deep analysis &amp; reports</span></span>
+      </a>
+      <a href="/oral" class="mobile-drawer-item">
+        <span class="dd-icon">🎙️</span>
+        <span><span class="dd-label">Oral Defense <span style="color:var(--teal);font-size:10px">2 Tokens</span></span><span class="dd-sub">Students account for their writing — out loud</span></span>
       </a>
       <a href="/write" class="mobile-drawer-item">
         <span class="dd-icon">🖊️</span>
@@ -370,7 +379,7 @@
     <div class="section-hdr">
       <p class="eyebrow" style="color:var(--blue)">Privacy Architecture</p>
       <h2>Where does the data go? <em>It depends on which tool.</em></h2>
-      <p>PaperTrail has four tools with meaningfully different data architectures. The short version: two transmit nothing at all (Inspect, which includes the printable Process View report, and StyleMatch); one transmits transiently and purges (Verify); one stores transiently until download (Write).</p>
+      <p>PaperTrail has five tools with meaningfully different data architectures. The short version: two transmit nothing at all (Inspect, which includes the printable Process View report, and StyleMatch); one transmits transiently and purges (Verify); two store transiently until download or a timed purge (Write, Oral Defense).</p>
     </div>
     <div class="arch-grid">
 
@@ -400,6 +409,14 @@
       </div>
 
       <div class="arch-card">
+        <span class="arch-icon">🎙️</span>
+        <h3>Oral Defense</h3>
+        <p>Oral Defense is the one tool where a student interacts with PaperTrail directly: they open a private, unguessable link the teacher sends and record short spoken answers. Students create no account. The teacher provides the student's name and email to address the defense; the essay text and curated questions are stored for the session. Recordings are transcribed by Deepgram and the report is generated via the Anthropic API — both under terms that prohibit training on this data.</p>
+        <p><strong>Audio is deleted permanently when the teacher exports the report, or automatically after 30 days</strong> (with a warning email first). The report and transcripts are retained for 90 days, then purged. Only the teacher who created the defense can access any of it.</p>
+        <span class="arch-verdict verdict-transient">⏱ Stored transiently — audio purged on export or after 30 days</span>
+      </div>
+
+      <div class="arch-card">
         <span class="arch-icon">🖊️</span>
         <h3>Write</h3>
         <p>Write is a web app — not a Chrome extension — so it operates differently from the other tools. When a student joins a session and submits, PaperTrail stores two things transiently: the submitted essay text, and a behavioral log (paste events, focus-loss events, timestamps). Nothing else.</p>
@@ -424,8 +441,9 @@
       <div class="privacy-block">
         <h3>Student Data</h3>
         <ul class="check-list">
-          <li>Students never create an account or interact with PaperTrail in any way</li>
-          <li>No student personal information (name, email, ID) is collected by PaperTrail Academic</li>
+          <li>Students never create an account. Only Oral Defense involves any student interaction at all — recording spoken answers at a private, teacher-sent link; every other tool involves no student contact</li>
+          <li>Inspect, StyleMatch, Verify, and Write collect no student personal information (name, email, ID). For Oral Defense, the teacher supplies the student's name and email to send the defense; both are retained only with the session and purged with it</li>
+          <li>Oral Defense stores audio recordings and transcripts transiently — audio is permanently deleted when the teacher exports the report or after 30 days; report and transcripts are purged after 90 days</li>
           <li>StyleMatch and Inspect (including the Process View report) process data entirely on the teacher's device — no student text reaches PaperTrail's servers</li>
           <li>Verify (Submitted and Compare reports) transmits essay text only, not student identity information (the teacher assigns a label)</li>
           <li>Write captures behavioral metadata (paste events, focus changes, timestamps) and essay text on submission — stored transiently in Supabase until the teacher downloads the session report (purged immediately on download), or auto-purged after 7 days for timed sessions and 30 days for untimed sessions; teachers receive an email warning before auto-purge</li>
@@ -437,7 +455,7 @@
         <h3>Institutional Data &amp; Infrastructure</h3>
         <ul class="check-list">
           <li>No third-party tracking scripts, analytics platforms, or advertising infrastructure</li>
-          <li>No data resale — PaperTrail Academic's revenue comes from teacher subscriptions and credits only</li>
+          <li>No data resale — PaperTrail Academic's revenue comes from teacher subscriptions and token purchases only</li>
           <li>No integration with student information systems (SIS), LMS platforms, or gradebooks</li>
           <li>The Chrome extension does not modify Google Docs or leave any record of use on a document</li>
           <li>PaperTrail does not access any Google Workspace admin data or teacher email</li>
@@ -465,6 +483,7 @@
         <p>FERPA protects personally identifiable information in education records. PaperTrail does not collect, store, or transmit student PII. Inspect reads only Google Docs revision metadata — timestamps and anonymized edit markers — which are not education records under FERPA. Both Inspect (including its Process View report) and StyleMatch run entirely locally with no transmission of any kind.</p>
         <p>Verify (Submitted and Compare reports) transmits essay text to generate a report. The teacher controls what is submitted; no student name or ID is required or collected by PaperTrail. The text is not retained by PaperTrail after the report is generated. Anthropic retains API inputs for 7 days under their commercial API terms, which prohibit using this data for model training. We recommend anonymizing student names from essay text before submitting.</p>
         <p>Write captures behavioral metadata (paste events, focus changes, timestamps) and submitted essay text, stored transiently in PaperTrail's Supabase backend. Data is purged immediately when the teacher downloads the session report. If not downloaded: timed sessions are auto-purged after 7 days, untimed sessions after 30 days, and ended sessions within 24 hours — teachers receive an email warning before auto-purge occurs. Student names are entered by the student at session join and are not linked to any external account or institution record. No PII beyond the name the student provides is collected. The teacher is the data custodian.</p>
+        <p>Oral Defense stores the student's name and email (supplied by the teacher), the essay text and questions, spoken-answer recordings, and transcripts. Audio is transcribed by Deepgram and the report generated via the Anthropic API, both under commercial terms that prohibit training on the data. Audio is permanently deleted when the teacher exports the report, or after 30 days with an email warning first; the report and transcripts are purged after 90 days. The teacher is the data custodian and the only party with access.</p>
         <div class="reg-note">A Data Processing Agreement (DPA) is available on request. Contact <a href="/cdn-cgi/l/email-protection#94fcf1f8f8fbd4e4f5e4f1e6e0e6f5fdf8f5f7f5f0f1f9fdf7baf7fbf9"><span class="__cf_email__" data-cfemail="abc3cec7c7c4ebdbcadbced9dfd9cac2c7cac8cacfcec6c2c885c8c4c6">[email&#160;protected]</span></a>.</div>
       </div>
 
@@ -474,6 +493,7 @@
         <div class="reg-subtitle">International and non-US/EU schools</div>
         <p>Inspect (including the Process View report) and StyleMatch collect no personal information and involve no data transmission — they raise no data protection concerns beyond those inherent in Google Docs itself, regardless of jurisdiction.</p>
         <p>Write stores submitted essay text and behavioral metadata transiently on Supabase (AWS, US region). Data is purged on teacher download, or auto-purged after 7 days (timed sessions) or 30 days (untimed sessions) if not downloaded. Schools using Write should confirm their acceptable use policy permits this transient US-based storage.</p>
+        <p>Oral Defense stores student audio recordings and transcripts transiently on the same US-based infrastructure, with transcription by Deepgram and report generation by Anthropic (neither trains on the data). Audio is deleted on report export or after 30 days; reports and transcripts after 90 days. Schools should confirm their policy permits transient US-based storage of student voice recordings.</p>
         <p>Schools using Verify should confirm their institution's acceptable use policy permits transmitting student work to US-based AI services. This is the same question that applies to any AI writing tool used in your school. Anthropic retains API inputs for 7 days and does not use them for model training.</p>
         <div class="reg-note">A Data Processing Summary is available on request. Contact <a href="/cdn-cgi/l/email-protection#4c24292020230c3c2d3c293e383e2d25202d2f2d282921252f622f2321"><span class="__cf_email__" data-cfemail="6d05080101022d1d0c1d081f191f0c04010c0e0c090800040e430e0200">[email&#160;protected]</span></a>.</div>
       </div>
@@ -485,6 +505,7 @@
         <p>Inspect (including the Process View report) and StyleMatch involve no personal data transmission and require no GDPR analysis beyond what applies to Google Docs itself.</p>
         <p>Write stores essay text and behavioral metadata transiently on Supabase (AWS, US region). Data is purged immediately on teacher download; auto-purged after 7 days (timed sessions) or 30 days (untimed) if not downloaded; teachers receive an email warning before auto-purge. The teacher is the data custodian. EU schools using Write should confirm they have a lawful basis for this transient processing under GDPR Article 6 and that their use of US-based infrastructure is covered by their institution's DPA.</p>
         <p>Verify transmits text to US-based processors (Supabase/AWS and Anthropic, Inc.). EU schools using Verify should confirm they have a lawful basis for this processing under GDPR Article 6. The text is not retained by PaperTrail after the report is generated. Anthropic retains API inputs for 7 days and does not use them for model training. Anthropic's commercial API terms incorporate Standard Contractual Clauses (SCCs) for international data transfers. We recommend anonymizing student-identifying information before submission.</p>
+      <p>Oral Defense processes voice recordings — personal data under GDPR — plus the student's name and email, on US-based processors (Supabase/AWS, Deepgram for transcription, Anthropic for the report). Audio is deleted on report export or after 30 days; reports and transcripts after 90 days. EU schools should confirm a lawful basis under Article 6 and coverage for these transfers before using Oral Defense with EU students.</p>
         <div class="reg-note">A DPA for EU data processing is available on request. Contact <a href="/cdn-cgi/l/email-protection#6109040d0d0e211100110413151300080d00020005040c08024f020e0c"><span class="__cf_email__" data-cfemail="97fff2fbfbf8d7e7f6e7f2e5e3e5f6fefbf6f4f6f3f2fafef4b9f4f8fa">[email&#160;protected]</span></a>.</div>
       </div>
 
@@ -505,10 +526,10 @@
       <div class="purchase-card">
         <h3>Individual Teacher</h3>
         <div class="pc-sub">Most common — teacher purchases directly</div>
-        <p>Teachers can subscribe to StyleMatch or purchase Verify credits immediately using a personal or school card. Payments are processed by Lemon Squeezy (Merchant of Record), who handles receipts and VAT.</p>
+        <p>Teachers can subscribe to StyleMatch or purchase PaperTrail Tokens immediately using a personal or school card. Payments are processed by Lemon Squeezy (Merchant of Record), who handles receipts and VAT.</p>
         <div class="price-callout">
-          <strong>StyleMatch:</strong> $4.99/month or $49.99/year per teacher<br>
-          <strong>Verify credits:</strong> From $6 for 10 reports (credits never expire)<br>
+          <strong>StyleMatch:</strong> $1.99/month or $19.99/year per teacher<br>
+          <strong>PaperTrail Tokens:</strong> From $6 for 10 tokens (never expire) — a Verify report is 1 token, an Oral Defense is 2<br>
           <strong>Write:</strong> $49/year per teacher — unlimited sessions
         </div>
         <p>A receipt is issued by Lemon Squeezy at the time of purchase and is suitable for expense reimbursement.</p>
@@ -519,12 +540,12 @@
       <div class="purchase-card">
         <h3>Department or School</h3>
         <div class="pc-sub">Multiple teachers — contact us for options</div>
-        <p>For departments wanting to equip multiple teachers with StyleMatch or Write subscriptions, or schools looking to purchase a batch of Verify credits for department use, please reach out directly.</p>
+        <p>For departments wanting to equip multiple teachers with StyleMatch or Write subscriptions, or schools looking to purchase a batch of PaperTrail Tokens for department use, please reach out directly.</p>
         <div class="price-callout">
           <strong>Verify Year Supply:</strong> 100 reports for $45 — suitable for a small department<br>
           <strong>Volume options:</strong> Discuss with us directly
         </div>
-        <p>We can discuss invoicing arrangements, purchase orders, and how credits can be allocated across a department. Response time is typically within one business day.</p>
+        <p>We can discuss invoicing arrangements, purchase orders, and how tokens can be allocated across a department. Response time is typically within one business day.</p>
         <a href="/cdn-cgi/l/email-protection#a4ccc1c8c8cbe4d4c5d4c1d6d0d6c5cdc8c5c7c5c0c1c9cdc78ac7cbc99bd7d1c6cec1c7d099f7c7cccbcbc884cbd684e0c1d4c5d6d0c9c1cad084edcad5d1cdd6dd" class="btn btn-gold">Contact us for department inquiries</a>
       </div>
 
@@ -638,6 +659,7 @@
         <li><a href="/inspect">Inspect</a></li>
         <li><a href="/stylematch">StyleMatch</a></li>
         <li><a href="/verify">Verify</a></li>
+        <li><a href="/oral">Oral Defense</a></li>
         <li><a href="/write">Write</a></li>
         <li><a href="https://chromewebstore.google.com/detail/papertrail/kgkjmhfoijiiplbmablcjbooopndjbgm" target="_blank" rel="noopener">Chrome Web Store</a></li>
       </ul>

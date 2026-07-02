@@ -161,12 +161,17 @@
           <div class="dd-divider"></div>
           <a href="/stylematch" class="dd-item">
             <span class="dd-icon">🔍</span>
-            <span><span class="dd-label">StyleMatch <span style="color:var(--gold-dk);font-size:10px">$4.99/mo</span></span><span class="dd-sub">8-metric authorship consistency analysis</span></span>
+            <span><span class="dd-label">StyleMatch <span style="color:var(--gold-dk);font-size:10px">$1.99/mo</span></span><span class="dd-sub">8-metric authorship consistency analysis</span></span>
           </a>
           <div class="dd-divider"></div>
           <a href="/verify" class="dd-item">
             <span class="dd-icon">🔬</span>
             <span><span class="dd-label">Verify <span style="color:var(--teal);font-size:10px">From $0.60</span></span><span class="dd-sub">AI-assisted deep analysis &amp; reports</span></span>
+          </a>
+          <div class="dd-divider"></div>
+          <a href="/oral" class="dd-item">
+            <span class="dd-icon">🎙️</span>
+            <span><span class="dd-label">Oral Defense <span style="color:var(--teal);font-size:10px">2 Tokens</span></span><span class="dd-sub">Students account for their writing — out loud</span></span>
           </a>
         </div>
       </div>
@@ -197,11 +202,15 @@
       </a>
       <a href="/stylematch" class="mobile-drawer-item">
         <span class="dd-icon">🔍</span>
-        <span><span class="dd-label">StyleMatch <span style="color:var(--gold-dk);font-size:10px">$4.99/mo</span></span><span class="dd-sub">8-metric authorship consistency analysis</span></span>
+        <span><span class="dd-label">StyleMatch <span style="color:var(--gold-dk);font-size:10px">$1.99/mo</span></span><span class="dd-sub">8-metric authorship consistency analysis</span></span>
       </a>
       <a href="/verify" class="mobile-drawer-item">
         <span class="dd-icon">🔬</span>
         <span><span class="dd-label">Verify <span style="color:var(--teal);font-size:10px">From $0.60</span></span><span class="dd-sub">AI-assisted deep analysis &amp; reports</span></span>
+      </a>
+      <a href="/oral" class="mobile-drawer-item">
+        <span class="dd-icon">🎙️</span>
+        <span><span class="dd-label">Oral Defense <span style="color:var(--teal);font-size:10px">2 Tokens</span></span><span class="dd-sub">Students account for their writing — out loud</span></span>
       </a>
       <a href="/write" class="mobile-drawer-item">
         <span class="dd-icon">🖊️</span>
@@ -231,7 +240,7 @@
 <div class="doc-wrap">
 
   <div class="lead-note">
-    <strong>Plain-language summary:</strong> PaperTrail&trade; Academic is built by a teacher, for teachers. These terms cover how you can use the service, what we do with any text you submit, and how payments work. The key points: StyleMatch never transmits your text anywhere. Verify does transmit text to generate a report, but does not retain it. PaperTrail Write holds student writing transiently and purges it after the teacher downloads their session report. All decisions made using PaperTrail reports are yours — the tool provides a data point, never a verdict.
+    <strong>Plain-language summary:</strong> PaperTrail&trade; Academic is built by a teacher, for teachers. These terms cover how you can use the service, what we do with any text you submit, and how payments work. The key points: StyleMatch never transmits your text anywhere. Verify does transmit text to generate a report, but does not retain it. PaperTrail Write holds student writing transiently and purges it after the teacher downloads their session report. Oral Defense holds student audio transiently — deleted when the teacher exports the report or after 30 days. All decisions made using PaperTrail reports are yours — the tool provides a data point, never a verdict.
   </div>
 
   <div class="toc">
@@ -266,7 +275,7 @@
   <div class="doc-section" id="s2">
     <h2>2. Who May Use This Service</h2>
     <p><strong>The Service is intended for use by educators and education professionals only.</strong></p>
-    <p>You must be 18 years of age or older to create a teacher account. The Chrome extension and PaperTrail Write teacher dashboard must not be used directly by students. Students participate in PaperTrail Write sessions only as directed by their teacher — they do not create accounts and are not subject to these Terms.</p>
+    <p>You must be 18 years of age or older to create a teacher account. The Chrome extension and PaperTrail Write teacher dashboard must not be used directly by students. Students participate in PaperTrail Write sessions and Oral Defense recordings only as directed by their teacher — they do not create accounts and are not subject to these Terms.</p>
     <p>PaperTrail Academic does not knowingly collect data from or about students beyond what is necessary to operate a teacher-assigned writing session. All teacher-facing interactions with the Service are through the educator's account.</p>
   </div>
 
@@ -277,6 +286,7 @@
       <li><strong>PaperTrail Inspect:</strong> Revision history analysis, writing session reconstruction, and behavioral pattern detection based on Google Docs revision data. Core Inspect features are available to all users without an account. Paste analysis and struggle moment detection require an active StyleMatch subscription.</li>
       <li><strong>StyleMatch:</strong> Local, on-device stylometric comparison of two writing samples across eight metrics to assess authorship consistency. No text is transmitted when using StyleMatch. Users who create a free account receive three complimentary StyleMatch runs. Unlimited access requires an active subscription.</li>
       <li><strong>Verify:</strong> AI-assisted writing analysis that transmits submitted text to a third-party AI provider (Anthropic, Inc.) for processing. Available as a Consistency Report or a Baseline Deviation Report. See Section 8 for data handling details.</li>
+      <li><strong>Oral Defense:</strong> A spoken follow-up on a submitted essay. AI drafts questions from the essay text (via Anthropic, Inc.), the teacher curates and sends them, and the student records short spoken answers at a private link — no student account is required. Recordings are transcribed (via Deepgram, Inc.) and summarized into an ownership report. Costs 2 PaperTrail Tokens per defense (1 to generate questions, 1 to send). See Section 8 for data handling details.</li>
       <li><strong>PaperTrail Write:</strong> A web application (<a href="https://write.papertrailacademic.com" target="_blank" rel="noopener">write.papertrailacademic.com</a>) for timed classroom writing sessions. Teachers create assignments, open sessions, and monitor student writing in real time. Students join via a code — no student account is required. Session data is stored transiently and purged automatically after the session ends. See Section 8 for data handling details.</li>
     </ul>
   </div>
@@ -307,7 +317,7 @@
           <th>Feature</th>
           <th>No account</th>
           <th>Free account</th>
-          <th>Verify credits only</th>
+          <th>PaperTrail Tokens only</th>
           <th>StyleMatch subscriber</th>
           <th>StyleMatch + Verify</th>
         </tr>
@@ -363,21 +373,22 @@
 
   <div class="doc-section" id="s6">
     <h2>6. Subscriptions and Payments</h2>
-    <p><strong>Billing.</strong> Paid subscriptions and credit packs are processed by Lemon Squeezy, our payment processor and Merchant of Record. By purchasing a subscription or credit pack, you agree to Lemon Squeezy's Terms of Service and Privacy Policy, available at <a href="https://www.lemonsqueezy.com" target="_blank" rel="noopener">lemonsqueezy.com</a>.</p>
+    <p><strong>Billing.</strong> Paid subscriptions and credit packs are processed by Lemon Squeezy, our payment processor and Merchant of Record. By purchasing a subscription or token pack, you agree to Lemon Squeezy's Terms of Service and Privacy Policy, available at <a href="https://www.lemonsqueezy.com" target="_blank" rel="noopener">lemonsqueezy.com</a>.</p>
     <p><strong>Lemon Squeezy as Merchant of Record.</strong> Lemon Squeezy handles all payment processing, invoicing, and applicable sales tax and VAT obligations. PaperTrail Academic is not responsible for tax collection on your purchase.</p>
     <p><strong>Pricing.</strong></p>
     <ul>
-      <li>StyleMatch Monthly: $4.99/month</li>
-      <li>StyleMatch Annual: $49.99/year</li>
-      <li>Verify Starter Pack: $6.00 (10 reports)</li>
-      <li>Verify Semester Pack: $18.00 (35 reports)</li>
-      <li>Verify Year Supply Pack: $45.00 (100 reports)</li>
+      <li>StyleMatch Monthly: $1.99/month</li>
+      <li>StyleMatch Annual: $19.99/year</li>
+      <li>PaperTrail Token Starter Pack: $6.00 (10 tokens)</li>
+      <li>PaperTrail Token Semester Pack: $18.00 (35 tokens)</li>
+      <li>PaperTrail Token Year Supply Pack: $45.00 (100 tokens)</li>
+      <li>A Verify report costs 1 token; an Oral Defense costs 2 tokens (1 to generate questions, 1 to send)</li>
       <li>PaperTrail Write Teacher Pro: pricing displayed at <a href="https://write.papertrailacademic.com" target="_blank" rel="noopener">write.papertrailacademic.com</a></li>
     </ul>
     <p>Prices are in USD and subject to change with notice. Changes to subscription pricing will be communicated at least 30 days in advance.</p>
-    <p><strong>Verify credits</strong> are non-expiring and non-transferable. They are tied to your account and cannot be moved to another account or refunded once consumed.</p>
+    <p><strong>PaperTrail Tokens</strong> (used by Verify and Oral Defense) are non-expiring and non-transferable. They are tied to your account and cannot be moved to another account or refunded once consumed.</p>
     <p><strong>Subscriptions</strong> renew automatically at the end of each billing period. You may cancel at any time; cancellation takes effect at the end of the current billing period. No partial-period refunds are issued. Upon cancellation, your account reverts to the free or trial tier.</p>
-    <p><strong>Refunds.</strong> Refund requests may be submitted to <a href="mailto:hello@papertrailacademic.com">hello@papertrailacademic.com</a> within 7 days of purchase, provided no reports have been generated or sessions run under the purchased plan. Credits consumed prior to a refund request are non-refundable. We handle refund requests on a case-by-case basis.</p>
+    <p><strong>Refunds.</strong> Refund requests may be submitted to <a href="mailto:hello@papertrailacademic.com">hello@papertrailacademic.com</a> within 7 days of purchase, provided no reports have been generated or sessions run under the purchased plan. Tokens consumed prior to a refund request are non-refundable. We handle refund requests on a case-by-case basis.</p>
   </div>
 
   <div class="doc-section" id="s7">
@@ -407,6 +418,7 @@
     <p>Anthropic processes submitted text under its commercial API terms, which prohibit using API inputs for model training. As of September 2025, Anthropic retains API inputs for 7 days before automatic deletion. See <a href="https://www.anthropic.com/privacy" target="_blank" rel="noopener">anthropic.com/privacy</a> for their full policy.</p>
 
     <p><strong>PaperTrail Write (web application):</strong> PaperTrail Write is designed as a transit system, not a data vault. Student writing data is held transiently in a secure backend (Supabase, hosted on AWS) for the duration of the session.</p>
+    <p><strong>Oral Defense:</strong> The essay text, curated questions, student name and email (supplied by the teacher), spoken-answer recordings, and transcripts are held in a secure backend (Supabase, hosted on AWS). Recordings are transcribed by Deepgram, Inc. and the ownership report is generated via the Anthropic API; neither provider uses this data for model training under their commercial terms. Audio recordings are permanently deleted when the teacher exports the report, or automatically after 30 days (with a prior email warning). Reports and transcripts are retained for 90 days, then purged. Only the teacher who created the defense can access its data.</p>
 
     <div class="callout blue">
       <p><strong>The teacher is the data custodian.</strong> After a session ends, the teacher downloads a session report containing student writing and process logs. Student submission data is then purged automatically from PaperTrail's servers — untimed sessions after 30 days, timed sessions after 7 days, and ended sessions within 24 hours. These purges are automatic and cannot be reversed.</p>
@@ -421,13 +433,13 @@
     </ul>
 
     <p><strong>Your responsibility.</strong> You are responsible for ensuring that your use of the Service complies with your institution's data governance policies and applicable education privacy law in your jurisdiction (including but not limited to FERPA in the United States and GDPR in the European Union). Where required, you should anonymize student-identifying information before submitting text through Verify.</p>
-    <p><strong>EU Users.</strong> If you are located in the European Union or processing data subject to GDPR, you acknowledge that text submitted through Verify and PaperTrail Write is processed in the United States by Anthropic, Inc. and by Supabase (AWS). By using these features, you represent that you have a lawful basis for this processing under GDPR.</p>
+    <p><strong>EU Users.</strong> If you are located in the European Union or processing data subject to GDPR, you acknowledge that text submitted through Verify and PaperTrail Write, and audio submitted through Oral Defense, is processed in the United States by Anthropic, Inc., Deepgram, Inc., and Supabase (AWS). By using these features, you represent that you have a lawful basis for this processing under GDPR.</p>
   </div>
 
   <div class="doc-section" id="s9">
     <h2>9. Intellectual Property</h2>
     <p><strong>Our IP.</strong> The Service, including all code, algorithms, UI design, report templates, scoring methodology, and branding, is the intellectual property of Michael Smith / PaperTrail Academic. All rights reserved.</p>
-    <p><strong>Your content.</strong> You retain all rights to the text you submit through the Service. By submitting text through Verify or PaperTrail Write, you grant PaperTrail Academic a limited, non-exclusive license to process that text solely for the purpose of generating your requested report or operating your writing session. This license does not include the right to store, reproduce, or share your submitted text beyond what is necessary to operate the Service.</p>
+    <p><strong>Your content.</strong> You retain all rights to the text you submit through the Service. By submitting text through Verify, PaperTrail Write, or Oral Defense (including student audio recordings), you grant PaperTrail Academic a limited, non-exclusive license to process that text solely for the purpose of generating your requested report or operating your writing session. This license does not include the right to store, reproduce, or share your submitted text beyond what is necessary to operate the Service.</p>
     <p><strong>Report output.</strong> Reports generated by the Service are for your professional use. You may include them in institutional records, documentation, or communications related to your professional duties. You may not redistribute or resell report output.</p>
   </div>
 
@@ -435,8 +447,9 @@
     <h2>10. Third-Party Services</h2>
     <p>The Service relies on the following third-party providers. Their terms and privacy policies govern their respective portions of the Service:</p>
     <ul>
-      <li><strong>Supabase</strong> (<a href="https://supabase.com" target="_blank" rel="noopener">supabase.com</a>) — authentication, database, and file storage for PaperTrail Write and Verify</li>
-      <li><strong>Anthropic, Inc.</strong> (<a href="https://www.anthropic.com" target="_blank" rel="noopener">anthropic.com</a>) — AI analysis for the Verify feature</li>
+      <li><strong>Supabase</strong> (<a href="https://supabase.com" target="_blank" rel="noopener">supabase.com</a>) — authentication, database, and file storage for PaperTrail Write, Verify, and Oral Defense</li>
+      <li><strong>Anthropic, Inc.</strong> (<a href="https://www.anthropic.com" target="_blank" rel="noopener">anthropic.com</a>) — AI analysis for the Verify feature; question generation and report writing for Oral Defense</li>
+      <li><strong>Deepgram, Inc.</strong> (<a href="https://deepgram.com" target="_blank" rel="noopener">deepgram.com</a>) — speech-to-text transcription and question read-aloud (text-to-speech) for Oral Defense</li>
       <li><strong>Lemon Squeezy</strong> (<a href="https://www.lemonsqueezy.com" target="_blank" rel="noopener">lemonsqueezy.com</a>) — payment processing and Merchant of Record</li>
       <li><strong>Google</strong> — the Chrome extension operates within Google Docs; PaperTrail Write uses Google OAuth for teacher sign-in and optionally the Google Drive API for source document selection. Your use of Google services is governed by Google's Terms of Service</li>
     </ul>
@@ -531,6 +544,7 @@
         <li><a href="/inspect">Inspect</a></li>
         <li><a href="/stylematch">StyleMatch</a></li>
         <li><a href="/verify">Verify</a></li>
+        <li><a href="/oral">Oral Defense</a></li>
         <li><a href="https://write.papertrailacademic.com" target="_blank" rel="noopener">Write</a></li>
         <li><a href="https://chromewebstore.google.com/detail/papertrail/kgkjmhfoijiiplbmablcjbooopndjbgm" target="_blank" rel="noopener">Chrome Web Store</a></li>
       </ul>

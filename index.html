@@ -111,7 +111,7 @@ nav{position:sticky;top:0;z-index:200;background:rgba(255,255,255,.96);backdrop-
 .products-hdr p{font-size:15px;color:var(--ink-2);max-width:500px;margin:0 auto}
 
 .cards-arena{max-width:1140px;margin:0 auto;padding:0 28px}
-.cards-row{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.cards-row{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
 
 /* ── Base card ── */
 .pcard{
@@ -131,6 +131,11 @@ nav{position:sticky;top:0;z-index:200;background:rgba(255,255,255,.96);backdrop-
 .banner-gold{background:var(--gold)}
 .banner-teal{background:var(--teal)}
 .banner-purple{background:var(--purple)}
+.banner-oral{background:#1f5a4f}
+.oral-eq{display:inline-block;width:3px;background:var(--teal);border-radius:2px;height:6px;animation:oralEq 0.9s ease-in-out infinite}
+@keyframes oralEq{0%,100%{height:5px}50%{height:14px}}
+.oral-recdot{width:10px;height:10px;border-radius:50%;background:#b4452f;animation:oralPulse 1.1s infinite;flex-shrink:0}
+@keyframes oralPulse{0%,100%{opacity:1}50%{opacity:.25}}
 .pill-free{background:rgba(255,255,255,.22);color:#fff}
 .pill-sub{background:rgba(255,255,255,.22);color:#fff}
 .pill-credits{background:rgba(255,255,255,.22);color:#fff}
@@ -298,7 +303,7 @@ body.overlay-active .cards-overlay{opacity:1;pointer-events:all}
 .pricing-hdr h2{font-family:'Lora',serif;font-size:clamp(22px,2.5vw,30px);color:var(--ink);margin-bottom:8px}
 .pricing-hdr h2 em{color:var(--blue)}
 .pricing-hdr p{font-size:14.5px;color:var(--ink-2);max-width:480px;margin:0 auto}
-.price-cols{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-bottom:24px}
+.price-cols{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px}
 .price-col{background:var(--bg);border:1.5px solid var(--rule);border-radius:12px;padding:22px 20px;display:flex;flex-direction:column;gap:11px}
 .price-col.featured{background:var(--blue);border-color:var(--blue);box-shadow:0 8px 32px rgba(74,111,165,.22)}
 .price-col h3{font-family:'Lora',serif;font-size:18px;color:var(--ink)}
@@ -399,6 +404,7 @@ footer{background:var(--ink);padding:42px 0 0}
 /* ─── Responsive ──────────────────────────────────────────────── */
 @media(max-width:1100px){
   .cards-row{grid-template-columns:repeat(2,1fr)}
+  .price-cols{grid-template-columns:repeat(2,1fr)}
 }
 @media(max-width:960px){
   .hero-inner{grid-template-columns:1fr;gap:32px}
@@ -450,12 +456,17 @@ footer{background:var(--ink);padding:42px 0 0}
           <div class="dd-divider"></div>
           <a href="/stylematch" class="dd-item">
             <span class="dd-icon">🔍</span>
-            <span><span class="dd-label">StyleMatch <span style="color:var(--gold-dk);font-size:10px">$4.99/mo</span></span><span class="dd-sub">8-metric authorship consistency analysis</span></span>
+            <span><span class="dd-label">StyleMatch <span style="color:var(--gold-dk);font-size:10px">$1.99/mo</span></span><span class="dd-sub">8-metric authorship consistency analysis</span></span>
           </a>
           <div class="dd-divider"></div>
           <a href="/verify" class="dd-item">
             <span class="dd-icon">🔬</span>
             <span><span class="dd-label">Verify <span style="color:var(--teal);font-size:10px">From $0.60</span></span><span class="dd-sub">AI-assisted deep analysis &amp; reports</span></span>
+          </a>
+          <div class="dd-divider"></div>
+          <a href="/oral" class="dd-item">
+            <span class="dd-icon">🎙️</span>
+            <span><span class="dd-label">Oral Defense <span style="color:var(--teal);font-size:10px">2 Tokens</span></span><span class="dd-sub">Students account for their writing — out loud</span></span>
           </a>
           <div class="dd-divider"></div>
           <a href="/write" class="dd-item">
@@ -492,11 +503,15 @@ footer{background:var(--ink);padding:42px 0 0}
       </a>
       <a href="/stylematch" class="mobile-drawer-item">
         <span class="dd-icon">🔍</span>
-        <span><span class="dd-label">StyleMatch <span style="color:var(--gold-dk);font-size:10px">$4.99/mo</span></span><span class="dd-sub">8-metric authorship consistency analysis</span></span>
+        <span><span class="dd-label">StyleMatch <span style="color:var(--gold-dk);font-size:10px">$1.99/mo</span></span><span class="dd-sub">8-metric authorship consistency analysis</span></span>
       </a>
       <a href="/verify" class="mobile-drawer-item">
         <span class="dd-icon">🔬</span>
         <span><span class="dd-label">Verify <span style="color:var(--teal);font-size:10px">From $0.60</span></span><span class="dd-sub">AI-assisted deep analysis &amp; reports</span></span>
+      </a>
+      <a href="/oral" class="mobile-drawer-item">
+        <span class="dd-icon">🎙️</span>
+        <span><span class="dd-label">Oral Defense <span style="color:var(--teal);font-size:10px">2 Tokens</span></span><span class="dd-sub">Students account for their writing — out loud</span></span>
       </a>
       <a href="/write" class="mobile-drawer-item">
         <span class="dd-icon">🖊️</span>
@@ -517,7 +532,7 @@ footer{background:var(--ink);padding:42px 0 0}
     <div class="hero-text">
       <p class="eyebrow">PaperTrail&trade; Academic</p>
       <h1>You've read thousands of student essays.<br><em>Trust that instinct — then document it.</em></h1>
-      <p class="hero-sub">Four tools that give teachers structured, repeatable, documentable insight into how student writing was produced — from process monitoring in the classroom to deep post-submission analysis. The evidence speaks clearly. The judgment stays yours.</p>
+      <p class="hero-sub">Five tools that give teachers structured, repeatable, documentable insight into how student writing was produced — from process monitoring in the classroom to a spoken defense of the finished essay. The evidence speaks clearly. The judgment stays yours.</p>
       <div class="hero-actions">
         <a href="https://chromewebstore.google.com/detail/papertrail/kgkjmhfoijiiplbmablcjbooopndjbgm"
            class="btn btn-gold" target="_blank" rel="noopener">&#11015; Add to Chrome — It's Free</a>
@@ -544,7 +559,7 @@ footer{background:var(--ink);padding:42px 0 0}
       <div class="hero-preview-card" onclick="heroOpenCard('stylematch')" role="button" tabindex="0" aria-label="Learn more about StyleMatch" style="border-left-color:var(--gold)">
         <div class="hpc-icon">🔍</div>
         <div style="flex:1">
-          <div class="hpc-title">StyleMatch&trade; &nbsp;<span style="color:var(--gold-dk);font-size:11px">$4.99/mo</span></div>
+          <div class="hpc-title">StyleMatch&trade; &nbsp;<span style="color:var(--gold-dk);font-size:11px">$1.99/mo</span></div>
           <div class="hpc-hook"><strong>Does this sound like them?</strong> Eight stylometric metrics compare submitted work to a known sample.</div>
           <a href="/stylematch" onclick="event.stopPropagation()" class="hpc-link" style="color:var(--gold-dk)">Learn more →</a>
         </div>
@@ -559,6 +574,15 @@ footer{background:var(--ink);padding:42px 0 0}
         </div>
       </div>
 
+      <div class="hero-preview-card" onclick="heroOpenCard('oral')" role="button" tabindex="0" aria-label="Learn more about Oral Defense" style="border-left-color:var(--teal)">
+        <div class="hpc-icon">🎙️</div>
+        <div style="flex:1">
+          <div class="hpc-title">Oral Defense &nbsp;<span style="color:var(--teal);font-size:11px">2 Tokens</span></div>
+          <div class="hpc-hook"><strong>Can they account for it?</strong> Students defend their own essay out loud — short spoken answers, no account needed.</div>
+          <a href="/oral" onclick="event.stopPropagation()" class="hpc-link" style="color:var(--teal)">Learn more →</a>
+        </div>
+      </div>
+
       <div class="hero-preview-card" onclick="heroOpenCard('write')" role="button" tabindex="0" aria-label="Learn more about Write" style="border-left-color:var(--purple)">
         <div class="hpc-icon">🖊️</div>
         <div style="flex:1">
@@ -568,7 +592,8 @@ footer{background:var(--ink);padding:42px 0 0}
         </div>
       </div>
 
-  </div>
+    </div><!-- /hero-cards-row -->
+  </div><!-- /hero-inner -->
 </section>
 
 <div class="tagline-strip">
@@ -580,7 +605,7 @@ footer{background:var(--ink);padding:42px 0 0}
   <div class="container">
     <div class="products-hdr">
       <p class="eyebrow">The PaperTrail Suite</p>
-      <h2>Four tools. One question: <em>Did they write this?</em></h2>
+      <h2>Five tools. One question: <em>Did they write this?</em></h2>
       <p>Click any card to see a full preview and feature breakdown.</p>
     </div>
   </div>
@@ -722,7 +747,7 @@ footer{background:var(--ink);padding:42px 0 0}
             <span class="pcard-banner-icon">🔍</span>
             <span class="pcard-banner-name">StyleMatch™</span>
           </div>
-          <span class="pcard-banner-pill pill-sub">$4.99/mo</span>
+          <span class="pcard-banner-pill pill-sub">$1.99/mo</span>
         </div>
         <div class="pcard-top">
           <h3>"This doesn't sound like them."</h3>
@@ -738,7 +763,7 @@ footer{background:var(--ink);padding:42px 0 0}
           </ul>
         </div>
         <div class="pcard-footer">
-          <div class="price-line"><span class="price-big">$4.99</span><span class="price-unit">/month &nbsp;·&nbsp; $49.99/year</span></div>
+          <div class="price-line"><span class="price-big">$1.99</span><span class="price-unit">/month &nbsp;·&nbsp; $19.99/year</span></div>
           <a href="#pricing" class="btn btn-gold btn-full" onclick="event.stopPropagation();_close(true)">See pricing</a>
           <p class="expand-hint">Click card to see sample report ↓</p>
         </div>
@@ -787,8 +812,8 @@ footer{background:var(--ink);padding:42px 0 0}
               <li>Minimum 500 words per sample required</li>
             </ul>
             <div class="exp-price-row">
-              <div class="exp-price-big">$4.99<span style="font-size:15px;font-weight:400;color:var(--ink-3)">/month</span></div>
-              <div class="exp-price-sub">or $49.99/year — save 17%</div>
+              <div class="exp-price-big">$1.99<span style="font-size:15px;font-weight:400;color:var(--ink-3)">/month</span></div>
+              <div class="exp-price-sub">or $19.99/year — save 16%</div>
               <a href="#pricing" class="btn btn-gold btn-full" onclick="event.stopPropagation();_close(true)">See full pricing ↓</a>
             </div>
             <div class="exp-disclaimer">StyleMatch is a probabilistic tool. Genre-constrained writing (lab reports, TOK essays) may show inflated similarity on some metrics. Always apply professional judgment. All reports include a mandatory disclaimer.</div>
@@ -820,7 +845,7 @@ footer{background:var(--ink);padding:42px 0 0}
         </div>
         <div class="pcard-footer">
           <div class="price-line"><span class="price-big">$6</span><span class="price-unit">— 10 reports (starter)</span></div>
-          <a href="#pricing" class="btn btn-teal btn-full" onclick="event.stopPropagation();_close(true)">See credit packs</a>
+          <a href="#pricing" class="btn btn-teal btn-full" onclick="event.stopPropagation();_close(true)">See token packs</a>
           <p class="expand-hint">Click card to see sample reports ↓</p>
         </div>
 
@@ -882,14 +907,101 @@ footer{background:var(--ink);padding:42px 0 0}
               <li>Research citations included — 10 peer-reviewed sources</li>
               <li>Printable PDF report with Report ID for institutional records</li>
               <li>No text retained after analysis is complete</li>
-              <li>Credits never expire — use when the situation calls for it</li>
+              <li>Tokens never expire — use them when the situation calls for it</li>
             </ul>
             <div class="exp-price-row">
               <div class="exp-price-big">$0.60<span style="font-size:14px;font-weight:400;color:var(--ink-3)">/report</span></div>
               <div class="exp-price-sub">Starter: 10 for $6 &nbsp;·&nbsp; Semester: 35 for $18 &nbsp;·&nbsp; Year: 100 for $45</div>
-              <a href="#pricing" class="btn btn-teal btn-full" onclick="event.stopPropagation();_close(true)">See all credit packs ↓</a>
+              <a href="#pricing" class="btn btn-teal btn-full" onclick="event.stopPropagation();_close(true)">See all token packs ↓</a>
             </div>
             <div class="exp-disclaimer">Verify transmits submitted text to PaperTrail's secure backend and the Anthropic API for processing. Text is not retained after the report is generated. See our Privacy Policy for full details.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ ORAL DEFENSE ══ -->
+      <div class="pcard" id="card-oral" onclick="openCard('oral',event)">
+        <button class="card-close" onclick="closeCard(event)">✕</button>
+        <div class="pcard-banner banner-oral">
+          <div class="pcard-banner-left">
+            <span class="pcard-banner-icon">🎙️</span>
+            <span class="pcard-banner-name">Oral Defense</span>
+          </div>
+          <span class="pcard-banner-pill pill-credits">2 Tokens</span>
+        </div>
+        <div class="pcard-top">
+          <h3>"Walk me through the choices you made."</h3>
+          <p class="card-desc">The essay generates its own defense: AI drafts questions about the student's authorial choices, you curate them, and the student answers out loud at a private link — one take, no account.</p>
+        </div>
+        <div class="pcard-features">
+          <ul>
+            <li>AI-drafted question pool from the essay itself — you approve, edit, or replace every question</li>
+            <li>Students record short spoken answers — no account, questions hidden until read aloud</li>
+            <li>Answers auto-transcribed, with on-demand audio playback</li>
+            <li>Report describes how the student accounted for each choice — described, never judged</li>
+            <li>Audio auto-deleted after export or 30 days</li>
+          </ul>
+        </div>
+        <div class="pcard-footer">
+          <div class="price-line"><span class="price-big" style="color:var(--teal)">2</span><span class="price-unit">tokens per defense &nbsp;·&nbsp; from $1.20</span></div>
+          <a href="/oral" class="btn btn-teal btn-full" onclick="event.stopPropagation()">Learn More →</a>
+          <p class="expand-hint">Click card to see how a defense runs ↓</p>
+        </div>
+
+        <div class="pcard-expanded">
+          <div class="exp-left">
+            <!-- Student recording mockup (animated) -->
+            <div style="background:#f6f7f9;border-radius:9px;border:1px solid var(--rule);overflow:hidden;font-family:'DM Sans',sans-serif;margin-bottom:12px">
+              <div style="background:var(--teal);padding:9px 13px;display:flex;align-items:center;gap:8px">
+                <span style="font-size:13px">🎙️</span>
+                <span style="font-size:11px;font-weight:700;color:#fff;font-family:'Lora',serif">PaperTrail <em style="color:#c9e8e1;font-style:italic">Oral Defense</em></span>
+                <span style="margin-left:auto;font-size:9px;color:rgba(255,255,255,.7)">Question 2 of 5</span>
+              </div>
+              <div style="padding:14px 16px">
+                <div style="font-family:'Lora',serif;font-size:12.5px;font-weight:600;color:var(--ink);line-height:1.45;margin-bottom:10px">Why did you open with the counterargument instead of your own thesis?</div>
+                <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
+                  <span style="display:inline-flex;gap:2px;align-items:flex-end;height:14px">
+                    <span class="oral-eq" style="animation-delay:0s"></span><span class="oral-eq" style="animation-delay:.15s"></span><span class="oral-eq" style="animation-delay:.3s"></span><span class="oral-eq" style="animation-delay:.45s"></span>
+                  </span>
+                  <span style="font-size:9.5px;color:var(--teal);font-weight:700">Question read aloud · 10s to prepare</span>
+                </div>
+                <div style="background:#fff;border:1px solid var(--rule);border-radius:7px;padding:8px 11px;display:flex;align-items:center;gap:9px">
+                  <span class="oral-recdot"></span>
+                  <span style="font-size:11px;font-weight:700;color:#b4452f;font-variant-numeric:tabular-nums">0:47</span>
+                  <span style="font-size:9px;color:var(--ink-3)">Recording — one take, up to 2:00</span>
+                </div>
+              </div>
+            </div>
+            <!-- Teacher report mockup -->
+            <div style="background:#fff;border-radius:9px;border:1px solid var(--rule);overflow:hidden;font-family:'DM Sans',sans-serif">
+              <div style="background:var(--teal);padding:8px 13px;font-size:10.5px;font-weight:700;color:#fff">🎙️ Ownership Report — E. Kowalski</div>
+              <div style="padding:10px 13px;display:flex;flex-direction:column;gap:6px">
+                <div style="display:flex;gap:8px;align-items:center;font-size:9.5px;color:var(--ink-2)"><span style="background:#eaf4f0;color:#1f5a4f;font-weight:700;padding:1px 7px;border-radius:9px;font-size:9px">✓ Accounted for</span> Q1 — explained the Steinbeck example from memory, added context</div>
+                <div style="display:flex;gap:8px;align-items:center;font-size:9.5px;color:var(--ink-2)"><span style="background:#eaf4f0;color:#1f5a4f;font-weight:700;padding:1px 7px;border-radius:9px;font-size:9px">✓ Accounted for</span> Q2 — described the counterargument structure as deliberate</div>
+                <div style="display:flex;gap:8px;align-items:center;font-size:9.5px;color:var(--ink-2)"><span style="background:#fbf6e8;color:#8a6d1f;font-weight:700;padding:1px 7px;border-radius:9px;font-size:9px">◐ Brief</span> Q3 — thin on why this source over alternatives</div>
+                <div style="display:flex;gap:8px;align-items:center;font-size:9.5px;color:var(--ink-2)"><span style="background:#fbecea;color:#b4452f;font-weight:700;padding:1px 7px;border-radius:9px;font-size:9px">⚑ Couldn't account</span> Q4 — couldn't explain the conclusion's key term</div>
+                <div style="font-size:8.5px;color:var(--ink-3);border-top:1px solid var(--rule);padding-top:6px;margin-top:2px;font-style:italic">Describes how the student accounted for their writing. Not a verdict — educator judgment required.</div>
+              </div>
+            </div>
+          </div>
+          <div class="exp-right">
+            <h4>The essay generates its own defense</h4>
+            <p style="font-size:13px;color:var(--ink-2);line-height:1.6;margin-bottom:12px"><strong>The question Oral Defense answers:</strong> can the student account for the choices in their own essay — out loud, in their own words, two weeks later? A genuine writer can talk about why they wrote what they wrote.</p>
+            <ul class="exp-features">
+              <li><strong>Generate</strong> — paste or auto-fill the essay; AI drafts ~10 questions about authorial choices: why this example, why this conclusion, why this structure (1 token)</li>
+              <li><strong>Curate</strong> — you are the gatekeeper: keep 4–6, edit any, add your own</li>
+              <li><strong>Send</strong> — the student gets a private link; no account, no app (1 token)</li>
+              <li><strong>Defend</strong> — each question is hidden until it's read aloud, then 10 seconds to prepare, then recording starts — one take, up to 2 minutes</li>
+              <li><strong>Report</strong> — per-question markers (✓ accounted for · ◐ brief · ⚑ couldn't account · — not answered), evidence from the transcript, and suggested follow-ups</li>
+              <li>Transcripts + on-demand audio playback in your dashboard</li>
+              <li>Audio permanently deleted on export (or 30-day backstop); report kept 90 days</li>
+            </ul>
+            <div class="exp-price-row">
+              <div class="exp-price-big" style="color:var(--teal)">2 tokens<span style="font-size:14px;font-weight:400;color:var(--ink-3)"> /defense</span></div>
+              <div class="exp-price-sub">1 to generate questions + 1 to send — from $1.20 with the starter pack</div>
+              <a href="/oral" class="btn btn-teal btn-full" onclick="event.stopPropagation()">See how a defense runs →</a>
+            </div>
+            <div class="exp-disclaimer">Oral Defense describes how a student accounts for their writing — it is not a lie detector and produces no verdict. Nerves, language background, and accommodations matter; the report exists to support your conversation, never to replace it.</div>
           </div>
         </div>
       </div>
@@ -1063,7 +1175,7 @@ footer{background:var(--ink);padding:42px 0 0}
       <p style="font-size:13.5px;color:var(--ink-2);line-height:1.65;margin:0">A document that is <strong>flagged by source-matching</strong>, <strong>shows stylistic divergence</strong> in StyleMatch, AND <strong>shows surface editing only</strong> in Process View is a different conversation than any of those signals alone. The evidence stack is what makes the conversation defensible.</p>
     </div>
 
-    <p style="text-align:center;font-size:11.5px;color:var(--ink-3);margin-top:24px;font-style:italic">Verify (AI-assisted close reading) is a fourth signal available when the situation calls for deeper analysis — see below.</p>
+    <p style="text-align:center;font-size:11.5px;color:var(--ink-3);margin-top:24px;font-style:italic">Verify (AI-assisted close reading) and Oral Defense (the student accounts for their writing, out loud) are further signals available when the situation calls for more — see below.</p>
   </div>
 </section>
 
@@ -1073,7 +1185,7 @@ footer{background:var(--ink);padding:42px 0 0}
     <div class="pricing-hdr">
       <p class="eyebrow">Pricing</p>
       <h2>Start free. <em>Upgrade when you need to.</em></h2>
-      <p>Inspect is free forever, no account required. StyleMatch and Verify are for when the situation calls for more.</p>
+      <p>Inspect is free forever, no account required. StyleMatch, Verify, and Oral Defense are for when the situation calls for more.</p>
     </div>
     <div class="price-cols">
       <div class="price-col">
@@ -1099,8 +1211,8 @@ footer{background:var(--ink);padding:42px 0 0}
         <span class="pcard-badge" style="align-self:flex-start;background:rgba(255,255,255,.18);color:#fff">🔍 StyleMatch</span>
         <h3>Subscription</h3>
         <p class="price-sub-lbl">Stylistic comparison — does it sound like them?</p>
-        <div class="big-price"><span class="n">$4.99</span><span class="u">/month</span></div>
-        <p class="price-alt">or $49.99/year — save 17%</p>
+        <div class="big-price"><span class="n">$1.99</span><span class="u">/month</span></div>
+        <p class="price-alt">or $19.99/year — save 16%</p>
         <ul class="price-feats">
           <li>Everything in Inspect</li>
           <li>The 8-metric stylometric comparison engine</li>
@@ -1113,9 +1225,9 @@ footer{background:var(--ink);padding:42px 0 0}
         </ul>
         <div style="display:flex;gap:8px;margin-top:4px">
           <a href="https://papertrailacademic.lemonsqueezy.com/checkout/buy/33e2150f-8332-42d5-ac7d-d22a8bc6b646"
-             class="btn btn-gold btn-full lemonsqueezy-button" style="flex:1;justify-content:center">Monthly $4.99</a>
+             class="btn btn-gold btn-full lemonsqueezy-button" style="flex:1;justify-content:center">Monthly $1.99</a>
           <a href="https://papertrailacademic.lemonsqueezy.com/checkout/buy/33e2150f-8332-42d5-ac7d-d22a8bc6b646"
-             class="btn btn-ghost btn-full lemonsqueezy-button" style="flex:1;justify-content:center;border-color:var(--gold);color:var(--gold-dk)">Yearly $49.99</a>
+             class="btn btn-ghost btn-full lemonsqueezy-button" style="flex:1;justify-content:center;border-color:var(--gold);color:var(--gold-dk)">Yearly $19.99</a>
         </div>
       </div>
       <div class="price-col">
@@ -1131,35 +1243,52 @@ footer{background:var(--ink);padding:42px 0 0}
           <li>Stylometric heatmap &amp; writer baseline profile</li>
           <li>AI-suggested follow-up questions for the student conversation</li>
           <li>Printable PDF with Report ID for records</li>
-          <li>No text retained — credits never expire</li>
+          <li>No text retained — tokens never expire</li>
         </ul>
         <a href="https://papertrailacademic.lemonsqueezy.com/checkout/buy/bb899eea-e9af-47ac-a757-052c5f189e8b"
-           class="btn btn-teal btn-full lemonsqueezy-button">Buy Verify Credits</a>
+           class="btn btn-teal btn-full lemonsqueezy-button">Buy PaperTrail Tokens</a>
+      </div>
+      <div class="price-col">
+        <span class="pcard-badge badge-teal" style="align-self:flex-start">🎙️ Oral Defense</span>
+        <h3>Pay per defense</h3>
+        <p class="price-sub-lbl">The student accounts for their writing — out loud</p>
+        <div class="big-price"><span class="n">2</span><span class="u">tokens/defense</span></div>
+        <p class="price-alt">1 to generate questions + 1 to send — from $1.20</p>
+        <ul class="price-feats">
+          <li>AI-drafted questions from the essay itself — you curate every one</li>
+          <li>Students answer by voice at a private link — no account</li>
+          <li>Questions hidden until read aloud — like a real defense</li>
+          <li>Auto-transcribed answers + audio playback</li>
+          <li>Per-question ownership report — described, never judged</li>
+          <li>Audio auto-deleted after export or 30 days</li>
+        </ul>
+        <a href="https://papertrailacademic.lemonsqueezy.com/checkout/buy/bb899eea-e9af-47ac-a757-052c5f189e8b"
+           class="btn btn-teal btn-full lemonsqueezy-button">Buy PaperTrail Tokens</a>
       </div>
     </div>
 
     <div class="packs-wrap">
-      <div class="packs-label">🔬 Verify Credit Packs</div>
-      <div class="packs-sublabel">Credits never expire. Use as the situation calls for it — no subscription required.</div>
+      <div class="packs-label">🪙 PaperTrail Token Packs</div>
+      <div class="packs-sublabel">One shared wallet for Verify and Oral Defense — a Verify report is 1 token, an Oral Defense is 2 (generate + send). Tokens never expire. No subscription required.</div>
       <div class="packs-row">
         <div class="pack">
           <div class="pack-name">Starter</div>
-          <div class="pack-count">10</div><div class="pack-unit">reports</div>
-          <div class="pack-price-n">$6.00</div><div class="pack-per">$0.60/report</div>
+          <div class="pack-count">10</div><div class="pack-unit">tokens</div>
+          <div class="pack-price-n">$6.00</div><div class="pack-per">$0.60/token</div>
           <a href="https://papertrailacademic.lemonsqueezy.com/checkout/buy/bb899eea-e9af-47ac-a757-052c5f189e8b"
              class="btn btn-ghost btn-sm btn-full lemonsqueezy-button">Buy Now</a>
         </div>
         <div class="pack">
           <div class="pack-name">Semester</div>
-          <div class="pack-count">35</div><div class="pack-unit">reports</div>
-          <div class="pack-price-n">$18.00</div><div class="pack-per">$0.51/report</div>
+          <div class="pack-count">35</div><div class="pack-unit">tokens</div>
+          <div class="pack-price-n">$18.00</div><div class="pack-per">$0.51/token</div>
           <a href="https://papertrailacademic.lemonsqueezy.com/checkout/buy/bb899eea-e9af-47ac-a757-052c5f189e8b"
              class="btn btn-teal btn-sm btn-full lemonsqueezy-button">Buy Now</a>
         </div>
         <div class="pack">
           <div class="pack-name">Year Supply</div>
-          <div class="pack-count">100</div><div class="pack-unit">reports</div>
-          <div class="pack-price-n">$45.00</div><div class="pack-per">$0.45/report</div>
+          <div class="pack-count">100</div><div class="pack-unit">tokens</div>
+          <div class="pack-price-n">$45.00</div><div class="pack-per">$0.45/token</div>
           <a href="https://papertrailacademic.lemonsqueezy.com/checkout/buy/bb899eea-e9af-47ac-a757-052c5f189e8b"
              class="btn btn-ghost btn-sm btn-full lemonsqueezy-button">Buy Now</a>
         </div>
@@ -1228,6 +1357,7 @@ footer{background:var(--ink);padding:42px 0 0}
         <li><a href="/inspect">Inspect</a></li>
         <li><a href="/stylematch">StyleMatch</a></li>
         <li><a href="/verify">Verify</a></li>
+        <li><a href="/oral">Oral Defense</a></li>
         <li><a href="/write">Write</a></li>
         <li><a href="https://chromewebstore.google.com/detail/papertrail/kgkjmhfoijiiplbmablcjbooopndjbgm" target="_blank" rel="noopener">Chrome Web Store</a></li>
       </ul>
