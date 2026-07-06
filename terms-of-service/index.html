@@ -296,7 +296,7 @@
     <ul>
       <li><strong>PaperTrail Inspect:</strong> Revision history analysis, writing session reconstruction, and behavioral pattern detection based on Google Docs revision data. Core Inspect features are available to all users without an account. Paste analysis and struggle moment detection require an active StyleMatch subscription.</li>
       <li><strong>StyleMatch:</strong> Local, on-device stylometric comparison of two writing samples across seven metrics to assess authorship consistency. No text is transmitted when using StyleMatch. Users who create a free account receive three complimentary StyleMatch runs. Unlimited access requires an active subscription.</li>
-      <li><strong>Verify:</strong> AI-assisted writing analysis that transmits submitted text to a third-party AI provider (Anthropic, Inc.) for processing. Available as a Consistency Report or a Baseline Deviation Report. See Section 8 for data handling details.</li>
+      <li><strong>Verify:</strong> AI-assisted writing analysis that transmits submitted text to a third-party AI provider (Anthropic, Inc.) for processing. Available as a Consistency Report, a Baseline Deviation Report, or a Data &amp; Methods Integrity Report (which extracts reported statistics via Anthropic and recomputes them deterministically on PaperTrail's backend; no web search is used). Each costs 1 PaperTrail Token. See Section 8 for data handling details.</li>
       <li><strong>Verify Citations:</strong> AI-assisted citation checking that transmits submitted text to Anthropic, Inc. for processing, where each citation is compared against reachable source text located via live web search. Produces a Citations Report covering bibliography cross-matching, source existence, and claim-vs-source comparison. Costs 2 PaperTrail Tokens per essay (covers 25 citations; +1 token per additional 25). See Section 8 for data handling details.</li>
       <li><strong>Oral Defense:</strong> A spoken follow-up on a submitted essay. AI drafts questions from the essay text (via Anthropic, Inc.), the teacher curates and sends them, and the student records short spoken answers at a private link — no student account is required. Recordings are transcribed (via Deepgram, Inc.) and summarized into an ownership report. Costs 2 PaperTrail Tokens per defense (1 to generate questions, 1 to send). See Section 8 for data handling details.</li>
       <li><strong>PaperTrail Write:</strong> A web application (<a href="https://write.papertrailacademic.com" target="_blank" rel="noopener">write.papertrailacademic.com</a>) for timed classroom writing sessions. Teachers create assignments, open sessions, and monitor student writing in real time. Students join via a code — no student account is required. Session data is stored transiently and purged automatically after the session ends. See Section 8 for data handling details.</li>
@@ -361,6 +361,14 @@
         </tr>
         <tr>
           <td>Verify Consistency Report</td>
+          <td class="no">—</td>
+          <td class="no">—</td>
+          <td class="yes">✓</td>
+          <td class="no">—</td>
+          <td class="yes">✓</td>
+        </tr>
+        <tr>
+          <td>Verify Data &amp; Methods Integrity Report</td>
           <td class="no">—</td>
           <td class="no">—</td>
           <td class="yes">✓</td>

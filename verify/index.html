@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>PaperTrail Verify — AI-Assisted Deep Authorship Analysis</title>
-  <meta name="description" content="Two AI-powered report types: scan a single essay for internal consistency, or compare submitted work against an authenticated baseline across ten research-grounded dimensions." />
+  <meta name="description" content="Three AI-assisted report types: scan a single essay for internal consistency, compare submitted work against an authenticated baseline across ten research-grounded dimensions, or recompute every reported statistic in a lab report — in code, never estimated." />
   <link rel="icon" href="/icon128.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -480,10 +480,10 @@ footer{background:var(--ink);padding:42px 0 0}
       <div class="hero-actions">
         <a href="https://chromewebstore.google.com/detail/papertrail/kgkjmhfoijiiplbmablcjbooopndjbgm"
            class="btn btn-teal btn-lg" target="_blank" rel="noopener">⬇ Add to Chrome — Try Free</a>
-        <a href="#modes" class="btn btn-ghost-teal btn-lg">See both report types ↓</a>
+        <a href="#modes" class="btn btn-ghost-teal btn-lg">See the report types ↓</a>
       </div>
       <div class="hero-trust">
-        <span>Two report types — no controlled sample needed for the first</span>
+        <span>Three report types — no controlled sample needed for two of them</span>
         <span>AI reads the writing, not just the statistics</span>
         <span>Evidence pulled directly from the student's text</span>
         <span>Suggested conversation questions generated per report</span>
@@ -564,9 +564,9 @@ footer{background:var(--ink);padding:42px 0 0}
 <section class="modes-section" id="modes">
   <div class="modes-inner">
     <div class="modes-hdr">
-      <span class="eyebrow">Two Report Types</span>
-      <h2>One uses what you have.<br><em>The other goes further.</em></h2>
-      <p>Verify uses AI to read the writing itself — not just count words and measure sentences. Both report types draw on the same underlying stylometric signals as StyleMatch, but layer qualitative analysis on top: what the writing actually says about how it was produced, who produced it, and whether the two samples sound like the same person.</p>
+      <span class="eyebrow">Three Report Types</span>
+      <h2>One uses what you have.<br><em>The others go further.</em></h2>
+      <p>Verify uses AI to read the writing itself — not just count words and measure sentences. The two writing reports draw on the same underlying stylometric signals as StyleMatch, but layer qualitative analysis on top. The third — new for 2026–27 — is different in kind: it recomputes the <em>numbers</em> a lab report or IA claims, deterministically, in code.</p>
     </div>
     <div class="modes-grid">
 
@@ -603,6 +603,30 @@ footer{background:var(--ink);padding:42px 0 0}
         </div>
       </div>
 
+    </div>
+
+    <!-- MODE 3: Data & Methods Integrity (new for 2026–27) -->
+    <div class="mode-card" style="margin-top:24px;border-color:var(--teal)">
+      <div class="mode-tag">New for 2026–27 · No sample needed</div>
+      <div class="mode-card-badge teal">🧪 Data &amp; Methods Integrity Report</div>
+      <h3>A lab report full of numbers.<br>Do they <em>recompute?</em></h3>
+      <p class="mode-card-desc">For lab reports, internal assessments, and data-based essays. Every statistic the document reports — t-tests, p-values, means, standard deviations, correlations, percentage changes — is <strong>recomputed in code</strong> from the numbers printed in the document itself. Not estimated, not judged by a model: arithmetic, shown with its working. It also multiplies out the described protocol (does the method fit in the time claimed?), checks every “see Table N” reference against what's actually present, and surfaces internal contradictions.</p>
+      <div style="background:#f2f8f6;border:1.5px solid #b2d8d2;border-radius:10px;padding:14px 18px;margin:0 0 16px;font-size:13.5px;line-height:1.65;color:var(--ink-2)">
+        <strong style="color:var(--teal)">From a real (anonymized) report:</strong> the paper reported
+        <em>t(3)&nbsp;=&nbsp;−10.22, p&nbsp;=&nbsp;0.177</em> and concluded the result was not significant.
+        Recomputed from its own difference table: <strong>p&nbsp;≈&nbsp;0.002</strong>. A p of 0.177 with
+        3 degrees of freedom would correspond to t&nbsp;≈&nbsp;1.76. The report states the arithmetic
+        and asks one question: <em>worth asking how the p-value was obtained.</em>
+      </div>
+      <ul class="mode-bullets">
+        <li>Recompute results are stated as facts with their working — Matches · Doesn't match reported · Couldn't recompute</li>
+        <li>Methods feasibility notes show their own multiplication, phrased as questions</li>
+        <li>Data referenced in the text but absent from the document is stated plainly</li>
+        <li>No integrity score, no roll-up, never a verdict — an inconsistency is a question, not a finding</li>
+      </ul>
+      <div class="mode-when">
+        <strong>Use this when:</strong> The results look too clean, the stats don't feel right, or the raw data keeps being referenced but never shown. Runs on the document alone — 1 token.
+      </div>
     </div>
 
     <!-- CITATIONS CROSS-SELL -->
