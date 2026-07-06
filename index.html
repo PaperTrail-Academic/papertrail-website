@@ -461,7 +461,12 @@ footer{background:var(--ink);padding:42px 0 0}
           <div class="dd-divider"></div>
           <a href="/verify" class="dd-item">
             <span class="dd-icon">🔬</span>
-            <span><span class="dd-label">Verify <span style="color:var(--teal);font-size:10px">From $0.60</span></span><span class="dd-sub">AI-assisted deep analysis &amp; reports</span></span>
+            <span><span class="dd-label">Verify <span style="color:var(--teal);font-size:10px">1 Token</span></span><span class="dd-sub">AI-assisted deep analysis &amp; reports</span></span>
+          </a>
+          <div class="dd-divider"></div>
+          <a href="/citations" class="dd-item">
+            <span class="dd-icon">📚</span>
+            <span><span class="dd-label">Verify Citations <span style="color:var(--teal);font-size:10px">From 2 Tokens</span></span><span class="dd-sub">Every source checked against what it actually says</span></span>
           </a>
           <div class="dd-divider"></div>
           <a href="/oral" class="dd-item">
@@ -508,7 +513,11 @@ footer{background:var(--ink);padding:42px 0 0}
       </a>
       <a href="/verify" class="mobile-drawer-item">
         <span class="dd-icon">🔬</span>
-        <span><span class="dd-label">Verify <span style="color:var(--teal);font-size:10px">From $0.60</span></span><span class="dd-sub">AI-assisted deep analysis &amp; reports</span></span>
+        <span><span class="dd-label">Verify <span style="color:var(--teal);font-size:10px">1 Token</span></span><span class="dd-sub">AI-assisted deep analysis &amp; reports</span></span>
+      </a>
+      <a href="/citations" class="mobile-drawer-item">
+        <span class="dd-icon">📚</span>
+        <span><span class="dd-label">Verify Citations <span style="color:var(--teal);font-size:10px">From 2 Tokens</span></span><span class="dd-sub">Every source checked against what it actually says</span></span>
       </a>
       <a href="/oral" class="mobile-drawer-item">
         <span class="dd-icon">🎙️</span>
@@ -534,7 +543,7 @@ footer{background:var(--ink);padding:42px 0 0}
     <div class="hero-text">
       <p class="eyebrow">PaperTrail&trade; Academic</p>
       <h1>You've read thousands of student essays.<br><em>Trust that instinct — then document it.</em></h1>
-      <p class="hero-sub">Five tools that give teachers structured, repeatable, documentable insight into how student writing was produced — from process monitoring in the classroom to a spoken defense of the finished essay. The evidence speaks clearly. The judgment stays yours.</p>
+      <p class="hero-sub">Six tools that give teachers structured, repeatable, documentable insight into how student writing was produced — from process monitoring in the classroom to a spoken defense of the finished essay. The evidence speaks clearly. The judgment stays yours.</p>
       <div class="hero-actions">
         <a href="https://chromewebstore.google.com/detail/papertrail/kgkjmhfoijiiplbmablcjbooopndjbgm"
            class="btn btn-gold" target="_blank" rel="noopener">&#11015; Add to Chrome — It's Free</a>
@@ -570,9 +579,18 @@ footer{background:var(--ink);padding:42px 0 0}
       <div class="hero-preview-card" onclick="heroOpenCard('verify')" role="button" tabindex="0" aria-label="Learn more about Verify" style="border-left-color:var(--teal)">
         <div class="hpc-icon">🔬</div>
         <div style="flex:1">
-          <div class="hpc-title">Verify &nbsp;<span style="color:var(--teal);font-size:11px">From $0.60</span></div>
+          <div class="hpc-title">Verify &nbsp;<span style="color:var(--teal);font-size:11px">1 Token</span></div>
           <div class="hpc-hook"><strong>Is the writing internally consistent?</strong> AI-assisted close reading. Two report types.</div>
           <a href="/verify" onclick="event.stopPropagation()" class="hpc-link" style="color:var(--teal)">Learn more →</a>
+        </div>
+      </div>
+
+      <div class="hero-preview-card" onclick="heroOpenCard('citations')" role="button" tabindex="0" aria-label="Learn more about Verify Citations" style="border-left-color:var(--teal)">
+        <div class="hpc-icon">📚</div>
+        <div style="flex:1">
+          <div class="hpc-title">Verify Citations &nbsp;<span style="color:var(--teal);font-size:11px">From 2 Tokens</span></div>
+          <div class="hpc-hook"><strong>Did the sources really say that?</strong> Every citation checked against the source itself — live web search, both sides quoted.</div>
+          <a href="/citations" onclick="event.stopPropagation()" class="hpc-link" style="color:var(--teal)">Learn more →</a>
         </div>
       </div>
 
@@ -607,7 +625,7 @@ footer{background:var(--ink);padding:42px 0 0}
   <div class="container">
     <div class="products-hdr">
       <p class="eyebrow">The PaperTrail Suite</p>
-      <h2>Five tools. One question: <em>Did they write this?</em></h2>
+      <h2>Six tools. One question: <em>Did they write this?</em></h2>
       <p>Click any card to see a full preview and feature breakdown.</p>
     </div>
   </div>
@@ -829,7 +847,7 @@ footer{background:var(--ink);padding:42px 0 0}
             <span class="pcard-banner-icon">🔬</span>
             <span class="pcard-banner-name">Verify</span>
           </div>
-          <span class="pcard-banner-pill pill-credits">From $0.60/report</span>
+          <span class="pcard-banner-pill pill-credits">1 Token/report</span>
         </div>
         <div class="pcard-top">
           <h3>"I want to be thorough before I have this conversation."</h3>
@@ -910,11 +928,100 @@ footer{background:var(--ink);padding:42px 0 0}
               <li>Tokens never expire — use them when the situation calls for it</li>
             </ul>
             <div class="exp-price-row">
-              <div class="exp-price-big">$0.60<span style="font-size:14px;font-weight:400;color:var(--ink-3)">/report</span></div>
-              <div class="exp-price-sub">Starter: 10 for $6 &nbsp;·&nbsp; Semester: 35 for $18 &nbsp;·&nbsp; Year: 100 for $45</div>
+              <div class="exp-price-big">1 token<span style="font-size:14px;font-weight:400;color:var(--ink-3)">/report</span></div>
+              <div class="exp-price-sub">A token is $0.60 in the starter pack &nbsp;·&nbsp; 10 for $6 &nbsp;·&nbsp; 35 for $18 &nbsp;·&nbsp; 100 for $45</div>
               <a href="#pricing" class="btn btn-teal btn-full" onclick="event.stopPropagation();_close(true)">See all token packs ↓</a>
             </div>
             <div class="exp-disclaimer">Verify transmits submitted text to PaperTrail's secure backend and the Anthropic API for processing. Text is not retained after the report is generated. See our Privacy Policy for full details.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ VERIFY CITATIONS ══ -->
+      <div class="pcard" id="card-citations" onclick="openCard('citations',event)">
+        <button class="card-close" onclick="closeCard(event)">✕</button>
+        <div class="pcard-banner banner-teal">
+          <div class="pcard-banner-left">
+            <span class="pcard-banner-icon">📚</span>
+            <span class="pcard-banner-name">Verify Citations</span>
+          </div>
+          <span class="pcard-banner-pill pill-credits">From 2 Tokens</span>
+        </div>
+        <div class="pcard-top">
+          <h3>"Where did this quote come from?"</h3>
+          <p class="card-desc">Every citation in the essay checked against the source itself — does the bibliography match the in-text citations, does the source exist, and does it actually say what the essay claims it says.</p>
+        </div>
+        <div class="pcard-features">
+          <ul>
+            <li>Bibliography ↔ in-text cross-match — both directions, before any tokens are spent</li>
+            <li>Live web search locates each source — never AI memory</li>
+            <li>Quoted passages searched in the reachable source text</li>
+            <li>"What the essay says" vs. "what the source says," side by side</li>
+            <li>A suggested question per finding — never a verdict</li>
+          </ul>
+        </div>
+        <div class="pcard-footer">
+          <div class="price-line"><span class="price-big" style="color:var(--teal)">2</span><span class="price-unit">tokens per essay (25 citations) &nbsp;·&nbsp; from $1.20</span></div>
+          <a href="/citations" class="btn btn-teal btn-full" onclick="event.stopPropagation()">Learn More →</a>
+          <p class="expand-hint">Click card to see a sample check ↓</p>
+        </div>
+
+        <div class="pcard-expanded">
+          <div class="exp-left">
+            <!-- Citations report mockup -->
+            <div style="background:#fff;border-radius:9px;border:1px solid var(--rule);overflow:hidden;font-family:'DM Sans',sans-serif;margin-bottom:12px">
+              <div style="background:var(--teal);padding:9px 13px;display:flex;align-items:center;gap:8px">
+                <span style="font-size:13px">📚</span>
+                <span style="font-size:11px;font-weight:700;color:#fff;font-family:'Lora',serif">PaperTrail <em style="color:#c9e8e1;font-style:italic">Verify Citations</em></span>
+                <span style="margin-left:auto;font-size:9px;color:rgba(255,255,255,.7)">11 citations checked</span>
+              </div>
+              <div style="padding:8px 13px;background:#f7f8fa;border-bottom:1px solid var(--rule);font-size:8.5px;color:var(--ink-3)">6 located &nbsp;·&nbsp; 3 access limited &nbsp;·&nbsp; 2 not located &nbsp;·&nbsp; 2 works-cited entries never cited in the text</div>
+              <div style="padding:10px 13px;border-bottom:1px solid #f0f0f0">
+                <div style="font-size:8.5px;color:var(--ink-3);margin-bottom:5px">Whitfield, R. (2019). <em>The Empirical Habit.</em> Halloway Press.</div>
+                <div style="display:flex;gap:5px;margin-bottom:6px;flex-wrap:wrap">
+                  <span style="font-size:8px;font-weight:800;padding:2px 8px;border-radius:9px;background:#eaf4f0;color:#1f5a4f;border:1px solid #cfe6dd">✓ Located — full text</span>
+                  <span style="font-size:8px;font-weight:800;padding:2px 8px;border-radius:9px;background:#fbf6e8;color:#8a6d1f;border:1px solid #ecdcae">◐ Notable difference</span>
+                </div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px">
+                  <div style="background:#f9fafc;border:1px solid #eef1f6;border-radius:6px;padding:6px 8px">
+                    <div style="font-size:7px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-3);margin-bottom:3px">What the essay says</div>
+                    <div style="font-size:8.5px;line-height:1.5;color:var(--ink-2)">Quotes Whitfield: "observation is the engine of all discovery."</div>
+                  </div>
+                  <div style="background:#f9fafc;border:1px solid #eef1f6;border-radius:6px;padding:6px 8px">
+                    <div style="font-size:7px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-3);margin-bottom:3px">What the source says</div>
+                    <div style="font-size:8.5px;line-height:1.5;color:var(--ink-2)">The quoted passage was not found in the source text.</div>
+                  </div>
+                </div>
+                <div style="font-size:8.5px;color:var(--teal-dk,#1f5a4f);background:#f2f8f6;border:1px solid #d9ebe5;border-radius:6px;padding:5px 8px;margin-top:6px">Worth asking: where in the book did they find this quotation?</div>
+              </div>
+              <div style="padding:10px 13px">
+                <div style="font-size:8.5px;color:var(--ink-3);margin-bottom:5px">Tanaka, M. (2020). <em>Measurement and inference in field biology.</em> [Print]</div>
+                <div style="display:flex;gap:5px;flex-wrap:wrap">
+                  <span style="font-size:8px;font-weight:800;padding:2px 8px;border-radius:9px;background:#f1f3f6;color:#6a7382;border:1px solid #e0e4ea">◌ Access limited — print only</span>
+                  <span style="font-size:8px;font-weight:800;padding:2px 8px;border-radius:9px;background:#f1f3f6;color:#6a7382;border:1px solid #e0e4ea">Couldn't check</span>
+                </div>
+              </div>
+              <div style="padding:8px 13px;font-size:8px;color:var(--ink-3);background:#f7f8fa;border-top:1px dashed #d7dce4;line-height:1.5;font-style:italic">"Not located" is a question, not a finding. Educator judgment required.</div>
+            </div>
+          </div>
+          <div class="exp-right">
+            <h4>Existence is table stakes. Claim-vs-source is the point.</h4>
+            <p style="font-size:13px;color:var(--ink-2);line-height:1.6;margin-bottom:12px"><strong>The question Verify Citations answers:</strong> modern misuse rarely invents whole sources — it invents what they said. Real bibliography, invented specifics.</p>
+            <ul class="exp-features">
+              <li><strong>Cross-match</strong> — bibliography vs. in-text citations, both directions, plus format observations (free, before any tokens are spent)</li>
+              <li><strong>Existence</strong> — live web search across journal databases, publisher pages, and Google Books: Located / Not located / Access limited</li>
+              <li><strong>Claim vs. source</strong> — quoted passages searched in the reachable text; figures matched exactly; paraphrases compared with both sides quoted</li>
+              <li><strong>Data plausibility</strong> — numbers sanity-checked, phrased only as questions</li>
+              <li>Evidence basis stated on every read — full text, abstract, snippet, or description</li>
+              <li>Suggested question per finding for the student conversation</li>
+              <li>Essay text not retained after the report is generated</li>
+            </ul>
+            <div class="exp-price-row">
+              <div class="exp-price-big" style="color:var(--teal)">2 tokens<span style="font-size:14px;font-weight:400;color:var(--ink-3)"> /essay</span></div>
+              <div class="exp-price-sub">Covers 25 citations, +1 token per additional 25 — from $1.20 with the starter pack</div>
+              <a href="/citations" class="btn btn-teal btn-full" onclick="event.stopPropagation()">See how a check runs →</a>
+            </div>
+            <div class="exp-disclaimer">Paywalled and print-only sources routinely fail lookup — which is why the report says "Not located," never "fabricated." A finding is an agenda for a conversation, not a determination of misconduct.</div>
           </div>
         </div>
       </div>
@@ -1175,7 +1282,7 @@ footer{background:var(--ink);padding:42px 0 0}
       <p style="font-size:13.5px;color:var(--ink-2);line-height:1.65;margin:0">A document that is <strong>flagged by source-matching</strong>, <strong>shows stylistic divergence</strong> in StyleMatch, AND <strong>shows surface editing only</strong> in Process View is a different conversation than any of those signals alone. The evidence stack is what makes the conversation defensible.</p>
     </div>
 
-    <p style="text-align:center;font-size:11.5px;color:var(--ink-3);margin-top:24px;font-style:italic">Verify (AI-assisted close reading) and Oral Defense (the student accounts for their writing, out loud) are further signals available when the situation calls for more — see below.</p>
+    <p style="text-align:center;font-size:11.5px;color:var(--ink-3);margin-top:24px;font-style:italic">Verify (AI-assisted close reading), Verify Citations (every source checked against what it actually says), and Oral Defense (the student accounts for their writing, out loud) are further signals available when the situation calls for more — see below.</p>
   </div>
 </section>
 
@@ -1185,7 +1292,7 @@ footer{background:var(--ink);padding:42px 0 0}
     <div class="pricing-hdr">
       <p class="eyebrow">Pricing</p>
       <h2>Start free. <em>Upgrade when you need to.</em></h2>
-      <p>Inspect is free forever, no account required. StyleMatch, Verify, and Oral Defense are for when the situation calls for more.</p>
+      <p>Inspect is free forever, no account required. StyleMatch is a small subscription; Verify, Verify Citations, and Oral Defense run on PaperTrail Tokens — pay only when the situation calls for more.</p>
     </div>
     <div class="price-cols">
       <div class="price-col">
@@ -1231,16 +1338,16 @@ footer{background:var(--ink);padding:42px 0 0}
         </div>
       </div>
       <div class="price-col">
-        <span class="pcard-badge badge-teal" style="align-self:flex-start">🔬 Verify</span>
+        <span class="pcard-badge badge-teal" style="align-self:flex-start">🔬 Verify &nbsp;+&nbsp; 📚 Citations</span>
         <h3>Pay per report</h3>
-        <p class="price-sub-lbl">AI-assisted close reading</p>
-        <div class="big-price"><span class="n">$0.60</span><span class="u">/report</span></div>
-        <p class="price-alt">Starter: 10 reports for $6</p>
+        <p class="price-sub-lbl">AI-assisted close reading &amp; citation checking</p>
+        <div class="big-price"><span class="n">1</span><span class="u">token/report</span></div>
+        <p class="price-alt">Citations check: from 2 tokens per essay</p>
         <ul class="price-feats">
           <li>Everything in Inspect</li>
-          <li><strong>Consistency Report</strong> — chunks essay into segments, scores 6 dimensions each</li>
-          <li><strong>Baseline Deviation Report</strong> — 10-dimension comparison vs. controlled sample</li>
-          <li>Stylometric heatmap &amp; writer baseline profile</li>
+          <li><strong>Consistency Report</strong> — chunks essay into segments, scores 6 dimensions each (1 token)</li>
+          <li><strong>Baseline Deviation Report</strong> — 10-dimension comparison vs. controlled sample (1 token)</li>
+          <li><strong>Citations Report</strong> — every source checked against what it actually says, via live web search (from 2 tokens)</li>
           <li>AI-suggested follow-up questions for the student conversation</li>
           <li>Printable PDF with Report ID for records</li>
           <li>No text retained — tokens never expire</li>
@@ -1269,7 +1376,20 @@ footer{background:var(--ink);padding:42px 0 0}
 
     <div class="packs-wrap">
       <div class="packs-label">🪙 PaperTrail Token Packs</div>
-      <div class="packs-sublabel">One shared wallet for Verify and Oral Defense — a Verify report is 1 token, an Oral Defense is 2 (generate + send). Tokens never expire. No subscription required.</div>
+      <div class="packs-sublabel">One shared wallet for everything token-based. Tokens never expire. No subscription required.</div>
+
+      <!-- What's a token? -->
+      <div style="max-width:780px;margin:14px auto 24px;background:#fff;border:1.5px solid var(--rule);border-radius:12px;padding:18px 22px 16px">
+        <div style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--teal);text-align:center;margin-bottom:10px">What's a PaperTrail Token?</div>
+        <p style="font-size:13px;color:var(--ink-2);line-height:1.65;text-align:center;margin:0 0 14px">The pay-as-you-go unit for PaperTrail's AI-assisted tools. A token is <strong>$0.60 in the starter pack</strong>, down to $0.45 in the year pack. Buy once, spend from the same wallet:</p>
+        <div style="display:flex;justify-content:center;gap:10px;flex-wrap:wrap">
+          <span style="display:inline-flex;align-items:center;gap:6px;background:var(--teal-lt,#e6f4f1);color:#1f5a4f;border:1px solid #b2d8d2;border-radius:18px;padding:6px 14px;font-size:12.5px;font-weight:600">🔬 Verify report · 1 token</span>
+          <span style="display:inline-flex;align-items:center;gap:6px;background:var(--teal-lt,#e6f4f1);color:#1f5a4f;border:1px solid #b2d8d2;border-radius:18px;padding:6px 14px;font-size:12.5px;font-weight:600">📚 Citations check · 2 tokens*</span>
+          <span style="display:inline-flex;align-items:center;gap:6px;background:var(--teal-lt,#e6f4f1);color:#1f5a4f;border:1px solid #b2d8d2;border-radius:18px;padding:6px 14px;font-size:12.5px;font-weight:600">🎙️ Oral Defense · 2 tokens</span>
+        </div>
+        <p style="font-size:11px;color:var(--ink-3);text-align:center;margin:12px 0 0;line-height:1.6">*Covers 25 citations, +1 token per additional 25. &nbsp;Oral Defense: 1 token to generate questions + 1 to send.</p>
+      </div>
+
       <div class="packs-row">
         <div class="pack">
           <div class="pack-name">Starter</div>
@@ -1357,6 +1477,7 @@ footer{background:var(--ink);padding:42px 0 0}
         <li><a href="/inspect">Inspect</a></li>
         <li><a href="/stylematch">StyleMatch</a></li>
         <li><a href="/verify">Verify</a></li>
+        <li><a href="/citations">Verify Citations</a></li>
         <li><a href="/oral">Oral Defense</a></li>
         <li><a href="/write">Write</a></li>
         <li><a href="https://chromewebstore.google.com/detail/papertrail/kgkjmhfoijiiplbmablcjbooopndjbgm" target="_blank" rel="noopener">Chrome Web Store</a></li>

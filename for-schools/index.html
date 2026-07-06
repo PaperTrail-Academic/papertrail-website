@@ -252,7 +252,12 @@
           <div class="dd-divider"></div>
           <a href="/verify" class="dd-item">
             <span class="dd-icon">🔬</span>
-            <span><span class="dd-label">Verify <span style="color:var(--teal);font-size:10px">From $0.60</span></span><span class="dd-sub">AI-assisted deep analysis &amp; reports</span></span>
+            <span><span class="dd-label">Verify <span style="color:var(--teal);font-size:10px">1 Token</span></span><span class="dd-sub">AI-assisted deep analysis &amp; reports</span></span>
+          </a>
+          <div class="dd-divider"></div>
+          <a href="/citations" class="dd-item">
+            <span class="dd-icon">📚</span>
+            <span><span class="dd-label">Verify Citations <span style="color:var(--teal);font-size:10px">From 2 Tokens</span></span><span class="dd-sub">Every source checked against what it actually says</span></span>
           </a>
           <div class="dd-divider"></div>
           <a href="/oral" class="dd-item">
@@ -299,7 +304,11 @@
       </a>
       <a href="/verify" class="mobile-drawer-item">
         <span class="dd-icon">🔬</span>
-        <span><span class="dd-label">Verify <span style="color:var(--teal);font-size:10px">From $0.60</span></span><span class="dd-sub">AI-assisted deep analysis &amp; reports</span></span>
+        <span><span class="dd-label">Verify <span style="color:var(--teal);font-size:10px">1 Token</span></span><span class="dd-sub">AI-assisted deep analysis &amp; reports</span></span>
+      </a>
+      <a href="/citations" class="mobile-drawer-item">
+        <span class="dd-icon">📚</span>
+        <span><span class="dd-label">Verify Citations <span style="color:var(--teal);font-size:10px">From 2 Tokens</span></span><span class="dd-sub">Every source checked against what it actually says</span></span>
       </a>
       <a href="/oral" class="mobile-drawer-item">
         <span class="dd-icon">🎙️</span>
@@ -381,7 +390,7 @@
     <div class="section-hdr">
       <p class="eyebrow" style="color:var(--blue)">Privacy Architecture</p>
       <h2>Where does the data go? <em>It depends on which tool.</em></h2>
-      <p>PaperTrail has five tools with meaningfully different data architectures. The short version: two transmit nothing at all (Inspect, which includes the printable Process View report, and StyleMatch); one transmits transiently and purges (Verify); two store transiently until download or a timed purge (Write, Oral Defense).</p>
+      <p>PaperTrail has six tools with meaningfully different data architectures. The short version: two transmit nothing at all (Inspect, which includes the printable Process View report, and StyleMatch); two transmit transiently and purge (Verify, Verify Citations); two store transiently until download or a timed purge (Write, Oral Defense).</p>
     </div>
     <div class="arch-grid">
 
@@ -405,8 +414,16 @@
       <div class="arch-card">
         <span class="arch-icon">🔬</span>
         <h3>Verify</h3>
-        <p>Verify is the only feature in the Chrome extension that transmits text. Verify offers two report types: <strong>Verify Submitted</strong> (analyses a single document for internal consistency) and <strong>Verify Compare</strong> (compares the submitted work against a controlled writing sample). When a teacher runs either report, the submitted text is sent to PaperTrail's secure backend (Supabase / AWS), forwarded to the Anthropic API for analysis, and returned as a report.</p>
+        <p>Verify and Verify Citations are the only features in the Chrome extension that transmit text. Verify offers two report types: <strong>Verify Submitted</strong> (analyses a single document for internal consistency) and <strong>Verify Compare</strong> (compares the submitted work against a controlled writing sample). When a teacher runs either report, the submitted text is sent to PaperTrail's secure backend (Supabase / AWS), forwarded to the Anthropic API for analysis, and returned as a report.</p>
         <p><strong>The text is not retained by PaperTrail after the report is generated.</strong> Only report metadata is stored (scores, timestamps, the label the teacher assigned). Anthropic retains API inputs for 7 days under their commercial API terms, which prohibit using API inputs for model training. Teachers should anonymize student names before submitting if their institution requires it.</p>
+        <span class="arch-verdict verdict-handled">→ Transmitted, not retained by PaperTrail</span>
+      </div>
+
+      <div class="arch-card">
+        <span class="arch-icon">📚</span>
+        <h3>Verify Citations</h3>
+        <p>Verify Citations follows the same data path as Verify — text sent to PaperTrail's secure backend (Supabase / AWS), forwarded to the Anthropic API, returned as a report, not retained after generation — with one addition: during analysis, the AI performs live web searches (Anthropic's server-side web search tool) to locate cited sources and compare them against the essay's claims.</p>
+        <p><strong>Search queries are derived from citation details — author names, titles, quoted passages, attributed figures — not the essay as a whole,</strong> and are not linked to any student identity. Teachers should anonymize student names before submitting if their institution requires it.</p>
         <span class="arch-verdict verdict-handled">→ Transmitted, not retained by PaperTrail</span>
       </div>
 
@@ -531,7 +548,7 @@
         <p>Teachers can subscribe to StyleMatch or purchase PaperTrail Tokens immediately using a personal or school card. Payments are processed by Lemon Squeezy (Merchant of Record), who handles receipts and VAT.</p>
         <div class="price-callout">
           <strong>StyleMatch:</strong> $1.99/month or $19.99/year per teacher<br>
-          <strong>PaperTrail Tokens:</strong> From $6 for 10 tokens (never expire) — a Verify report is 1 token, an Oral Defense is 2<br>
+          <strong>PaperTrail Tokens:</strong> From $6 for 10 tokens (never expire) — a Verify report is 1 token, a Verify Citations check is 2, an Oral Defense is 2<br>
           <strong>Write:</strong> $49/year per teacher — unlimited sessions
         </div>
         <p>A receipt is issued by Lemon Squeezy at the time of purchase and is suitable for expense reimbursement.</p>
@@ -661,6 +678,7 @@
         <li><a href="/inspect">Inspect</a></li>
         <li><a href="/stylematch">StyleMatch</a></li>
         <li><a href="/verify">Verify</a></li>
+        <li><a href="/citations">Verify Citations</a></li>
         <li><a href="/oral">Oral Defense</a></li>
         <li><a href="/write">Write</a></li>
         <li><a href="https://chromewebstore.google.com/detail/papertrail/kgkjmhfoijiiplbmablcjbooopndjbgm" target="_blank" rel="noopener">Chrome Web Store</a></li>
