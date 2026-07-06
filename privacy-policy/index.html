@@ -38,6 +38,9 @@
     .nl.active{color:var(--blue);font-weight:600}
     .nl.cta{background:var(--gold);color:#fff;padding:7px 16px;border-radius:5px;font-weight:600}
     .nl.cta:hover{background:var(--gold-dk);text-decoration:none}
+    /* Teacher sign-in — outlined pill, distinct from menu links and the solid CTA */
+    .nl.signin{border:1.5px solid var(--blue);color:var(--blue);font-weight:600;padding:6px 14px;border-radius:6px}
+    .nl.signin:hover{background:var(--blue);color:#fff;text-decoration:none}
     .nav-dropdown{position:relative}
     .nav-dropdown>.nl{display:flex;align-items:center;gap:4px;cursor:pointer;user-select:none}
     .nav-dropdown>.nl .dd-caret{font-size:10px;opacity:.55;display:inline-block;transition:transform .2s}
@@ -175,7 +178,7 @@
     <a href="/#pricing" class="nl">Pricing</a>
     <a href="/for-schools" class="nl">For Schools</a>
     <a href="/privacy-policy" class="nl active">Privacy</a>
-    <a href="https://app.papertrailacademic.com" class="nl">Teacher sign-in</a>
+    <a href="https://app.papertrailacademic.com" class="nl signin">👤 Teacher sign-in</a>
     <a href="https://chromewebstore.google.com/detail/papertrail/kgkjmhfoijiiplbmablcjbooopndjbgm" class="nl cta" target="_blank" rel="noopener">Add to Chrome — Free</a>
     <button class="nav-hamburger" id="navHamburger" aria-label="Open menu" aria-expanded="false" aria-controls="mobileDrawer">
       <span></span><span></span><span></span>
@@ -222,7 +225,7 @@
       <a href="/#pricing" class="mobile-drawer-link">Pricing</a>
       <a href="/for-schools" class="mobile-drawer-link">For Schools</a>
       <a href="/privacy-policy" class="mobile-drawer-link active">Privacy</a>
-      <a href="https://app.papertrailacademic.com" class="mobile-drawer-link">Teacher sign-in — web app</a>
+      <a href="https://app.papertrailacademic.com" class="mobile-drawer-link" style="border:1.5px solid var(--blue);border-radius:8px;color:var(--blue);font-weight:600;text-align:center">👤 Teacher sign-in — web app</a>
     </div>
   </div>
 </div>

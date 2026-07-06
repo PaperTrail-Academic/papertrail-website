@@ -64,6 +64,9 @@ nav{position:sticky;top:0;z-index:200;background:rgba(255,255,255,.96);backdrop-
 .nl:hover{color:var(--blue)}
 .nl.cta{background:var(--gold);color:#fff;padding:7px 16px;border-radius:5px;font-weight:600}
 .nl.cta:hover{background:var(--gold-dk)}
+    /* Teacher sign-in — outlined pill, distinct from menu links and the solid CTA */
+    .nl.signin{border:1.5px solid var(--blue);color:var(--blue);font-weight:600;padding:6px 14px;border-radius:6px}
+    .nl.signin:hover{background:var(--blue);color:#fff;text-decoration:none}
 .nav-dropdown{position:relative}
 .nav-dropdown>.nl{display:flex;align-items:center;gap:4px;cursor:pointer;user-select:none}
 .nav-dropdown>.nl .dd-caret{font-size:10px;opacity:.55;display:inline-block;transition:transform .2s}
@@ -484,7 +487,7 @@ footer{background:var(--ink);padding:42px 0 0}
     <a href="#pricing"  class="nl">Pricing</a>
     <a href="for-schools"  class="nl">For Schools</a>
     <a href="/privacy-policy" class="nl">Privacy</a>
-    <a href="https://app.papertrailacademic.com" class="nl">Teacher sign-in</a>
+    <a href="https://app.papertrailacademic.com" class="nl signin">👤 Teacher sign-in</a>
     <a href="https://chromewebstore.google.com/detail/papertrail/kgkjmhfoijiiplbmablcjbooopndjbgm"
        class="nl cta" target="_blank" rel="noopener">Add to Chrome — Free</a>
     <button class="nav-hamburger" id="navHamburger" aria-label="Open menu" aria-expanded="false" aria-controls="mobileDrawer">
@@ -532,7 +535,7 @@ footer{background:var(--ink);padding:42px 0 0}
       <a href="#pricing" class="mobile-drawer-link">Pricing</a>
       <a href="for-schools" class="mobile-drawer-link">For Schools</a>
       <a href="/privacy-policy" class="mobile-drawer-link">Privacy</a>
-      <a href="https://app.papertrailacademic.com" class="mobile-drawer-link">Teacher sign-in — web app</a>
+      <a href="https://app.papertrailacademic.com" class="mobile-drawer-link" style="border:1.5px solid var(--blue);border-radius:8px;color:var(--blue);font-weight:600;text-align:center">👤 Teacher sign-in — web app</a>
     </div>
   </div>
 </div>
@@ -857,12 +860,12 @@ footer{background:var(--ink);padding:42px 0 0}
           <ul>
             <li>Consistency Report: chunks essay into segments, scores 6 dimensions each</li>
             <li>Baseline Deviation Report: 10-dimension comparison vs. controlled sample</li>
-            <li>AI-suggested follow-up questions for the student conversation</li>
-            <li>Printable PDF — no text retained after analysis</li>
+            <li>🧪 Data &amp; Methods Report: every reported statistic recomputed in code</li>
+            <li>AI-suggested follow-up questions — no text retained after analysis</li>
           </ul>
         </div>
         <div class="pcard-footer">
-          <div class="price-line"><span class="price-big">$6</span><span class="price-unit">— 10 reports (starter)</span></div>
+          <div class="price-line"><span class="price-big">1</span><span class="price-unit">token per report</span></div>
           <a href="#pricing" class="btn btn-teal btn-full" onclick="event.stopPropagation();_close(true)">See token packs</a>
           <p class="expand-hint">Click card to see sample reports ↓</p>
         </div>
@@ -873,7 +876,7 @@ footer{background:var(--ink);padding:42px 0 0}
             <div class="vfy-mock" style="margin-bottom:12px">
               <div class="vfy-head" style="padding:8px 12px">
                 <span class="vfy-head-title">🔬 Consistency Report — S. Okonkwo</span>
-                <span style="font-size:9px;font-weight:700;background:#e8f5e9;color:#1b5e20;padding:2px 8px;border-radius:10px">78 · Consistent</span>
+                <span style="font-size:9px;font-weight:700;background:#e8f5e9;color:#1b5e20;padding:2px 8px;border-radius:10px">0 of 29 chunks flagged</span>
               </div>
               <div class="vfy-body" style="padding:10px 12px">
                 <div class="vfy-sec-label" style="margin-bottom:6px">Stylometric Heatmap — 29 chunks · 0 flagged</div>

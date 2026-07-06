@@ -27,6 +27,11 @@ nav a.nl{font-size:14px;font-weight:500;color:var(--slate);text-decoration:none;
 nav a.nl:hover{color:var(--blue);background:var(--blue-light)}
 nav a.nl.cta{background:var(--blue);color:var(--white);font-weight:600}
 nav a.nl.cta:hover{background:var(--blue-dark);color:var(--white)}
+/* Teacher sign-in — outlined pill so returning users spot it instantly;
+   deliberately quieter than the solid Add-to-Chrome CTA but clearly not a
+   plain menu link. */
+nav a.nl.signin{border:1.5px solid var(--blue);color:var(--blue);font-weight:600;padding:6px 14px}
+nav a.nl.signin:hover{background:var(--blue);color:var(--white)}
 
 /* BUTTONS */
 .btn{display:inline-flex;align-items:center;gap:8px;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:600;padding:13px 26px;border-radius:8px;text-decoration:none;border:none;cursor:pointer;transition:transform .15s,box-shadow .15s,background .15s;line-height:1}
