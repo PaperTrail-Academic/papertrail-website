@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /confirmed/
+Disallow: /success/
+Disallow: /reset-password/
+
+Sitemap: https://papertrailacademic.com/sitemap.xml
