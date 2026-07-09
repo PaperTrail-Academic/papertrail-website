@@ -50,6 +50,70 @@
     "url": "https://papertrailacademic.com/"
   }
   </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Is PaperTrail an AI detector?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. AI detectors return a probability — a percentage chance that text was AI-generated — and that number is often wrong, especially for ESL students and neurodivergent writers whose natural phrasing can read as \"unnatural\" to a model. PaperTrail doesn't guess at authorship from the text alone. Inspect shows you the document's actual revision history. StyleMatch compares writing style against a student's own past work. Verify adds AI-assisted analysis on top of that evidence — but the output is always a report you interpret, never a score that decides for you."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is PaperTrail a plagiarism checker?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No — that's a different problem. Plagiarism checkers like Turnitin scan submitted text against a database of existing sources to find copied passages. PaperTrail doesn't do that. Verify Citations checks something more specific: whether the sources a student cites actually say what the essay claims they say. That catches fabricated or misrepresented evidence, which a plagiarism checker won't."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How can I tell if a student used ChatGPT to write an essay?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No single signal proves it either way, which is why PaperTrail is built around three independent ones instead of one verdict. Inspect shows the session history — how the document was actually typed, including any large paste events. StyleMatch flags whether the submitted essay's sentence structure, vocabulary, and punctuation diverge from that student's own controlled writing sample. Verify adds a deeper AI-assisted read of internal consistency, and Oral Defense lets the essay generate its own follow-up questions for the student to answer out loud. None of these alone is proof. Together, they're a documentable, defensible basis for a conversation."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Why do AI detectors give false positives?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Because they're built to output a probability, not a fact — and that probability is trained on patterns that don't hold evenly across writers. Formulaic, tightly-structured writing frequently scores as \"more likely AI\" even when it's entirely the student's own. That's a structural problem with score-based detection, not a tuning issue. It's why PaperTrail doesn't produce a single AI-probability number — it shows you what happened in the document instead of asking you to trust a model's guess about the text."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How is Inspect different from Draftback or Revision History?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Inspect does the same core thing — replay a Google Doc's edit history — and it's free, with no account required, rather than a paid subscription. Where Inspect goes further is in what it surfaces automatically: paste-and-novelty scoring, struggle-moment detection, and a printable Process View report you can hand a student or parent, not just a scrubber timeline you watch by hand."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What's the difference between StyleMatch and an AI detector?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "An AI detector asks whether text looks machine-generated. StyleMatch asks a narrower, more answerable question: does this sound like the same person who wrote their in-class sample? It's authorship consistency, not AI-generation probability — seven stylometric metrics computed client-side, nothing transmitted. A ghostwritten essay and a heavily AI-edited essay can both fail a style match without either one tripping an AI detector."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can PaperTrail help a student prove they didn't cheat?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes — that's half the point. A revision history that shows steady, incremental work over several sessions is real evidence, and it goes both directions. Inspect's Process View report and Oral Defense's recorded answers give a student something concrete to point to, not just a denial."
+        }
+      }
+    ]
+  }
+  </script>
 
 <style>
 /* ─── Reset & Tokens ─────────────────────────────────────────── */
@@ -1448,6 +1512,63 @@ footer{background:var(--ink);padding:42px 0 0}
              class="btn btn-ghost btn-sm btn-full lemonsqueezy-button">Buy Now</a>
         </div>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FAQ ══════════════════════════════════════════════════════════ -->
+<section class="faq-section" id="faq" style="padding:64px 0 70px;background:var(--white);border-top:1px solid var(--rule)">
+  <style>
+    #faq details.faq-item{background:var(--bg);border:1.5px solid var(--rule);border-radius:10px;padding:16px 20px;cursor:pointer}
+    #faq details.faq-item[open]{background:var(--white);border-color:var(--blue-lt)}
+    #faq details.faq-item summary{font-family:'Lora',serif;font-size:16.5px;font-weight:700;color:var(--ink);list-style:none;display:flex;align-items:center;justify-content:space-between;gap:14px}
+    #faq details.faq-item summary::-webkit-details-marker{display:none}
+    #faq details.faq-item summary::after{content:'+';font-size:20px;font-weight:400;color:var(--blue);flex-shrink:0;transition:transform .15s ease}
+    #faq details.faq-item[open] summary::after{content:'\2212'}
+    #faq details.faq-item p{font-size:14px;color:var(--ink-2);line-height:1.65;margin-top:12px}
+  </style>
+  <div class="container" style="max-width:820px;margin:0 auto;padding:0 20px">
+    <div style="text-align:center;margin-bottom:34px">
+      <p class="eyebrow" style="color:var(--ink-3)">Common questions</p>
+      <h2 style="font-family:'Lora',serif;font-size:clamp(24px,2.8vw,32px);font-weight:700;color:var(--ink);line-height:1.25">Questions teachers actually ask</h2>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:10px">
+
+      <details class="faq-item">
+        <summary>Is PaperTrail an AI detector?</summary>
+        <p>No. AI detectors return a probability — a percentage chance that text was AI-generated — and that number is often wrong, especially for ESL students and neurodivergent writers whose natural phrasing can read as "unnatural" to a model. PaperTrail doesn't guess at authorship from the text alone. Inspect shows you the document's actual revision history. StyleMatch compares writing style against a student's own past work. Verify adds AI-assisted analysis on top of that evidence — but the output is always a report you interpret, never a score that decides for you.</p>
+      </details>
+
+      <details class="faq-item">
+        <summary>Is PaperTrail a plagiarism checker?</summary>
+        <p>No — that's a different problem. Plagiarism checkers like Turnitin scan submitted text against a database of existing sources to find copied passages. PaperTrail doesn't do that. Verify Citations checks something more specific: whether the sources a student cites actually say what the essay claims they say. That catches fabricated or misrepresented evidence, which a plagiarism checker won't.</p>
+      </details>
+
+      <details class="faq-item">
+        <summary>How can I tell if a student used ChatGPT to write an essay?</summary>
+        <p>No single signal proves it either way, which is why PaperTrail is built around three independent ones instead of one verdict. Inspect shows the session history — how the document was actually typed, including any large paste events. StyleMatch flags whether the submitted essay's sentence structure, vocabulary, and punctuation diverge from that student's own controlled writing sample. Verify adds a deeper AI-assisted read of internal consistency, and Oral Defense lets the essay generate its own follow-up questions for the student to answer out loud. None of these alone is proof. Together, they're a documentable, defensible basis for a conversation.</p>
+      </details>
+
+      <details class="faq-item">
+        <summary>Why do AI detectors give false positives?</summary>
+        <p>Because they're built to output a probability, not a fact — and that probability is trained on patterns that don't hold evenly across writers. Formulaic, tightly-structured writing (the kind ESL students and many neurodivergent students are taught to produce) frequently scores as "more likely AI" even when it's entirely their own. That's a structural problem with score-based detection, not a tuning issue. It's why PaperTrail doesn't produce a single AI-probability number — we show you what happened in the document instead of asking you to trust a model's guess about the text.</p>
+      </details>
+
+      <details class="faq-item">
+        <summary>How is Inspect different from Draftback or Revision History?</summary>
+        <p>Inspect does the same core thing — replay a Google Doc's edit history — and it's free, with no account required, rather than a paid subscription. Where Inspect goes further is in what it surfaces automatically: paste-and-novelty scoring, struggle-moment detection, and a printable Process View report you can hand a student or parent, not just a scrubber timeline you watch by hand.</p>
+      </details>
+
+      <details class="faq-item">
+        <summary>What's the difference between StyleMatch and an AI detector?</summary>
+        <p>An AI detector asks "does this text look machine-generated?" StyleMatch asks a narrower, more answerable question: "does this sound like the same person who wrote their in-class sample?" It's authorship consistency, not AI-generation probability — seven stylometric metrics (function words, punctuation patterns, sentence rhythm, and more) computed client-side, nothing transmitted. A ghostwritten essay and a heavily AI-edited essay can both fail a style match without either one tripping an AI detector.</p>
+      </details>
+
+      <details class="faq-item">
+        <summary>Can PaperTrail help a student prove they didn't cheat?</summary>
+        <p>Yes — that's half the point. A revision history that shows steady, incremental work over several sessions is real evidence, and it goes both directions. Inspect's Process View report and Oral Defense's recorded answers give a student something concrete to point to, not just a denial.</p>
+      </details>
+
     </div>
   </div>
 </section>
