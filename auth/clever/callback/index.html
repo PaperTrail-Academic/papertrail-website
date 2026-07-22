@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Signing you in — PaperTrail Academic</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,500;0,600;1,500&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --blue:#4A6FA5; --gold:#C9A84C; --teal:#2a7a6b; --ink:#1a2235;
+    --clever:#4274F6;
+  }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body {
+    font-family:'DM Sans',system-ui,sans-serif; color:var(--ink);
+    background:#f7f9fc; min-height:100vh; display:flex; flex-direction:column;
+    align-items:center; justify-content:center; padding:24px;
+  }
+  .card {
+    background:#fff; border:1px solid #e3e8f0; border-radius:14px;
+    padding:40px 36px; max-width:460px; width:100%; text-align:center;
+    box-shadow:0 4px 24px rgba(26,34,53,.06);
+  }
+  h1 { font-family:'Lora',serif; font-size:22px; font-weight:600; margin-bottom:10px; }
+  h1 em { color:var(--gold); }
+  p { font-size:14px; color:#66738c; line-height:1.6; margin-bottom:8px; }
+  .spinner {
+    width:34px; height:34px; border:3px solid #e3e8f0; border-top-color:var(--clever);
+    border-radius:50%; margin:0 auto 18px; animation:spin .8s linear infinite;
+  }
+  @keyframes spin { to { transform:rotate(360deg); } }
+  .ok-mark { font-size:38px; margin-bottom:12px; display:none; }
+  .err { color:#b4544a; font-weight:500; display:none; }
+  .btn {
+    display:inline-block; margin-top:18px; padding:12px 22px; border-radius:8px;
+    background:var(--blue); color:#fff; font-weight:700; font-size:14px;
+    text-decoration:none; transition:background .15s;
+  }
+  .btn:hover { background:#3d5d8a; }
+  .btn.secondary { background:#f1f3f7; color:var(--ink); margin-left:8px; }
+  .fineprint { font-size:12px; color:#8b95aa; margin-top:22px; line-height:1.5; }
+  .fineprint a { color:var(--blue); }
+</style>
+</head>
+<body>
+  <div class="card">
+    <div class="spinner" id="spinner"></div>
+    <div class="ok-mark" id="okmark">✓</div>
+    <h1>PaperTrail™ <em>Academic</em></h1>
+    <p id="status-line">Completing your Clever sign-in…</p>
+    <p class="err" id="error-line"></p>
+    <div id="next-steps" style="display:none;">
+      <button class="btn" id="connect-ext-btn" type="button" style="border:none;cursor:pointer;font-family:inherit;font-size:14px;"></button>
+      <a class="btn secondary" href="https://docs.google.com" target="_blank" rel="noopener">Open Google Docs →</a>
+      <p class="fineprint" id="ext-note">
+        Click above to sign the PaperTrail Chrome extension into this account.
+        Don't have it yet? <a href="https://chromewebstore.google.com/" target="_blank" rel="noopener">Get PaperTrail for Google Docs</a>.
+      </p>
+    </div>
+    <div id="retry-steps" style="display:none;">
+      <a class="btn" href="/" id="retry-btn">Back to papertrailacademic.com</a>
+      <p class="fineprint">
+        Trouble signing in? Write to <a href="mailto:support@papertrailacademic.com">support@papertrailacademic.com</a>.
+      </p>
+    </div>
+  </div>
+
+<script>
+(function () {
+  'use strict';
+
+  // ── Config ──────────────────────────────────────────────────────────────
+  var SUPABASE_URL  = 'https://ktzrdhiqhidexunucuqp.supabase.co';
+  var SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt0enJkaGlxaGlkZXh1bnVjdXFwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI2MTQ2ODMsImV4cCI6MjA4ODE5MDY4M30.24Gbyh0C-wbDqQ31MD-ttXoCfLwjcWvjs9-UXAaqmHU';
+  var EXTENSION_ID  = 'kgkjmhfoijiiplbmablcjbooopndjbgm'; // stable — manifest pins "key"
+  // MUST match a redirect URI registered in the Clever dashboard, exactly.
+  // This page is the PRIMARY redirect URI (Clever requires a public HTTPS
+  // page that can handle portal-initiated logins with no extra params).
+  var REDIRECT_URI  = 'https://papertrailacademic.com/auth/clever/callback/';
+
+  var qs = new URLSearchParams(window.location.search);
+  var code = qs.get('code');
+  var err  = qs.get('error');
+  var returnedState = qs.get('state');
+
+  // CSRF check for flows WE initiated (the site's Clever button stores a state
+  // nonce in sessionStorage before redirecting). Clever portal-initiated logins
+  // carry no state at all — those are allowed through stateless, but the
+  // extension handoff below is click-gated either way, so a planted code can
+  // never silently switch the extension's account.
+  var expectedState = null;
+  try {
+    expectedState = sessionStorage.getItem('pt_clever_state');
+    sessionStorage.removeItem('pt_clever_state');
+  } catch (_) {}
+
+  function fail(msg) {
+    document.getElementById('spinner').style.display = 'none';
+    document.getElementById('status-line').style.display = 'none';
+    var e = document.getElementById('error-line');
+    e.textContent = msg;
+    e.style.display = 'block';
+    document.getElementById('retry-steps').style.display = 'block';
+  }
+
+  function succeed(data) {
+    var user = data.user;
+    document.getElementById('spinner').style.display = 'none';
+    document.getElementById('okmark').style.display = 'block';
+    document.getElementById('status-line').textContent =
+      'Signed in as ' + (user.email || 'your Clever account') + '.';
+    document.getElementById('next-steps').style.display = 'block';
+
+    // Extension handoff is DELIBERATELY click-gated and labeled with the
+    // account email: the extension's session is only ever replaced by an
+    // explicit, informed user action — never by merely landing on this page.
+    var btn = document.getElementById('connect-ext-btn');
+    btn.textContent = 'Sign the Chrome extension in as ' + (user.email || 'this account');
+    btn.onclick = function () {
+      try {
+        if (window.chrome && chrome.runtime && chrome.runtime.sendMessage) {
+          chrome.runtime.sendMessage(EXTENSION_ID, {
+            type: 'STORE_SESSION_FROM_WEB',
+            session: data.session,
+            user: user,
+            profile: data.profile || null
+          }, function (resp) {
+            void (chrome.runtime && chrome.runtime.lastError);
+            document.getElementById('ext-note').textContent =
+              (resp && resp.ok)
+                ? 'Extension signed in. Open any Google Doc to use PaperTrail.'
+                : 'Could not reach the extension — is it installed and enabled?';
+          });
+        } else {
+          document.getElementById('ext-note').textContent =
+            'This browser can\'t reach the extension. In Chrome, install PaperTrail and try again.';
+        }
+      } catch (_) {
+        document.getElementById('ext-note').textContent =
+          'Could not reach the extension — is it installed and enabled?';
+      }
+    };
+  }
+
+  // Clever sends error params for blocked/unshared users.
+  if (err) {
+    fail(err === 'unauthorized-user'
+      ? 'Your Clever account is not shared with PaperTrail. A teacher can add it from the Clever Library.'
+      : 'Clever sign-in was cancelled or denied.');
+    return;
+  }
+  if (!code) {
+    // Someone opened the page directly — send them to the portal-safe home.
+    fail('No sign-in code found. Please start again from Clever or the PaperTrail extension.');
+    return;
+  }
+  if (expectedState && returnedState !== expectedState) {
+    fail('Sign-in could not be verified (state mismatch). Please start again from papertrailacademic.com.');
+    return;
+  }
+
+  // Strip the single-use code from the address bar immediately (it expires in
+  // 60 s and must never be exchanged twice — a reload would otherwise retry it).
+  try { history.replaceState(null, '', window.location.pathname); } catch (_) {}
+
+  fetch(SUPABASE_URL + '/functions/v1/clever-auth', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'apikey': SUPABASE_ANON,
+      'Authorization': 'Bearer ' + SUPABASE_ANON
+    },
+    body: JSON.stringify({ code: code, redirect_uri: REDIRECT_URI })
+  })
+  .then(function (r) { return r.json().then(function (d) { return { ok: r.ok, d: d }; }); })
+  .then(function (res) {
+    if (!res.ok || !res.d.ok) {
+      fail(res.d && res.d.error ? res.d.error : 'Sign-in failed. Please try again.');
+      return;
+    }
+    var data = res.d;
+
+    // Keep a copy for the website itself (future account pages). The
+    // extension handoff happens only via the click-gated button in succeed().
+    try {
+      localStorage.setItem('pt_session', JSON.stringify(data.session));
+      localStorage.setItem('pt_user', JSON.stringify(data.user));
+    } catch (_) {}
+
+    succeed(data);
+  })
+  .catch(function () {
+    fail('Network error during sign-in. Please check your connection and try again.');
+  });
+})();
+</script>
+</body>
+</html>
