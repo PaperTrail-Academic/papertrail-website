@@ -248,14 +248,14 @@
       Privacy Policy
     </div>
     <h1>Privacy Policy</h1>
-    <div class="meta">Last updated: April 2026</div>
+    <div class="meta">Last updated: July 2026</div>
   </div>
 </div>
 
 <div class="doc-wrap">
 
   <div class="lead-note">
-    <strong>The short version:</strong> Inspect requires no account and transmits nothing — everything, including the Process View report, runs locally in your browser. StyleMatch requires an account (name and email), but all StyleMatch analysis stays on your device and is never transmitted. Verify (Submitted, Compare, and Citations reports) requires an account and transmits essay text to generate a report but does not retain it. Oral Defense holds student voice recordings transiently — deleted when the teacher exports the report or after 30 days. PaperTrail Write holds session data transiently and purges it after the teacher downloads their report. No advertising. No analytics. No selling of data.
+    <strong>The short version:</strong> Inspect requires no account and transmits nothing — everything, including the Process View report, runs locally in your browser. StyleMatch requires an account (name and email), but all StyleMatch analysis stays on your device and is never transmitted. Verify (Submitted, Compare, and Citations reports) requires an account and transmits essay text to generate a report but does not retain it. Oral Defense holds student voice recordings transiently — deleted when the teacher exports the report or after 30 days. PaperTrail Write holds session data transiently and purges it after the teacher downloads their report. The PaperTrail for Word add-in (Microsoft AppSource) follows the same rules as the Chrome extension: StyleMatch stays on your device, and Verify transmits essay text to generate a report but does not retain it. Sign-in — whether with Google, Microsoft, email, or Clever — only ever returns your name and email address. No advertising. No analytics. No selling of data.
   </div>
 
   <!-- ═══════════════════════════════════════════════
@@ -267,6 +267,10 @@
     <p><strong>Account registration data</strong> — When you create a PaperTrail Academic account to use StyleMatch or Verify, we collect your name and email address. This information is stored in our secure database (Supabase, hosted on AWS infrastructure). No account is required to use Inspect (which includes Process View).</p>
 
     <p><strong>Google Sign-In data</strong> — If you choose to sign in with Google, we receive your name and email address via Google's OAuth 2.0 flow. We do not receive your Google password, and we do not request access to Google Drive, Gmail, or any other Google service beyond basic profile information.</p>
+
+    <p><strong>Microsoft Sign-In data</strong> — If you choose to sign in with Microsoft (for example, in the teacher web app), we receive your name and email address via Microsoft's OAuth 2.0 flow (Microsoft Entra ID). We do not receive your Microsoft password, and we do not request access to OneDrive, Outlook, or any other Microsoft service beyond basic profile information — except the read-only, single-file access described below if you explicitly attach a source document from OneDrive.</p>
+
+    <p><strong>Clever Sign-In data</strong> — If you sign in with Clever (school SSO), we receive your name, email address, and role from Clever solely to create or match your educator account. PaperTrail requests educator profile information only; student Clever accounts cannot sign in. We do not receive your Clever password or district roster data.</p>
 
     <p><strong>Subscription and billing data</strong> — If you purchase a StyleMatch subscription or PaperTrail Tokens, payment is handled entirely by Lemon Squeezy (our payment processor and merchant of record). PaperTrail Academic does not receive or store your credit card number or payment details. When a purchase is completed, our payment processor notifies PaperTrail Academic's backend via a secure webhook. PaperTrail Academic then updates your account's subscription status and PaperTrail Token balance in order to unlock the appropriate features. No payment or financial details are included in this notification.</p>
 
@@ -313,6 +317,10 @@
     <p><strong>Deepgram</strong> — For Oral Defense only, student audio recordings are transcribed by Deepgram's speech-to-text API, and questions are read aloud to the student using Deepgram's text-to-speech. Deepgram processes this audio under its commercial API terms and does not use it to train models. See <a href="https://deepgram.com/privacy" target="_blank" rel="noopener">deepgram.com/privacy</a>.</p>
 
     <p><strong>Resend</strong> — Our transactional email provider (resend.com), used to send account-related emails (e.g., purchase confirmations). Email addresses are shared with Resend solely for this purpose.</p>
+
+    <p><strong>Microsoft</strong> — If you sign in with Microsoft, Microsoft Entra ID performs the authentication and returns your name and email address to PaperTrail Academic; PaperTrail never receives your Microsoft password. If you attach a source document from Microsoft OneDrive, Microsoft's file picker grants PaperTrail read-only access to the single file you select — no other files are accessed. The PaperTrail for Word add-in runs inside Microsoft Word (Windows, Mac, or Word on the web); Microsoft operates that host application, but PaperTrail shares no document content with Microsoft. See <a href="https://privacy.microsoft.com" target="_blank" rel="noopener">privacy.microsoft.com</a>.</p>
+
+    <p><strong>Clever</strong> — If you sign in with Clever (school SSO), Clever authenticates you and returns your basic educator profile (name, email, role) to PaperTrail Academic. PaperTrail never receives your Clever password. See <a href="https://clever.com/trust/privacy/policy" target="_blank" rel="noopener">clever.com/trust/privacy/policy</a>.</p>
 
     <p>No other third parties receive your data. PaperTrail Academic does not share data with advertising networks, data brokers, analytics providers, or any other parties.</p>
 
@@ -424,6 +432,27 @@
   </div>
 
   <!-- ═══════════════════════════════════════════════
+       PAPERTRAIL FOR WORD (MICROSOFT ADD-IN)
+  ════════════════════════════════════════════════ -->
+  <div class="doc-section" id="word-addin">
+    <h2>PaperTrail for Word — Microsoft AppSource Add-in</h2>
+
+    <p><strong>PaperTrail for Word</strong> is a Microsoft Word task-pane add-in distributed through Microsoft AppSource. It brings StyleMatch and Verify to essays that arrive as Word documents, and it runs inside Microsoft Word on Windows, Mac, and Word on the web. With respect to your data, it behaves the same way as the Chrome extension. (Inspect — revision-history analysis — is not available in Word, because Word does not expose a revision changelog; it remains in the Google Docs extension only.)</p>
+
+    <p><strong>Reading the document</strong> — The add-in reads the text of the open Word document only when you click <strong>“Read document.”</strong> It uses Microsoft's Office JavaScript API to read the body of the document you have open; it does not access your other files, your OneDrive, or any document you have not explicitly read into the pane.</p>
+
+    <p><strong>🔍 StyleMatch in Word</strong> — Runs entirely on your device. The controlled sample you paste and the open document's text are compared locally within the Office runtime. No document text is transmitted to PaperTrail Academic or any third party.</p>
+
+    <p><strong>🔬 Verify in Word</strong> — If you run Verify, the document text is transmitted over an encrypted connection (HTTPS) to PaperTrail Academic's secure backend (Supabase) and forwarded to the Anthropic API solely to generate your report. The essay text is not retained after analysis, and the report itself is removed from our server once it has been delivered to you. Anthropic processes the text under its commercial API terms, which prohibit training AI models on API inputs.</p>
+
+    <p><strong>Sign-in and sessions</strong> — You can sign in to the add-in with email or Clever (school SSO). Sign-in returns only your name and email address (see the Sign-In entries above). The add-in stores your sign-in session only for the duration of your Word session and clears it when the session ends.</p>
+
+    <div class="callout blue">
+      <p><strong>Nothing is shared with Microsoft.</strong> No document content is shared with Microsoft, advertisers, or any third party beyond the processors named in this policy (Supabase and Anthropic, and only when you run Verify). Nothing is ever used to train AI models, and StyleMatch transmits nothing at all.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════
        10. PAPERTRAIL WRITE
   ════════════════════════════════════════════════ -->
   <div class="doc-section" id="write">
@@ -489,7 +518,7 @@
   </div>
 
   <div class="doc-footer-note">
-    This privacy policy covers PaperTrail Academic's website, Chrome extension, Oral Defense (oral.papertrailacademic.com), and PaperTrail Write web application.<br>
+    This privacy policy covers PaperTrail Academic's website, Chrome extension, the PaperTrail for Word add-in (Microsoft AppSource), Oral Defense (oral.papertrailacademic.com), and PaperTrail Write web application.<br>
     PaperTrail Academic is operated by Michael Smith. &copy; 2026 All rights reserved.<br>
     Also see: <a href="/terms-of-service/">Terms of Service</a>
   </div>
