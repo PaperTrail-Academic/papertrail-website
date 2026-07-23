@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<OfficeApp xmlns="http://schemas.microsoft.com/office/appforoffice/1.1"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns:bt="http://schemas.microsoft.com/office/officeappbasictypes/1.0"
+           xmlns:ov="http://schemas.microsoft.com/office/taskpaneappversionoverrides"
+           xsi:type="TaskPaneApp">
+
+  <Id>1121530a-241a-4305-bf7f-3172dc216195</Id>
+  <Version>1.0.0.0</Version>
+  <ProviderName>PaperTrail Academic</ProviderName>
+  <DefaultLocale>en-US</DefaultLocale>
+  <DisplayName DefaultValue="PaperTrail for Word"/>
+  <Description DefaultValue="Academic integrity tools for Word. Authorship consistency (StyleMatch), AI-assisted deep analysis (Verify), citation checking, and oral defense — no verdicts, just evidence. Note: Inspect (revision-history analysis) is available in our Google Docs extension."/>
+  <IconUrl DefaultValue="https://papertrailacademic.com/word-addin/assets/icon-32.png"/>
+  <HighResolutionIconUrl DefaultValue="https://papertrailacademic.com/word-addin/assets/icon-80.png"/>
+  <SupportUrl DefaultValue="https://papertrailacademic.com/support/"/>
+
+  <AppDomains>
+    <AppDomain>https://papertrailacademic.com</AppDomain>
+    <AppDomain>https://ktzrdhiqhidexunucuqp.supabase.co</AppDomain>
+    <!-- Clever SSO: the auth dialog navigates to clever.com and back -->
+    <AppDomain>https://clever.com</AppDomain>
+    <AppDomain>https://accounts.google.com</AppDomain>
+  </AppDomains>
+
+  <Hosts>
+    <Host Name="Document"/>
+  </Hosts>
+
+  <Requirements>
+    <Sets DefaultMinVersion="1.3">
+      <Set Name="WordApi" MinVersion="1.3"/>
+    </Sets>
+  </Requirements>
+
+  <DefaultSettings>
+    <SourceLocation DefaultValue="https://papertrailacademic.com/word-addin/taskpane.html"/>
+  </DefaultSettings>
+
+  <Permissions>ReadWriteDocument</Permissions>
+
+  <VersionOverrides xmlns="http://schemas.microsoft.com/office/taskpaneappversionoverrides" xsi:type="VersionOverridesV1_0">
+    <Hosts>
+      <Host xsi:type="Document">
+        <DesktopFormFactor>
+          <GetStarted>
+            <Title resid="GetStarted.Title"/>
+            <Description resid="GetStarted.Description"/>
+            <LearnMoreUrl resid="GetStarted.LearnMoreUrl"/>
+          </GetStarted>
+          <FunctionFile resid="Taskpane.Url"/>
+          <ExtensionPoint xsi:type="PrimaryCommandSurface">
+            <OfficeTab id="TabHome">
+              <Group id="PaperTrail.Group1">
+                <Label resid="Group1.Label"/>
+                <Icon>
+                  <bt:Image size="16" resid="Icon.16"/>
+                  <bt:Image size="32" resid="Icon.32"/>
+                  <bt:Image size="80" resid="Icon.80"/>
+                </Icon>
+                <Control xsi:type="Button" id="PaperTrail.TaskpaneButton">
+                  <Label resid="TaskpaneButton.Label"/>
+                  <Supertip>
+                    <Title resid="TaskpaneButton.Label"/>
+                    <Description resid="TaskpaneButton.Tooltip"/>
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="Icon.16"/>
+                    <bt:Image size="32" resid="Icon.32"/>
+                    <bt:Image size="80" resid="Icon.80"/>
+                  </Icon>
+                  <Action xsi:type="ShowTaskpane">
+                    <TaskpaneId>ButtonId1</TaskpaneId>
+                    <SourceLocation resid="Taskpane.Url"/>
+                  </Action>
+                </Control>
+              </Group>
+            </OfficeTab>
+          </ExtensionPoint>
+        </DesktopFormFactor>
+      </Host>
+    </Hosts>
+    <Resources>
+      <bt:Images>
+        <bt:Image id="Icon.16" DefaultValue="https://papertrailacademic.com/word-addin/assets/icon-16.png"/>
+        <bt:Image id="Icon.32" DefaultValue="https://papertrailacademic.com/word-addin/assets/icon-32.png"/>
+        <bt:Image id="Icon.80" DefaultValue="https://papertrailacademic.com/word-addin/assets/icon-80.png"/>
+      </bt:Images>
+      <bt:Urls>
+        <bt:Url id="Taskpane.Url" DefaultValue="https://papertrailacademic.com/word-addin/taskpane.html"/>
+        <bt:Url id="GetStarted.LearnMoreUrl" DefaultValue="https://papertrailacademic.com/"/>
+      </bt:Urls>
+      <bt:ShortStrings>
+        <bt:String id="GetStarted.Title" DefaultValue="PaperTrail is ready"/>
+        <bt:String id="Group1.Label" DefaultValue="PaperTrail"/>
+        <bt:String id="TaskpaneButton.Label" DefaultValue="PaperTrail"/>
+      </bt:ShortStrings>
+      <bt:LongStrings>
+        <bt:String id="GetStarted.Description" DefaultValue="Open the PaperTrail pane from the Home tab to analyze this document."/>
+        <bt:String id="TaskpaneButton.Tooltip" DefaultValue="Authorship consistency, deep analysis, citations, and oral defense for this document."/>
+      </bt:LongStrings>
+    </Resources>
+  </VersionOverrides>
+</OfficeApp>

@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PaperTrail for Word</title>
+<script src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lora:wght@600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --blue:#4A6FA5;--blue-dk:#3a5882;--blue-lt:#e8eef6;
+    --gold:#C9A84C;--gold-dk:#a8892f;
+    --teal:#2a7a6b;--teal-lt:#e6f4f1;
+    --ink:#1a2235;--ink-2:#3d4f6e;--ink-3:#6b7a96;
+    --rule:#dce4ef;--bg:#f9fafc;--white:#fff;
+    --warn:#8a6d1f;--warn-bg:#fdf6e3;--red:#b4544a;--green:#2f8f5b;
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'DM Sans',system-ui,sans-serif;color:var(--ink);background:var(--bg);font-size:13px;line-height:1.5}
+  .wrap{padding:12px 12px 24px;max-width:640px;margin:0 auto}
+  header{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+  .brand{font-family:'Lora',serif;font-weight:700;font-size:15px;color:var(--ink);display:flex;align-items:center;gap:6px}
+  .chip{margin-left:auto;border:1.5px solid var(--blue);color:var(--blue);background:#fff;border-radius:20px;padding:5px 12px;font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap}
+  .chip:hover{background:var(--blue);color:#fff}
+  .chip.tokens{border-color:var(--teal);color:var(--teal)}
+  .chip.tokens:hover{background:var(--teal);color:#fff}
+  button{font-family:inherit}
+  .btn{width:100%;border:none;border-radius:8px;padding:10px;font-weight:700;font-size:13px;color:#fff;background:var(--blue);cursor:pointer}
+  .btn:hover{background:var(--blue-dk)}
+  .btn:disabled{background:#c3ccdb;cursor:not-allowed}
+  .btn.teal{background:var(--teal)}.btn.teal:hover{filter:brightness(.94)}
+  .btn.ghost{background:#fff;color:var(--blue);border:1.5px solid var(--rule)}
+  .readbar{display:flex;gap:8px;align-items:center;background:#fff;border:1px solid var(--rule);border-radius:10px;padding:8px;margin-bottom:10px}
+  .readbar .btn{width:auto;padding:8px 12px;font-size:12px}
+  #docinfo{font-size:12px;color:var(--ink-3)}
+  .pill{display:inline-block;border-radius:20px;padding:1px 8px;font-size:11px;font-weight:600}
+  .pill.ok{background:var(--teal-lt);color:var(--teal)}
+  .pill.warn{background:var(--warn-bg);color:var(--warn)}
+  .pill.info{background:var(--blue-lt);color:var(--blue)}
+  .tabs{display:flex;gap:4px;margin-bottom:12px}
+  .tabs button{flex:1;border:1px solid var(--rule);background:#fff;color:var(--ink-2);border-radius:8px;padding:8px 4px;font-size:12px;font-weight:600;cursor:pointer}
+  .tabs button.active{background:var(--blue);color:#fff;border-color:var(--blue)}
+  .tab{display:none}.tab.active{display:block}
+  .intro{font-size:12.5px;color:var(--ink-2);line-height:1.6;margin-bottom:10px}
+  .intro b{color:var(--ink)}
+  textarea{width:100%;min-height:120px;border:1px solid var(--rule);border-radius:8px;padding:10px;font-family:inherit;font-size:12.5px;resize:vertical;margin-bottom:4px}
+  .wc{font-size:11px;color:var(--ink-3);margin-bottom:10px}
+  .wc.ok{color:var(--teal);font-weight:600}.wc.bad{color:var(--warn)}
+  .seg{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:10px}
+  .seg button{flex:1 1 46%;border:1px solid var(--rule);background:#fff;color:var(--ink-2);border-radius:7px;padding:7px 4px;font-size:12px;font-weight:600;cursor:pointer}
+  .seg button.active{background:var(--teal);color:#fff;border-color:var(--teal)}
+  details.meta{margin:6px 0 10px;border:1px solid var(--rule);border-radius:8px;background:#fff}
+  details.meta summary{cursor:pointer;padding:8px 10px;font-size:12px;font-weight:600;color:var(--ink-2)}
+  details.meta .body{padding:0 10px 10px;display:flex;flex-direction:column;gap:6px}
+  details.meta input{border:1px solid var(--rule);border-radius:6px;padding:7px;font-family:inherit;font-size:12px}
+  .status{font-size:12px;color:var(--ink-2);margin-top:8px;line-height:1.6;min-height:16px}
+  .status.err{color:var(--red)}
+  .hidden{display:none!important}
+  .mrow{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+  .mrow .n{flex:0 0 40%;font-size:12px;color:var(--ink-2)}
+  .mrow .bar{flex:1;height:8px;background:#eef1f6;border-radius:6px;overflow:hidden}
+  .mrow .bar span{display:block;height:100%;border-radius:6px}
+  .mrow .v{flex:0 0 26%;text-align:right;font-size:11px;font-weight:600}
+  .muted{font-size:11.5px;color:var(--ink-3);margin-top:8px;line-height:1.5}
+  .disclaim{font-size:11px;color:var(--ink-3);font-style:italic;margin-top:10px;padding-top:8px;border-top:1px solid var(--rule)}
+  /* report overlay */
+  #report-overlay{position:fixed;inset:0;background:#fff;z-index:50;display:flex;flex-direction:column}
+  .report-bar{display:flex;gap:8px;padding:8px;border-bottom:1px solid var(--rule);background:var(--bg)}
+  .report-bar button{border:1px solid var(--rule);background:#fff;color:var(--blue);border-radius:7px;padding:7px 12px;font-size:12px;font-weight:600;cursor:pointer}
+  #report-frame{flex:1;border:0;width:100%}
+  .link{color:var(--blue);cursor:pointer;text-decoration:underline;font-weight:600}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="brand">🔍 PaperTrail <span style="font-weight:400;color:var(--ink-3);font-size:12px">for Word</span></div>
+    <button id="acct" class="chip">Sign in</button>
+  </header>
+
+  <div class="readbar">
+    <button id="btn-read" class="btn">Read document</button>
+    <span id="docinfo">Open a student essay, then read it in.</span>
+  </div>
+
+  <nav class="tabs">
+    <button data-tab="stylematch" class="active">🔍 StyleMatch</button>
+    <button data-tab="verify">🔬 Verify</button>
+    <button data-tab="oral">🎙️ Oral</button>
+  </nav>
+
+  <!-- ── STYLEMATCH ─────────────────────────────────────────── -->
+  <section id="tab-stylematch" class="tab active">
+    <p class="intro"><b>StyleMatch</b> — "This doesn't sound like them." A controlled writing sample is compared against the open document across eight authorship metrics, entirely on your device. No text is ever transmitted. Divergence ratings, not a verdict.</p>
+    <textarea id="sampleA" placeholder="Paste a controlled writing sample you trust is the student's own — an in-class essay, a handwritten piece typed up. Minimum 500 words."></textarea>
+    <div class="wc" id="sm-wc">0 words</div>
+    <button id="btn-sm" class="btn" disabled>Run StyleMatch</button>
+    <div id="sm-results" class="hidden"></div>
+  </section>
+
+  <!-- ── VERIFY ─────────────────────────────────────────────── -->
+  <section id="tab-verify" class="tab">
+    <div class="seg" id="verify-type">
+      <button data-vt="consistency" class="active">🔬 Consistency</button>
+      <button data-vt="data">🧪 Data &amp; Methods</button>
+      <button data-vt="compare">⚖️ Compare</button>
+      <button data-vt="citations">📚 Citations</button>
+    </div>
+    <p class="intro" id="verify-intro"></p>
+
+    <div id="compare-wrap" class="hidden">
+      <textarea id="ctrlText" placeholder="Paste the controlled sample to compare against. Minimum 500 words."></textarea>
+      <div class="wc" id="ctrl-wc">0 words</div>
+    </div>
+
+    <details class="meta">
+      <summary>Optional labels for the report</summary>
+      <div class="body">
+        <input id="m-student" type="text" placeholder="Student name (optional)">
+        <input id="m-assignment" type="text" placeholder="Assignment (optional)">
+        <input id="m-course" type="text" placeholder="Course (optional)">
+      </div>
+    </details>
+
+    <button id="btn-verify" class="btn teal" disabled>Run</button>
+    <div id="verify-status" class="status"></div>
+    <p class="disclaim">Verify is evidence for educator reference — never a verdict, and never the sole basis for any decision.</p>
+  </section>
+
+  <!-- ── ORAL DEFENSE ───────────────────────────────────────── -->
+  <section id="tab-oral" class="tab">
+    <p class="intro"><b>Oral Defense</b> — "Have the student account for their writing, out loud." You'll build the defense (generate questions, pick them, send the student a private link) in the PaperTrail web app, where the full workflow and your dashboard live. This button reads the open document and takes you there with the essay ready to paste.</p>
+    <button id="btn-oral" class="btn teal" disabled>Create Oral Defense from this document</button>
+    <div id="oral-status" class="status"></div>
+  </section>
+
+</div>
+
+<!-- ── FULL REPORT OVERLAY ──────────────────────────────────── -->
+<div id="report-overlay" class="hidden">
+  <div class="report-bar">
+    <button id="report-back">← Back</button>
+    <button id="report-print">Print / Save</button>
+  </div>
+  <iframe id="report-frame" title="PaperTrail report"></iframe>
+</div>
+
+<script src="stylematch.js"></script>
+<script src="reports.js"></script>
+<script src="taskpane.js"></script>
+</body>
+</html>

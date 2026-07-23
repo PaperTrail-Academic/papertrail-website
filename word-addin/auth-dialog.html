@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sign in — PaperTrail</title>
+<script src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<style>
+  body{font-family:'DM Sans',system-ui,sans-serif;background:#f7f9fc;margin:0;padding:22px;color:#243044}
+  h1{font-size:16px;margin:0 0 4px}
+  p{font-size:12px;color:#66738c;margin:0 0 16px;line-height:1.5}
+  input{width:100%;box-sizing:border-box;border:1px solid #e3e8f0;border-radius:8px;padding:10px;font-size:13px;margin-bottom:8px}
+  button{width:100%;border:none;border-radius:8px;padding:11px;font-weight:700;font-size:13px;color:#fff;background:#4A6FA5;cursor:pointer}
+  #clever{background:#4274F6;display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:12px}
+  .divider{display:flex;align-items:center;gap:8px;margin:4px 0 12px}
+  .divider::before,.divider::after{content:'';flex:1;height:1px;background:#e3e8f0}
+  .divider span{font-size:11px;color:#8b95aa;white-space:nowrap}
+  #msg{font-size:12px;color:#b4544a;min-height:16px;margin-top:8px}
+  .hint{font-size:11px;color:#8b95aa;margin-top:12px;line-height:1.5}
+</style>
+</head>
+<body>
+  <h1>Sign in to PaperTrail</h1>
+  <p>Use the same account as your Chrome extension or the website — tokens and subscription carry over.</p>
+
+  <button id="clever" type="button">
+    <svg width="18" height="18" viewBox="0 0 48 48"><rect width="48" height="48" rx="10" fill="#fff"/><path d="M25.6 34.8c-6.1 0-10.6-4.6-10.6-10.7v-.1c0-6 4.4-10.8 10.8-10.8 3.9 0 6.3 1.3 8.2 3.2l-2.9 3.4c-1.6-1.5-3.2-2.4-5.3-2.4-3.5 0-6 2.9-6 6.5v.1c0 3.6 2.5 6.6 6 6.6 2.4 0 3.8-1 5.5-2.5l2.9 3c-2.1 2.2-4.4 3.7-8.6 3.7z" fill="#4274F6"/></svg>
+    Log in with Clever
+  </button>
+
+  <div class="divider"><span>or with email</span></div>
+
+  <input id="email" type="email" placeholder="Email" autocomplete="username">
+  <input id="pass" type="password" placeholder="Password" autocomplete="current-password">
+  <button id="go">Sign in</button>
+  <div id="msg"></div>
+  <div class="hint">
+    Signed up with Google? Set a password once via “Forgot password” on
+    papertrailacademic.com, then use it here.
+    <!-- TODO: full Google OAuth in this dialog (allowed — the dialog is a
+         real window, not an iframe). supabase.auth.signInWithOAuth with
+         redirectTo back to this page, then messageParent as below. -->
+  </div>
+
+<script>
+  'use strict';
+
+  var SUPABASE_URL  = 'https://ktzrdhiqhidexunucuqp.supabase.co';
+  var SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt0enJkaGlxaGlkZXh1bnVjdXFwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI2MTQ2ODMsImV4cCI6MjA4ODE5MDY4M30.24Gbyh0C-wbDqQ31MD-ttXoCfLwjcWvjs9-UXAaqmHU';
+
+  // ── Clever SSO ─────────────────────────────────────────────────────────
+  // This page is its OWN OAuth callback: the dialog navigates to Clever,
+  // Clever redirects back here with ?code=..., and the code is exchanged
+  // via the clever-auth edge function (which holds the client secret).
+  // Register https://papertrailacademic.com/word-addin/auth-dialog.html as
+  // an additional redirect URI in the Clever dashboard; clever.com must be
+  // (and is) listed in the manifest's <AppDomains>.
+  var CLEVER_CLIENT_ID = '6f5f18fdfec504af7d7f'; // PaperTrail Clever app client ID
+  var DIALOG_URL = 'https://papertrailacademic.com/word-addin/auth-dialog.html';
+
+  var supa = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
+
+  function sendToTaskpane(session, user, profile) {
+    Office.context.ui.messageParent(JSON.stringify({
+      type: 'auth',
+      access_token: session.access_token,
+      email: user.email,
+      user_id: user.id || user.user_id || (profile && profile.id),
+    }));
+  }
+
+  Office.onReady(function () {
+    var msgEl = document.getElementById('msg');
+
+    // Returning from Clever? Exchange the code exactly once (single-use, 60 s TTL).
+    var qs = new URLSearchParams(window.location.search);
+    var code = qs.get('code');
+    if (qs.get('error')) {
+      msgEl.textContent = 'Clever sign-in was cancelled or denied.';
+    } else if (code) {
+      try { history.replaceState(null, '', window.location.pathname); } catch (_) {}
+      msgEl.style.color = '#66738c';
+      msgEl.textContent = 'Completing Clever sign-in…';
+      fetch(SUPABASE_URL + '/functions/v1/clever-auth', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'apikey': SUPABASE_ANON,
+          'Authorization': 'Bearer ' + SUPABASE_ANON
+        },
+        body: JSON.stringify({ code: code, redirect_uri: DIALOG_URL })
+      })
+      .then(function (r) { return r.json().then(function (d) { return { ok: r.ok, d: d }; }); })
+      .then(function (res) {
+        if (!res.ok || !res.d.ok) {
+          msgEl.style.color = '#b4544a';
+          msgEl.textContent = (res.d && res.d.error) || 'Clever sign-in failed. Please try again.';
+          return;
+        }
+        sendToTaskpane(res.d.session, res.d.user, res.d.profile);
+      })
+      .catch(function () {
+        msgEl.style.color = '#b4544a';
+        msgEl.textContent = 'Network error during Clever sign-in. Please try again.';
+      });
+    }
+
+    document.getElementById('clever').onclick = function () {
+      window.location.href = 'https://clever.com/oauth/authorize'
+        + '?response_type=code'
+        + '&client_id=' + encodeURIComponent(CLEVER_CLIENT_ID)
+        + '&redirect_uri=' + encodeURIComponent(DIALOG_URL);
+    };
+
+    document.getElementById('go').onclick = async function () {
+      msgEl.style.color = '#b4544a';
+      msgEl.textContent = '';
+      const { data, error } = await supa.auth.signInWithPassword({
+        email: document.getElementById('email').value.trim(),
+        password: document.getElementById('pass').value,
+      });
+      if (error) { msgEl.textContent = error.message; return; }
+      sendToTaskpane(data.session, data.user);
+    };
+  });
+</script>
+</body>
+</html>
