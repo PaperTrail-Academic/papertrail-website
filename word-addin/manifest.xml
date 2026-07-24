@@ -21,6 +21,9 @@
     <!-- Clever SSO: the auth dialog navigates to clever.com and back -->
     <AppDomain>https://clever.com</AppDomain>
     <AppDomain>https://accounts.google.com</AppDomain>
+    <!-- Microsoft (Azure) sign-in redirect passes through these -->
+    <AppDomain>https://login.microsoftonline.com</AppDomain>
+    <AppDomain>https://login.live.com</AppDomain>
   </AppDomains>
 
   <Hosts>
