@@ -31,6 +31,13 @@ var session = null;    // { access_token, email, user_id }
 var vt = 'consistency';
 var verifyRunning = false;
 
+// StyleMatch's engine (stylematch.js) exposes its API only under the
+// window.__wpaStyleMatch namespace. This file was ported from the extension,
+// where smWords/smComputeScores were globals. Shim them so the ported call
+// sites work unchanged. Lookup is deferred to call time (load-order safe).
+function smWords(t) { return window.__wpaStyleMatch.smWords(t); }
+function smComputeScores(a, b) { return window.__wpaStyleMatch.smComputeScores(a, b); }
+
 var $ = function (id) { return document.getElementById(id); };
 function wc(t) { return t && t.trim() ? smWords(t.trim()).length : 0; }
 function esc(s) { return String(s == null ? '' : s).replace(/[&<>]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]; }); }
