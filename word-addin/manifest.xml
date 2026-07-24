@@ -10,7 +10,7 @@
   <ProviderName>PaperTrail Academic</ProviderName>
   <DefaultLocale>en-US</DefaultLocale>
   <DisplayName DefaultValue="PaperTrail for Word"/>
-  <Description DefaultValue="Academic integrity tools for Word: authorship consistency (StyleMatch), AI-assisted deep analysis (Verify), citation checking, and oral defense — evidence, not verdicts. Inspect (revision history) is in our Google Docs extension."/>
+  <Description DefaultValue="Academic integrity tools for Word: authorship consistency (StyleMatch), AI-assisted deep analysis (Verify), citation checking, and oral defense — evidence, not verdicts. Inspect, our revision-history companion, is available separately."/>
   <IconUrl DefaultValue="https://papertrailacademic.com/word-addin/assets/icon-32.png"/>
   <HighResolutionIconUrl DefaultValue="https://papertrailacademic.com/word-addin/assets/icon-64.png"/>
   <SupportUrl DefaultValue="https://papertrailacademic.com/support/"/>
