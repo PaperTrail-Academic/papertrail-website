@@ -21,10 +21,12 @@ var ANON_KEY =
   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt0enJkaGlxaGlkZXh1bnVjdXFwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI2MTQ2ODMsImV4cCI6MjA4ODE5MDY4M30.24Gbyh0C-wbDqQ31MD-ttXoCfLwjcWvjs9-UXAaqmHU';
 var ADDIN_BASE = 'https://papertrailacademic.com/word-addin/';
 var WEB_APP_URL = 'https://app.papertrailacademic.com/app';
-var CHECKOUT_URL = 'https://papertrailacademic.lemonsqueezy.com/checkout/buy/bb899eea-e9af-47ac-a757-052c5f189e8b';
+var CHECKOUT_URL = 'https://papertrailacademic.lemonsqueezy.com/checkout/buy/bb899eea-e9af-47ac-a757-052c5f189e8b'; // Verify tokens
+var SM_SUB_CHECKOUT = 'https://papertrailacademic.lemonsqueezy.com/checkout/buy/33e2150f-8332-42d5-ac7d-d22a8bc6b646'; // StyleMatch subscription ($1.99/mo · $19.99/yr)
 
 var MIN_WORDS = 500;   // Consistency + Compare + StyleMatch
 var MIN_WORDS_SHORT = 300; // Data & Methods + Citations
+var SM_FREE_RUN_LIMIT = 3; // lifetime free StyleMatch runs for registered free users (mirrors extension)
 
 var docText = '';
 var session = null;    // { access_token, email, user_id }
@@ -105,7 +107,7 @@ function readDocument() {
       $('docinfo').innerHTML = '<b>' + n.toLocaleString() + ' words</b> read ' +
         (n < MIN_WORDS_SHORT ? '<span class="pill warn">very short</span>' : '<span class="pill ok">ready</span>');
       $('btn-sm').disabled = false;
-      $('btn-verify').disabled = !session;
+      $('btn-verify').disabled = false; // clickable even when signed out → preflight routes to sign-in / token purchase
       $('btn-oral').disabled = false;
     });
   }).catch(function (e) { $('docinfo').textContent = 'Could not read the document: ' + (e.message || e); });
@@ -128,15 +130,34 @@ function smBand(v) {
   if (v >= 45) return ['Notable', 'var(--warn)'];
   return ['Divergent', 'var(--red)'];
 }
+function smShow(html) { $('sm-results').classList.remove('hidden'); $('sm-results').innerHTML = html; }
+
 function runStyleMatch() {
   var a = $('sampleA').value.trim();
   var wa = wc(a), wb = wc(docText);
-  if (!docText) { $('sm-results').classList.remove('hidden'); $('sm-results').innerHTML = '<div class="muted">Read the document first.</div>'; return; }
+  if (!docText) { smShow('<div class="muted">Read the document first.</div>'); return; }
   if (wa < MIN_WORDS || wb < MIN_WORDS) {
-    $('sm-results').classList.remove('hidden');
-    $('sm-results').innerHTML = '<div class="muted">Both samples need at least 500 words (controlled: ' + wa + ', document: ' + wb + ').</div>';
+    smShow('<div class="muted">Both samples need at least 500 words (controlled: ' + wa + ', document: ' + wb + ').</div>');
     return;
   }
+  if (!session) {
+    smShow('<div class="muted">Sign in to run StyleMatch — new accounts get <b>3 free analyses</b>. <a class="link" id="sm-signin">Sign in</a></div>');
+    var sb = $('sm-signin'); if (sb) sb.onclick = signIn;
+    return;
+  }
+  // Gate against the shared Supabase profile — single source of truth across all surfaces.
+  smShow('<div class="muted">Checking your plan…</div>');
+  refreshBalance().then(function () {
+    var isSub = session.subscription_status === 'active' || session.subscription_status === 'cancelled';
+    var runsUsed = session.stylematch_runs_used || 0;
+    if (!isSub && runsUsed >= SM_FREE_RUN_LIMIT) { smShow(''); showSubModal(); return; }
+    smRenderResults(a);
+    var hasCredits = (session.credit_balance || 0) > 0;
+    if (!isSub && !hasCredits) incrementStyleMatchRun(); // credits are for Verify; only pure-free runs count
+  });
+}
+
+function smRenderResults(a) {
   var s = smComputeScores(a, docText);
   var rows = SM_METRICS.map(function (m) {
     var v = Math.round(s[m[0]]);
@@ -146,9 +167,48 @@ function runStyleMatch() {
       '<span class="bar"><span style="width:' + v + '%;background:' + band[1] + '"></span></span>' +
       '<span class="v" style="color:' + band[1] + '">' + v + '% ' + band[0] + '</span></div>';
   }).join('');
-  $('sm-results').innerHTML = rows +
-    '<div class="muted">Divergence ratings, not a verdict — you read the data. Genre-constrained writing (lab reports, TOK) can inflate similarity.</div>';
-  $('sm-results').classList.remove('hidden');
+  var footer = '<div class="muted">Divergence ratings, not a verdict — you read the data. Genre-constrained writing (lab reports, TOK) can inflate similarity.</div>';
+  var isSub = session && (session.subscription_status === 'active' || session.subscription_status === 'cancelled');
+  if (session && !isSub) {
+    if ((session.credit_balance || 0) > 0) {
+      footer += '<div class="muted"><a class="link" id="sm-sub-link">Subscribe to StyleMatch</a> for unlimited analyses.</div>';
+    } else {
+      var remaining = Math.max(0, SM_FREE_RUN_LIMIT - (session.stylematch_runs_used || 0) - 1);
+      footer += '<div class="muted">' + remaining + ' of ' + SM_FREE_RUN_LIMIT + ' free analyses remaining. <a class="link" id="sm-sub-link">Subscribe</a> for unlimited.</div>';
+    }
+  }
+  smShow(rows + footer);
+  var sl = $('sm-sub-link'); if (sl) sl.onclick = showSubModal;
+}
+
+function incrementStyleMatchRun() {
+  if (!session || !session.user_id) return;
+  fetch(SUPABASE_URL + '/rest/v1/rpc/increment_stylematch_run',
+    { method: 'POST', headers: { 'Content-Type': 'application/json', apikey: ANON_KEY, Authorization: 'Bearer ' + session.access_token }, body: JSON.stringify({ user_id: session.user_id }) })
+    .then(function () { session.stylematch_runs_used = (session.stylematch_runs_used || 0) + 1; })
+    .catch(function () {}); // silent — may under-count; never surfaced (mirrors extension)
+}
+
+function showSubModal() {
+  var existing = $('sm-sub-modal');
+  if (existing) { existing.classList.remove('hidden'); return; }
+  var m = document.createElement('div');
+  m.id = 'sm-sub-modal';
+  m.style.cssText = 'position:fixed;inset:0;background:rgba(26,34,53,.5);display:flex;align-items:center;justify-content:center;z-index:60;padding:16px';
+  m.innerHTML =
+    '<div style="background:#fff;border-radius:12px;max-width:340px;width:100%;padding:20px;box-shadow:0 16px 56px rgba(74,111,165,.25)">' +
+      '<div style="font-family:Lora,serif;font-weight:700;font-size:16px;color:#1a2235;margin-bottom:6px">Subscribe to StyleMatch</div>' +
+      '<p style="font-size:12.5px;color:#3d4f6e;line-height:1.6;margin:0 0 14px">You’ve used your 3 free StyleMatch analyses. Subscribe for unlimited authorship-consistency checks across Word, Google Docs, and the web app.</p>' +
+      '<div style="display:flex;gap:8px;margin-bottom:12px">' +
+        '<div style="flex:1;border:1px solid #dce4ef;border-radius:8px;padding:10px;text-align:center"><div style="font-weight:700;color:#1a2235">$1.99<span style="font-size:11px;color:#6b7a96">/mo</span></div><div style="font-size:11px;color:#6b7a96">Monthly</div></div>' +
+        '<div style="flex:1;border:1px solid #C9A84C;border-radius:8px;padding:10px;text-align:center;background:#fdf6e3"><div style="font-weight:700;color:#1a2235">$19.99<span style="font-size:11px;color:#6b7a96">/yr</span></div><div style="font-size:11px;color:#a8892f">Save ~16%</div></div>' +
+      '</div>' +
+      '<button class="btn" id="sm-sub-go" style="margin-bottom:8px">Subscribe</button>' +
+      '<button class="btn ghost" id="sm-sub-cancel">Not now</button>' +
+    '</div>';
+  document.body.appendChild(m);
+  $('sm-sub-go').onclick = function () { openCheckout(SM_SUB_CHECKOUT); };
+  $('sm-sub-cancel').onclick = function () { m.classList.add('hidden'); };
 }
 
 /* ── Account / sign-in ─────────────────────────────────────────── */
@@ -176,19 +236,23 @@ function signIn() {
     });
 }
 function refreshBalance() {
-  if (!session) return;
-  fetch(SUPABASE_URL + '/rest/v1/users?id=eq.' + encodeURIComponent(session.user_id) + '&select=credit_balance',
+  if (!session) return Promise.resolve();
+  return fetch(SUPABASE_URL + '/rest/v1/users?id=eq.' + encodeURIComponent(session.user_id) + '&select=subscription_status,credit_balance,stylematch_runs_used',
     { headers: { apikey: ANON_KEY, Authorization: 'Bearer ' + session.access_token } })
     .then(function (r) { return r.json(); })
     .then(function (rows) {
-      var bal = rows && rows[0] ? rows[0].credit_balance : '—';
+      var row = (rows && rows[0]) || {};
+      session.subscription_status  = row.subscription_status || 'free';
+      session.credit_balance       = typeof row.credit_balance === 'number' ? row.credit_balance : 0;
+      session.stylematch_runs_used = row.stylematch_runs_used || 0;
       var chip = $('acct');
       chip.className = 'chip tokens';
-      chip.textContent = session.email + ' · ' + bal + ' 🪙';
+      chip.textContent = session.email + ' · ' + session.credit_balance + ' 🪙';
     }).catch(function () {});
 }
-function openCheckout() {
-  var url = session ? CHECKOUT_URL + '?checkout[custom][user_id]=' + encodeURIComponent(session.user_id) + '&checkout[email]=' + encodeURIComponent(session.email) : CHECKOUT_URL;
+function openCheckout(base) {
+  base = base || CHECKOUT_URL; // default: Verify tokens
+  var url = session ? base + '?checkout[custom][user_id]=' + encodeURIComponent(session.user_id) + '&checkout[email]=' + encodeURIComponent(session.email) : base;
   openExternal(url);
 }
 function openExternal(url) {
@@ -218,22 +282,57 @@ function vStatus(msg, isErr) { var el = $('verify-status'); el.className = 'stat
 
 function preflight(minWords) {
   if (verifyRunning) return false;
-  if (!session) { vStatus('Sign in first (top-right).', true); return false; }
+  if (!session) { vStatus('Sign in to run Verify.', true); signIn(); return false; }
   if (!docText) { vStatus('Read the document first.', true); return false; }
+  if ((session.credit_balance || 0) <= 0) { vStatus('You have no PaperTrail Tokens — opening checkout. Each report costs 1 token (Citations 2+).', true); openCheckout(CHECKOUT_URL); return false; }
   if (wc(docText) < minWords) { vStatus('This report needs at least ' + minWords + ' words in the document.', true); return false; }
   return true;
 }
 function runVerifyDispatch() {
+  // Refresh the shared profile first so the token check (and just-completed
+  // purchases / subscriptions) reflect the current Supabase state.
+  if (session) { refreshBalance().then(_verifyDispatch); } else { _verifyDispatch(); }
+}
+function _verifyDispatch() {
   if (vt === 'consistency') return runReport('consistency');
   if (vt === 'data') return runDataIntegrity();
   if (vt === 'compare') return runReport('compare');
   if (vt === 'citations') return runCitations();
 }
 
-/* Render a full report HTML string into the isolated iframe overlay */
+/* Render a full report in a large Office dialog (task panes can't be widened by
+   the add-in). Falls back to the in-pane overlay if the dialog can't open. */
+var _reportDlg = null;
 function showReport(html) {
-  $('report-frame').srcdoc = html;
-  $('report-overlay').classList.remove('hidden');
+  if (_reportDlg) { try { _reportDlg.close(); } catch (e) {} _reportDlg = null; }
+  var canDialog = Office.context && Office.context.ui && Office.context.ui.displayDialogAsync;
+  if (!canDialog) { $('report-frame').srcdoc = html; $('report-overlay').classList.remove('hidden'); return; }
+  Office.context.ui.displayDialogAsync(ADDIN_BASE + 'report-viewer.html',
+    { height: 86, width: 62, displayInIframe: true },
+    function (res) {
+      if (res.status !== Office.AsyncResultStatus.Succeeded) {
+        $('report-frame').srcdoc = html; $('report-overlay').classList.remove('hidden'); return;
+      }
+      var dlg = res.value; _reportDlg = dlg;
+      dlg.addEventHandler(Office.EventType.DialogMessageReceived, function (arg) {
+        if (arg.message === 'ready') { sendReportToDialog(dlg, html); }
+        else if (arg.message === 'close') { try { dlg.close(); } catch (e) {} _reportDlg = null; }
+      });
+      dlg.addEventHandler(Office.EventType.DialogEventReceived, function () { _reportDlg = null; });
+    });
+}
+
+/* Office dialog messages are size-capped, so stream the report HTML in chunks
+   the viewer reassembles in order. */
+function sendReportToDialog(dlg, html) {
+  if (!dlg.messageChild) return;
+  var CHUNK = 7000;
+  var total = Math.ceil(html.length / CHUNK) || 1;
+  dlg.messageChild(JSON.stringify({ t: 'begin', total: total }));
+  for (var i = 0; i < total; i++) {
+    dlg.messageChild(JSON.stringify({ t: 'chunk', i: i, s: html.substr(i * CHUNK, CHUNK) }));
+  }
+  dlg.messageChild(JSON.stringify({ t: 'end' }));
 }
 
 /* Poll the reports row until complete, then hand report_json to `build` */

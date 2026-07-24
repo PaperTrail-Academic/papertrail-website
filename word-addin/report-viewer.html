@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PaperTrail report</title>
+<script src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js"></script>
+<style>
+  html, body { margin: 0; height: 100%; background: #fff; }
+  .bar { display: flex; gap: 8px; align-items: center; padding: 8px 10px; border-bottom: 1px solid #dce4ef; background: #f9fafc; font-family: 'DM Sans', system-ui, sans-serif; }
+  .bar .title { font-weight: 700; color: #1a2235; font-size: 13px; margin-right: auto; }
+  .bar button { border: 1px solid #dce4ef; background: #fff; color: #4A6FA5; border-radius: 7px; padding: 7px 14px; font-size: 13px; font-weight: 600; cursor: pointer; }
+  .bar button:hover { background: #4A6FA5; color: #fff; }
+  #frame { border: 0; width: 100%; height: calc(100% - 50px); }
+  #wait { font-family: 'DM Sans', system-ui, sans-serif; color: #6b7a96; font-size: 13px; padding: 24px; }
+</style>
+</head>
+<body>
+  <div class="bar">
+    <span class="title">🔬 PaperTrail Report</span>
+    <button id="print" type="button">Print / Save</button>
+    <button id="close" type="button">Close</button>
+  </div>
+  <div id="wait">Loading report…</div>
+  <iframe id="frame" title="PaperTrail report" style="display:none"></iframe>
+
+<script>
+  'use strict';
+  var chunks = [], total = 0, got = 0;
+
+  Office.onReady(function () {
+    // Register the parent-message handler BEFORE announcing readiness, so no chunk is missed.
+    Office.context.ui.addHandlerAsync(Office.EventType.DialogParentMessageReceived, onParentMessage);
+    document.getElementById('print').onclick = function () {
+      try { document.getElementById('frame').contentWindow.print(); } catch (e) {}
+    };
+    document.getElementById('close').onclick = function () {
+      Office.context.ui.messageParent('close');
+    };
+    Office.context.ui.messageParent('ready');
+  });
+
+  function onParentMessage(arg) {
+    var m;
+    try { m = JSON.parse(arg.message); } catch (e) { return; }
+    if (m.t === 'begin') { total = m.total; got = 0; chunks = new Array(total); }
+    else if (m.t === 'chunk') { if (chunks[m.i] === undefined) got++; chunks[m.i] = m.s; }
+    else if (m.t === 'end') {
+      var frame = document.getElementById('frame');
+      frame.srcdoc = chunks.join('');
+      document.getElementById('wait').style.display = 'none';
+      frame.style.display = '';
+    }
+  }
+</script>
+</body>
+</html>
